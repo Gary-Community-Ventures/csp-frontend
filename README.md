@@ -17,6 +17,7 @@ This project is a frontend template built with the following technologies:
 - **ESLint**: A pluggable linting utility for JavaScript and JSX.
 - **Git**: A distributed version control system.
 
+
 ## Getting Started
 
 To run the project locally, follow these steps:
@@ -32,6 +33,15 @@ To run the project locally, follow these steps:
     ```bash
     npm run dev
     ```
+
+## Available Commands
+
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the project for production.
+- `npm run format`: Formats the code using Prettier.
+- `npm run lint`: Runs ESLint to check for code quality issues.
+- `npm run preview`: Serves the production build locally for preview.
+- `npx shadcn@latest add <component-name>`: Adds a new component from Shadcn UI. Replace `<component-name>` with the name of the component you want to add (e.g., `button`, `input`, `card`). The components will be added to `src/components/ui/`.
 
 ## TODOs
 

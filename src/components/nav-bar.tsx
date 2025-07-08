@@ -32,7 +32,7 @@ export const NavBar = () => {
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <div>
               <SignedOut>
-                <SignInButton />
+                <SignInButton mode="modal" />
               </SignedOut>
               <SignedIn>
                 <UserButton />
