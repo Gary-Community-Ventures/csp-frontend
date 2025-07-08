@@ -6,7 +6,6 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 import { Link } from '@tanstack/react-router'
-import { aboutRoute, homeRoute } from '@/routes.tsx'
 import {
   SignedIn,
   SignedOut,
@@ -20,12 +19,12 @@ export const NavBar = () => {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to={homeRoute.to}>Home</Link>
+            <Link to="/">Home</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to={aboutRoute.to}>About</Link>
+            <Link to="/about">About</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
