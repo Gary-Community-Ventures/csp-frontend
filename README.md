@@ -36,4 +36,4 @@ To run the project locally, follow these steps:
 ## TODOs
 
 - Remember to replace `GTM_CONTAINER_ID` in `index.html` with your actual Google Tag Manager ID.
-- Add Clerk credentials
+- Add Clerk credentials by adding `VITE_CLERK_PUBLISHABLE_KEY=[API_KEY]` to the `.env` file
