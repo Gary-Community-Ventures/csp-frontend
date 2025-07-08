@@ -7,6 +7,12 @@ import {
 } from '@/components/ui/navigation-menu'
 import { Link } from '@tanstack/react-router'
 import { aboutRoute, homeRoute } from '@/routes.tsx'
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/clerk-react'
 
 export const NavBar = () => {
   return (
@@ -20,6 +26,18 @@ export const NavBar = () => {
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link to={aboutRoute.to}>About</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <div>
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
