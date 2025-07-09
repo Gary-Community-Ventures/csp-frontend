@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
-import { router } from './routes'
+import { router } from '@/routes/router'
 import { ClerkProvider } from '@clerk/clerk-react'
 import './index.css'
 
