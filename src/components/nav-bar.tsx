@@ -16,11 +16,14 @@ type NavBarProps = {
       Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
     >
   })[]
+  pinBottom?: boolean
 }
 
-export function NavBar({ links }: NavBarProps) {
+export function NavBar({ links, pinBottom = false }: NavBarProps) {
   return (
-    <NavigationMenu>
+    <NavigationMenu
+      className={pinBottom ? 'fixed bottom-0 z-50 bg-white' : undefined}
+    >
       <NavigationMenuList>
         {links.map((link) => (
           <NavigationMenuItem key={link.to}>
@@ -28,10 +31,10 @@ export function NavBar({ links }: NavBarProps) {
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <Link {...link} className='h-15'>
+              <Link {...link} className="h-full">
                 <span className="inline-block">
                   <div className="flex justify-center">
-                    <link.Icon className="size-7 text-black" />
+                    <link.Icon className="size-5 text-black sm:size-7" />
                   </div>
                   {link.text}
                 </span>

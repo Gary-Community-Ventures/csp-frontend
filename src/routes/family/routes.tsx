@@ -14,10 +14,11 @@ const familyRoute = createRoute({
   path: '/family',
   component: () => (
     <div>
-      <main className="pt-10 px-4 max-w-7xl mx-auto">
+      <main>
         <Outlet />
       </main>
       <NavBar
+        pinBottom={true}
         links={[
           { to: '/family', text: 'Home', Icon: House },
           { to: '/family/activity', text: 'Activity', Icon: Mail },
@@ -65,7 +66,8 @@ const helpRoute = createRoute({
 const settingsRoute = createRoute({
   getParentRoute: () => familyRoute,
   path: '/settings',
-  component: () => <h2>Family Settings</h2>,
+  component: () =>
+    Array.from({ length: 100 }).map(() => <h2>Family Settings</h2>),
 })
 
 export const familyRouteTree = familyRoute.addChildren([

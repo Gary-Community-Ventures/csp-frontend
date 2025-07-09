@@ -14,10 +14,11 @@ const careGiverRoute = createRoute({
   path: '/care-giver',
   component: () => (
     <div>
-      <main className="pt-10 px-4 max-w-7xl mx-auto">
+      <main>
         <Outlet />
       </main>
       <NavBar
+        pinBottom={true}
         links={[
           { to: '/care-giver', text: 'Home', Icon: Home },
           { to: '/care-giver/children', text: 'Children', Icon: Mail },
