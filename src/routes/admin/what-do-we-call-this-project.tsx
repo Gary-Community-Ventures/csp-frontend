@@ -44,6 +44,8 @@ const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
   const [y, setY] = useState(0);
   const dxRef = useRef(3);
   const dyRef = useRef(3);
+  const xRef = useRef(0); // Ref for current x position
+  const yRef = useRef(0); // Ref for current y position
   const [currentText, setCurrentText] = useState(PHRASES[0]);
   const squareRef = useRef<HTMLDivElement>(null);
 
@@ -56,8 +58,10 @@ const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
       const squareWidth = 225; // Assuming 225px width
       const squareHeight = 75; // Assuming 75px height
 
-      setX(Math.random() * (containerWidth - squareWidth));
-      setY(Math.random() * (containerHeight - squareHeight));
+      xRef.current = Math.random() * (containerWidth - squareWidth);
+      yRef.current = Math.random() * (containerHeight - squareHeight);
+      setX(xRef.current); // Trigger initial render
+      setY(yRef.current); // Trigger initial render
       setCurrentText(PHRASES[Math.floor(Math.random() * PHRASES.length)]);
     }
   }, []);
@@ -85,36 +89,42 @@ const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
       const squareWidth = square.offsetWidth;
       const squareHeight = square.offsetHeight;
 
-      let newX = x + dxRef.current;
-      let newY = y + dyRef.current;
-
       let bouncedX = false;
       let bouncedY = false;
 
-      // Collision detection and direction reversal
-      if (newX + squareWidth > containerWidth) {
-        newX = containerWidth - squareWidth; // Snap to boundary
+      // Calculate next potential position
+      let nextX = xRef.current + dxRef.current;
+      let nextY = yRef.current + dyRef.current;
+
+      // Collision detection and direction reversal for X axis
+      if (nextX + squareWidth > containerWidth) {
+        nextX = containerWidth - squareWidth; // Snap to boundary
         dxRef.current *= -1;
         bouncedX = true;
-      } else if (newX < 0) {
-        newX = 0; // Snap to boundary
+      } else if (nextX < 0) {
+        nextX = 0; // Snap to boundary
         dxRef.current *= -1;
         bouncedX = true;
       }
 
-      if (newY + squareHeight > containerHeight) {
-        newY = containerHeight - squareHeight; // Snap to boundary
+      // Collision detection and direction reversal for Y axis
+      if (nextY + squareHeight > containerHeight) {
+        nextY = containerHeight - squareHeight; // Snap to boundary
         dyRef.current *= -1;
         bouncedY = true;
-      } else if (newY < 0) {
-        newY = 0; // Snap to boundary
+      } else if (nextY < 0) {
+        nextY = 0; // Snap to boundary
         dyRef.current *= -1;
         bouncedY = true;
       }
+
+      // Update refs with new positions
+      xRef.current = nextX;
+      yRef.current = nextY;
 
       // Update state to trigger re-render
-      setX(newX);
-      setY(newY);
+      setX(xRef.current);
+      setY(yRef.current);
 
       // Detect corner bounce
       if (bouncedX && bouncedY) {
@@ -132,27 +142,15 @@ const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
     animationFrameId = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [x, y]); // x and y are in dependency array to ensure latest position is used
+  }, []); // Empty dependency array: runs once on mount
 
   return (
     <div
       ref={squareRef}
+      className="absolute w-[225px] h-[75px] bg-black flex items-center justify-center text-white text-center text-[14px] p-[5px] box-border z-10"
       style={{
-        position: 'absolute',
-        width: '225px', // Increased width to accommodate text
-        height: '75px',
-        backgroundColor: 'black',
         left: `${x}px`,
         top: `${y}px`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: 'white',
-        textAlign: 'center',
-        fontSize: '14px', // Adjusted font size
-        padding: '5px',
-        boxSizing: 'border-box', // Include padding in width/height
-        zIndex: 10, // Ensure the square is above the leaderboard
       }}
     >
       {currentText}

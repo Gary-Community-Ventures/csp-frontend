@@ -9,15 +9,20 @@ import { Wrapper } from '@/context'
 import { adminRouteTree } from './admin/routes'
 import { careGiverRouteTree } from './care-giver/routes'
 import { familyRouteTree } from './family/routes'
+import { FileSliders, Apple, Baby } from 'lucide-react'
 import WhatDoWeCallThisProject from './admin/what-do-we-call-this-project'
 
 export const rootRoute = createRootRoute({
   component: () => (
     <Wrapper>
-      <NavBar />
-      <main className="pt-10 px-4 max-w-7xl mx-auto">
-        <Outlet />
-      </main>
+      <NavBar
+        links={[
+          { to: '/admin', text: 'Admin', Icon: FileSliders },
+          { to: '/care-giver', text: 'Care Giver', Icon: Apple },
+          { to: '/family', text: 'Family', Icon: Baby },
+        ]}
+      />
+      <Outlet />
     </Wrapper>
   ),
 })

@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, type Dispatch, type SetStateAction } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react'
 
 type MainContext = {
   count: number
@@ -26,4 +32,3 @@ export function useMainContext(): MainContext {
 
   return context
 }
-
