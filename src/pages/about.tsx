@@ -6,9 +6,11 @@ export function AboutPage() {
 
   return (
     <div className="flex items-center justify-center">
-      <Card className='w-lg'>
+      <Card className="w-lg">
         <CardHeader>
-          <CardTitle>Here is an example about page</CardTitle>
+          <CardTitle>
+            Here is an example about page for the Childcare Subsidy Program
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <p>The count is at {count}</p>
