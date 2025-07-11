@@ -2,6 +2,8 @@ import { Outlet, createRoute } from '@tanstack/react-router'
 
 import { rootRoute } from '@/routes/router'
 
+import { BackendTestPage } from './pages/backendTest'
+
 const adminRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/admin',
@@ -19,4 +21,13 @@ const homeRoute = createRoute({
   component: () => <h2>Admin Home</h2>,
 })
 
-export const adminRouteTree = adminRoute.addChildren([homeRoute])
+const backendTestPage = createRoute({
+  getParentRoute: () => adminRoute,
+  path: '/backend-test',
+  component: () => <BackendTestPage />,
+})
+
+export const adminRouteTree = adminRoute.addChildren([
+  homeRoute,
+  backendTestPage,
+])
