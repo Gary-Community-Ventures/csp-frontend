@@ -11,20 +11,32 @@ import { caregiverRouteTree } from './caregiver/routes'
 import { familyRouteTree } from './family/routes'
 import { FileSliders, Apple, Baby } from 'lucide-react'
 import { WhatDoWeCallThisProject } from './admin/what-do-we-call-this-project'
+import { useState } from 'react'
 
 export const rootRoute = createRootRoute({
-  component: () => (
-    <Wrapper>
-      <NavBar
-        links={[
-          { to: '/admin', text: 'Admin', Icon: FileSliders },
-          { to: '/caregiver', text: 'Care Giver', Icon: Apple },
-          { to: '/family', text: 'Family', Icon: Baby },
-        ]}
-      />
-      <Outlet />
-    </Wrapper>
-  ),
+  component: () => {
+    const [showLeaderboard, setShowLeaderboard] = useState(false)
+
+    return (
+      <Wrapper>
+        <WhatDoWeCallThisProject showLeaderboard={showLeaderboard} />
+        <NavBar
+          links={[
+            { to: '/admin', text: 'Admin', Icon: FileSliders },
+            { to: '/caregiver', text: 'Care Giver', Icon: Apple },
+            { to: '/family', text: 'Family', Icon: Baby },
+          ]}
+        />
+        <button
+          className="w-full p-5 text-center text-primary-foreground font-bold"
+          onClick={() => setShowLeaderboard(!showLeaderboard)}
+        >
+          {showLeaderboard ? 'Hide' : 'Show'} Leaderboard
+        </button>
+        <Outlet />
+      </Wrapper>
+    )
+  },
 })
 
 const whatDoWeCallThisProjectRoute = createRoute({

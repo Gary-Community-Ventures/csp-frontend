@@ -35,8 +35,28 @@ interface LeaderboardEntry {
   count: number;
 }
 
-interface BouncingSquareProps {
-  onCornerBounce: (phrase: string) => void;
+interface ThemeColors {
+  primary: string;
+  primaryForeground: string;
+  secondary: string;
+  secondaryForeground: string;
+  background: string;
+  foreground: string;
+}
+
+interface ColorLeaderboardEntry {
+  theme: ThemeColors;
+  count: number;
+}
+
+interface BouncingBoxProps {
+  x: number;
+  y: number;
+  text: string;
+  width: number;
+  height: number;
+  backgroundColor: string;
+  isPaused: boolean; // New prop
 }
 
 // Function to generate a random OKLCH color
@@ -47,133 +67,37 @@ const getRandomOklchColor = (minL = 0.2, maxL = 0.9, minC = 0.05, maxC = 0.2) =>
   return `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${h.toFixed(3)})`;
 };
 
-const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const dxRef = useRef(3);
-  const dyRef = useRef(3);
-  const xRef = useRef(0); // Ref for current x position
-  const yRef = useRef(0); // Ref for current y position
-  const [currentText, setCurrentText] = useState(PHRASES[0]);
-  const squareRef = useRef<HTMLDivElement>(null);
-
-  // Effect for initial random position
-  useEffect(() => {
-    const container = squareRef.current?.parentElement;
-    if (container) {
-      const containerWidth = container.offsetWidth;
-      const containerHeight = container.offsetHeight;
-      const squareWidth = 225; // Assuming 225px width
-      const squareHeight = 75; // Assuming 75px height
-
-      xRef.current = Math.random() * (containerWidth - squareWidth);
-      yRef.current = Math.random() * (containerHeight - squareHeight);
-      setX(xRef.current); // Trigger initial render
-      setY(yRef.current); // Trigger initial render
-      setCurrentText(PHRASES[Math.floor(Math.random() * PHRASES.length)]);
-    }
-  }, []);
-
-  // Effect for animation loop
-  useEffect(() => {
-    let animationFrameId: number;
-
-    const animate = () => {
-      if (!squareRef.current) {
-        animationFrameId = requestAnimationFrame(animate);
-        return;
-      }
-
-      const square = squareRef.current;
-      const container = square.parentElement;
-
-      if (!container) {
-        animationFrameId = requestAnimationFrame(animate);
-        return;
-      }
-
-      const containerWidth = container.offsetWidth;
-      const containerHeight = container.offsetHeight;
-      const squareWidth = square.offsetWidth;
-      const squareHeight = square.offsetHeight;
-
-      let bouncedX = false;
-      let bouncedY = false;
-
-      // Calculate next potential position
-      let nextX = xRef.current + dxRef.current;
-      let nextY = yRef.current + dyRef.current;
-
-      // Collision detection and direction reversal for X axis
-      if (nextX + squareWidth > containerWidth) {
-        nextX = containerWidth - squareWidth; // Snap to boundary
-        dxRef.current *= -1;
-        bouncedX = true;
-      } else if (nextX < 0) {
-        nextX = 0; // Snap to boundary
-        dxRef.current *= -1;
-        bouncedX = true;
-      }
-
-      // Collision detection and direction reversal for Y axis
-      if (nextY + squareHeight > containerHeight) {
-        nextY = containerHeight - squareHeight; // Snap to boundary
-        dyRef.current *= -1;
-        bouncedY = true;
-      } else if (nextY < 0) {
-        nextY = 0; // Snap to boundary
-        dyRef.current *= -1;
-        bouncedY = true;
-      }
-
-      // Update refs with new positions
-      xRef.current = nextX;
-      yRef.current = nextY;
-
-      // Update state to trigger re-render
-      setX(xRef.current);
-      setY(yRef.current);
-
-      // Detect corner bounce
-      if (bouncedX && bouncedY) {
-        onCornerBounce(currentText);
-      }
-
-      // Change text on any bounce (wall or corner)
-      if (bouncedX || bouncedY) {
-        setCurrentText(PHRASES[Math.floor(Math.random() * PHRASES.length)]);
-        // Randomize colors on any wall hit
-        const root = document.documentElement;
-        root.style.setProperty('--primary', getRandomOklchColor());
-        root.style.setProperty('--primary-foreground', getRandomOklchColor());
-        root.style.setProperty('--secondary', getRandomOklchColor());
-        root.style.setProperty('--secondary-foreground', getRandomOklchColor());
-        root.style.setProperty('--background', getRandomOklchColor(0.95, 0.99, 0.01, 0.05)); // Very light, almost white with a splash of color
-      }
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    animationFrameId = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []); // Empty dependency array: runs once on mount
-
+const BouncingBox = ({ x, y, text, width, height, backgroundColor }: BouncingBoxProps) => {
   return (
     <div
-      ref={squareRef}
       className="absolute w-[225px] h-[75px] bg-black flex items-center justify-center text-white text-center text-[14px] p-[5px] box-border z-10 pointer-events-auto"
       style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        backgroundColor: backgroundColor,
         left: `${x}px`,
         top: `${y}px`,
       }}
     >
-      {currentText}
+      {text}
     </div>
   );
 };
 
 export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeaderboard?: boolean }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [boxes, setBoxes] = useState<{
+    id: number;
+    x: number;
+    y: number;
+    dx: number;
+    dy: number;
+    text: string;
+    width: number;
+    height: number;
+    backgroundColor: string;
+  }[]>([]);
+
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>(() => {
     try {
       const savedLeaderboard = localStorage.getItem('cornerBounceLeaderboard');
@@ -184,6 +108,19 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
     }
   });
 
+  const [colorLeaderboard, setColorLeaderboard] = useState<ColorLeaderboardEntry[]>(() => {
+    try {
+      const savedColorLeaderboard = localStorage.getItem('colorCollisionLeaderboard');
+      return savedColorLeaderboard ? JSON.parse(savedColorLeaderboard) : [];
+    } catch (error) {
+      console.error("Failed to load color leaderboard from localStorage", error);
+      return [];
+    }
+  });
+
+  const [isPaused, setIsPaused] = useState(false); // New state for pausing animation
+  const [hoveredTheme, setHoveredTheme] = useState<ThemeColors | null>(null); // New state for hovered theme
+
   useEffect(() => {
     try {
       localStorage.setItem('cornerBounceLeaderboard', JSON.stringify(leaderboard));
@@ -191,6 +128,14 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
       console.error("Failed to save leaderboard to localStorage", error);
     }
   }, [leaderboard]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('colorCollisionLeaderboard', JSON.stringify(colorLeaderboard));
+    } catch (error) {
+      console.error("Failed to save color leaderboard to localStorage", error);
+    }
+  }, [colorLeaderboard]);
 
   const handleCornerBounce = (phrase: string) => {
     setLeaderboard(prevLeaderboard => {
@@ -205,28 +150,280 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
     });
   };
 
+  const applyThemeToRoot = (theme: ThemeColors) => {
+    const root = document.documentElement;
+    root.style.setProperty('--primary', theme.primary);
+    root.style.setProperty('--primary-foreground', theme.primaryForeground);
+    root.style.setProperty('--secondary', theme.secondary);
+    root.style.setProperty('--secondary-foreground', theme.secondaryForeground);
+    root.style.setProperty('--background', theme.background);
+    root.style.setProperty('--foreground', theme.foreground);
+  };
+
+  const randomizeCurrentTheme = () => {
+    const root = document.documentElement;
+    root.style.setProperty('--primary', getRandomOklchColor());
+    root.style.setProperty('--primary-foreground', getRandomOklchColor());
+    root.style.setProperty('--secondary', getRandomOklchColor());
+    root.style.setProperty('--secondary-foreground', getRandomOklchColor());
+    root.style.setProperty('--background', getRandomOklchColor(0.95, 0.99, 0.01, 0.05)); // Very light, almost white with a splash of color
+    root.style.setProperty('--foreground', 'oklch(0 0 0)'); // Keep foreground black
+  };
+
+  const handleColorCollision = (theme: ThemeColors) => {
+    setColorLeaderboard(prevLeaderboard => {
+      // Check if an identical theme already exists
+      const existingEntryIndex = prevLeaderboard.findIndex(entry =>
+        entry.theme.primary === theme.primary &&
+        entry.theme.primaryForeground === theme.primaryForeground &&
+        entry.theme.secondary === theme.secondary &&
+        entry.theme.secondaryForeground === theme.secondaryForeground &&
+        entry.theme.background === theme.background &&
+        entry.theme.foreground === theme.foreground
+      );
+
+      if (existingEntryIndex !== -1) {
+        // If theme exists, increment its count
+        const updatedLeaderboard = [...prevLeaderboard];
+        updatedLeaderboard[existingEntryIndex] = {
+          ...updatedLeaderboard[existingEntryIndex],
+          count: updatedLeaderboard[existingEntryIndex].count + 1,
+        };
+        return updatedLeaderboard.sort((a, b) => b.count - a.count);
+      } else {
+        // If theme is new, add it with count 1
+        return [...prevLeaderboard, { theme, count: 1 }].sort((a, b) => b.count - a.count);
+      }
+    });
+  };
+
+  const handleMouseEnterColor = (theme: ThemeColors) => {
+    setIsPaused(true);
+    setHoveredTheme(theme);
+    applyThemeToRoot(theme);
+  };
+
+  const handleMouseLeaveColor = () => {
+    setIsPaused(false);
+    setHoveredTheme(null);
+    randomizeCurrentTheme(); // Revert to dynamic theme
+  };
+
+  // Initial setup of boxes
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const containerWidth = containerRef.current.offsetWidth;
+    const containerHeight = containerRef.current.offsetHeight;
+
+    const createRandomBox = (id: number, speedMultiplier = 1) => {
+      const width = 225;
+      const height = 75;
+      const x = Math.random() * (containerWidth - width);
+      const y = Math.random() * (containerHeight - height);
+      const dx = (Math.random() > 0.5 ? 3 : -3) * speedMultiplier; // Random initial direction
+      const dy = (Math.random() > 0.5 ? 3 : -3) * speedMultiplier; // Random initial direction
+      const text = PHRASES[Math.floor(Math.random() * PHRASES.length)];
+      const backgroundColor = 'oklch(0 0 0)'; // Fixed black color for boxes
+      return { id, x, y, dx, dy, text, width, height, backgroundColor };
+    };
+
+    setBoxes([
+      createRandomBox(1),
+      createRandomBox(2, 1.13),
+    ]);
+
+    // Set initial background color for the body
+    randomizeCurrentTheme();
+
+  }, [containerRef.current]); // Dependency on containerRef.current
+
+  // Animation loop
+  useEffect(() => {
+    let animationFrameId: number;
+
+    const animate = () => {
+      if (!containerRef.current) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
+      if (isPaused) {
+        animationFrameId = requestAnimationFrame(animate);
+        return; // If paused, just request next frame without updating positions
+      }
+
+      const containerWidth = containerRef.current.offsetWidth;
+      const containerHeight = containerRef.current.offsetHeight;
+
+      setBoxes(prevBoxes => {
+        const updatedBoxes = prevBoxes.map(box => {
+          let { x, y, dx, dy, text, width, height } = box;
+          let bouncedX = false;
+          let bouncedY = false;
+
+          // Wall collision detection
+          if (x + dx + width > containerWidth) {
+            x = containerWidth - width; // Snap to boundary
+            dx *= -1;
+            bouncedX = true;
+          } else if (x + dx < 0) {
+            x = 0; // Snap to boundary
+            dx *= -1;
+            bouncedX = true;
+          }
+
+          if (y + dy + height > containerHeight) {
+            y = containerHeight - height; // Snap to boundary
+            dy *= -1;
+            bouncedY = true;
+          } else if (y + dy < 0) {
+            y = 0; // Snap to boundary
+            dy *= -1;
+            bouncedY = true;
+          }
+
+          // Update text and randomize colors on any wall hit
+          if (bouncedX || bouncedY) {
+            text = PHRASES[Math.floor(Math.random() * PHRASES.length)];
+            randomizeCurrentTheme(); // Randomize colors on any wall hit
+          }
+
+          // Detect corner bounce
+          if (bouncedX && bouncedY) {
+            handleCornerBounce(text);
+          }
+
+          return { ...box, x: x + dx, y: y + dy, dx, dy, text };
+        });
+
+        // Box-to-box collision detection
+        for (let i = 0; i < updatedBoxes.length; i++) {
+          for (let j = i + 1; j < updatedBoxes.length; j++) {
+            const boxA = updatedBoxes[i];
+            const boxB = updatedBoxes[j];
+
+            // Simple AABB collision detection
+            if (
+              boxA.x < boxB.x + boxB.width &&
+              boxA.x + boxA.width > boxB.x &&
+              boxA.y < boxB.y + boxB.height &&
+              boxA.y + boxA.height > boxB.y
+            ) {
+              // Collision detected, reverse velocities
+              // Calculate overlap
+              const overlapX = Math.min(boxA.x + boxA.width - boxB.x, boxB.x + boxB.width - boxA.x);
+              const overlapY = Math.min(boxA.y + boxA.height - boxB.y, boxB.y + boxB.height - boxA.y);
+
+              if (overlapX < overlapY) {
+                // Resolve collision on X axis
+                if (boxA.x < boxB.x) {
+                  boxA.x -= overlapX / 2;
+                  boxB.x += overlapX / 2;
+                } else {
+                  boxA.x += overlapX / 2;
+                  boxB.x -= overlapX / 2;
+                }
+                boxA.dx *= -1;
+                boxB.dx *= -1;
+              } else {
+                // Resolve collision on Y axis
+                if (boxA.y < boxB.y) {
+                  boxA.y -= overlapY / 2;
+                  boxB.y += overlapY / 2;
+                } else {
+                  boxA.y += overlapY / 2;
+                  boxB.y -= overlapY / 2;
+                }
+                boxA.dy *= -1;
+                boxB.dy *= -1;
+              }
+              // Get current theme colors and record them
+              const root = document.documentElement;
+              const currentTheme: ThemeColors = {
+                primary: root.style.getPropertyValue('--primary'),
+                primaryForeground: root.style.getPropertyValue('--primary-foreground'),
+                secondary: root.style.getPropertyValue('--secondary'),
+                secondaryForeground: root.style.getPropertyValue('--secondary-foreground'),
+                background: root.style.getPropertyValue('--background'),
+                foreground: root.style.getPropertyValue('--foreground'),
+              };
+              handleColorCollision(currentTheme);
+            }
+          }
+        }
+
+        return updatedBoxes;
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isPaused]); // isPaused is in dependency array to react to pause/resume
+
   return (
     <div
+      ref={containerRef}
       className="fixed top-0 left-0 w-screen h-screen overflow-hidden z-[9999] flex items-center justify-center pointer-events-none"
     >
-      <BouncingSquare onCornerBounce={handleCornerBounce} />
+      {boxes.map(box => (
+        <BouncingBox
+          key={box.id}
+          x={box.x}
+          y={box.y}
+          text={box.text}
+          width={box.width}
+          height={box.height}
+          backgroundColor={box.backgroundColor}
+          isPaused={isPaused} // Pass isPaused prop
+        />
+      ))}
       {showLeaderboard && (
-        <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0 pointer-events-auto">
-          <h2 className="text-lg font-bold mb-2">Corner Bounce Leaderboard</h2>
-          {leaderboard.length === 0 ? (
-            <p>No corner bounces yet!</p>
-          ) : (
-            <ol className="list-decimal list-inside">
-              {leaderboard.map((entry, index) => (
-                <li key={index} className="mb-1">
-                  {entry.phrase}: {entry.count}
-                </li>
-              ))}
-            </ol>
-          )}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-4 pointer-events-auto">
+          <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0">
+            <h2 className="text-lg font-bold mb-2">Corner Bounce Leaderboard</h2>
+            {leaderboard.length === 0 ? (
+              <p>No corner bounces yet!</p>
+            ) : (
+              <ol className="list-inside">
+                {leaderboard.map((entry, index) => (
+                  <li key={index} className="mb-1">
+                    {entry.phrase}: {entry.count}
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+          <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0">
+            <h2 className="text-lg font-bold mb-2">Color Collisions</h2>
+            {colorLeaderboard.length === 0 ? (
+              <p>No color collisions yet!</p>
+            ) : (
+              <ol className="list-inside">
+                {colorLeaderboard.map((entry, index) => (
+                  <li
+                    key={index}
+                    className="mb-1 cursor-pointer"
+                    onMouseEnter={() => handleMouseEnterColor(entry.theme)}
+                    onMouseLeave={handleMouseLeaveColor}
+                  >
+                    <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                      <span style={{ backgroundColor: entry.theme.primary, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                      <span style={{ backgroundColor: entry.theme.primaryForeground, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                      <span style={{ backgroundColor: entry.theme.secondary, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                      <span style={{ backgroundColor: entry.theme.secondaryForeground, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                      <span style={{ backgroundColor: entry.theme.background, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
         </div>
       )}
     </div>
   );
 };
-

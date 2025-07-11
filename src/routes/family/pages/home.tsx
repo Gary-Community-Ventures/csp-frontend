@@ -38,8 +38,6 @@ export function FamilyHomePage() {
         </h2>
         <TransactionsList />
       </section>
-
-      <WhatDoWeCallThisProject showLeaderboard={false} />
     </>
   )
 }
