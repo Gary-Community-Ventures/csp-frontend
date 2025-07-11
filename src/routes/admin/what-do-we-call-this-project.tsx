@@ -39,6 +39,14 @@ interface BouncingSquareProps {
   onCornerBounce: (phrase: string) => void;
 }
 
+// Function to generate a random OKLCH color
+const getRandomOklchColor = (minL = 0.2, maxL = 0.9, minC = 0.05, maxC = 0.2) => {
+  const l = Math.random() * (maxL - minL) + minL; // Lightness
+  const c = Math.random() * (maxC - minC) + minC; // Chroma
+  const h = Math.random() * 360; // Hue between 0 and 360
+  return `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${h.toFixed(3)})`;
+};
+
 const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
@@ -134,6 +142,13 @@ const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
       // Change text on any bounce (wall or corner)
       if (bouncedX || bouncedY) {
         setCurrentText(PHRASES[Math.floor(Math.random() * PHRASES.length)]);
+        // Randomize colors on any wall hit
+        const root = document.documentElement;
+        root.style.setProperty('--primary', getRandomOklchColor());
+        root.style.setProperty('--primary-foreground', getRandomOklchColor());
+        root.style.setProperty('--secondary', getRandomOklchColor());
+        root.style.setProperty('--secondary-foreground', getRandomOklchColor());
+        root.style.setProperty('--background', getRandomOklchColor(0.95, 0.99, 0.01, 0.05)); // Very light, almost white with a splash of color
       }
 
       animationFrameId = requestAnimationFrame(animate);
@@ -147,7 +162,7 @@ const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
   return (
     <div
       ref={squareRef}
-      className="absolute w-[225px] h-[75px] bg-black flex items-center justify-center text-white text-center text-[14px] p-[5px] box-border z-10"
+      className="absolute w-[225px] h-[75px] bg-black flex items-center justify-center text-white text-center text-[14px] p-[5px] box-border z-10 pointer-events-auto"
       style={{
         left: `${x}px`,
         top: `${y}px`,
@@ -158,7 +173,7 @@ const BouncingSquare = ({ onCornerBounce }: BouncingSquareProps) => {
   );
 };
 
-const WhatDoWeCallThisProject = () => {
+export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeaderboard?: boolean }) => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>(() => {
     try {
       const savedLeaderboard = localStorage.getItem('cornerBounceLeaderboard');
@@ -192,25 +207,26 @@ const WhatDoWeCallThisProject = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 w-screen h-screen overflow-hidden z-[9999] flex items-center justify-center"
+      className="fixed top-0 left-0 w-screen h-screen overflow-hidden z-[9999] flex items-center justify-center pointer-events-none"
     >
       <BouncingSquare onCornerBounce={handleCornerBounce} />
-      <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0">
-        <h2 className="text-lg font-bold mb-2">Corner Bounce Leaderboard</h2>
-        {leaderboard.length === 0 ? (
-          <p>No corner bounces yet!</p>
-        ) : (
-          <ol className="list-decimal list-inside">
-            {leaderboard.map((entry, index) => (
-              <li key={index} className="mb-1">
-                {entry.phrase}: {entry.count}
-              </li>
-            ))}
-          </ol>
-        )}
-      </div>
+      {showLeaderboard && (
+        <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0 pointer-events-auto">
+          <h2 className="text-lg font-bold mb-2">Corner Bounce Leaderboard</h2>
+          {leaderboard.length === 0 ? (
+            <p>No corner bounces yet!</p>
+          ) : (
+            <ol className="list-decimal list-inside">
+              {leaderboard.map((entry, index) => (
+                <li key={index} className="mb-1">
+                  {entry.phrase}: {entry.count}
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-export default WhatDoWeCallThisProject;

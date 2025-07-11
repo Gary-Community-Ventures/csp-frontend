@@ -9,9 +9,9 @@ import {
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 
-const careGiverRoute = createRoute({
+const caregiverRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/care-giver',
+  path: '/caregiver',
   component: () => (
     <div>
       <main>
@@ -20,15 +20,15 @@ const careGiverRoute = createRoute({
       <NavBar
         pinBottom={true}
         links={[
-          { to: '/care-giver', text: 'Home', Icon: Home },
-          { to: '/care-giver/children', text: 'Children', Icon: Mail },
-          { to: '/care-giver/resources', text: 'Resources', Icon: BookOpen },
+          { to: '/caregiver', text: 'Home', Icon: Home },
+          { to: '/caregiver/children', text: 'Children', Icon: Mail },
+          { to: '/caregiver/resources', text: 'Resources', Icon: BookOpen },
           {
-            to: '/care-giver/help',
+            to: '/caregiver/help',
             text: 'Help',
             Icon: MessageCircleQuestionMark,
           },
-          { to: '/care-giver/settings', text: 'Settings', Icon: Settings },
+          { to: '/caregiver/settings', text: 'Settings', Icon: Settings },
         ]}
       />
     </div>
@@ -36,36 +36,36 @@ const careGiverRoute = createRoute({
 })
 
 const homeRoute = createRoute({
-  getParentRoute: () => careGiverRoute,
+  getParentRoute: () => caregiverRoute,
   path: '/',
   component: () => <h2>Care Giver Home</h2>,
 })
 
 const childrenRoute = createRoute({
-  getParentRoute: () => careGiverRoute,
+  getParentRoute: () => caregiverRoute,
   path: '/children',
   component: () => <h2>Children</h2>,
 })
 
 const resourcesRoute = createRoute({
-  getParentRoute: () => careGiverRoute,
+  getParentRoute: () => caregiverRoute,
   path: '/resources',
   component: () => <h2>Resources</h2>,
 })
 
 const helpRoute = createRoute({
-  getParentRoute: () => careGiverRoute,
+  getParentRoute: () => caregiverRoute,
   path: '/help',
   component: () => <h2>Help</h2>,
 })
 
 const settingsRoute = createRoute({
-  getParentRoute: () => careGiverRoute,
+  getParentRoute: () => caregiverRoute,
   path: '/settings',
   component: () => <h2>Settings</h2>,
 })
 
-export const careGiverRouteTree = careGiverRoute.addChildren([
+export const caregiverRouteTree = caregiverRoute.addChildren([
   homeRoute,
   childrenRoute,
   resourcesRoute,

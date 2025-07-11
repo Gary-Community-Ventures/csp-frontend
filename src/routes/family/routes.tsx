@@ -8,12 +8,14 @@ import {
   Settings,
 } from 'lucide-react'
 import { rootRoute } from '@/routes/router'
+import { FamilyHomePage } from './pages/home'
+import { FamilyWrapper } from './wrapper'
 
 const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/family',
   component: () => (
-    <div>
+    <FamilyWrapper>
       <main>
         <Outlet />
       </main>
@@ -35,14 +37,14 @@ const familyRoute = createRoute({
           { to: '/family/settings', text: 'Settings', Icon: Settings },
         ]}
       />
-    </div>
+    </FamilyWrapper>
   ),
 })
 
 const homeRoute = createRoute({
   getParentRoute: () => familyRoute,
   path: '/',
-  component: () => <h2>Family Home</h2>,
+  component: FamilyHomePage,
 })
 
 const activityRoute = createRoute({

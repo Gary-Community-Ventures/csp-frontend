@@ -22,7 +22,7 @@ type NavBarProps = {
 export function NavBar({ links, pinBottom = false }: NavBarProps) {
   return (
     <NavigationMenu
-      className={pinBottom ? 'fixed bottom-0 z-50 bg-white' : undefined}
+      className={pinBottom ? 'fixed bottom-0 z-50 bg-white' : 'bg-white'}
     >
       <NavigationMenuList>
         {links.map((link) => (
