@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
 
 export type Caregiver = {
   name: string
@@ -22,10 +22,10 @@ export type FamilyContext = {
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
 
 export function FamilyWrapper({ children }: { children: React.ReactNode }) {
-  const [firstName, setFirstName] = useState('Diaper')
-  const [lastName, setLastName] = useState('Dollars')
-  const [balance, setBalance] = useState(1200)
-  const [caregivers, setCaregivers] = useState<Caregiver[]>([
+  const firstName = 'Diaper'
+  const lastName = 'Dollars'
+  const balance = 1200
+  const caregivers: Caregiver[] = [
     { name: 'Diaper Dollars', aproved: false },
     { name: 'Sippy Cup Support', aproved: false },
     { name: 'My Friend Benny', aproved: true },
@@ -33,8 +33,8 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
     { name: 'The Swing Set Stipend', aproved: true },
     { name: 'The Procreation Payout', aproved: true },
     { name: 'The Sitter Stipend', aproved: true },
-  ])
-  const [transactions, setTransactions] = useState<Transaction[]>([
+  ]
+  const transactions: Transaction[] = [
     {
       provider: 'Diaper Dollars',
       amount: -100,
@@ -50,7 +50,7 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
       amount: 1200,
       date: new Date(),
     },
-  ])
+  ]
 
   return (
     <FamilyContext.Provider
