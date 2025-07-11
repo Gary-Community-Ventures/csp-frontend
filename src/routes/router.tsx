@@ -1,9 +1,4 @@
-import {
-  Outlet,
-  Router,
-  createRootRoute,
-  createRoute,
-} from '@tanstack/react-router'
+import { Outlet, Router, createRootRoute } from '@tanstack/react-router'
 import { NavBar } from '@/components/nav-bar'
 import { Wrapper } from '@/context'
 import { adminRouteTree } from './admin/routes'
@@ -39,17 +34,10 @@ export const rootRoute = createRootRoute({
   },
 })
 
-const whatDoWeCallThisProjectRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/what-do-we-call-this-project',
-  component: WhatDoWeCallThisProject,
-})
-
 export const routeTree = rootRoute.addChildren([
   adminRouteTree,
   caregiverRouteTree,
   familyRouteTree,
-  whatDoWeCallThisProjectRoute,
 ])
 
 export const router = new Router({ routeTree })
