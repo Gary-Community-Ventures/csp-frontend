@@ -383,7 +383,7 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
       ))}
       {showLeaderboard && (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-4 pointer-events-auto">
-          <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0">
+          <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0 h-[250px] overflow-y-auto">
             <h2 className="text-lg font-bold mb-2">Corner Bounce Leaderboard</h2>
             {leaderboard.length === 0 ? (
               <p>No corner bounces yet!</p>
@@ -397,7 +397,7 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
               </ol>
             )}
           </div>
-          <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0">
+          <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0 h-[250px] overflow-y-auto">
             <h2 className="text-lg font-bold mb-2">Color Collisions</h2>
             {colorLeaderboard.length === 0 ? (
               <p>No color collisions yet!</p>
