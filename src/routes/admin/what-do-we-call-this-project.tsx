@@ -119,7 +119,7 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
   });
 
   const [isPaused, setIsPaused] = useState(false); // New state for pausing animation
-  const [hoveredTheme, setHoveredTheme] = useState<ThemeColors | null>(null); // New state for hovered theme
+  const [_, setHoveredTheme] = useState<ThemeColors | null>(null); // New state for hovered theme
 
   useEffect(() => {
     try {

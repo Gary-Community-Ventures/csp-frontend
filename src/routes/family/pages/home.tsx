@@ -1,4 +1,3 @@
-import { WhatDoWeCallThisProject } from '@/routes/admin/what-do-we-call-this-project'
 import { useFamilyContext } from '../wrapper'
 import { CareGiversList } from '../components/caregivers'
 import { TransactionsList } from '../components/transactions'
