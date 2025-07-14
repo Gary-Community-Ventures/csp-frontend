@@ -30,9 +30,9 @@ export function FamilyHomePage() {
         </h1>
       </div>
       <section className="px-5">
-        <h2 className="text-3xl font-bold text-foreground">Your Caregivers</h2>
+        <h2 className="text-3xl font-bold text-title-foreground">Your Caregivers</h2>
         <CareGiversList />
-        <h2 className="text-3xl font-bold text-foreground mt-10">
+        <h2 className="text-3xl font-bold text-title-foreground mt-10">
           Recent Transactions
         </h2>
         <TransactionsList />
