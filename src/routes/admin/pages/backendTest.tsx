@@ -11,7 +11,8 @@ interface HealthResponse {
   environment: string
 }
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL || 'http://localhost:5000'
+const API_BASE_URL =
+  import.meta.env.VITE_BACKEND_DOMAIN || 'http://localhost:5000'
 
 export function BackendTestPage() {
   const [healthResponse, setHealthResponse] = useState<HealthResponse | null>(
