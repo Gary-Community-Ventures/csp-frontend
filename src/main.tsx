@@ -19,9 +19,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
 function App() {
   return (
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+    <ClerkProvider
+      publishableKey={PUBLISHABLE_KEY}
+      afterSignOutUrl="/"
+      appearance={{
+        variables: { colorPrimary: 'var(--primary)' },
+      }}
+    >
       <RouterProvider router={router} />
     </ClerkProvider>
   )
 }
-
