@@ -3,7 +3,8 @@ import { CareGiversList } from '../components/caregivers'
 import { TransactionsList } from '../components/transactions'
 
 export function FamilyHomePage() {
-  const { firstName, lastName, balance } = useFamilyContext()
+  const { householdInfo } = useFamilyContext()
+  const { firstName, lastName, balance } = householdInfo
 
   const formattedBalance = balance.toLocaleString('en-US', {
     style: 'currency',
@@ -30,7 +31,9 @@ export function FamilyHomePage() {
         </h1>
       </div>
       <section className="px-5">
-        <h2 className="text-3xl font-bold text-title-foreground">Your Caregivers</h2>
+        <h2 className="text-3xl font-bold text-title-foreground">
+          Your Caregivers
+        </h2>
         <CareGiversList />
         <h2 className="text-3xl font-bold text-title-foreground mt-10">
           Recent Transactions

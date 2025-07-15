@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { router } from '@/routes/router'
-import { ClerkProvider, useUser } from '@clerk/clerk-react'
+import { ClerkProvider } from '@clerk/clerk-react'
 import './index.css'
 import { WhatDoWeCallThisProject } from './routes/admin/what-do-we-call-this-project'
 
@@ -14,6 +14,12 @@ if (!PUBLISHABLE_KEY) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <App />
+  </StrictMode>
+)
+
+function App() {
+  return (
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
       afterSignOutUrl="/"
@@ -21,17 +27,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         variables: { colorPrimary: 'var(--primary)' },
       }}
     >
-      <App />
+      <RouterProvider
+        router={router}
+        defaultPendingMs={300}
+        defaultPendingComponent={() => (
+          <WhatDoWeCallThisProject randomizeColors={false} />
+        )}
+      />
     </ClerkProvider>
-  </StrictMode>
-)
-
-function App() {
-  const { user, isLoaded } = useUser()
-
-  if (!isLoaded) {
-    return <WhatDoWeCallThisProject showLeaderboard={true} randomizeColors={false}/>
-  }
-
-  return <RouterProvider context={{ user }} router={router} />
+  )
 }

@@ -10,8 +10,9 @@ import {
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
+import { loadFamilyData } from './family-data'
 
-const familyRoute = createRoute({
+export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/family',
   component: () => (
@@ -39,6 +40,7 @@ const familyRoute = createRoute({
       />
     </FamilyWrapper>
   ),
+  loader: loadFamilyData,
 })
 
 const homeRoute = createRoute({
