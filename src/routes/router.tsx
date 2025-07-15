@@ -1,9 +1,4 @@
-import {
-  Outlet,
-  Router,
-  createRootRoute,
-  useSearch,
-} from '@tanstack/react-router'
+import { Outlet, Router, createRootRoute } from '@tanstack/react-router'
 import { NavBar } from '@/components/nav-bar'
 import { Wrapper } from '@/context'
 import { adminRouteTree } from './admin/routes'
@@ -30,7 +25,10 @@ export const rootRoute = createRootRoute({
         />
         {whatDoWeCallThisProject && (
           <>
-            <button className='w-full text-center' onClick={() => setShowLeaderBoard((prev) => !prev)}>
+            <button
+              className="w-full text-center"
+              onClick={() => setShowLeaderBoard((prev) => !prev)}
+            >
               {showLeaderBoard ? 'Hide Leaderboard' : 'Show Leaderboard'}
             </button>
             <WhatDoWeCallThisProject showLeaderboard={showLeaderBoard} />
@@ -42,7 +40,7 @@ export const rootRoute = createRootRoute({
   },
   validateSearch: (search: Record<string, unknown>) => {
     if (search['whatDoWeCallThisProject'] === undefined) {
-      return { whatDoWeCallThisProject: undefined }
+      return {}
     }
 
     return {
@@ -65,3 +63,4 @@ declare module '@tanstack/react-router' {
     router: typeof router
   }
 }
+

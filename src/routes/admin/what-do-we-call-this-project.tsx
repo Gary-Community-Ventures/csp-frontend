@@ -84,7 +84,7 @@ const BouncingBox = ({ x, y, text, width, height, backgroundColor }: BouncingBox
   );
 };
 
-export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeaderboard?: boolean }) => {
+export const WhatDoWeCallThisProject = ({ showLeaderboard = true, randomizeColors = true }: { showLeaderboard?: boolean; randomizeColors?: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [boxes, setBoxes] = useState<{
     id: number;
@@ -206,7 +206,9 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
   const handleMouseLeaveColor = () => {
     setIsPaused(false);
     setHoveredTheme(null);
-    randomizeCurrentTheme(); // Revert to dynamic theme
+    if (randomizeColors) {
+      randomizeCurrentTheme(); // Revert to dynamic theme
+    }
   };
 
   // Initial setup of boxes
@@ -234,7 +236,9 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
     ]);
 
     // Set initial background color for the body
-    randomizeCurrentTheme();
+    if (randomizeColors) {
+      randomizeCurrentTheme();
+    }
 
   }, [containerRef.current]); // Dependency on containerRef.current
 
@@ -286,7 +290,9 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
           // Update text and randomize colors on any wall hit
           if (bouncedX || bouncedY) {
             text = PHRASES[Math.floor(Math.random() * PHRASES.length)];
-            randomizeCurrentTheme(); // Randomize colors on any wall hit
+            if (randomizeColors) {
+              randomizeCurrentTheme(); // Randomize colors on any wall hit
+            }
           }
 
           // Detect corner bounce
@@ -397,33 +403,35 @@ export const WhatDoWeCallThisProject = ({ showLeaderboard = true }: { showLeader
               </ol>
             )}
           </div>
-          <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0 h-[250px] overflow-y-auto">
-            <h2 className="text-lg font-bold mb-2">Color Collisions</h2>
-            {colorLeaderboard.length === 0 ? (
-              <p>No color collisions yet!</p>
-            ) : (
-              <ol className="list-inside">
-                {colorLeaderboard.map((entry, index) => (
-                  <li
-                    key={index}
-                    className="mb-1 cursor-pointer"
-                    onMouseEnter={() => handleMouseEnterColor(entry.theme)}
-                    onMouseLeave={handleMouseLeaveColor}
-                  >
-                    <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                      <span style={{ backgroundColor: entry.theme.primary, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
-                      <span style={{ backgroundColor: entry.theme.primaryForeground, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
-                      <span style={{ backgroundColor: entry.theme.secondary, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
-                      <span style={{ backgroundColor: entry.theme.secondaryForeground, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
-                      <span style={{ backgroundColor: entry.theme.background, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            )}
+          {randomizeColors && (
+            <div className="p-4 bg-white bg-opacity-75 rounded shadow-lg text-black relative z-0 h-[250px] overflow-y-auto">
+              <h2 className="text-lg font-bold mb-2">Color Collisions</h2>
+              {colorLeaderboard.length === 0 ? (
+                <p>No color collisions yet!</p>
+              ) : (
+                <ol className="list-inside">
+                  {colorLeaderboard.map((entry, index) => (
+                    <li
+                      key={index}
+                      className="mb-1 cursor-pointer"
+                      onMouseEnter={() => handleMouseEnterColor(entry.theme)}
+                      onMouseLeave={handleMouseLeaveColor}
+                    >
+                      <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                        <span style={{ backgroundColor: entry.theme.primary, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                        <span style={{ backgroundColor: entry.theme.primaryForeground, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                        <span style={{ backgroundColor: entry.theme.secondary, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                        <span style={{ backgroundColor: entry.theme.secondaryForeground, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                        <span style={{ backgroundColor: entry.theme.background, display: 'inline-block', width: '15px', height: '15px', border: '1px solid #ccc' }}></span>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          )}
           </div>
-        </div>
       )}
     </div>
-  );
+  )
 };

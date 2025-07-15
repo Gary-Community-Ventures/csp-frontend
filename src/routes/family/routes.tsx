@@ -69,7 +69,7 @@ const settingsRoute = createRoute({
   getParentRoute: () => familyRoute,
   path: '/settings',
   component: () =>
-    Array.from({ length: 100 }).map(() => <h2>Family Settings</h2>),
+    Array.from({ length: 100 }).map((_, i) => <h2 key={i}>Family Settings</h2>),
 })
 
 export const familyRouteTree = familyRoute.addChildren([

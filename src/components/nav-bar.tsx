@@ -25,18 +25,18 @@ export function NavBar({ links, pinBottom = false }: NavBarProps) {
       className={pinBottom ? 'fixed bottom-0 z-50 bg-white' : 'bg-white'}
     >
       <NavigationMenuList>
-        {links.map((link) => (
-          <NavigationMenuItem key={link.to}>
+        {links.map(({ Icon, text, ...restLinkProps }) => (
+          <NavigationMenuItem key={restLinkProps.to}>
             <NavigationMenuLink
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <Link {...link} className="h-full">
+              <Link {...restLinkProps} className="h-full">
                 <span className="inline-block">
                   <div className="flex justify-center">
-                    <link.Icon className="size-5 text-black sm:size-7" />
+                    <Icon className="size-5 text-black sm:size-7" />
                   </div>
-                  {link.text}
+                  {text}
                 </span>
               </Link>
             </NavigationMenuLink>

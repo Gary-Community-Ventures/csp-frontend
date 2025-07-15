@@ -8,10 +8,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", "sans-serif"],
-        serif: ["var(--font-serif)", "serif"],
+        sans: ['var(--font-sans)', 'sans-serif'],
+        serif: ['var(--font-serif)', 'serif'],
       },
     },
   },
   plugins: [],
 }
+
