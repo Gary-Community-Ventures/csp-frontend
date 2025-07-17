@@ -18,7 +18,7 @@ const caregiverRoute = createRoute({
         <Outlet />
       </main>
       <NavBar
-        pinBottom={true}
+        sticky={true}
         links={[
           { to: '/caregiver', text: 'Home', Icon: Home },
           { to: '/caregiver/children', text: 'Children', Icon: Mail },
