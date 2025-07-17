@@ -1,4 +1,11 @@
-import { createContext, useContext } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react'
 import { familyRoute } from './routes'
 
 export type HouseholdInfo = {
@@ -18,16 +25,23 @@ export type Transaction = {
   date: Date
 }
 
+export type NavBarContext = {
+  setHidden: Dispatch<SetStateAction<boolean>>
+  hidden: boolean
+}
+
 export type FamilyContext = {
   householdInfo: HouseholdInfo
   caregivers: Caregiver[]
   transactions: Transaction[]
+  navBar: NavBarContext
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
 
 export function FamilyWrapper({ children }: { children: React.ReactNode }) {
   const { familyData } = familyRoute.useLoaderData()
+  const [hidden, setHidden] = useState<boolean>(false)
 
   const familyContext: FamilyContext = {
     householdInfo: {
@@ -37,6 +51,10 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
     },
     caregivers: familyData.caregivers,
     transactions: familyData.transactions,
+    navBar: {
+      setHidden,
+      hidden,
+    },
   }
 
   return (

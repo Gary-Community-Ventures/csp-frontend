@@ -5,7 +5,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
-import { Link, type LinkProps } from '@tanstack/react-router'
+import { Link, useLocation, type LinkProps } from '@tanstack/react-router'
 import { type LucideProps } from 'lucide-react'
 import type { ForwardRefExoticComponent } from 'react'
 
@@ -19,18 +19,26 @@ type NavBarProps = {
   sticky?: boolean
 }
 
-export function NavBar({ links, sticky = false }: NavBarProps) {
+export function NavBar({
+  links,
+  sticky = false,
+}: NavBarProps) {
+  const location = useLocation()
+
   return (
-    <NavigationMenu className={sticky ? 'sticky top-0 z-50 bg-white' : 'bg-white'}>
+    <NavigationMenu
+      className={sticky ? 'sticky top-0 z-50 bg-white' : 'bg-white'}
+    >
       <NavigationMenuList>
         {links.map(({ Icon, text, ...restLinkProps }) => (
           <NavigationMenuItem key={restLinkProps.to}>
             <NavigationMenuLink
               asChild
+              active={location.pathname === restLinkProps.to}
               className={navigationMenuTriggerStyle()}
             >
               <Link {...restLinkProps} className="h-full">
-                <span className="inline-block">
+                <span className="inline-block md:flex md:justify-center md:items-center md:gap-3">
                   <div className="flex justify-center">
                     <Icon className="size-5 text-secondary sm:size-7" />
                   </div>

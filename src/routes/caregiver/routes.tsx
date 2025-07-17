@@ -5,7 +5,6 @@ import {
   Mail,
   BookOpen,
   MessageCircleQuestionMark,
-  Settings,
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 
@@ -28,7 +27,6 @@ const caregiverRoute = createRoute({
             text: 'Help',
             Icon: MessageCircleQuestionMark,
           },
-          { to: '/caregiver/settings', text: 'Settings', Icon: Settings },
         ]}
       />
     </div>

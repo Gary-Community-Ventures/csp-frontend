@@ -3,14 +3,18 @@ import {
   Mail,
   HeartHandshake,
   MessageCircleQuestionMark,
-  Settings,
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 import { UserButton } from '@clerk/clerk-react'
 import { useFamilyContext } from '../wrapper'
 
 export function FamilyNavBar() {
-  const { householdInfo } = useFamilyContext()
+  const { householdInfo, navBar } = useFamilyContext()
+
+  if (navBar.hidden) {
+    return null
+  }
+
   return (
     <>
       <div className="flex justify-between bg-primary text-primary-foreground p-5">
@@ -39,7 +43,6 @@ export function FamilyNavBar() {
             text: 'Help',
             Icon: MessageCircleQuestionMark,
           },
-          { to: '/family/settings', text: 'Settings', Icon: Settings },
         ]}
       />
     </>
