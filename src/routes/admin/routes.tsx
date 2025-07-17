@@ -1,8 +1,7 @@
 import { Outlet, createRoute } from '@tanstack/react-router'
-
 import { rootRoute } from '@/routes/router'
-
 import { BackendTestPage } from './pages/backendTest'
+import { SignOutButton } from '@clerk/clerk-react'
 
 const adminRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -18,7 +17,7 @@ const adminRoute = createRoute({
 const homeRoute = createRoute({
   getParentRoute: () => adminRoute,
   path: '/',
-  component: () => <h2>Admin Home</h2>,
+  component: () => <SignOutButton />,
 })
 
 const backendTestPage = createRoute({

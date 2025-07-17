@@ -1,10 +1,11 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
-import { router } from '@/routes/router'
-import { ClerkProvider } from '@clerk/clerk-react'
+import { router, type RouterContext } from '@/routes/router'
+import { ClerkProvider, useAuth, useClerk, useUser } from '@clerk/clerk-react'
 import './index.css'
 import { WhatDoWeCallThisProject } from './routes/admin/what-do-we-call-this-project'
+import { Toaster } from 'sonner'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -14,26 +15,47 @@ if (!PUBLISHABLE_KEY) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
-  </StrictMode>
-)
-
-function App() {
-  return (
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
-      afterSignOutUrl="/"
+      signInUrl='/auth/sign-in'
+      signUpUrl='/auth/sign-up'
       appearance={{
         variables: { colorPrimary: 'var(--primary)' },
       }}
     >
-      <RouterProvider
-        router={router}
-        defaultPendingMs={300}
-        defaultPendingComponent={() => (
-          <WhatDoWeCallThisProject randomizeColors={false} />
-        )}
-      />
+      <App />
     </ClerkProvider>
+    <Toaster closeButton={true} />
+  </StrictMode>
+)
+
+function App() {
+  const { user, isLoaded, isSignedIn } = useUser()
+  const { getToken } = useAuth()
+  const clerk = useClerk()
+
+  if (!isLoaded) {
+    return null
+  }
+
+  const context: RouterContext = {
+    user,
+    isSignedIn,
+    getToken,
+    clerk,
+  }
+
+  return (
+    <RouterProvider
+      router={router}
+      defaultPendingMs={300}
+      defaultPendingComponent={() => (
+        <WhatDoWeCallThisProject randomizeColors={false} />
+      )}
+      defaultNotFoundComponent={() => (
+        <WhatDoWeCallThisProject randomizeColors={false} />
+      )}
+      context={context}
+    />
   )
 }

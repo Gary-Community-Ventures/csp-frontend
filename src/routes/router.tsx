@@ -1,4 +1,8 @@
-import { Outlet, Router, createRootRoute } from '@tanstack/react-router'
+import {
+  Outlet,
+  Router,
+  createRootRouteWithContext,
+} from '@tanstack/react-router'
 import { NavBar } from '@/components/nav-bar'
 import { Wrapper } from '@/context'
 import { adminRouteTree } from './admin/routes'
@@ -8,8 +12,16 @@ import { FileSliders, Apple, Baby } from 'lucide-react'
 import { authRouteTree } from './auth/routes'
 import { useState } from 'react'
 import { WhatDoWeCallThisProject } from './admin/what-do-we-call-this-project'
+import type { UserResource, GetToken, LoadedClerk } from '@clerk/types'
 
-export const rootRoute = createRootRoute({
+export type RouterContext = {
+  user: UserResource | null
+  isSignedIn: boolean
+  getToken: GetToken
+  clerk: LoadedClerk | null
+}
+
+export const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: () => {
     const { whatDoWeCallThisProject } = rootRoute.useSearch()
     const [showLeaderBoard, setShowLeaderBoard] = useState(false)
@@ -47,6 +59,7 @@ export const rootRoute = createRootRoute({
       whatDoWeCallThisProject: true,
     }
   },
+  errorComponent: () => <WhatDoWeCallThisProject randomizeColors={false} />,
 })
 
 export const routeTree = rootRoute.addChildren([
@@ -56,11 +69,18 @@ export const routeTree = rootRoute.addChildren([
   authRouteTree,
 ])
 
-export const router = new Router({ routeTree })
+export const router = new Router({
+  routeTree,
+  context: {
+    user: null,
+    isSignedIn: false,
+    getToken: async () => null,
+    clerk: null,
+  },
+})
 
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router
   }
 }
-

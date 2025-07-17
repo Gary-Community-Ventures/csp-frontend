@@ -6,7 +6,7 @@ import { useBackgroundColor } from '@/lib/hooks'
 
 const authRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/',
+  path: '/auth',
   component: () => {
     useBackgroundColor('var(--secondary-background)')
     return (

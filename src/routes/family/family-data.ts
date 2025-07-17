@@ -1,7 +1,19 @@
-import { backendUrl, DEFAULT_HEADERS } from '@/lib/requests'
+import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/requests'
+import type { RouterContext } from '../router'
 
-export async function loadFamilyData() {
-  const res = await fetch(backendUrl('/family'), { headers: DEFAULT_HEADERS })
+export async function loadFamilyData({
+  context,
+  abortController,
+}: {
+  context: RouterContext
+  abortController: AbortController
+}) {
+  const res = await fetch(backendUrl('/family'), {
+    headers: await headersWithAuth(context),
+    signal: abortController.signal,
+  })
+
+  handleStatusCodes(context, res)
 
   const rawJson = await res.json()
 
