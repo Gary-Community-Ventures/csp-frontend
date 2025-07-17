@@ -31,6 +31,5 @@ export async function headersWithAuth(context: RouterContext) {
 
 function authError(context: RouterContext) {
   toast('Please Sign In')
-  context
-  // context.clerk?.redirectToSignIn()
+  context.clerk?.redirectToSignIn()
 }

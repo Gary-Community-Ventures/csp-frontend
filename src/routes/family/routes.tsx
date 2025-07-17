@@ -1,43 +1,19 @@
-import { NavBar } from '@/components/nav-bar'
 import { Outlet, createRoute } from '@tanstack/react-router'
-import {
-  House,
-  Mail,
-  HeartHandshake,
-  MessageCircleQuestionMark,
-  Settings,
-} from 'lucide-react'
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
 import { loadFamilyData } from './family-data'
+import { FamilyNavBar } from './components/nav-bar'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/family',
   component: () => (
     <FamilyWrapper>
+      <FamilyNavBar />
       <main>
         <Outlet />
       </main>
-      <NavBar
-        pinBottom={true}
-        links={[
-          { to: '/family', text: 'Home', Icon: House },
-          { to: '/family/activity', text: 'Activity', Icon: Mail },
-          {
-            to: '/family/providers',
-            text: 'Providers',
-            Icon: HeartHandshake,
-          },
-          {
-            to: '/family/help',
-            text: 'Help',
-            Icon: MessageCircleQuestionMark,
-          },
-          { to: '/family/settings', text: 'Settings', Icon: Settings },
-        ]}
-      />
     </FamilyWrapper>
   ),
   loader: loadFamilyData,

@@ -16,14 +16,12 @@ type NavBarProps = {
       Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
     >
   })[]
-  pinBottom?: boolean
+  sticky?: boolean
 }
 
-export function NavBar({ links, pinBottom = false }: NavBarProps) {
+export function NavBar({ links, sticky = false }: NavBarProps) {
   return (
-    <NavigationMenu
-      className={pinBottom ? 'fixed bottom-0 z-50 bg-white' : 'bg-white'}
-    >
+    <NavigationMenu className={sticky ? 'sticky top-0 z-50 bg-white' : 'bg-white'}>
       <NavigationMenuList>
         {links.map(({ Icon, text, ...restLinkProps }) => (
           <NavigationMenuItem key={restLinkProps.to}>
@@ -34,7 +32,7 @@ export function NavBar({ links, pinBottom = false }: NavBarProps) {
               <Link {...restLinkProps} className="h-full">
                 <span className="inline-block">
                   <div className="flex justify-center">
-                    <Icon className="size-5 text-black sm:size-7" />
+                    <Icon className="size-5 text-secondary sm:size-7" />
                   </div>
                   {text}
                 </span>
