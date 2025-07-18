@@ -7,8 +7,7 @@ import { Link } from '@tanstack/react-router'
 import { TransactionsList } from '@/components/transactions'
 
 export function CaregiverHomePage() {
-  const { caregiverInfo, children, payments, curriculum } =
-    useCaregiverContext()
+  const { children, payments, curriculum } = useCaregiverContext()
 
   return (
     <div className="p-5">
