@@ -2,7 +2,7 @@ import { Outlet, createRoute } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
-import { loadFamilyData } from './family-data'
+import { loadFamilyData } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
 
 export const familyRoute = createRoute({
@@ -39,8 +39,8 @@ const providersRoute = createRoute({
 
 const helpRoute = createRoute({
   getParentRoute: () => familyRoute,
-  path: '/help',
-  component: () => <h2>Family Help</h2>,
+  path: '/messages',
+  component: () => <h2>Messages</h2>,
 })
 
 const settingsRoute = createRoute({

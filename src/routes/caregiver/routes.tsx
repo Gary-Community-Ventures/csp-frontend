@@ -1,66 +1,52 @@
 import { Outlet, createRoute } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
-import {
-  Home,
-  Mail,
-  BookOpen,
-  MessageCircleQuestionMark,
-} from 'lucide-react'
-import { NavBar } from '@/components/nav-bar'
+import { CaregiverHomePage } from './pages/home'
+import { CaregiverNavBar } from './components/nav-bar'
+import { loadCaregiverData } from './loader'
+import { CaregiverWrapper } from './wrapper'
 
-const caregiverRoute = createRoute({
+export const caregiverRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/caregiver',
   component: () => (
-    <div>
+    <CaregiverWrapper>
+      <CaregiverNavBar />
       <main>
         <Outlet />
       </main>
-      <NavBar
-        sticky={true}
-        links={[
-          { to: '/caregiver', text: 'Home', Icon: Home },
-          { to: '/caregiver/children', text: 'Children', Icon: Mail },
-          { to: '/caregiver/resources', text: 'Resources', Icon: BookOpen },
-          {
-            to: '/caregiver/help',
-            text: 'Help',
-            Icon: MessageCircleQuestionMark,
-          },
-        ]}
-      />
-    </div>
+    </CaregiverWrapper>
   ),
+  loader: loadCaregiverData,
 })
 
 const homeRoute = createRoute({
   getParentRoute: () => caregiverRoute,
   path: '/',
-  component: () => <h2>Care Giver Home</h2>,
+  component: CaregiverHomePage,
 })
 
 const childrenRoute = createRoute({
   getParentRoute: () => caregiverRoute,
-  path: '/children',
-  component: () => <h2>Children</h2>,
+  path: '/messages',
+  component: () => <h2>Messages</h2>,
 })
 
 const resourcesRoute = createRoute({
+  getParentRoute: () => caregiverRoute,
+  path: '/activity',
+  component: () => <h2>Activity</h2>,
+})
+
+const helpRoute = createRoute({
   getParentRoute: () => caregiverRoute,
   path: '/resources',
   component: () => <h2>Resources</h2>,
 })
 
-const helpRoute = createRoute({
-  getParentRoute: () => caregiverRoute,
-  path: '/help',
-  component: () => <h2>Help</h2>,
-})
-
 const settingsRoute = createRoute({
   getParentRoute: () => caregiverRoute,
-  path: '/settings',
-  component: () => <h2>Settings</h2>,
+  path: '/attendance',
+  component: () => <h2>Attendance</h2>,
 })
 
 export const caregiverRouteTree = caregiverRoute.addChildren([

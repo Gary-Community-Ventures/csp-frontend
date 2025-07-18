@@ -1,15 +1,10 @@
-import {
-  House,
-  Mail,
-  HeartHandshake,
-  ListChecks,
-} from 'lucide-react'
+import { Mail, Home, BookOpen, ListChecks, ListTodo } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 import { UserButton } from '@clerk/clerk-react'
-import { useFamilyContext } from '../wrapper'
+import { useCaregiverContext } from '../wrapper'
 
-export function FamilyNavBar() {
-  const { householdInfo, navBar } = useFamilyContext()
+export function CaregiverNavBar() {
+  const { caregiverInfo, navBar } = useCaregiverContext()
 
   if (navBar.hidden) {
     return null
@@ -25,23 +20,24 @@ export function FamilyNavBar() {
       </div>
       <div className="flex justify-center items-center p-5 bg-white">
         <strong className="text-3xl text-primary">
-          {householdInfo.firstName} {householdInfo.lastName}
+          {caregiverInfo.firstName} {caregiverInfo.lastName}
         </strong>
       </div>
       <NavBar
         sticky={true}
         links={[
-          { to: '/family', text: 'Home', Icon: House },
-          { to: '/family/messages', text: 'Messages', Icon: Mail },
+          { to: '/caregiver', text: 'Home', Icon: Home },
+          { to: '/caregiver/messages', text: 'Messages', Icon: Mail },
+          { to: '/caregiver/activity', text: 'Activity', Icon: ListChecks },
           {
-            to: '/family/activity',
-            text: 'Activity',
-            Icon: ListChecks,
+            to: '/caregiver/resources',
+            text: 'Resources',
+            Icon: BookOpen,
           },
           {
-            to: '/family/providers',
-            text: 'Providers',
-            Icon: HeartHandshake,
+            to: '/caregiver/attendance',
+            text: 'Attendance',
+            Icon: ListTodo,
           },
         ]}
       />

@@ -1,5 +1,4 @@
 import { CardList } from '@/components/card-list'
-import { useFamilyContext } from '../wrapper'
 import { useMemo } from 'react'
 
 type TransactionAmountProps = {
@@ -34,14 +33,21 @@ function TransactionAmount({ amount }: TransactionAmountProps) {
   )
 }
 
-export function TransactionsList() {
-  const { transactions } = useFamilyContext()
+export type TransationsListProps = {
+  transactions: {
+    name: string
+    amount: number
+    date: Date
+  }[]
+}
+
+export function TransactionsList({ transactions }: TransationsListProps) {
   return (
     <CardList
       items={transactions.map((transaction) => (
         <div className="flex justify-between">
           <div>
-            <strong className="text-lg">{transaction.provider}</strong>
+            <strong className="text-lg">{transaction.name}</strong>
             <div className="text-muted-foreground text-sm">
               {transaction.date.toLocaleDateString('en-US')}
             </div>

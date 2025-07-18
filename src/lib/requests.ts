@@ -2,7 +2,7 @@ import type { RouterContext } from '@/routes/router'
 import { toast } from 'sonner'
 
 export function backendUrl(path: string) {
-  return `${import.meta.env.VITE_BACKEND_DOMAIN}/${path}`
+  return `${import.meta.env.VITE_BACKEND_DOMAIN}${path}`
 }
 
 export const DEFAULT_HEADERS = {
