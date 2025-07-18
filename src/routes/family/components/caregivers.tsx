@@ -16,12 +16,12 @@ function PayButton({ caregiver }: PayButtonProps) {
   return (
     <Button asChild>
       {/* TODO: Add payment link */}
-      <Link to="/family/providers">Pay</Link>
+      <Link to="/family/caregivers">Pay</Link>
     </Button>
   )
 }
 
-export function CareGiversList() {
+export function CaregiversList() {
   const { caregivers } = useFamilyContext()
 
   return (

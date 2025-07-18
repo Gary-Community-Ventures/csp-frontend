@@ -1,5 +1,5 @@
 import { useFamilyContext } from '../wrapper'
-import { CareGiversList } from '../components/caregivers'
+import { CaregiversList } from '../components/caregivers'
 import { TransactionsList } from '@/components/transactions'
 import { Header } from '@/components/header'
 
@@ -26,7 +26,7 @@ export function FamilyHomePage() {
       <div className="px-5">
         <section className="mb-5">
           <Header>Your Caregivers</Header>
-          <CareGiversList />
+          <CaregiversList />
         </section>
         <section>
           <Header>Recent Transactions</Header>
