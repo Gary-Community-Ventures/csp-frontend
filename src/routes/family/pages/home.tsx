@@ -17,7 +17,7 @@ export function FamilyHomePage() {
     <>
       <section>
         <h1 className="p-5 w-full">
-          <div className="bg-tertiary rounded-3xl text-tertiary-foreground w-full p-5">
+          <div className="bg-tertiary-background rounded-3xl w-full p-5">
             <div className="text-sm text-center">Your Current Balance:</div>
             <div className="text-5xl text-center">{formattedBalance}</div>
           </div>

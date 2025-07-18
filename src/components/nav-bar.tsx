@@ -40,7 +40,7 @@ export function NavBar({
               <Link {...restLinkProps} className="h-full">
                 <span className="inline-block md:flex md:justify-center md:items-center md:gap-3">
                   <div className="flex justify-center">
-                    <Icon className="size-5 text-secondary sm:size-7" />
+                    <Icon className="size-5 text-tertiary sm:size-7" />
                   </div>
                   {text}
                 </span>
