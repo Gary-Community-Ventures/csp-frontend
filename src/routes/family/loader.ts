@@ -37,7 +37,7 @@ export type SelectedChildInfo = {
   balance: number
 }
 
-export type Caregiver = {
+export type Provider = {
   id: number
   name: string
   status: 'approved' | 'pending' | 'denied'
@@ -58,7 +58,7 @@ export type Child = {
 
 export type Family = {
   selected_child_info: SelectedChildInfo
-  caregivers: Caregiver[]
+  providers: Provider[]
   transactions: Transaction[]
   children: Child[]
 }

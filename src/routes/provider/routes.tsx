@@ -1,55 +1,55 @@
 import { Outlet, createRoute } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
-import { CaregiverHomePage } from './pages/home'
-import { CaregiverNavBar } from './components/nav-bar'
-import { loadCaregiverData } from './loader'
-import { CaregiverWrapper } from './wrapper'
+import { ProviderHomePage } from './pages/home'
+import { ProviderNavBar } from './components/nav-bar'
+import { loadProviderData } from './loader'
+import { ProviderWrapper } from './wrapper'
 
-export const caregiverRoute = createRoute({
+export const providerRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/caregiver',
+  path: '/provider',
   component: () => (
-    <CaregiverWrapper>
-      <CaregiverNavBar />
+    <ProviderWrapper>
+      <ProviderNavBar />
       <main>
         <Outlet />
       </main>
-    </CaregiverWrapper>
+    </ProviderWrapper>
   ),
-  loader: loadCaregiverData,
+  loader: loadProviderData,
 })
 
 const homeRoute = createRoute({
-  getParentRoute: () => caregiverRoute,
+  getParentRoute: () => providerRoute,
   path: '/',
-  component: CaregiverHomePage,
+  component: ProviderHomePage,
 })
 
 const childrenRoute = createRoute({
-  getParentRoute: () => caregiverRoute,
+  getParentRoute: () => providerRoute,
   path: '/messages',
   component: () => <h2>Messages</h2>,
 })
 
 const resourcesRoute = createRoute({
-  getParentRoute: () => caregiverRoute,
+  getParentRoute: () => providerRoute,
   path: '/activity',
   component: () => <h2>Activity</h2>,
 })
 
 const helpRoute = createRoute({
-  getParentRoute: () => caregiverRoute,
+  getParentRoute: () => providerRoute,
   path: '/resources',
   component: () => <h2>Resources</h2>,
 })
 
 const settingsRoute = createRoute({
-  getParentRoute: () => caregiverRoute,
+  getParentRoute: () => providerRoute,
   path: '/attendance',
   component: () => <h2>Attendance</h2>,
 })
 
-export const caregiverRouteTree = caregiverRoute.addChildren([
+export const providerRouteTree = providerRoute.addChildren([
   homeRoute,
   childrenRoute,
   resourcesRoute,

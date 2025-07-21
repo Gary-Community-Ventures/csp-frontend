@@ -4,7 +4,7 @@ import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
 import { loadFamilyData } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
-import { FamilyProvidersPage } from './pages/caregivers'
+import { FamilyProvidersPage } from './pages/providers'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -34,7 +34,7 @@ const activityRoute = createRoute({
 
 const providersRoute = createRoute({
   getParentRoute: () => familyRoute,
-  path: '/caregivers',
+  path: '/providers',
   component: FamilyProvidersPage,
 })
 

@@ -1,5 +1,5 @@
 import { Header } from '@/components/header'
-import { CaregiversList } from '../components/caregivers'
+import { ProviderList } from '../components/providers'
 import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -17,10 +17,10 @@ export function FamilyProvidersPage() {
       <div className="flex flex-col lg:flex-row">
         <section className="p-5 flex-1">
           <Header>YOUR PROVIDERS</Header>
-          <CaregiversList />
+          <ProviderList />
         </section>
         <section className="p-5 flex-1">
-          <Header>ADD A CAREGIVER</Header>
+          <Header>ADD A PROVIDER</Header>
           <WhiteCard>
             <div className="flex gap-5 items-center justify-center flex-col">
               <strong className="text-xl text-center">
@@ -33,7 +33,7 @@ export function FamilyProvidersPage() {
               </Button>
               <Separator />
               <strong className="text-xl text-center">
-                Invite your Family, Friend, or Neighbor Care Giver
+                Invite your Family, Friend, or Neighbor Caregiver
               </strong>
               <Button asChild>
                 {/* TODO: Add a link to the invite page */}

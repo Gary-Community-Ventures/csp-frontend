@@ -39,8 +39,8 @@ export function FamilyNavBar() {
             Icon: ListChecks,
           },
           {
-            to: '/family/caregivers',
-            text: 'Caregivers',
+            to: '/family/providers',
+            text: 'Providers',
             Icon: HeartHandshake,
           },
         ]}

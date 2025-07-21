@@ -1,14 +1,14 @@
 import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/requests'
 import type { RouterContext } from '../router'
 
-export async function loadCaregiverData({
+export async function loadProviderData({
   context,
   abortController,
 }: {
   context: RouterContext
   abortController: AbortController
 }) {
-  const res = await fetch(backendUrl('/caregiver'), {
+  const res = await fetch(backendUrl('/provider'), {
     headers: await headersWithAuth(context),
     signal: abortController.signal,
   })
@@ -17,8 +17,8 @@ export async function loadCaregiverData({
 
   const rawJson = await res.json()
 
-  const json: Caregiver = {
-    caregiver_info: rawJson.caregiver_info,
+  const json: Provider = {
+    provider_info: rawJson.provider_info,
     children: rawJson.children,
     payments: rawJson.payments.map((payment: any) => ({
       ...payment,
@@ -28,11 +28,11 @@ export async function loadCaregiverData({
   }
 
   return {
-    caregiverData: json,
+    providerData: json,
   }
 }
 
-export type CaregiverInfo = {
+export type ProviderInfo = {
   first_name: string
   last_name: string
 }
@@ -52,8 +52,8 @@ export type Child = {
   last_name: string
 }
 
-export type Caregiver = {
-  caregiver_info: CaregiverInfo
+export type Provider = {
+  provider_info: ProviderInfo
   children: Child[]
   payments: Payment[]
   curriculum: Curriculum

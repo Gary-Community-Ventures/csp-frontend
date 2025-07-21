@@ -1,10 +1,10 @@
 import { Mail, Home, BookOpen, ListChecks, ListTodo } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 import { UserButton } from '@clerk/clerk-react'
-import { useCaregiverContext } from '../wrapper'
+import { useProviderContext } from '../wrapper'
 
-export function CaregiverNavBar() {
-  const { caregiverInfo, navBar } = useCaregiverContext()
+export function ProviderNavBar() {
+  const { providerInfo, navBar } = useProviderContext()
 
   if (navBar.hidden) {
     return null
@@ -20,22 +20,22 @@ export function CaregiverNavBar() {
       </div>
       <div className="flex justify-center items-center p-5 bg-white">
         <strong className="text-3xl text-primary">
-          {caregiverInfo.firstName} {caregiverInfo.lastName}
+          {providerInfo.firstName} {providerInfo.lastName}
         </strong>
       </div>
       <NavBar
         sticky={true}
         links={[
-          { to: '/caregiver', text: 'Home', Icon: Home },
-          { to: '/caregiver/messages', text: 'Messages', Icon: Mail },
-          { to: '/caregiver/activity', text: 'Activity', Icon: ListChecks },
+          { to: '/provider', text: 'Home', Icon: Home },
+          { to: '/provider/messages', text: 'Messages', Icon: Mail },
+          { to: '/provider/activity', text: 'Activity', Icon: ListChecks },
           {
-            to: '/caregiver/resources',
+            to: '/provider/resources',
             text: 'Resources',
             Icon: BookOpen,
           },
           {
-            to: '/caregiver/attendance',
+            to: '/provider/attendance',
             text: 'Attendance',
             Icon: ListTodo,
           },
