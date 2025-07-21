@@ -7,21 +7,30 @@ import {
 } from 'react'
 import { familyRoute } from './routes'
 
-export type FamilyInfo = {
+export type SelectedChildInfo = {
+  id: number
   firstName: string
   lastName: string
   balance: number
 }
 
 export type Caregiver = {
+  id: number
   name: string
   status: 'approved' | 'pending' | 'denied'
 }
 
 export type Transaction = {
-  provider: string
+  id: number
+  name: string
   amount: number
   date: Date
+}
+
+export type Child = {
+  id: number
+  first_name: string
+  last_name: string
 }
 
 export type NavBarContext = {
@@ -30,10 +39,11 @@ export type NavBarContext = {
 }
 
 export type FamilyContext = {
-  familyInfo: FamilyInfo
+  selectedChildInfo: SelectedChildInfo
   caregivers: Caregiver[]
   transactions: Transaction[]
   navBar: NavBarContext
+  children: Child[]
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
@@ -43,13 +53,15 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
   const [hidden, setHidden] = useState<boolean>(false)
 
   const familyContext: FamilyContext = {
-    familyInfo: {
-      firstName: familyData.family_info.first_name,
-      lastName: familyData.family_info.last_name,
-      balance: familyData.family_info.balance,
+    selectedChildInfo: {
+      id: familyData.selected_child_info.id,
+      firstName: familyData.selected_child_info.first_name,
+      lastName: familyData.selected_child_info.last_name,
+      balance: familyData.selected_child_info.balance,
     },
     caregivers: familyData.caregivers,
     transactions: familyData.transactions,
+    children: familyData.children,
     navBar: {
       setHidden,
       hidden,
