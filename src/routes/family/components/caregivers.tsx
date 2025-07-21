@@ -9,8 +9,10 @@ type PayButtonProps = {
 }
 
 function PayButton({ caregiver }: PayButtonProps) {
-  if (!caregiver.approved) {
+  if (caregiver.status === 'pending') {
     return <Badge variant="destructive">Pending</Badge>
+  } else if (caregiver.status === 'denied') {
+    return <Badge variant="destructive">Denied</Badge>
   }
 
   return (

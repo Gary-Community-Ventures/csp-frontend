@@ -30,25 +30,35 @@ export async function loadFamilyData({
   }
 }
 
-export type HouseholdInfo = {
+export type SelectedChildInfo = {
+  id: number
   first_name: string
   last_name: string
   balance: number
 }
 
 export type Caregiver = {
+  id: number
   name: string
-  approved: boolean
+  status: 'approved' | 'pending' | 'denied'
 }
 
 export type Transaction = {
-  provider: string
+  id: number
+  name: string
   amount: number
   date: Date
 }
 
+export type Child = {
+  id: number
+  first_name: string
+  last_name: string
+}
+
 export type Family = {
-  household_info: HouseholdInfo
+  selected_child_info: SelectedChildInfo
   caregivers: Caregiver[]
   transactions: Transaction[]
+  children: Child[]
 }
