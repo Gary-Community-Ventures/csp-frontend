@@ -49,7 +49,11 @@ export function TransactionsList({ transactions }: TransationsListProps) {
           <div>
             <strong className="text-lg">{transaction.name}</strong>
             <div className="text-muted-foreground text-sm">
-              {transaction.date.toLocaleDateString('en-US')}
+              {transaction.date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
             </div>
           </div>
           <TransactionAmount amount={transaction.amount} />
