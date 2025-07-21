@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { familyRoute } from './routes'
 
-export type HouseholdInfo = {
+export type FamilyInfo = {
   firstName: string
   lastName: string
   balance: number
@@ -15,7 +15,7 @@ export type HouseholdInfo = {
 
 export type Caregiver = {
   name: string
-  approved: boolean
+  status: 'approved' | 'pending' | 'denied'
 }
 
 export type Transaction = {
@@ -30,7 +30,7 @@ export type NavBarContext = {
 }
 
 export type FamilyContext = {
-  householdInfo: HouseholdInfo
+  familyInfo: FamilyInfo
   caregivers: Caregiver[]
   transactions: Transaction[]
   navBar: NavBarContext
@@ -43,10 +43,10 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
   const [hidden, setHidden] = useState<boolean>(false)
 
   const familyContext: FamilyContext = {
-    householdInfo: {
-      firstName: familyData.household_info.first_name,
-      lastName: familyData.household_info.last_name,
-      balance: familyData.household_info.balance,
+    familyInfo: {
+      firstName: familyData.family_info.first_name,
+      lastName: familyData.family_info.last_name,
+      balance: familyData.family_info.balance,
     },
     caregivers: familyData.caregivers,
     transactions: familyData.transactions,

@@ -9,7 +9,7 @@ import { UserButton } from '@clerk/clerk-react'
 import { useFamilyContext } from '../wrapper'
 
 export function FamilyNavBar() {
-  const { householdInfo, navBar } = useFamilyContext()
+  const { familyInfo, navBar } = useFamilyContext()
 
   if (navBar.hidden) {
     return null
@@ -25,7 +25,7 @@ export function FamilyNavBar() {
       </div>
       <div className="flex justify-center items-center p-5 bg-white">
         <strong className="text-3xl text-primary">
-          {householdInfo.firstName} {householdInfo.lastName}
+          {familyInfo.firstName} {familyInfo.lastName}
         </strong>
       </div>
       <NavBar

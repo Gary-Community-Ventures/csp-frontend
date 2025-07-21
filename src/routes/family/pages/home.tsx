@@ -4,8 +4,8 @@ import { TransactionsList } from '@/components/transactions'
 import { Header } from '@/components/header'
 
 export function FamilyHomePage() {
-  const { householdInfo, transactions } = useFamilyContext()
-  const { balance } = householdInfo
+  const { familyInfo, transactions } = useFamilyContext()
+  const { balance } = familyInfo
 
   const formattedBalance = balance.toLocaleString('en-US', {
     style: 'currency',

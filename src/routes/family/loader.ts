@@ -30,7 +30,7 @@ export async function loadFamilyData({
   }
 }
 
-export type HouseholdInfo = {
+export type FamilyInfo = {
   first_name: string
   last_name: string
   balance: number
@@ -38,7 +38,7 @@ export type HouseholdInfo = {
 
 export type Caregiver = {
   name: string
-  approved: boolean
+  status: 'approved' | 'pending' | 'denied'
 }
 
 export type Transaction = {
@@ -48,7 +48,7 @@ export type Transaction = {
 }
 
 export type Family = {
-  household_info: HouseholdInfo
+  family_info: FamilyInfo
   caregivers: Caregiver[]
   transactions: Transaction[]
 }
