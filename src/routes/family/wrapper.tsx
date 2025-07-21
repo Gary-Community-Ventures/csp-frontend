@@ -14,7 +14,7 @@ export type SelectedChildInfo = {
   balance: number
 }
 
-export type Caregiver = {
+export type Provider = {
   id: number
   name: string
   status: 'approved' | 'pending' | 'denied'
@@ -40,7 +40,7 @@ export type NavBarContext = {
 
 export type FamilyContext = {
   selectedChildInfo: SelectedChildInfo
-  caregivers: Caregiver[]
+  providers: Provider[]
   transactions: Transaction[]
   navBar: NavBarContext
   children: Child[]
@@ -59,7 +59,7 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
       lastName: familyData.selected_child_info.last_name,
       balance: familyData.selected_child_info.balance,
     },
-    caregivers: familyData.caregivers,
+    providers: familyData.providers,
     transactions: familyData.transactions,
     children: familyData.children,
     navBar: {

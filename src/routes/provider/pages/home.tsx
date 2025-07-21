@@ -1,13 +1,13 @@
 import { Header } from '@/components/header'
 import { WhiteCard } from '@/components/white-card'
-import { useCaregiverContext } from '../wrapper'
+import { useProviderContext } from '../wrapper'
 import { CardList } from '@/components/card-list'
 import { Button } from '@/components/ui/button'
 import { Link } from '@tanstack/react-router'
 import { TransactionsList } from '@/components/transactions'
 
-export function CaregiverHomePage() {
-  const { children, payments, curriculum } = useCaregiverContext()
+export function ProviderHomePage() {
+  const { children, payments, curriculum } = useProviderContext()
 
   return (
     <div className="p-5">
@@ -25,7 +25,7 @@ export function CaregiverHomePage() {
               </strong>
               <Button asChild>
                 {/* TODO: Add link */}
-                <Link to="/caregiver/messages">Message Parent</Link>
+                <Link to="/provider/messages">Message Parent</Link>
               </Button>
             </div>
           ))}

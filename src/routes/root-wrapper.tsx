@@ -14,7 +14,7 @@ export function RootWrapper() {
       <NavBar
         links={[
           { to: '/admin', text: 'Admin', Icon: FileSliders },
-          { to: '/caregiver', text: 'Care Giver', Icon: Apple },
+          { to: '/provider', text: 'Care Giver', Icon: Apple },
           { to: '/family', text: 'Family', Icon: Baby },
         ]}
       />

@@ -6,7 +6,7 @@ import {
 import { NavBar } from '@/components/nav-bar'
 import { Wrapper } from '@/context'
 import { adminRouteTree } from './admin/routes'
-import { caregiverRouteTree } from './caregiver/routes'
+import { providerRouteTree } from './provider/routes'
 import { familyRouteTree } from './family/routes'
 import { FileSliders, Apple, Baby } from 'lucide-react'
 import { authRouteTree } from './auth/routes'
@@ -31,7 +31,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
         <NavBar
           links={[
             { to: '/admin', text: 'Admin', Icon: FileSliders },
-            { to: '/caregiver', text: 'Care Giver', Icon: Apple },
+            { to: '/provider', text: 'Care Giver', Icon: Apple },
             { to: '/family', text: 'Family', Icon: Baby },
           ]}
         />
@@ -64,7 +64,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
 
 export const routeTree = rootRoute.addChildren([
   adminRouteTree,
-  caregiverRouteTree,
+  providerRouteTree,
   familyRouteTree,
   authRouteTree,
 ])
