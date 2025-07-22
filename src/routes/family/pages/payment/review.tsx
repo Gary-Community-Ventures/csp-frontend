@@ -20,7 +20,7 @@ export default function ReviewPage() {
   const { providers } = useFamilyContext();
 
   const selectedProvider = providers.find(
-    (p) => p.id.toString() === paymentState.providerId
+    (p) => p.id === paymentState.providerId
   );
 
   const handlePayNow = async () => {
