@@ -26,7 +26,7 @@ export function ProviderNavBar() {
       <NavBar
         sticky={true}
         links={[
-          { to: '/provider', text: 'Home', Icon: Home },
+          { to: '/provider/home', text: 'Home', Icon: Home },
           { to: '/provider/messages', text: 'Messages', Icon: Mail },
           { to: '/provider/activity', text: 'Activity', Icon: ListChecks },
           {

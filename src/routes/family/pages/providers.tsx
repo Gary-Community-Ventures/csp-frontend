@@ -10,8 +10,10 @@ export function FamilyProvidersPage() {
     <div>
       <section className="p-5">
         <p className="text-lg">
-          Take out whatever help text bubble copy we're putting on mobile and
-          just put it here. Explain child care center/FFNS
+          Pay your existing provider or add a new one. If you use a licensed
+          childcare center or home, search for them below. If a friend, family
+          member or neighbor cares for your child, invite them to be in the
+          pilot. (They will need to apply and be approved to receive funding).
         </p>
       </section>
       <div className="flex flex-col lg:flex-row">

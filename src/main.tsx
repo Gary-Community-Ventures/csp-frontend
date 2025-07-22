@@ -17,8 +17,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
-      signInUrl='/auth/sign-in'
-      signUpUrl='/auth/sign-up'
+      signInUrl="/auth/sign-in"
+      signUpUrl="/auth/sign-up"
       appearance={{
         variables: { colorPrimary: 'var(--primary)' },
       }}
@@ -55,6 +55,7 @@ function App() {
       defaultNotFoundComponent={() => (
         <WhatDoWeCallThisProject randomizeColors={false} />
       )}
+      defaultStaleTime={5 * 60 * 1000}
       context={context}
     />
   )

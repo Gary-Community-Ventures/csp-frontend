@@ -31,7 +31,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
         <NavBar
           links={[
             { to: '/admin', text: 'Admin', Icon: FileSliders },
-            { to: '/provider', text: 'Care Giver', Icon: Apple },
+            { to: '/provider/home', text: 'Care Giver', Icon: Apple },
             { to: '/family', text: 'Family', Icon: Baby },
           ]}
         />
