@@ -9,6 +9,7 @@ import { FamilyProvidersPage } from './pages/providers';
 import PaymentPage from './pages/payment/payment';
 import ReviewPage from './pages/payment/review';
 import ConfirmationPage from './pages/payment/confirmation';
+import { PaymentFlowProvider } from './pages/payment/context';
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -62,10 +63,6 @@ const settingsRoute = createRoute({
   component: () =>
     Array.from({ length: 100 }).map((_, i) => <h2 key={i}>Family Settings</h2>),
 });
-
-import { PaymentFlowProvider } from './pages/payment/context';
-
-// ... (rest of the imports)
 
 const paymentRoute = createRoute({
   getParentRoute: () => familyRoute,
