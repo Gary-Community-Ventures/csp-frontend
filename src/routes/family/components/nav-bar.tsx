@@ -58,7 +58,7 @@ export function FamilyNavBar() {
                 <AvatarImage src={user.imageUrl} />
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent align='end'>
               <DropdownMenuLabel>Select Child</DropdownMenuLabel>
               <DropdownMenuRadioGroup
                 value={String(selectedChildInfo.id)}
