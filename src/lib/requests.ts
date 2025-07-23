@@ -35,14 +35,15 @@ function authError(context: RouterContext) {
   context.clerk?.redirectToSignIn()
 }
 
-export async function makePaymentRequest(context: RouterContext, paymentData: { amount: number; providerId: string; hours: number }) {
+export async function makePaymentRequest(context: RouterContext, paymentData: { amount: number; providerId: number; hours: number; childId: number }) {
   const res = await fetch(backendUrl('/payment-request'), {
     method: 'POST',
     headers: await headersWithAuth(context),
     body: JSON.stringify({
-      amount: paymentData.amount,
-      providerId: paymentData.providerId,
+      amount_in_cents: paymentData.amount,
+      provider_id: paymentData.providerId,
       hours: paymentData.hours,
+      child_id: paymentData.childId,
     }),
   })
 

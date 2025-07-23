@@ -1,12 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { useNavigate } from "@tanstack/react-router";
 import { usePaymentFlowContext } from "./context";
 import { useFamilyContext } from "../../wrapper";
@@ -25,42 +19,51 @@ export default function ConfirmationPage() {
     navigate({ to: "/family" });
   };
 
+  const { selectedChildInfo } = useFamilyContext()
+
   return (
-    <div className="flex justify-center items-center h-full">
-      <Card className="w-[450px]">
-        <CardHeader className="items-center">
-          <CardTitle>Payment Complete</CardTitle>
-          <CardDescription>
-            Your payment has been successfully processed.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-24 h-24 text-green-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <p className="text-lg font-semibold mt-4">${paymentState.amount || "0.00"}</p>
-          <p className="text-sm text-muted-foreground">
-            to {selectedProvider?.name || "N/A"}
-          </p>
-          <p className="text-sm text-muted-foreground">
-            for {paymentState.hours || "0"} hours
-          </p>
-        </CardContent>
-        <div className="flex justify-center p-6">
-          <Button onClick={handleReturnToHome}>Return to Home</Button>
+    <div className="flex flex-col h-full bg-white">
+      <div className="w-full bg-primary p-5 flex justify-center items-center">
+        <strong className="text-3xl text-white">
+          {selectedChildInfo.firstName} {selectedChildInfo.lastName}
+        </strong>
+      </div>
+      <div className="flex flex-grow justify-center items-center p-4 sm:p-8">
+        <div className="w-full max-w-md min-w-[300px]">
+          <div className="items-center text-center">
+            <h2 className="text-2xl font-bold mb-2">Payment Complete</h2>
+            <p className="text-muted-foreground mb-6">
+              Your payment has been successfully processed.
+            </p>
+          </div>
+          <div className="flex flex-col items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-24 h-24 text-green-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <p className="text-lg font-semibold mt-4">${(paymentState.amount / 100).toFixed(2)}</p>
+            <p className="text-sm text-muted-foreground">
+              to {selectedProvider?.name || "N/A"}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              for {paymentState.hours || "0"} hours
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row justify-center p-6 space-y-4 sm:space-y-0">
+            <Button onClick={handleReturnToHome} className="w-full sm:w-auto">Return to Home</Button>
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

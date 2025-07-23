@@ -5,7 +5,6 @@ import {
   ListChecks,
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
-import { UserButton } from '@clerk/clerk-react'
 import { useFamilyContext } from '../wrapper'
 
 export function FamilyNavBar() {
@@ -17,12 +16,6 @@ export function FamilyNavBar() {
 
   return (
     <>
-      <div className="flex justify-between bg-primary text-primary-foreground p-5">
-        <img src="/logo.png" className="max-h-15" alt="logo" />
-        <div className="flex items-center">
-          <UserButton />
-        </div>
-      </div>
       <div className="flex justify-center items-center p-5 bg-white">
         <strong className="text-3xl text-primary">
           {selectedChildInfo.firstName} {selectedChildInfo.lastName}

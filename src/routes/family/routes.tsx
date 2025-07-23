@@ -1,9 +1,10 @@
-import { Outlet, createRoute } from '@tanstack/react-router'
+import { Outlet, createRoute, useLocation } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
 import { loadFamilyData } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
+import { FamilyHeader } from './components/family-header';
 import { FamilyProvidersPage } from './pages/providers';
 import PaymentPage from './pages/payment/payment';
 import ReviewPage from './pages/payment/review';
@@ -12,14 +13,20 @@ import ConfirmationPage from './pages/payment/confirmation';
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/family',
-  component: () => (
-    <FamilyWrapper>
-      <FamilyNavBar />
-      <main>
-        <Outlet />
-      </main>
-    </FamilyWrapper>
-  ),
+  component: () => {
+    const location = useLocation();
+    const hideNavBar = location.pathname.startsWith('/family/payment');
+
+    return (
+      <FamilyWrapper>
+        <FamilyHeader />
+        {!hideNavBar && <FamilyNavBar />}
+        <main>
+          <Outlet />
+        </main>
+      </FamilyWrapper>
+    );
+  },
   loader: loadFamilyData,
 });
 

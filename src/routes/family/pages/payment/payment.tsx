@@ -1,12 +1,5 @@
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
@@ -52,7 +45,6 @@ export default function PaymentPage() {
   }, [paymentState.amount, paymentState.hours, paymentState.providerId])
 
   useEffect(() => {
-
     validateForm()
   }, [validateForm])
 
@@ -62,16 +54,21 @@ export default function PaymentPage() {
     }
   }
 
+  const { selectedChildInfo } = useFamilyContext()
+
   return (
-    <div className="flex justify-center items-center h-full">
-      <Card className="w-[450px]">
-        <CardHeader>
-          <CardTitle>Pay Provider</CardTitle>
-          <CardDescription>
+    <div className="flex flex-col h-full bg-white">
+      <div className="w-full bg-primary p-5 flex justify-center items-center">
+        <strong className="text-3xl text-white">
+          {selectedChildInfo.firstName} {selectedChildInfo.lastName}
+        </strong>
+      </div>
+      <div className="flex flex-grow justify-center items-center p-4 sm:p-8">
+        <div className="w-full max-w-md min-w-[300px] bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold text-center mb-4">Pay Provider</h2>
+          <p className="text-center text-muted-foreground mb-6">
             Please fill out the information below to make a payment.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
           <form>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
@@ -149,16 +146,16 @@ export default function PaymentPage() {
               </div>
             </div>
           </form>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={() => navigate({ to: '..' })}>
-            Cancel
-          </Button>
-          <Button onClick={handleContinue} disabled={!isFormValid}>
-            Continue
-          </Button>
-        </CardFooter>
-      </Card>
+          <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-4 sm:space-y-0 sm:space-x-4">
+            <Button variant="outline" onClick={() => navigate({ to: '..' })} className="w-full sm:w-auto">
+              Cancel
+            </Button>
+            <Button onClick={handleContinue} disabled={!isFormValid} className="w-full sm:w-auto">
+              Continue
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
