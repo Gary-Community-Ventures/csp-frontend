@@ -143,10 +143,18 @@ export default function PaymentPage() {
             </div>
           </form>
           <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0 sm:space-x-4">
-            <Button variant="outline" onClick={() => navigate({ to: '..' })} className="w-full sm:w-auto">
+            <Button
+              variant="outline"
+              onClick={() => navigate({ to: '..' })}
+              className="w-full sm:w-auto"
+            >
               Cancel
             </Button>
-            <Button onClick={handleContinue} disabled={!isFormValid} className="w-full sm:w-auto">
+            <Button
+              onClick={handleContinue}
+              disabled={!isFormValid}
+              className="w-full sm:w-auto"
+            >
               Continue
             </Button>
           </div>

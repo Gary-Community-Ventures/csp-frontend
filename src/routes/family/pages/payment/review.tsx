@@ -1,57 +1,61 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 
-import { Separator } from "@/components/ui/separator";
-import { makePaymentRequest } from "@/lib/requests";
-import { useNavigate, useRouter } from "@tanstack/react-router";
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
-import { usePaymentFlowContext } from "./context";
-import { useFamilyContext } from "../../wrapper";
+import { Separator } from '@/components/ui/separator'
+import { makePaymentRequest } from '@/lib/requests'
+import { useNavigate, useRouter } from '@tanstack/react-router'
+import { toast } from 'sonner'
+import { useEffect, useState } from 'react'
+import { usePaymentFlowContext } from './context'
+import { useFamilyContext } from '../../wrapper'
 
 export default function ReviewPage() {
-  const navigate = useNavigate();
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const { paymentState } = usePaymentFlowContext();
+  const navigate = useNavigate()
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  const { paymentState } = usePaymentFlowContext()
 
   useEffect(() => {
-    if (paymentState.amount <= 0 || paymentState.hours <= 0 || paymentState.providerId === null) {
-      navigate({ to: "/family/payment" });
+    if (
+      paymentState.amount <= 0 ||
+      paymentState.hours <= 0 ||
+      paymentState.providerId === null
+    ) {
+      navigate({ to: '/family/payment' })
     }
-  }, [paymentState, navigate]);
-  const { providers, selectedChildInfo } = useFamilyContext();
+  }, [paymentState, navigate])
+  const { providers, selectedChildInfo } = useFamilyContext()
 
   const selectedProvider = providers.find(
     (p) => p.id === paymentState.providerId
-  );
+  )
 
   const handlePayNow = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
       // Ensure providerId is not null before making the payment request
       if (paymentState.providerId === null) {
-        throw new Error("Provider ID is required to make a payment.");
+        throw new Error('Provider ID is required to make a payment.')
       }
       await makePaymentRequest(router.options.context, {
         amount: paymentState.amount,
         providerId: paymentState.providerId,
         hours: paymentState.hours,
         childId: selectedChildInfo.id,
-      });
-      navigate({ to: "/family/payment/confirmation" });
+      })
+      navigate({ to: '/family/payment/confirmation' })
     } catch (error) {
-      console.error("Payment request failed:", error);
-      toast.error("Failed to process payment request. Please try again.", {
+      console.error('Payment request failed:', error)
+      toast.error('Failed to process payment request. Please try again.', {
         style: {
           background: 'var(--destructive)',
           color: 'var(--primary-foreground)',
           border: '1px solid var(--destructive)',
         },
-      });
+      })
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className="flex flex-col h-full bg-white">
@@ -62,35 +66,49 @@ export default function ReviewPage() {
       </div>
       <div className="flex flex-grow justify-center p-4 sm:p-8">
         <div className="w-full max-w-md min-w-[300px]">
-          <h2 className="text-2xl font-bold text-center mb-8 text-[var(--tertiary)]">Review and Pay</h2>
+          <h2 className="text-2xl font-bold text-center mb-8 text-[var(--tertiary)]">
+            Review and Pay
+          </h2>
           <div className="grid gap-4">
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted-foreground">Childcare Center</p>
               <p className="text-sm font-medium">
-                {selectedProvider?.name || "N/A"}
+                {selectedProvider?.name || 'N/A'}
+              </p>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-muted-foreground">Amount</p>
+              <p className="text-sm font-medium">
+                ${(paymentState.amount / 100).toFixed(2)}
               </p>
             </div>
             <Separator />
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted-foreground">Hours of Care</p>
-              <p className="text-sm font-medium">{paymentState.hours || "N/A"}</p>
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">Amount</p>
-              <p className="text-sm font-medium">${(paymentState.amount / 100).toFixed(2)}</p>
+              <p className="text-sm font-medium">
+                {paymentState.hours || 'N/A'}
+              </p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0">
-            <Button variant="outline" onClick={() => navigate({ to: ".." })} className="w-full sm:w-auto">
+            <Button
+              variant="outline"
+              onClick={() => navigate({ to: '..' })}
+              className="w-full sm:w-auto"
+            >
               Back
             </Button>
-            <Button onClick={handlePayNow} disabled={isLoading} className="w-full sm:w-auto">
-              {isLoading ? "Processing..." : "Pay Now"}
+            <Button
+              onClick={handlePayNow}
+              disabled={isLoading}
+              className="w-full sm:w-auto"
+            >
+              {isLoading ? 'Processing...' : 'Pay Now'}
             </Button>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
