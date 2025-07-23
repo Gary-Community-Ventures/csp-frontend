@@ -59,7 +59,7 @@ export default function ConfirmationPage() {
               for {paymentState.hours || "0"} hours
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row justify-center p-6 space-y-4 sm:space-y-0">
+          <div className="flex flex-col sm:flex-row justify-center p-8 space-y-4 sm:space-y-0">
             <Button onClick={handleReturnToHome} className="w-full sm:w-auto">Return to Home</Button>
           </div>
         </div>

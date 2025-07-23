@@ -19,11 +19,13 @@ export const familyRoute = createRoute({
 
     return (
       <FamilyWrapper>
-        <FamilyHeader />
-        {!hideNavBar && <FamilyNavBar />}
-        <main>
-          <Outlet />
-        </main>
+        <div className="flex flex-col h-full">
+          <FamilyHeader />
+          {!hideNavBar && <FamilyNavBar />}
+          <main className="flex-grow h-full">
+            <Outlet />
+          </main>
+        </div>
       </FamilyWrapper>
     );
   },

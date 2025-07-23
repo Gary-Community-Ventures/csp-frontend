@@ -58,20 +58,16 @@ export default function PaymentPage() {
 
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="w-full bg-primary p-5 flex justify-center items-center">
+      <div className="w-full bg-primary p-5 pt-0 flex justify-center items-center">
         <strong className="text-3xl text-white">
           {selectedChildInfo.firstName} {selectedChildInfo.lastName}
         </strong>
       </div>
-      <div className="flex flex-grow justify-center items-center p-4 sm:p-8">
-        <div className="w-full max-w-md min-w-[300px] bg-white p-6 sm:p-8 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-center mb-4">Pay Provider</h2>
-          <p className="text-center text-muted-foreground mb-6">
-            Please fill out the information below to make a payment.
-          </p>
+      <div className="flex flex-grow justify-center items-center h-full">
+        <div className="w-full max-w-md min-w-[300px] bg-white p-6 sm:p-8 h-full">
           <form>
             <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 h-14">
                 <Label htmlFor="childcare-center">Childcare Center</Label>
                 <Select
                   value={paymentState.providerId?.toString() || ''}
@@ -84,7 +80,7 @@ export default function PaymentPage() {
                     }))
                   }
                 >
-                  <SelectTrigger id="childcare-center">
+                  <SelectTrigger id="childcare-center" className="w-full h-14">
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent position="popper">
@@ -99,7 +95,7 @@ export default function PaymentPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 h-14">
                 <Label htmlFor="amount">Amount</Label>
                 <Input
                   id="amount"
@@ -130,7 +126,7 @@ export default function PaymentPage() {
                   }}
                 />
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 h-14">
                 <Label htmlFor="hours">Number of Care Hours</Label>
                 <Input
                   id="hours"
@@ -146,7 +142,7 @@ export default function PaymentPage() {
               </div>
             </div>
           </form>
-          <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0 sm:space-x-4">
             <Button variant="outline" onClick={() => navigate({ to: '..' })} className="w-full sm:w-auto">
               Cancel
             </Button>

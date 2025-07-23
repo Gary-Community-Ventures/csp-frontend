@@ -43,9 +43,9 @@ export default function ReviewPage() {
       console.error("Payment request failed:", error);
       toast.error("Failed to process payment request. Please try again.", {
         style: {
-          background: '#fee2e2',
-          color: '#991b1b',
-          border: '1px solid #ef4444',
+          background: 'var(--destructive)',
+          color: 'var(--primary-foreground)',
+          border: '1px solid var(--destructive)',
         },
       });
     } finally {
@@ -60,12 +60,9 @@ export default function ReviewPage() {
           {selectedChildInfo.firstName} {selectedChildInfo.lastName}
         </strong>
       </div>
-      <div className="flex flex-grow justify-center items-center p-4 sm:p-8">
+      <div className="flex flex-grow justify-center p-4 sm:p-8">
         <div className="w-full max-w-md min-w-[300px]">
-          <h2 className="text-2xl font-bold text-center mb-4">Review and Pay</h2>
-          <p className="text-center text-muted-foreground mb-6">
-            Please review the payment details below.
-          </p>
+          <h2 className="text-2xl font-bold text-center mb-8 text-[var(--tertiary)]">Review and Pay</h2>
           <div className="grid gap-4">
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted-foreground">Childcare Center</p>
@@ -84,7 +81,7 @@ export default function ReviewPage() {
               <p className="text-sm font-medium">${(paymentState.amount / 100).toFixed(2)}</p>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-4 sm:space-y-0">
+          <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0">
             <Button variant="outline" onClick={() => navigate({ to: ".." })} className="w-full sm:w-auto">
               Back
             </Button>
