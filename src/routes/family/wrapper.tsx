@@ -44,6 +44,7 @@ export type FamilyContext = {
   transactions: Transaction[]
   navBar: NavBarContext
   children: Child[]
+  isAlsoProvider: boolean
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
@@ -68,6 +69,7 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
         lastName: child.last_name,
       }
     }),
+    isAlsoProvider: familyData.is_also_provider,
     navBar: {
       setHidden,
       hidden,

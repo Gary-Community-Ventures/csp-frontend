@@ -6,16 +6,12 @@ import {
   MessageCircleQuestionMark,
   LogOut,
   UserRound,
+  ArrowRightLeft,
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 import { useFamilyContext } from '../wrapper'
-import { useNavigate } from '@tanstack/react-router'
-import {
-  SignOutButton,
-  useClerk,
-  UserButton,
-  useUser,
-} from '@clerk/clerk-react'
+import { Link, useNavigate } from '@tanstack/react-router'
+import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -30,7 +26,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 export function FamilyNavBar() {
-  const { selectedChildInfo, navBar, children } = useFamilyContext()
+  const { selectedChildInfo, navBar, children, isAlsoProvider } =
+    useFamilyContext()
   const navigate = useNavigate()
   const clerk = useClerk()
   const { user, isLoaded, isSignedIn } = useUser()
@@ -58,7 +55,7 @@ export function FamilyNavBar() {
                 <AvatarImage src={user.imageUrl} />
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align='end'>
+            <DropdownMenuContent align="end">
               <DropdownMenuLabel>Select Child</DropdownMenuLabel>
               <DropdownMenuRadioGroup
                 value={String(selectedChildInfo.id)}
@@ -75,6 +72,14 @@ export function FamilyNavBar() {
               </DropdownMenuRadioGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
+                {isAlsoProvider && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/provider/home">
+                      <ArrowRightLeft />
+                      Go to Provider Home
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem asChild>
                   <a href="https://google.com/" target="_blank" rel="noopener">
                     {/*TODO: add help link*/}

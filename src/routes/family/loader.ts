@@ -91,4 +91,5 @@ export type Family = {
   providers: Provider[]
   transactions: Transaction[]
   children: Child[]
+  is_also_provider: boolean
 }
