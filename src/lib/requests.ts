@@ -10,9 +10,18 @@ export const DEFAULT_HEADERS = {
   Accept: 'application/json',
 }
 
-export function handleStatusCodes(context: RouterContext, res: Response) {
+export async function handleStatusCodes(context: RouterContext, res: Response) {
   if (res.status === 401) {
     authError(context)
+  } else if (res.status === 400) {
+    const errorData = await res.json();
+    toast.error(errorData.description || "Bad Request", {
+      style: {
+        background: 'var(--destructive)',
+        color: 'var(--primary-foreground)',
+        border: '1px solid var(--destructive)',
+      },
+    });
   }
 
   // TODO: handle the other status codes
@@ -41,15 +50,15 @@ export async function makePaymentRequest(context: RouterContext, paymentData: { 
     headers: await headersWithAuth(context),
     body: JSON.stringify({
       amount_in_cents: paymentData.amount,
-      provider_id: paymentData.providerId,
+      google_sheets_provider_id: paymentData.providerId,
       hours: paymentData.hours,
-      child_id: paymentData.childId,
+      google_sheets_child_id: paymentData.childId,
     }),
   })
 
   if (!res.ok) {
-    handleStatusCodes(context, res)
-    return
+    await handleStatusCodes(context, res)
+    throw new Error("Payment request failed with status: " + res.status);
   }
 
   return res.json()
