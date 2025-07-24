@@ -1,10 +1,11 @@
+import { LoadingPage } from '@/components/pages/loading-page';
+import { NotFoundPage } from '@/components/pages/not-found-page';
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { router, type RouterContext } from '@/routes/router'
 import { ClerkProvider, useAuth, useClerk, useUser } from '@clerk/clerk-react'
 import './index.css'
-import { WhatDoWeCallThisProject } from './routes/admin/what-do-we-call-this-project'
 import { Toaster } from 'sonner'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -49,12 +50,8 @@ function App() {
     <RouterProvider
       router={router}
       defaultPendingMs={300}
-      defaultPendingComponent={() => (
-        <WhatDoWeCallThisProject randomizeColors={false} />
-      )}
-      defaultNotFoundComponent={() => (
-        <WhatDoWeCallThisProject randomizeColors={false} />
-      )}
+      defaultPendingComponent={LoadingPage}
+      defaultNotFoundComponent={NotFoundPage}
       context={context}
     />
   )
