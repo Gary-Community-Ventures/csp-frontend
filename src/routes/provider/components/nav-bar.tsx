@@ -1,5 +1,5 @@
-import { Mail, Home, BookOpen, ListChecks, ListTodo } from 'lucide-react'
-import { NavBar } from '@/components/nav-bar'
+// import { Mail, Home, BookOpen, ListChecks, ListTodo } from 'lucide-react'
+// import { NavBar } from '@/components/nav-bar'
 import { UserButton } from '@clerk/clerk-react'
 import { useProviderContext } from '../wrapper'
 
@@ -23,7 +23,7 @@ export function ProviderNavBar() {
           {providerInfo.firstName} {providerInfo.lastName}
         </strong>
       </div>
-      <NavBar
+      {/* <NavBar
         sticky={true}
         links={[
           { to: '/provider/home', text: 'Home', Icon: Home },
@@ -40,7 +40,7 @@ export function ProviderNavBar() {
             Icon: ListTodo,
           },
         ]}
-      />
+      /> */}
     </>
   )
 }
