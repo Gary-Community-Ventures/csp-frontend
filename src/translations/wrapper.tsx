@@ -8,11 +8,16 @@ import {
   type SetStateAction,
 } from 'react'
 
-export type DefaultLanguage = 'en'
-export type Language = 'en' | 'es'
+// NOTE: don't forget to update the Clerk localizations
+export const LANGUAGES = ['en', 'es'] as const
+export const LOCALE_NAMES: Record<Language, string> = {
+  en: 'English',
+  es: 'Español',
+}
+export const DEFAULT_LANGUAGE = 'en' as const
 
-export const DEFAULT_LANGUAGE: DefaultLanguage = 'en'
-export const LANGUAGES: Language[] = ['en', 'es']
+export type DefaultLanguage = typeof DEFAULT_LANGUAGE
+export type Language = (typeof LANGUAGES)[number]
 
 export type LanguageContextType = {
   lang: Language
@@ -62,6 +67,9 @@ export function useText() {
 
   return (text: TranslatableText) => {
     if (text[lang] === undefined) {
+      console.error(
+        `Missing translation for ${lang}. Falling back to: ${text[DEFAULT_LANGUAGE]}\n${new Error().stack}`
+      )
       return text[DEFAULT_LANGUAGE]
     }
 

@@ -6,16 +6,12 @@ import {
   MessageCircleQuestionMark,
   LogOut,
   UserRound,
+  ArrowRightLeft,
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 import { useFamilyContext } from '../wrapper'
-import { useNavigate } from '@tanstack/react-router'
-import {
-  SignOutButton,
-  useClerk,
-  UserButton,
-  useUser,
-} from '@clerk/clerk-react'
+import { Link, useNavigate } from '@tanstack/react-router'
+import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -30,6 +26,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
 
 export function FamilyNavBar() {
   const t = translations.family.navBar
@@ -97,6 +94,7 @@ export function FamilyNavBar() {
                     <Text text={t.menu.support} />
                   </a>
                 </DropdownMenuItem>
+                <DropdownMenuLanguageSwitcher />
                 <DropdownMenuItem asChild>
                   <button
                     onClick={() => {

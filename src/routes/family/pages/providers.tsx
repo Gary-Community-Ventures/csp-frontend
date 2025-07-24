@@ -4,42 +4,49 @@ import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Link } from '@tanstack/react-router'
+import { Text } from '@/translations/wrapper'
+import { translations } from '@/translations/text'
 
 export function FamilyProvidersPage() {
+  const t = translations.family.providerPage
   return (
     <div>
       <section className="p-5">
         <p className="text-lg">
-          Pay your existing provider or add a new one. If you use a licensed
-          childcare center or home, search for them below. If a friend, family
-          member or neighbor cares for your child, invite them to be in the
-          pilot. (They will need to apply and be approved to receive funding).
+          <Text text={t.header} />
         </p>
       </section>
       <div className="flex flex-col lg:flex-row">
         <section className="p-5 flex-1">
-          <Header>YOUR PROVIDERS</Header>
+          <Header>
+            <Text text={t.yourProviders} />
+          </Header>
           <ProviderList />
         </section>
         <section className="p-5 flex-1">
-          <Header>ADD A PROVIDER</Header>
+          <Header>
+            <Text text={t.addProvider} />
+          </Header>
           <WhiteCard>
             <div className="flex gap-5 items-center justify-center flex-col">
               <strong className="text-xl text-center">
-                Search for existing childcare centers or licensed home-based
-                providers.
+                <Text text={t.searchProviders} />
               </strong>
               <Button asChild>
                 {/* TODO: Add a link to the search page */}
-                <Link to="/family">Search</Link>
+                <Link to="/family">
+                  <Text text={t.searchProvidersButton} />
+                </Link>
               </Button>
               <Separator />
               <strong className="text-xl text-center">
-                Invite your Family, Friend, or Neighbor Caregiver
+                <Text text={t.inviteFfn} />
               </strong>
               <Button asChild>
                 {/* TODO: Add a link to the invite page */}
-                <Link to="/family">Invite</Link>
+                <Link to="/family">
+                  <Text text={t.inviteFfnButton} />
+                </Link>
               </Button>
             </div>
           </WhiteCard>
