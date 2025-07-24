@@ -1,9 +1,8 @@
-
-const VITE_APP_ENV = import.meta.env.VITE_APP_ENV || 'production';
+const VITE_APP_ENV = import.meta.env.VITE_APP_ENV || 'production'
 
 export const EnvironmentBanner = () => {
   if (VITE_APP_ENV === 'production') {
-    return null;
+    return null
   }
 
   const envConfig = {
@@ -15,17 +14,17 @@ export const EnvironmentBanner = () => {
       name: 'Staging',
       className: 'bg-yellow-500',
     },
-  };
+  }
 
-  const config = envConfig[VITE_APP_ENV as keyof typeof envConfig];
+  const config = envConfig[VITE_APP_ENV as keyof typeof envConfig]
 
   if (!config) {
-    return null;
+    return null
   }
 
   return (
     <div className={`w-full text-center text-white p-1 ${config.className}`}>
       <p className="font-semibold">{config.name} Environment</p>
     </div>
-  );
-};
+  )
+}

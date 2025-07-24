@@ -1,4 +1,4 @@
-import { EnvironmentBanner } from '@/components/ui/environment-banner';
+import { EnvironmentBanner } from '@/components/ui/environment-banner'
 
 import {
   Outlet,
@@ -28,7 +28,6 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       </Wrapper>
     )
   },
-    
 })
 
 export const routeTree = rootRoute.addChildren([

@@ -1,8 +1,7 @@
-import * as Sentry from "@sentry/react";
-import { router } from '@/routes/router';
+import * as Sentry from '@sentry/react'
+import { router } from '@/routes/router'
 
-const environment = import.meta.env.VITE_APP_ENV || 'development';
-
+const environment = import.meta.env.VITE_APP_ENV || 'development'
 
 const sentryDsn = import.meta.env.VITE_SENTRY_DSN
 
@@ -18,10 +17,10 @@ export function initializeSentry() {
           blockAllMedia: environment === 'production',
         }),
       ],
-      tracesSampleRate: environment === "production" ? 0.1 : 1.0,
-      replaysSessionSampleRate: environment === "production" ? 0.01 : 0.1,
+      tracesSampleRate: environment === 'production' ? 0.1 : 1.0,
+      replaysSessionSampleRate: environment === 'production' ? 0.01 : 0.1,
       replaysOnErrorSampleRate: 1.0,
-    });
+    })
   }
 
   router.subscribe('onBeforeLoad', ({ pathChanged, toLocation }) => {
@@ -30,7 +29,7 @@ export function initializeSentry() {
         category: 'navigation',
         message: `Navigating to ${toLocation.pathname}`,
         level: 'info',
-      });
+      })
     }
-  });
+  })
 }

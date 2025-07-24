@@ -1,20 +1,18 @@
-import { LoadingPage } from '@/components/pages/loading-page';
-import { NotFoundPage } from '@/components/pages/not-found-page';
+import { LoadingPage } from '@/components/pages/loading-page'
+import { NotFoundPage } from '@/components/pages/not-found-page'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { router, type RouterContext } from '@/routes/router'
 import { ClerkProvider, useAuth, useClerk, useUser } from '@clerk/clerk-react'
-import * as Sentry from "@sentry/react";
+import * as Sentry from '@sentry/react'
 import './index.css'
 import { Toaster } from 'sonner'
-import ErrorFallback from '@/components/error-fallback';
-import { initializeSentry } from '@/lib/sentry';
-import { useSentryUserContext } from '@/lib/hooks';
+import ErrorFallback from '@/components/error-fallback'
+import { initializeSentry } from '@/lib/sentry'
+import { useSentryUserContext } from '@/lib/hooks'
 
-initializeSentry();
-
-
+initializeSentry()
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -43,7 +41,7 @@ function App() {
   const { getToken } = useAuth()
   const clerk = useClerk()
 
-  useSentryUserContext();
+  useSentryUserContext()
 
   if (!isLoaded) {
     return null

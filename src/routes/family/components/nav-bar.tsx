@@ -119,16 +119,6 @@ export function FamilyNavBar() {
             Icon: House,
           },
           {
-            to: '/family/$childId/messages',
-            text: 'Messages',
-            Icon: Mail,
-          },
-          {
-            to: '/family/$childId/activity',
-            text: 'Activity',
-            Icon: ListChecks,
-          },
-          {
             to: '/family/$childId/providers',
             text: 'Providers',
             Icon: HeartHandshake,
