@@ -7,14 +7,16 @@ import { Link } from '@tanstack/react-router'
 import { TransactionsList } from '@/components/transactions'
 
 export function ProviderHomePage() {
-  const { children, payments, curriculum } = useProviderContext()
+  const { children, transactions, curriculum } = useProviderContext()
 
   return (
     <div className="p-5">
-      <section className="mb-5">
-        <Header>Content</Header>
-        <WhiteCard>{curriculum.description}</WhiteCard>
-      </section>
+      {curriculum !== null && (
+        <section className="mb-5">
+          <Header>Content</Header>
+          <WhiteCard>{curriculum.description}</WhiteCard>
+        </section>
+      )}
       <section className="mb-5">
         <Header>Families</Header>
         <CardList
@@ -34,11 +36,11 @@ export function ProviderHomePage() {
       <section>
         <Header>Payments</Header>
         <TransactionsList
-          transactions={payments.map((payment) => {
+          transactions={transactions.map((transaction) => {
             return {
-              name: payment.provider,
-              amount: payment.amount,
-              date: payment.date,
+              name: transaction.name,
+              amount: transaction.amount,
+              date: transaction.date,
             }
           })}
         />

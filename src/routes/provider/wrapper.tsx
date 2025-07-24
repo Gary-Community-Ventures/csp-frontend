@@ -8,21 +8,25 @@ import {
 import { providerRoute } from './routes'
 
 export type ProviderInfo = {
+  id: number
   firstName: string
   lastName: string
 }
 
-export type Payment = {
-  provider: string
+export type Transaction = {
+  id: number
+  name: string
   amount: number
   date: Date
 }
 
 export type Curriculum = {
+  id: number
   description: string
 }
 
 export type Child = {
+  id: number
   firstName: string
   lastName: string
 }
@@ -35,9 +39,10 @@ export type NavBarContext = {
 export type ProviderContextType = {
   providerInfo: ProviderInfo
   children: Child[]
-  payments: Payment[]
-  curriculum: Curriculum
+  transactions: Transaction[]
+  curriculum: Curriculum | null
   navBar: NavBarContext
+  isAlsoFamily: boolean
 }
 
 const ProviderContext = createContext<ProviderContextType | undefined>(
@@ -50,14 +55,20 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
 
   const providerContext: ProviderContextType = {
     providerInfo: {
+      id: providerData.provider_info.id,
       firstName: providerData.provider_info.first_name,
       lastName: providerData.provider_info.last_name,
     },
     children: providerData.children.map((child) => {
-      return { firstName: child.first_name, lastName: child.last_name }
+      return {
+        id: child.id,
+        firstName: child.first_name,
+        lastName: child.last_name,
+      }
     }),
-    payments: providerData.payments,
+    transactions: providerData.transactions,
     curriculum: providerData.curriculum,
+    isAlsoFamily: providerData.is_also_family,
     navBar: {
       setHidden,
       hidden,

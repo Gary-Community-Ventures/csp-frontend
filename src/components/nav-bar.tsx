@@ -31,13 +31,11 @@ export function NavBar({ links, sticky = false }: NavBarProps) {
                 {...restLinkProps}
                 className="h-full transition-none"
                 activeProps={{ className: 'border-b-2 mb-0' }}
-                inactiveProps={{ className: 'mb-[2px]'}}
+                inactiveProps={{ className: 'mb-[2px]' }}
               >
-                <span className="inline-block md:flex md:justify-center md:items-center md:gap-3">
-                  <div className="flex justify-center">
-                    <Icon className="size-5 text-tertiary sm:size-7" />
-                  </div>
-                  {text}
+                <span className="flex flex-col justify-center items-center md:flex-row md:gap-3">
+                  <Icon className="size-5 text-tertiary sm:size-7" />
+                  <span className="inline-block">{text}</span>
                 </span>
               </Link>
             </NavigationMenuLink>
