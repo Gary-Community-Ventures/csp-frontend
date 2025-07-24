@@ -4,6 +4,8 @@ import {
   Outlet,
   Router,
   createRootRouteWithContext,
+  createRoute,
+  redirect,
 } from '@tanstack/react-router'
 import { Wrapper } from '@/context'
 import { adminRouteTree } from './admin/routes'
@@ -30,7 +32,31 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
   },
 })
 
+export const redirectToProviderOrFamily = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/',
+  beforeLoad: ({ context }) => {
+    if (context.user === null) {
+      throw redirect({ to: '/auth/sign-in' })
+    }
+
+    const types = context.user.publicMetadata.types
+
+    if (!Array.isArray(types)) {
+      throw new Error('User has no types')
+    }
+
+    if (types.includes('family')) {
+      throw redirect({ to: '/family' })
+    }
+    if (types.includes('provider')) {
+      throw redirect({ to: '/provider' })
+    }
+  },
+})
+
 export const routeTree = rootRoute.addChildren([
+  redirectToProviderOrFamily,
   adminRouteTree,
   providerRouteTree,
   familyRouteTree,

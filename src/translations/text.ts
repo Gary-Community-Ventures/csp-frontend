@@ -156,12 +156,56 @@ export const translations = {
         en: 'Recent Payments',
         es: 'Pagos Recientes',
       },
-    }
+    },
   },
-  lanuageSwitcher: {
-    languages: {
-      en: 'Languages',
-      es: 'Idiomas',
+  general: {
+    lanuageSwitcher: {
+      languages: {
+        en: 'Languages',
+        es: 'Idiomas',
+      },
+    },
+    loadingPage: {
+      loading: {
+        en: 'Loading...',
+        es: 'Cargando...',
+      },
+    },
+    notFoundPage: {
+      fourOhFour: {
+        en: '404',
+        es: '404',
+      },
+      notFound: {
+        en: 'Page Not Found',
+        es: 'Página No Encontrada',
+      },
+      notFoundDescription: {
+        en: 'The page you are looking for does not exist.',
+        es: 'La página que estás buscando no existe.',
+      },
+      goBack: {
+        en: 'Go Back',
+        es: 'Volver Atrás',
+      },
+    },
+    errorFallback: {
+      somethingWentWrong: {
+        en: 'Something went wrong',
+        es: 'Algo salió mal',
+      },
+      weHaveNotified: {
+        en: 'We have notified about this error and will look into it.',
+        es: 'Hemos notificado sobre este error y lo investigaremos.',
+      },
+      tryAgain: {
+        en: 'Try again',
+        es: 'Intenta de nuevo',
+      },
+      goHome: {
+        en: 'Go home',
+        es: 'Ir a la página de inicio',
+      },
     },
   },
 } as const

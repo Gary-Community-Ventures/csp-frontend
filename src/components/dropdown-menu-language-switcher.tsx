@@ -17,7 +17,7 @@ import {
 import { translations } from '@/translations/text'
 
 export function DropdownMenuLanguageSwitcher() {
-  const t = translations.lanuageSwitcher
+  const t = translations.general.lanuageSwitcher
   const { lang, setLang } = useLanguageContext()
 
   return (

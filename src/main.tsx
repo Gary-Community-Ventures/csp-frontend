@@ -46,6 +46,7 @@ function ClerkWrapper({ children }: PropsWithChildren) {
       publishableKey={PUBLISHABLE_KEY}
       signInUrl="/auth/sign-in"
       signUpUrl="/auth/sign-up"
+      afterSignOutUrl="auth/sign-in"
       appearance={{
         variables: { colorPrimary: 'var(--primary)' },
       }}
