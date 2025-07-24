@@ -37,23 +37,25 @@ const homeRoute = createRoute({
   component: FamilyHomePage,
 })
 
-const activityRoute = createRoute({
-  getParentRoute: () => familyWithIdRoute,
-  path: '/activity',
-  component: () => <h2>Family Activity</h2>,
-})
-
 const providersRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: '/providers',
   component: FamilyProvidersPage,
 })
 
-const helpRoute = createRoute({
+/* TODO renable when messages/activity are implemented
+const activityRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: '/activity',
+  component: () => <h2>Family Activity</h2>,
+})
+
+const messagesRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: '/messages',
   component: () => <h2>Messages</h2>,
 })
+*/
 
 const settingsRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
@@ -64,9 +66,11 @@ const settingsRoute = createRoute({
 
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
+  /* TODO renable when messages/activity are implemented
   activityRoute,
+  messagesRoute,
+  */
   providersRoute,
-  helpRoute,
   settingsRoute,
 ])
 

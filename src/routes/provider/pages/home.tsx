@@ -2,8 +2,8 @@ import { Header } from '@/components/header'
 import { WhiteCard } from '@/components/white-card'
 import { useProviderContext } from '../wrapper'
 import { CardList } from '@/components/card-list'
-import { Button } from '@/components/ui/button'
-import { Link } from '@tanstack/react-router'
+// import { Button } from '@/components/ui/button'
+// import { Link } from '@tanstack/react-router'
 import { TransactionsList } from '@/components/transactions'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
@@ -32,12 +32,12 @@ export function ProviderHomePage() {
               <strong className="text-lg">
                 {child.firstName} {child.lastName}
               </strong>
-              <Button asChild>
-                {/* TODO: Add link */}
+              {/* TODO enable when messages are implemented */}
+              {/*<Button asChild>
                 <Link to="/provider/messages">
                   <Text text={t.messageParent} />
                 </Link>
-              </Button>
+              </Button>*/}
             </div>
           ))}
         />

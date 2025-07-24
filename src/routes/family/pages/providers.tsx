@@ -32,21 +32,21 @@ export function FamilyProvidersPage() {
               <strong className="text-xl text-center">
                 <Text text={t.searchProviders} />
               </strong>
-              <Button asChild>
-                {/* TODO: Add a link to the search page */}
-                <Link to="/family">
-                  <Text text={t.searchProvidersButton} />
-                </Link>
-              </Button>
+              <Button
+                disabled
+              >
+                {/* <Link to="/family">Search</Link> */}
+                  <Text text={t.searchProvidersButton} /> {/* TODO: update text for now to add (Coming Soon) */}
+              </Button>   
               <Separator />
               <strong className="text-xl text-center">
                 <Text text={t.inviteFfn} />
               </strong>
-              <Button asChild>
-                {/* TODO: Add a link to the invite page */}
-                <Link to="/family">
-                  <Text text={t.inviteFfnButton} />
-                </Link>
+              <Button
+                disabled
+              >
+                {/* <Link to="/family">Search</Link> */}
+                <Text text={t.inviteFfnButton} /> {/* TODO: update text for now to add (Coming Soon) */}
               </Button>
             </div>
           </WhiteCard>

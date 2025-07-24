@@ -1,15 +1,15 @@
 import {
   Mail,
   Home,
-  BookOpen,
-  ListChecks,
-  ListTodo,
+  // BookOpen,
+  // ListChecks,
+  // ListTodo,
   MessageCircleQuestionMark,
   LogOut,
   UserRound,
   ArrowRightLeft,
 } from 'lucide-react'
-import { NavBar } from '@/components/nav-bar'
+// import { NavBar } from '@/components/nav-bar'
 import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
 import { useProviderContext } from '../wrapper'
 import {
@@ -22,12 +22,15 @@ import {
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Link } from '@tanstack/react-router'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
-import { Text, useText } from '@/translations/wrapper'
+import {
+  Text,
+  //useText
+} from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 
 export function ProviderNavBar() {
   const t = translations.provider.navBar
-  const text = useText()
+  // const text = useText()
   const { providerInfo, navBar, isAlsoFamily } = useProviderContext()
   const { user, isLoaded, isSignedIn } = useUser()
   const clerk = useClerk()
@@ -97,7 +100,7 @@ export function ProviderNavBar() {
           {providerInfo.firstName} {providerInfo.lastName}
         </strong>
       </div>
-      <NavBar
+      {/* <NavBar
         sticky={true}
         links={[
           { to: '/provider/home', text: text(t.links.home), Icon: Home },
@@ -122,7 +125,7 @@ export function ProviderNavBar() {
             Icon: ListTodo,
           },
         ]}
-      />
+      /> */}
     </>
   )
 }

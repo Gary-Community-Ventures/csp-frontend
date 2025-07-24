@@ -1,13 +1,20 @@
+import { LoadingPage } from '@/components/pages/loading-page'
+import { NotFoundPage } from '@/components/pages/not-found-page'
 import { StrictMode, type PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { router, type RouterContext } from '@/routes/router'
 import { ClerkProvider, useAuth, useClerk, useUser } from '@clerk/clerk-react'
+import * as Sentry from '@sentry/react'
 import './index.css'
-import { WhatDoWeCallThisProject } from './routes/admin/what-do-we-call-this-project'
 import { Toaster } from 'sonner'
 import { LanguageWrapper, useLanguageContext } from './translations/wrapper'
 import { enUS, esES } from '@clerk/localizations'
+import ErrorFallback from '@/components/error-fallback'
+import { initializeSentry } from '@/lib/sentry'
+import { useSentryUserContext } from '@/lib/hooks'
+
+initializeSentry()
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -54,6 +61,8 @@ function App() {
   const { getToken } = useAuth()
   const clerk = useClerk()
 
+  useSentryUserContext()
+
   if (!isLoaded) {
     return null
   }
@@ -66,17 +75,15 @@ function App() {
   }
 
   return (
-    <RouterProvider
-      router={router}
-      defaultPendingMs={300}
-      defaultPendingComponent={() => (
-        <WhatDoWeCallThisProject randomizeColors={false} />
-      )}
-      defaultNotFoundComponent={() => (
-        <WhatDoWeCallThisProject randomizeColors={false} />
-      )}
-      defaultStaleTime={5 * 60 * 1000}
-      context={context}
-    />
+    <Sentry.ErrorBoundary fallback={ErrorFallback} showDialog>
+      <RouterProvider
+        router={router}
+        defaultPendingMs={300}
+        defaultPendingComponent={LoadingPage}
+        defaultNotFoundComponent={NotFoundPage}
+        defaultStaleTime={5 * 60 * 1000}
+        context={context}
+      />
+    </Sentry.ErrorBoundary>
   )
 }

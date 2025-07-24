@@ -1,8 +1,8 @@
 import {
   House,
-  Mail,
+//  Mail,
   HeartHandshake,
-  ListChecks,
+//  ListChecks,
   MessageCircleQuestionMark,
   LogOut,
   UserRound,
@@ -11,7 +11,11 @@ import {
 import { NavBar } from '@/components/nav-bar'
 import { useFamilyContext } from '../wrapper'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
+import {
+  SignOutButton,
+  useClerk,
+  useUser,
+} from '@clerk/clerk-react'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -131,6 +135,7 @@ export function FamilyNavBar() {
             text: text(t.links.home),
             Icon: House,
           },
+          /* TODO renable when messages/activity are implemented
           {
             to: '/family/$childId/messages',
             text: text(t.links.messages),
@@ -141,6 +146,7 @@ export function FamilyNavBar() {
             text: text(t.links.activity),
             Icon: ListChecks,
           },
+          */
           {
             to: '/family/$childId/providers',
             text: text(t.links.providers),
