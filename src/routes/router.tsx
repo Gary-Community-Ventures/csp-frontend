@@ -1,5 +1,5 @@
 import { EnvironmentBanner } from '@/components/ui/environment-banner';
-import { ErrorPage } from '@/components/pages/error-page';
+
 import {
   Outlet,
   Router,
@@ -28,7 +28,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       </Wrapper>
     )
   },
-    errorComponent: ErrorPage,
+    
 })
 
 export const routeTree = rootRoute.addChildren([
