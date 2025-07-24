@@ -21,8 +21,13 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Link } from '@tanstack/react-router'
+import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
+import { Text, useText } from '@/translations/wrapper'
+import { translations } from '@/translations/text'
 
 export function ProviderNavBar() {
+  const t = translations.provider.navBar
+  const text = useText()
   const { providerInfo, navBar, isAlsoFamily } = useProviderContext()
   const { user, isLoaded, isSignedIn } = useUser()
   const clerk = useClerk()
@@ -52,7 +57,7 @@ export function ProviderNavBar() {
                   <DropdownMenuItem asChild>
                     <Link to="/family">
                       <ArrowRightLeft />
-                      Go to Family Home
+                      <Text text={t.menu.familyHome} />
                     </Link>
                   </DropdownMenuItem>
                 )}
@@ -60,9 +65,10 @@ export function ProviderNavBar() {
                   <a href="https://google.com/" target="_blank" rel="noopener">
                     {/*TODO: add help link*/}
                     <MessageCircleQuestionMark />
-                    Help/Support
+                    <Text text={t.menu.support} />
                   </a>
                 </DropdownMenuItem>
+                <DropdownMenuLanguageSwitcher />
                 <DropdownMenuItem asChild>
                   <button
                     onClick={() => {
@@ -70,14 +76,14 @@ export function ProviderNavBar() {
                     }}
                   >
                     <UserRound />
-                    Your Profile
+                    <Text text={t.menu.yourProfile} />
                   </button>
                 </DropdownMenuItem>
                 <DropdownMenuItem variant="destructive" asChild>
                   <SignOutButton>
                     <span>
                       <LogOut />
-                      Sign Out
+                      <Text text={t.menu.signOut} />
                     </span>
                   </SignOutButton>
                 </DropdownMenuItem>
@@ -94,17 +100,25 @@ export function ProviderNavBar() {
       <NavBar
         sticky={true}
         links={[
-          { to: '/provider/home', text: 'Home', Icon: Home },
-          { to: '/provider/messages', text: 'Messages', Icon: Mail },
-          { to: '/provider/activity', text: 'Activity', Icon: ListChecks },
+          { to: '/provider/home', text: text(t.links.home), Icon: Home },
+          {
+            to: '/provider/messages',
+            text: text(t.links.messages),
+            Icon: Mail,
+          },
+          {
+            to: '/provider/activity',
+            text: text(t.links.activity),
+            Icon: ListChecks,
+          },
           {
             to: '/provider/resources',
-            text: 'Resources',
+            text: text(t.links.resources),
             Icon: BookOpen,
           },
           {
             to: '/provider/attendance',
-            text: 'Attendance',
+            text: text(t.links.attendance),
             Icon: ListTodo,
           },
         ]}

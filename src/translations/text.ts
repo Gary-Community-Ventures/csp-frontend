@@ -118,6 +118,46 @@ export const translations = {
       },
     },
   },
+  provider: {
+    navBar: {
+      menu: {
+        ...generalNavBar.menu,
+        familyHome: {
+          en: 'Go to Family Home',
+          es: 'Ir a Inicio de Familia',
+        },
+      },
+      links: {
+        ...generalNavBar.links,
+        resources: {
+          en: 'Resources',
+          es: 'Recursos',
+        },
+        attendance: {
+          en: 'Attendance',
+          es: 'Asistencia',
+        },
+      },
+    },
+    home: {
+      content: {
+        en: 'Content',
+        es: 'Contenido',
+      },
+      children: {
+        en: 'Children',
+        es: 'Niños',
+      },
+      messageParent: {
+        en: 'Message Parent',
+        es: 'Mensaje al Padre',
+      },
+      payments: {
+        en: 'Recent Payments',
+        es: 'Pagos Recientes',
+      },
+    }
+  },
   lanuageSwitcher: {
     languages: {
       en: 'Languages',
