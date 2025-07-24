@@ -5,7 +5,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react'
-import { familyRoute } from './routes'
+import { familyWithIdRoute } from './routes'
 
 export type SelectedChildInfo = {
   id: number
@@ -29,8 +29,8 @@ export type Transaction = {
 
 export type Child = {
   id: number
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
 }
 
 export type NavBarContext = {
@@ -49,7 +49,7 @@ export type FamilyContext = {
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
 
 export function FamilyWrapper({ children }: { children: React.ReactNode }) {
-  const { familyData } = familyRoute.useLoaderData()
+  const { familyData } = familyWithIdRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 
   const familyContext: FamilyContext = {
@@ -61,7 +61,13 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
     },
     providers: familyData.providers,
     transactions: familyData.transactions,
-    children: familyData.children,
+    children: familyData.children.map((child) => {
+      return {
+        id: child.id,
+        firstName: child.first_name,
+        lastName: child.last_name,
+      }
+    }),
     navBar: {
       setHidden,
       hidden,

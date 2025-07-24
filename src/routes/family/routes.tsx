@@ -2,13 +2,24 @@ import { Outlet, createRoute } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
-import { loadFamilyData } from './loader'
+import { loadFamilyData, redirectToDefaultId } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
 import { FamilyProvidersPage } from './pages/providers'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/family',
+})
+
+export const familyWithoutIdRoute = createRoute({
+  getParentRoute: () => familyRoute,
+  path: '/',
+  beforeLoad: redirectToDefaultId,
+})
+
+export const familyWithIdRoute = createRoute({
+  getParentRoute: () => familyRoute,
+  path: '/$childId',
   component: () => (
     <FamilyWrapper>
       <FamilyNavBar />
@@ -21,40 +32,45 @@ export const familyRoute = createRoute({
 })
 
 const homeRoute = createRoute({
-  getParentRoute: () => familyRoute,
-  path: '/',
+  getParentRoute: () => familyWithIdRoute,
+  path: '/home',
   component: FamilyHomePage,
 })
 
 const activityRoute = createRoute({
-  getParentRoute: () => familyRoute,
+  getParentRoute: () => familyWithIdRoute,
   path: '/activity',
   component: () => <h2>Family Activity</h2>,
 })
 
 const providersRoute = createRoute({
-  getParentRoute: () => familyRoute,
+  getParentRoute: () => familyWithIdRoute,
   path: '/providers',
   component: FamilyProvidersPage,
 })
 
 const helpRoute = createRoute({
-  getParentRoute: () => familyRoute,
+  getParentRoute: () => familyWithIdRoute,
   path: '/messages',
   component: () => <h2>Messages</h2>,
 })
 
 const settingsRoute = createRoute({
-  getParentRoute: () => familyRoute,
+  getParentRoute: () => familyWithIdRoute,
   path: '/settings',
   component: () =>
     Array.from({ length: 100 }).map((_, i) => <h2 key={i}>Family Settings</h2>),
 })
 
-export const familyRouteTree = familyRoute.addChildren([
+export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   activityRoute,
   providersRoute,
   helpRoute,
   settingsRoute,
+])
+
+export const familyRouteTree = familyRoute.addChildren([
+  familyWithIdRouteTree,
+  familyWithoutIdRoute,
 ])

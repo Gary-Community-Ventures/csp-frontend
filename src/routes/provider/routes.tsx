@@ -21,7 +21,7 @@ export const providerRoute = createRoute({
 
 const homeRoute = createRoute({
   getParentRoute: () => providerRoute,
-  path: '/',
+  path: '/home',
   component: ProviderHomePage,
 })
 
