@@ -1,8 +1,8 @@
 import {
   House,
-  Mail,
+//  Mail,
   HeartHandshake,
-  ListChecks,
+//  ListChecks,
   MessageCircleQuestionMark,
   LogOut,
   UserRound,
@@ -13,7 +13,7 @@ import { useNavigate } from '@tanstack/react-router'
 import {
   SignOutButton,
   useClerk,
-  UserButton,
+//  UserButton,
   useUser,
 } from '@clerk/clerk-react'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
