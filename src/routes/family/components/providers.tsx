@@ -18,7 +18,7 @@ function PayButton({ provider }: PayButtonProps) {
   return (
     <Button asChild>
       {/* TODO: Add payment link */}
-      <Link to="/family/providers">Pay Provider</Link>
+      <Link to="/family/$childId/providers">Pay Provider</Link>
     </Button>
   )
 }
