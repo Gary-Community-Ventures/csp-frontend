@@ -37,6 +37,7 @@ export default function ReviewPage() {
     try {
       // Ensure providerId is not null before making the payment request
       if (paymentState.providerId === null) {
+        navigate({ to: '/family/$childId/payment' })
         throw new Error('Provider ID is required to make a payment.')
       }
       await makePaymentRequest(router.options.context, {
