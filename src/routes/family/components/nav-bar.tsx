@@ -118,6 +118,18 @@ export function FamilyNavBar() {
             text: 'Home',
             Icon: House,
           },
+          /* TODO renable when messages/activity are implemented
+          {
+            to: '/family/$childId/messages',
+            text: 'Messages',
+            Icon: Mail,
+          },
+          {
+            to: '/family/$childId/activity',
+            text: 'Activity',
+            Icon: ListChecks,
+          },
+          */
           {
             to: '/family/$childId/providers',
             text: 'Providers',
