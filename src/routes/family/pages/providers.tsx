@@ -3,7 +3,6 @@ import { ProviderList } from '../components/providers'
 import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Link } from '@tanstack/react-router'
 
 export function FamilyProvidersPage() {
   return (
@@ -29,17 +28,21 @@ export function FamilyProvidersPage() {
                 Search for existing childcare centers or licensed home-based
                 providers.
               </strong>
-              <Button asChild>
-                {/* TODO: Add a link to the search page */}
-                <Link to="/family">Search</Link>
-              </Button>
+              <Button
+                disabled
+              >
+                {/* <Link to="/family">Search</Link> */}
+                Search (Coming Soon)
+              </Button>   
               <Separator />
               <strong className="text-xl text-center">
                 Invite your Family, Friend, or Neighbor Caregiver
               </strong>
-              <Button asChild>
-                {/* TODO: Add a link to the invite page */}
-                <Link to="/family">Invite</Link>
+              <Button
+                disabled
+              >
+                {/* <Link to="/family">Search</Link> */}
+                Invite (Coming Soon)
               </Button>
             </div>
           </WhiteCard>
