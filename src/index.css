@@ -93,13 +93,11 @@
   }
   html,
   body {
+    @apply bg-background text-foreground min-h-screen font-sans;
+    background-color: var(--body-background);
+    overflow-x: hidden;
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-  }
-  body {
-    @apply bg-background text-foreground min-h-screen font-sans;
-    background-color: var(--body-background);
   }
 }

@@ -1,14 +1,22 @@
 import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/requests'
 import type { RouterContext } from '../router'
+import { redirect } from '@tanstack/react-router'
 
 export async function loadFamilyData({
   context,
   abortController,
+  params,
 }: {
   context: RouterContext
   abortController: AbortController
+  params: { childId?: number }
 }) {
-  const res = await fetch(backendUrl('/family'), {
+  let urlPath = '/family'
+  if (params.childId !== undefined) {
+    urlPath += `/${params.childId}`
+  }
+
+  const res = await fetch(backendUrl(urlPath), {
     headers: await headersWithAuth(context),
     signal: abortController.signal,
   })
@@ -28,6 +36,28 @@ export async function loadFamilyData({
   return {
     familyData: json,
   }
+}
+
+export async function redirectToDefaultId({
+  context,
+  abortController,
+}: {
+  context: RouterContext
+  abortController: AbortController
+}) {
+  const res = await fetch(backendUrl('/family/default_child_id'), {
+    headers: await headersWithAuth(context),
+    signal: abortController.signal,
+  })
+
+  handleStatusCodes(context, res)
+
+  const rawJson = await res.json()
+
+  throw redirect({
+    to: '/family/$childId/home',
+    params: { childId: rawJson.child_id },
+  })
 }
 
 export type SelectedChildInfo = {

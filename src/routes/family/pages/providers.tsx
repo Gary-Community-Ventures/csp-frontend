@@ -3,15 +3,16 @@ import { ProviderList } from '../components/providers'
 import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Link } from '@tanstack/react-router'
 
 export function FamilyProvidersPage() {
   return (
     <div>
       <section className="p-5">
         <p className="text-lg">
-          Take out whatever help text bubble copy we're putting on mobile and
-          just put it here. Explain child care center/FFNS
+          Pay your existing provider or add a new one. If you use a licensed
+          childcare center or home, search for them below. If a friend, family
+          member or neighbor cares for your child, invite them to be in the
+          pilot. (They will need to apply and be approved to receive funding).
         </p>
       </section>
       <div className="flex flex-col lg:flex-row">
@@ -27,17 +28,21 @@ export function FamilyProvidersPage() {
                 Search for existing childcare centers or licensed home-based
                 providers.
               </strong>
-              <Button asChild>
-                {/* TODO: Add a link to the search page */}
-                <Link to="/family">Search</Link>
-              </Button>
+              <Button
+                disabled
+              >
+                {/* <Link to="/family">Search</Link> */}
+                Search (Coming Soon)
+              </Button>   
               <Separator />
               <strong className="text-xl text-center">
                 Invite your Family, Friend, or Neighbor Caregiver
               </strong>
-              <Button asChild>
-                {/* TODO: Add a link to the invite page */}
-                <Link to="/family">Invite</Link>
+              <Button
+                disabled
+              >
+                {/* <Link to="/family">Search</Link> */}
+                Invite (Coming Soon)
               </Button>
             </div>
           </WhiteCard>

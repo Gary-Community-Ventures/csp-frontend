@@ -17,7 +17,7 @@ function PayButton({ provider }: PayButtonProps) {
 
   return (
     <Button asChild>
-      <Link to="/family/payment" search={{ providerId: provider.id }}>
+      <Link to="/family/$childId/payment" search={{ providerId: provider.id }}>
         Pay Provider
       </Link>
     </Button>
