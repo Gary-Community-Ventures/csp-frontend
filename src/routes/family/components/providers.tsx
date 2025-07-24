@@ -3,22 +3,36 @@ import { useFamilyContext, type Provider } from '../wrapper'
 import { Badge } from '@/components/ui/badge'
 import { Link } from '@tanstack/react-router'
 import { CardList } from '@/components/card-list'
+import { Text } from '@/translations/wrapper'
+import { translations } from '@/translations/text'
 
 type PayButtonProps = {
   provider: Provider
 }
 
 function PayButton({ provider }: PayButtonProps) {
+  const t = translations.family.providerList
+
   if (provider.status === 'pending') {
-    return <Badge variant="destructive">Pending</Badge>
+    return (
+      <Badge variant="destructive">
+        <Text text={t.pending} />
+      </Badge>
+    )
   } else if (provider.status === 'denied') {
-    return <Badge variant="destructive">Denied</Badge>
+    return (
+      <Badge variant="destructive">
+        <Text text={t.denied} />
+      </Badge>
+    )
   }
 
   return (
     <Button asChild>
       {/* TODO: Add payment link */}
-      <Link to="/family/$childId/providers">Pay Provider</Link>
+      <Link to="/family/$childId/providers">
+        <Text text={t.payProvider} />
+      </Link>
     </Button>
   )
 }

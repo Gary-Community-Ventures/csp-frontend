@@ -6,6 +6,7 @@ import { ClerkProvider, useAuth, useClerk, useUser } from '@clerk/clerk-react'
 import './index.css'
 import { WhatDoWeCallThisProject } from './routes/admin/what-do-we-call-this-project'
 import { Toaster } from 'sonner'
+import { LanguageWrapper } from './translations/wrapper'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -23,7 +24,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         variables: { colorPrimary: 'var(--primary)' },
       }}
     >
-      <App />
+      <LanguageWrapper>
+        <App />
+      </LanguageWrapper>
     </ClerkProvider>
     <Toaster closeButton={true} />
   </StrictMode>

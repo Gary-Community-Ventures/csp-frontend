@@ -3,6 +3,7 @@ import {
   useContext,
   useState,
   type Dispatch,
+  type PropsWithChildren,
   type SetStateAction,
 } from 'react'
 import { familyWithIdRoute } from './routes'
@@ -48,7 +49,7 @@ export type FamilyContext = {
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
 
-export function FamilyWrapper({ children }: { children: React.ReactNode }) {
+export function FamilyWrapper({ children }: PropsWithChildren) {
   const { familyData } = familyWithIdRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 

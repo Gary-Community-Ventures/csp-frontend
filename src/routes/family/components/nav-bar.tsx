@@ -28,9 +28,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Text, useText } from '@/translations/wrapper'
+import { translations } from '@/translations/text'
 
 export function FamilyNavBar() {
-  const { selectedChildInfo, navBar, children } = useFamilyContext()
+  const t = translations.family.navBar
+  const text = useText()
+  const { selectedChildInfo, navBar, children, isAlsoProvider } =
+    useFamilyContext()
   const navigate = useNavigate()
   const clerk = useClerk()
   const { user, isLoaded, isSignedIn } = useUser()
@@ -58,8 +63,10 @@ export function FamilyNavBar() {
                 <AvatarImage src={user.imageUrl} />
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align='end'>
-              <DropdownMenuLabel>Select Child</DropdownMenuLabel>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>
+                <Text text={t.menu.selectedChild} />
+              </DropdownMenuLabel>
               <DropdownMenuRadioGroup
                 value={String(selectedChildInfo.id)}
                 onValueChange={changeChild}
@@ -75,11 +82,19 @@ export function FamilyNavBar() {
               </DropdownMenuRadioGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
+                {isAlsoProvider && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/provider/home">
+                      <ArrowRightLeft />
+                      <Text text={t.menu.providerHome} />
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem asChild>
                   <a href="https://google.com/" target="_blank" rel="noopener">
                     {/*TODO: add help link*/}
                     <MessageCircleQuestionMark />
-                    Help/Support
+                    <Text text={t.menu.support} />
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
@@ -89,14 +104,14 @@ export function FamilyNavBar() {
                     }}
                   >
                     <UserRound />
-                    Your Profile
+                    <Text text={t.menu.yourProfile} />
                   </button>
                 </DropdownMenuItem>
                 <DropdownMenuItem variant="destructive" asChild>
                   <SignOutButton>
                     <span>
                       <LogOut />
-                      Sign Out
+                      <Text text={t.menu.signOut} />
                     </span>
                   </SignOutButton>
                 </DropdownMenuItem>
@@ -115,22 +130,22 @@ export function FamilyNavBar() {
         links={[
           {
             to: '/family/$childId/home',
-            text: 'Home',
+            text: text(t.links.home),
             Icon: House,
           },
           {
             to: '/family/$childId/messages',
-            text: 'Messages',
+            text: text(t.links.messages),
             Icon: Mail,
           },
           {
             to: '/family/$childId/activity',
-            text: 'Activity',
+            text: text(t.links.activity),
             Icon: ListChecks,
           },
           {
             to: '/family/$childId/providers',
-            text: 'Providers',
+            text: text(t.links.providers),
             Icon: HeartHandshake,
           },
         ]}
