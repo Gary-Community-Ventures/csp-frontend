@@ -7,8 +7,11 @@ import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
+import { useHideFamilyNavBar } from '@/lib/hooks'
+import { Link } from '@tanstack/react-router'
 
 export default function ReviewPage() {
+  useHideFamilyNavBar()
   const navigate = useNavigate()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -20,7 +23,7 @@ export default function ReviewPage() {
       paymentState.hours <= 0 ||
       paymentState.providerId === null
     ) {
-      navigate({ to: '/family/payment' })
+      navigate({ to: '/family/$childId/payment' })
     }
   }, [paymentState, navigate])
   const { providers, selectedChildInfo } = useFamilyContext()
@@ -42,7 +45,7 @@ export default function ReviewPage() {
         hours: paymentState.hours,
         childId: selectedChildInfo.id,
       })
-      navigate({ to: '/family/payment/confirmation' })
+      navigate({ to: '/family/$childId/payment/confirmation' })
     } catch (error) {
       console.error('Payment request failed:', error)
       toast.error('Failed to process payment request. Please try again.', {
@@ -59,19 +62,14 @@ export default function ReviewPage() {
 
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="w-full bg-primary p-5 flex justify-center items-center">
-        <strong className="text-3xl text-white">
-          {selectedChildInfo.firstName} {selectedChildInfo.lastName}
-        </strong>
-      </div>
       <div className="flex flex-grow justify-center p-4 sm:p-8">
         <div className="w-full max-w-md min-w-[300px]">
-          <h2 className="text-2xl font-bold text-center mb-8 text-[var(--tertiary)]">
+          <h2 className="text-2xl font-bold text-center mb-8 text-secondary">
             Review and Pay
           </h2>
           <div className="grid gap-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">Childcare Center</p>
+              <p className="text-sm text-muted-foreground">Provider</p>
               <p className="text-sm font-medium">
                 {selectedProvider?.name || 'N/A'}
               </p>
@@ -92,12 +90,8 @@ export default function ReviewPage() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0">
-            <Button
-              variant="outline"
-              onClick={() => navigate({ to: '..' })}
-              className="w-full sm:w-auto"
-            >
-              Back
+            <Button variant="outline" className="w-full sm:w-auto" asChild>
+              <Link to="..">Back</Link>
             </Button>
             <Button
               onClick={handlePayNow}

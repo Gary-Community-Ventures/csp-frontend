@@ -13,20 +13,23 @@ import { useNavigate, useSearch } from '@tanstack/react-router'
 import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
 import { useEffect, useState, useCallback } from 'react'
+import { useHideFamilyNavBar } from '@/lib/hooks'
+import { Link } from '@tanstack/react-router'
 
 export default function PaymentPage() {
+  useHideFamilyNavBar()
   const navigate = useNavigate()
   const { paymentState, setPaymentState } = usePaymentFlowContext()
   const [displayAmount, setDisplayAmount] = useState<string>('')
   const [isFormValid, setIsFormValid] = useState(false)
   const { providers } = useFamilyContext()
-  const { providerId } = useSearch({
-    from: '/family/payment',
-  }) as { providerId?: number }
+  const { providerId: providerIdParam } = useSearch({
+    from: '/family/$childId/payment',
+  })
 
   useEffect(() => {
-    if (providerId && providers.length > 0) {
-      const provider = providers.find((p) => p.id === providerId)
+    if (providerIdParam && providers.length > 0) {
+      const provider = providers.find((p) => p.id === providerIdParam)
       if (provider) {
         setPaymentState((prev) => ({
           ...prev,
@@ -34,7 +37,7 @@ export default function PaymentPage() {
         }))
       }
     }
-  }, [providerId, providers, setPaymentState])
+  }, [providerIdParam, providers, setPaymentState])
 
   const validateForm = useCallback(() => {
     const isValid =
@@ -50,25 +53,18 @@ export default function PaymentPage() {
 
   const handleContinue = () => {
     if (isFormValid) {
-      navigate({ to: '/family/payment/review' })
+      navigate({ to: '/family/$childId/payment/review' })
     }
   }
 
-  const { selectedChildInfo } = useFamilyContext()
-
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="w-full bg-primary p-5 pt-0 flex justify-center items-center">
-        <strong className="text-3xl text-white">
-          {selectedChildInfo.firstName} {selectedChildInfo.lastName}
-        </strong>
-      </div>
       <div className="flex flex-grow justify-center items-center h-full">
         <div className="w-full max-w-md min-w-[300px] bg-white p-6 sm:p-8 h-full">
           <form>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5 h-14">
-                <Label htmlFor="childcare-center">Childcare Center</Label>
+                <Label htmlFor="childcare-center">Provider</Label>
                 <Select
                   value={paymentState.providerId?.toString() || ''}
                   onValueChange={(value) =>
@@ -143,12 +139,8 @@ export default function PaymentPage() {
             </div>
           </form>
           <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0 sm:space-x-4">
-            <Button
-              variant="outline"
-              onClick={() => navigate({ to: '..' })}
-              className="w-full sm:w-auto"
-            >
-              Cancel
+            <Button variant="outline" className="w-full sm:w-auto" asChild>
+              <Link to="..">Cancel</Link>
             </Button>
             <Button
               onClick={handleContinue}

@@ -101,11 +101,19 @@ export function FamilyNavBar() {
           </DropdownMenu>
         </div>
       </div>
-      <div className="flex justify-center items-center p-5 bg-white">
-        <strong className="text-3xl text-primary">
-          {selectedChildInfo.firstName} {selectedChildInfo.lastName}
-        </strong>
-      </div>
+      {navBar.hidden ? (
+        <div className="w-full bg-primary p-5 pt-0 flex justify-center items-center">
+          <strong className="text-3xl text-white">
+            {selectedChildInfo.firstName} {selectedChildInfo.lastName}
+          </strong>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center p-5 bg-white">
+          <strong className="text-3xl text-primary">
+            {selectedChildInfo.firstName} {selectedChildInfo.lastName}
+          </strong>
+        </div>
+      )}
       {navBar.hidden ? null : (
         <NavBar
           sticky={true}

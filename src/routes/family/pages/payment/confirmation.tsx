@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button'
 
-import { useNavigate } from '@tanstack/react-router'
 import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
+import { useHideFamilyNavBar } from '@/lib/hooks'
+import { Link } from '@tanstack/react-router'
 
 export default function ConfirmationPage() {
-  const navigate = useNavigate()
+  useHideFamilyNavBar()
   const { paymentState, resetPaymentState } = usePaymentFlowContext()
   const { providers } = useFamilyContext()
 
@@ -13,20 +14,8 @@ export default function ConfirmationPage() {
     (p) => p.id === paymentState.providerId
   )
 
-  const handleReturnToHome = () => {
-    resetPaymentState()
-    navigate({ to: '/family' })
-  }
-
-  const { selectedChildInfo } = useFamilyContext()
-
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="w-full bg-primary p-5 flex justify-center items-center">
-        <strong className="text-3xl text-white">
-          {selectedChildInfo.firstName} {selectedChildInfo.lastName}
-        </strong>
-      </div>
       <div className="flex flex-grow justify-center p-4 sm:p-8">
         <div className="w-full max-w-md min-w-[300px]">
           <div className="items-center text-center">
@@ -65,8 +54,10 @@ export default function ConfirmationPage() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row justify-center p-8 space-y-4 sm:space-y-0">
-            <Button onClick={handleReturnToHome} className="w-full sm:w-auto">
-              Return to Home
+            <Button className="w-full sm:w-auto" asChild>
+              <Link to="/family" onClick={resetPaymentState}>
+                Return to Home
+              </Link>
             </Button>
           </div>
         </div>
