@@ -25,6 +25,7 @@ const homeRoute = createRoute({
   component: ProviderHomePage,
 })
 
+/* TODO renable when other pages are implemented
 const childrenRoute = createRoute({
   getParentRoute: () => providerRoute,
   path: '/messages',
@@ -48,11 +49,12 @@ const settingsRoute = createRoute({
   path: '/attendance',
   component: () => <h2>Attendance</h2>,
 })
+*/
 
 export const providerRouteTree = providerRoute.addChildren([
   homeRoute,
-  childrenRoute,
-  resourcesRoute,
-  helpRoute,
-  settingsRoute,
+  // childrenRoute,
+  // resourcesRoute,
+  // helpRoute,
+  // settingsRoute,
 ])
