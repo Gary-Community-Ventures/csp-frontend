@@ -17,13 +17,15 @@ import { useHideFamilyNavBar } from '@/lib/hooks'
 import { Link } from '@tanstack/react-router'
 import { z } from 'zod'
 import { paymentSchema } from '@/lib/schemas'
-import { dollarToCents, formatAmount, centsToDollar } from '@/lib/currency'
+import { dollarToCents, centsToDollar } from '@/lib/currency'
 
 export default function PaymentPage() {
   useHideFamilyNavBar()
   const navigate = useNavigate()
   const { paymentState, setPaymentState } = usePaymentFlowContext()
-  const [displayAmount, setDisplayAmount] = useState<string>('')
+  const [displayAmount, setDisplayAmount] = useState<string>(
+    paymentState.amount > 0 ? centsToDollar(paymentState.amount).toFixed(2) : ''
+  )
   const [isFormValid, setIsFormValid] = useState(false)
   const [errors, setErrors] = useState<z.ZodIssue[]>([])
   const [showErrors, setShowErrors] = useState(false)
@@ -104,33 +106,37 @@ export default function PaymentPage() {
               </div>
               <div className="flex flex-col space-y-1.5 min-h-16">
                 <Label htmlFor="amount">Amount</Label>
-                <Input
-                  id="amount"
-                  type="text"
-                  placeholder="e.g., 100.00"
-                  value={displayAmount}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    const cleanedValue = value.replace(/[^\d.]/g, '') // Allow only numbers and a single decimal point
-                    setDisplayAmount(cleanedValue)
+                <div className="relative flex items-center">
+                  <span className="absolute left-0 pl-3 text-gray-500 pointer-events-none">$</span>
+                  <Input
+                    id="amount"
+                    type="text"
+                    placeholder="e.g., 100.00"
+                    value={displayAmount}
+                    onChange={(e) => {
+                      const value = e.target.value
+                      const cleanedValue = value.replace(/[^\d.]/g, '') // Allow only numbers and a single decimal point
+                      setDisplayAmount(cleanedValue)
 
-                    const parsedValue = parseFloat(cleanedValue)
-                    setPaymentState((prev) => ({
-                      ...prev,
-                      amount: isNaN(parsedValue)
-                        ? 0
-                        : dollarToCents(parsedValue),
-                    }))
-                  }}
-                  onFocus={(e) => {
-                    // Remove dollar sign when focused
-                    setDisplayAmount(e.target.value.replace(/[^\d.]/g, ''))
-                  }}
-                  onBlur={() => {
-                    // Add dollar sign and format to 2 decimal places when blurred
-                    setDisplayAmount(formatAmount(paymentState.amount))
-                  }}
-                />
+                      const parsedValue = parseFloat(cleanedValue)
+                      setPaymentState((prev) => ({
+                        ...prev,
+                        amount: isNaN(parsedValue)
+                          ? 0
+                          : dollarToCents(parsedValue),
+                      }))
+                    }}
+                    onFocus={(e) => {
+                      // Remove dollar sign when focused
+                      setDisplayAmount(e.target.value.replace(/[^\d.]/g, ''))
+                    }}
+                    onBlur={() => {
+                      // Format to 2 decimal places when blurred
+                      setDisplayAmount(centsToDollar(paymentState.amount).toFixed(2))
+                    }}
+                    className="pl-7"
+                  />
+                </div>
                 {showErrors && getErrorMessage('amount') && (
                   <p className="text-red-500 text-sm mt-1">
                     {getErrorMessage('amount')}
