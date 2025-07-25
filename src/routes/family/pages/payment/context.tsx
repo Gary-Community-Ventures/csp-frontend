@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 
-interface PaymentFlowState {
+type PaymentFlowState = {
   providerId: number
   amount: number
   hours: number
 }
 
-interface PaymentFlowContextType {
+type PaymentFlowContextType = {
   paymentState: PaymentFlowState
   setPaymentState: React.Dispatch<React.SetStateAction<PaymentFlowState>>
   clearPaymentState: () => void
