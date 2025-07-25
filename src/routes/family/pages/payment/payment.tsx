@@ -17,6 +17,7 @@ import { useHideFamilyNavBar } from '@/lib/hooks'
 import { Link } from '@tanstack/react-router'
 import { z } from 'zod'
 import { paymentSchema } from '@/lib/schemas'
+import { dollarToCents, formatAmount, centsToDollar } from '@/lib/currency'
 
 export default function PaymentPage() {
   useHideFamilyNavBar()
@@ -118,7 +119,7 @@ export default function PaymentPage() {
                       ...prev,
                       amount: isNaN(parsedValue)
                         ? 0
-                        : Math.round(parsedValue * 100),
+                        : dollarToCents(parsedValue),
                     }))
                   }}
                   onFocus={(e) => {
@@ -127,8 +128,7 @@ export default function PaymentPage() {
                   }}
                   onBlur={() => {
                     // Add dollar sign and format to 2 decimal places when blurred
-                    const formatted = (paymentState.amount / 100).toFixed(2)
-                    setDisplayAmount(`${formatted}`)
+                    setDisplayAmount(formatAmount(paymentState.amount))
                   }}
                 />
                 {showErrors && getErrorMessage('amount') && (

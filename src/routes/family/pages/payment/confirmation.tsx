@@ -4,6 +4,7 @@ import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
 import { useHideFamilyNavBar } from '@/lib/hooks'
 import { Link } from '@tanstack/react-router'
+import { formatAmount } from '@/lib/currency'
 
 export default function ConfirmationPage() {
   useHideFamilyNavBar()
@@ -44,7 +45,7 @@ export default function ConfirmationPage() {
               />
             </svg>
             <p className="text-lg font-semibold mt-4">
-              ${(paymentState.amount / 100).toFixed(2)}
+              {formatAmount(paymentState.amount)}
             </p>
             <p className="text-sm text-muted-foreground">
               to {selectedProvider?.name || 'N/A'}

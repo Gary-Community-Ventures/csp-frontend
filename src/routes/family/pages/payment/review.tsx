@@ -10,6 +10,7 @@ import { useFamilyContext } from '../../wrapper'
 import { useHideFamilyNavBar } from '@/lib/hooks'
 import { Link } from '@tanstack/react-router'
 import { paymentSchema } from '@/lib/schemas'
+import { formatAmount } from '@/lib/currency'
 
 export default function ReviewPage() {
   useHideFamilyNavBar()
@@ -78,7 +79,7 @@ export default function ReviewPage() {
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted-foreground">Amount</p>
               <p className="text-sm font-medium">
-                ${(paymentState.amount / 100).toFixed(2)}
+                {formatAmount(paymentState.amount)}
               </p>
             </div>
             <Separator />
