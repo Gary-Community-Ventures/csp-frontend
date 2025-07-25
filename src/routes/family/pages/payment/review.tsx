@@ -46,15 +46,6 @@ export default function ReviewPage() {
         childId: selectedChildInfo.id,
       })
       navigate({ to: '/family/$childId/payment/confirmation' })
-    } catch (error) {
-      console.error('Payment request failed:', error)
-      toast.error('Failed to process payment request. Please try again.', {
-        style: {
-          background: 'var(--destructive)',
-          color: 'var(--primary-foreground)',
-          border: '1px solid var(--destructive)',
-        },
-      })
     } finally {
       setIsLoading(false)
     }

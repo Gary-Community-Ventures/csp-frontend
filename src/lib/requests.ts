@@ -11,20 +11,38 @@ export const DEFAULT_HEADERS = {
 }
 
 export async function handleStatusCodes(context: RouterContext, res: Response) {
+  const error_style = {
+    background: 'var(--destructive)',
+    color: 'var(--primary-foreground)',
+    border: '1px solid var(--destructive)',
+  }
   if (res.status === 401) {
     authError(context)
   } else if (res.status === 400) {
     const errorData = await res.json();
     toast.error(errorData.description || "Bad Request", {
-      style: {
-        background: 'var(--destructive)',
-        color: 'var(--primary-foreground)',
-        border: '1px solid var(--destructive)',
-      },
+      style: error_style,
     });
   }
-
-  // TODO: handle the other status codes
+  else if (res.status === 403) {
+    toast.error("You do not have permission to perform this action.", {
+      style: error_style,
+    });
+  } else if (res.status === 404) {
+    toast.error("Resource not found.", {
+      style: error_style,
+    });
+  }
+  else if (res.status >= 500) {
+    toast.error("Server error. Please try again later.", {
+      style: error_style,
+    });
+  }
+  else if (!res.ok) {
+    toast.error(`Unexpected error occurred: ${res.status}`, {
+      style: error_style,
+    });
+  }
 }
 
 export async function headersWithAuth(context: RouterContext) {
@@ -56,9 +74,9 @@ export async function makePaymentRequest(context: RouterContext, paymentData: { 
     }),
   })
 
+  handleStatusCodes(context, res)
   if (!res.ok) {
-    await handleStatusCodes(context, res)
-    throw new Error("Payment request failed with status: " + res.status);
+    throw new Error(`Failed to make payment request: ${res.statusText}`)
   }
 
   return res.json()
