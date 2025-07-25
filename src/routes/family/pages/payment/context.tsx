@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 type PaymentFlowState = {
   providerId: number
@@ -9,7 +9,6 @@ type PaymentFlowState = {
 type PaymentFlowContextType = {
   paymentState: PaymentFlowState
   setPaymentState: React.Dispatch<React.SetStateAction<PaymentFlowState>>
-  clearPaymentState: () => void
 }
 
 const PaymentFlowContext = createContext<PaymentFlowContextType | undefined>(
@@ -27,17 +26,9 @@ export function PaymentFlowProvider({
     hours: 0,
   })
 
-  const clearPaymentState = useCallback(() => {
-    setPaymentState({
-      providerId: 0,
-      amount: 0,
-      hours: 0,
-    })
-  }, [])
-
   return (
     <PaymentFlowContext.Provider
-      value={{ paymentState, setPaymentState, clearPaymentState }}
+      value={{ paymentState, setPaymentState }}
     >
       {children}
     </PaymentFlowContext.Provider>

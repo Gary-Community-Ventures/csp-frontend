@@ -7,11 +7,12 @@ import { formatAmount } from '@/lib/currency'
 import { useRouter } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { paymentSchema } from '@/lib/schemas'
+import { Link } from '@tanstack/react-router'
 
 export default function ConfirmationPage() {
   useHideFamilyNavBar()
   const router = useRouter()
-  const { paymentState, clearPaymentState } = usePaymentFlowContext()
+  const { paymentState } = usePaymentFlowContext()
   const { providers } = useFamilyContext()
 
   useEffect(() => {
@@ -27,11 +28,6 @@ export default function ConfirmationPage() {
     providers,
     paymentState.providerId
   )
-
-  const handleReturnHome = async () => {
-    await router.navigate({ to: '/family' })
-    clearPaymentState()
-  }
 
   return (
     <div className="flex flex-col h-full bg-white">
@@ -73,8 +69,8 @@ export default function ConfirmationPage() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row justify-center p-8 space-y-4 sm:space-y-0">
-            <Button className="w-full sm:w-auto" onClick={handleReturnHome}>
-              Return to Home
+            <Button className="w-full sm:w-auto">
+              <Link to="/family/$childId/home">Return to Home</Link>
             </Button>
           </div>
         </div>

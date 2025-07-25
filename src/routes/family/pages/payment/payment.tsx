@@ -23,7 +23,7 @@ import { findProviderById } from '@/lib/providers'
 export default function PaymentPage() {
   useHideFamilyNavBar()
   const navigate = useNavigate()
-  const { paymentState, setPaymentState, clearPaymentState } =
+  const { paymentState, setPaymentState } =
     usePaymentFlowContext()
   const [displayAmount, setDisplayAmount] = useState<string>(
     paymentState.amount > 0 ? centsToDollar(paymentState.amount).toFixed(2) : ''
@@ -172,7 +172,7 @@ export default function PaymentPage() {
           </form>
           <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0 sm:space-x-4">
             <Button variant="outline" className="w-full sm:w-auto" asChild>
-              <Link to="/family/$childId/home" onClick={clearPaymentState}>
+              <Link to="/family/$childId/home">
                 Cancel
               </Link>
             </Button>
