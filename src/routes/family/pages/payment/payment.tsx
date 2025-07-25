@@ -35,7 +35,7 @@ export default function PaymentPage() {
   })
 
   useEffect(() => {
-    if (providerIdParam && providers.length > 0) {
+    if (providerIdParam) {
       const provider = providers.find((p) => p.id === providerIdParam)
       if (provider) {
         setPaymentState((prev) => ({
