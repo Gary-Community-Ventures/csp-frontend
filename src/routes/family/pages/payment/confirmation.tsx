@@ -1,16 +1,26 @@
 import { Button } from '@/components/ui/button'
-
 import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
 import { useHideFamilyNavBar } from '@/lib/hooks'
 import { formatAmount } from '@/lib/currency'
 import { useRouter } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { paymentSchema } from '@/lib/schemas'
 
 export default function ConfirmationPage() {
   useHideFamilyNavBar()
   const router = useRouter()
-  const { paymentState, resetPaymentState } = usePaymentFlowContext()
+  const { paymentState, clearPaymentState } = usePaymentFlowContext()
   const { providers } = useFamilyContext()
+
+  useEffect(() => {
+    const result = paymentSchema.safeParse(paymentState)
+    if (!result.success) {
+      router.navigate({
+        to: '/family/$childId/payment',
+      })
+    }
+  }, [paymentState, router])
 
   const selectedProvider = providers.find(
     (p) => p.id === paymentState.providerId
@@ -18,7 +28,7 @@ export default function ConfirmationPage() {
 
   const handleReturnHome = async () => {
     await router.navigate({ to: '/family' })
-    resetPaymentState()
+    clearPaymentState()
   }
 
   return (

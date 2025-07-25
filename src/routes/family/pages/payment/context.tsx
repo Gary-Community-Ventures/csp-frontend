@@ -9,7 +9,7 @@ interface PaymentFlowState {
 interface PaymentFlowContextType {
   paymentState: PaymentFlowState
   setPaymentState: React.Dispatch<React.SetStateAction<PaymentFlowState>>
-  resetPaymentState: () => void
+  clearPaymentState: () => void
 }
 
 const PaymentFlowContext = createContext<PaymentFlowContextType | undefined>(
@@ -27,7 +27,7 @@ export function PaymentFlowProvider({
     hours: 0,
   })
 
-  const resetPaymentState = useCallback(() => {
+  const clearPaymentState = useCallback(() => {
     setPaymentState({
       providerId: 0,
       amount: 0,
@@ -37,14 +37,14 @@ export function PaymentFlowProvider({
 
   return (
     <PaymentFlowContext.Provider
-      value={{ paymentState, setPaymentState, resetPaymentState }}
+      value={{ paymentState, setPaymentState, clearPaymentState }}
     >
       {children}
     </PaymentFlowContext.Provider>
   )
 }
 
-export function usePaymentFlowContext() {
+export const usePaymentFlowContext = () => {
   const context = useContext(PaymentFlowContext)
   if (context === undefined) {
     throw new Error(
