@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
 import { useHideFamilyNavBar } from '@/lib/hooks'
+import { findProviderById } from '@/lib/providers'
 import { formatAmount } from '@/lib/currency'
 import { useRouter } from '@tanstack/react-router'
 import { useEffect } from 'react'
@@ -22,8 +23,9 @@ export default function ConfirmationPage() {
     }
   }, [paymentState, router])
 
-  const selectedProvider = providers.find(
-    (p) => p.id === paymentState.providerId
+  const selectedProvider = findProviderById(
+    providers,
+    paymentState.providerId
   )
 
   const handleReturnHome = async () => {

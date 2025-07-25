@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { makePaymentRequest } from '@/lib/requests'
 import { useNavigate, useRouter } from '@tanstack/react-router'
-import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
@@ -11,6 +10,7 @@ import { useHideFamilyNavBar } from '@/lib/hooks'
 import { Link } from '@tanstack/react-router'
 import { paymentSchema } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
+import { findProviderById } from '@/lib/providers'
 
 export default function ReviewPage() {
   useHideFamilyNavBar()
@@ -27,8 +27,9 @@ export default function ReviewPage() {
   }, [paymentState, navigate])
   const { providers, selectedChildInfo } = useFamilyContext()
 
-  const selectedProvider = providers.find(
-    (p) => p.id === paymentState.providerId
+  const selectedProvider = findProviderById(
+    providers,
+    paymentState.providerId
   )
 
   const handlePayNow = async () => {
