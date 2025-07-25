@@ -56,7 +56,7 @@ export default function ConfirmationPage() {
           </div>
           <div className="flex flex-col sm:flex-row justify-center p-8 space-y-4 sm:space-y-0">
             <Button className="w-full sm:w-auto" asChild>
-              <Link to="/family" onClick={resetPaymentState}>
+              <Link to="/family" onTransitionSuccess={resetPaymentState}>
                 Return to Home
               </Link>
             </Button>

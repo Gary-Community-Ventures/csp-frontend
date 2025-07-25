@@ -22,7 +22,6 @@ export default function ReviewPage() {
   useEffect(() => {
     const result = paymentSchema.safeParse(paymentState)
     if (!result.success) {
-      toast.error("Invalid payment details. Please go back and correct them.")
       navigate({ to: '/family/$childId/payment' })
     }
   }, [paymentState, navigate])
