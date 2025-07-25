@@ -1,8 +1,8 @@
 import {
   House,
-//  Mail,
+  //  Mail,
   HeartHandshake,
-//  ListChecks,
+  //  ListChecks,
   MessageCircleQuestionMark,
   LogOut,
   UserRound,
@@ -13,7 +13,7 @@ import { useNavigate } from '@tanstack/react-router'
 import {
   SignOutButton,
   useClerk,
-//  UserButton,
+  //  UserButton,
   useUser,
 } from '@clerk/clerk-react'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
@@ -29,6 +29,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
+import { Link } from '@tanstack/react-router'
+
 export function FamilyNavBar() {
   const { selectedChildInfo, navBar, children } = useFamilyContext()
   const navigate = useNavigate()
@@ -36,10 +38,6 @@ export function FamilyNavBar() {
   const { user, isLoaded, isSignedIn } = useUser()
 
   if (!isLoaded || !isSignedIn) {
-    return null
-  }
-
-  if (navBar.hidden) {
     return null
   }
 
@@ -58,7 +56,7 @@ export function FamilyNavBar() {
                 <AvatarImage src={user.imageUrl} />
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align='end'>
+            <DropdownMenuContent align="end">
               <DropdownMenuLabel>Select Child</DropdownMenuLabel>
               <DropdownMenuRadioGroup
                 value={String(selectedChildInfo.id)}
@@ -105,20 +103,33 @@ export function FamilyNavBar() {
           </DropdownMenu>
         </div>
       </div>
-      <div className="flex justify-center items-center p-5 bg-white">
-        <strong className="text-3xl text-primary">
-          {selectedChildInfo.firstName} {selectedChildInfo.lastName}
-        </strong>
-      </div>
-      <NavBar
-        sticky={true}
-        links={[
-          {
-            to: '/family/$childId/home',
-            text: 'Home',
-            Icon: House,
-          },
-          /* TODO renable when messages/activity are implemented
+      {navBar.hidden ? (
+        <div className="w-full bg-primary p-5 pt-0 flex justify-center items-center">
+          <Link to="/family/$childId/home">
+            <strong className="text-3xl text-white">
+              {selectedChildInfo.firstName} {selectedChildInfo.lastName}
+            </strong>
+          </Link>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center p-5 bg-white">
+          <Link to="/family/$childId/home">
+            <strong className="text-3xl text-primary">
+              {selectedChildInfo.firstName} {selectedChildInfo.lastName}
+            </strong>
+          </Link>
+        </div>
+      )}
+      {navBar.hidden ? null : (
+        <NavBar
+          sticky={true}
+          links={[
+            {
+              to: '/family/$childId/home',
+              text: 'Home',
+              Icon: House,
+            },
+            /* TODO renable when messages/activity are implemented
           {
             to: '/family/$childId/messages',
             text: 'Messages',
@@ -130,13 +141,14 @@ export function FamilyNavBar() {
             Icon: ListChecks,
           },
           */
-          {
-            to: '/family/$childId/providers',
-            text: 'Providers',
-            Icon: HeartHandshake,
-          },
-        ]}
-      />
+            {
+              to: '/family/$childId/providers',
+              text: 'Providers',
+              Icon: HeartHandshake,
+            },
+          ]}
+        />
+      )}
     </>
   )
 }

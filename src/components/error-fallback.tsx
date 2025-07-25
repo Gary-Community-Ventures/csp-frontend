@@ -1,5 +1,4 @@
 function ErrorFallback({
-  error: _error,
   resetError,
 }: {
   error: unknown
