@@ -27,7 +27,7 @@ export const familyWithIdRoute = createRoute({
   component: () => (
     <FamilyWrapper>
       <FamilyNavBar />
-      <main>
+      <main className="h-full">
         <Outlet />
       </main>
     </FamilyWrapper>
