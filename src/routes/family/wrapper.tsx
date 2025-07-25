@@ -3,6 +3,7 @@ import {
   useContext,
   useState,
   type Dispatch,
+  type PropsWithChildren,
   type SetStateAction,
 } from 'react'
 import { familyWithIdRoute } from './routes'
@@ -44,11 +45,12 @@ export type FamilyContext = {
   transactions: Transaction[]
   navBar: NavBarContext
   children: Child[]
+  isAlsoProvider: boolean
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
 
-export function FamilyWrapper({ children }: { children: React.ReactNode }) {
+export function FamilyWrapper({ children }: PropsWithChildren) {
   const { familyData } = familyWithIdRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 
@@ -68,6 +70,7 @@ export function FamilyWrapper({ children }: { children: React.ReactNode }) {
         lastName: child.last_name,
       }
     }),
+    isAlsoProvider: familyData.is_also_provider,
     navBar: {
       setHidden,
       hidden,

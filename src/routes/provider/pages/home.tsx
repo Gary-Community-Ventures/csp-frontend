@@ -5,18 +5,27 @@ import { CardList } from '@/components/card-list'
 // import { Button } from '@/components/ui/button'
 // import { Link } from '@tanstack/react-router'
 import { TransactionsList } from '@/components/transactions'
+import { Text } from '@/translations/wrapper'
+import { translations } from '@/translations/text'
 
 export function ProviderHomePage() {
-  const { children, payments, curriculum } = useProviderContext()
+  const t = translations.provider.home
+  const { children, transactions, curriculum } = useProviderContext()
 
   return (
     <div className="p-5">
+      {curriculum !== null && (
+        <section className="mb-5">
+          <Header>
+            <Text text={t.content} />
+          </Header>
+          <WhiteCard>{curriculum.description}</WhiteCard>
+        </section>
+      )}
       <section className="mb-5">
-        <Header>Content</Header>
-        <WhiteCard>{curriculum.description}</WhiteCard>
-      </section>
-      <section className="mb-5">
-        <Header>Families</Header>
+        <Header>
+          <Text text={t.children} />
+        </Header>
         <CardList
           items={children.map((child) => (
             <div className="flex justify-between">
@@ -24,21 +33,25 @@ export function ProviderHomePage() {
                 {child.firstName} {child.lastName}
               </strong>
               {/* TODO enable when messages are implemented */}
-              {/* <Button asChild>
-                <Link to="/provider/messages">Message Parent</Link>
-              </Button> */}
+              {/*<Button asChild>
+                <Link to="/provider/messages">
+                  <Text text={t.messageParent} />
+                </Link>
+              </Button>*/}
             </div>
           ))}
         />
       </section>
       <section>
-        <Header>Payments</Header>
+        <Header>
+          <Text text={t.payments} />
+        </Header>
         <TransactionsList
-          transactions={payments.map((payment) => {
+          transactions={transactions.map((transaction) => {
             return {
-              name: payment.provider,
-              amount: payment.amount,
-              date: payment.date,
+              name: transaction.name,
+              amount: transaction.amount,
+              date: transaction.date,
             }
           })}
         />

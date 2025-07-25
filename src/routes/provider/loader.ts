@@ -18,13 +18,11 @@ export async function loadProviderData({
   const rawJson = await res.json()
 
   const json: Provider = {
-    provider_info: rawJson.provider_info,
-    children: rawJson.children,
-    payments: rawJson.payments.map((payment: any) => ({
+    ...rawJson,
+    transactions: rawJson.transactions.map((payment: any) => ({
       ...payment,
       date: new Date(payment.date),
     })),
-    curriculum: rawJson.curriculum,
   }
 
   return {
@@ -33,21 +31,25 @@ export async function loadProviderData({
 }
 
 export type ProviderInfo = {
+  id: number
   first_name: string
   last_name: string
 }
 
-export type Payment = {
-  provider: string
+export type Transaction = {
+  id: number
+  name: string
   amount: number
   date: Date
 }
 
 export type Curriculum = {
+  id: number
   description: string
 }
 
 export type Child = {
+  id: number
   first_name: string
   last_name: string
 }
@@ -55,6 +57,7 @@ export type Child = {
 export type Provider = {
   provider_info: ProviderInfo
   children: Child[]
-  payments: Payment[]
-  curriculum: Curriculum
+  transactions: Transaction[]
+  curriculum: Curriculum | null
+  is_also_family: boolean
 }
