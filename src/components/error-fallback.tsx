@@ -2,7 +2,6 @@ import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 
 function ErrorFallback({
-  error: _error,
   resetError,
 }: {
   error: unknown

@@ -4,7 +4,11 @@ import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
 import { loadFamilyData, redirectToDefaultId } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
-import { FamilyProvidersPage } from './pages/providers'
+import { FamilyProvidersPage } from './pages/providers';
+import PaymentPage from './pages/payment/payment';
+import ReviewPage from './pages/payment/review';
+import ConfirmationPage from './pages/payment/confirmation';
+import { PaymentFlowProvider } from './pages/payment/context';
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -23,25 +27,25 @@ export const familyWithIdRoute = createRoute({
   component: () => (
     <FamilyWrapper>
       <FamilyNavBar />
-      <main>
+      <main className="h-full">
         <Outlet />
       </main>
     </FamilyWrapper>
   ),
   loader: loadFamilyData,
-})
+});
 
 const homeRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: '/home',
   component: FamilyHomePage,
-})
+});
 
 const providersRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: '/providers',
   component: FamilyProvidersPage,
-})
+});
 
 /* TODO renable when messages/activity are implemented
 const activityRoute = createRoute({
@@ -62,7 +66,42 @@ const settingsRoute = createRoute({
   path: '/settings',
   component: () =>
     Array.from({ length: 100 }).map((_, i) => <h2 key={i}>Family Settings</h2>),
-})
+});
+
+const paymentRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: '/payment',
+  validateSearch: (search: { providerId?: number }) => search,
+  component: () => (
+    <PaymentFlowProvider>
+      <Outlet />
+    </PaymentFlowProvider>
+  ),
+});
+
+const paymentIndexRoute = createRoute({
+  getParentRoute: () => paymentRoute,
+  path: '/',
+  component: PaymentPage,
+});
+
+const reviewRoute = createRoute({
+  getParentRoute: () => paymentRoute,
+  path: '/review',
+  component: ReviewPage,
+});
+
+const confirmationRoute = createRoute({
+  getParentRoute: () => paymentRoute,
+  path: '/confirmation',
+  component: ConfirmationPage,
+});
+
+const paymentRouteTree = paymentRoute.addChildren([
+  paymentIndexRoute,
+  reviewRoute,
+  confirmationRoute,
+]);
 
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
@@ -72,6 +111,7 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   */
   providersRoute,
   settingsRoute,
+  paymentRouteTree,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([

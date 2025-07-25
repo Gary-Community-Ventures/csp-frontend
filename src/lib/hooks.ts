@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useUser } from '@clerk/clerk-react'
 import * as Sentry from '@sentry/react'
+import { useFamilyContext } from '../routes/family/wrapper'
 
 export function useBackgroundColor(color: string) {
   useEffect(() => {
@@ -34,4 +35,16 @@ export function useSentryUserContext() {
       }
     }
   }, [user, isLoaded, isSignedIn])
+}
+
+export function useHideFamilyNavBar() {
+  const { navBar } = useFamilyContext()
+
+  useEffect(() => {
+    navBar.setHidden(true)
+
+    return () => {
+      navBar.setHidden(false)
+    }
+  }, [navBar])
 }

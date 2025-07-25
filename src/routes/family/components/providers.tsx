@@ -29,8 +29,7 @@ function PayButton({ provider }: PayButtonProps) {
 
   return (
     <Button asChild>
-      {/* TODO: Add payment link */}
-      <Link to="/family/$childId/providers">
+      <Link to="/family/$childId/payment" search={{ providerId: provider.id }}>
         <Text text={t.payProvider} />
       </Link>
     </Button>
