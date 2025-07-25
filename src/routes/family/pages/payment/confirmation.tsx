@@ -3,17 +3,23 @@ import { Button } from '@/components/ui/button'
 import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
 import { useHideFamilyNavBar } from '@/lib/hooks'
-import { Link } from '@tanstack/react-router'
 import { formatAmount } from '@/lib/currency'
+import { useRouter } from '@tanstack/react-router'
 
 export default function ConfirmationPage() {
   useHideFamilyNavBar()
+  const router = useRouter()
   const { paymentState, resetPaymentState } = usePaymentFlowContext()
   const { providers } = useFamilyContext()
 
   const selectedProvider = providers.find(
     (p) => p.id === paymentState.providerId
   )
+
+  const handleReturnHome = async () => {
+    await router.navigate({ to: '/family' })
+    resetPaymentState()
+  }
 
   return (
     <div className="flex flex-col h-full bg-white">
@@ -55,8 +61,8 @@ export default function ConfirmationPage() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row justify-center p-8 space-y-4 sm:space-y-0">
-            <Button className="w-full sm:w-auto" asChild>
-              <Link to="/family" onClick={resetPaymentState}>Return to Home</Link>
+            <Button className="w-full sm:w-auto" onClick={handleReturnHome}>
+              Return to Home
             </Button>
           </div>
         </div>
