@@ -29,6 +29,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
+import { Link } from '@tanstack/react-router'
+
 export function FamilyNavBar() {
   const { selectedChildInfo, navBar, children } = useFamilyContext()
   const navigate = useNavigate()
@@ -103,15 +105,19 @@ export function FamilyNavBar() {
       </div>
       {navBar.hidden ? (
         <div className="w-full bg-primary p-5 pt-0 flex justify-center items-center">
-          <strong className="text-3xl text-white">
-            {selectedChildInfo.firstName} {selectedChildInfo.lastName}
-          </strong>
+          <Link to="/family/$childId/home">
+            <strong className="text-3xl text-white">
+              {selectedChildInfo.firstName} {selectedChildInfo.lastName}
+            </strong>
+          </Link>
         </div>
       ) : (
         <div className="flex justify-center items-center p-5 bg-white">
-          <strong className="text-3xl text-primary">
-            {selectedChildInfo.firstName} {selectedChildInfo.lastName}
-          </strong>
+          <Link to="/family/$childId/home">
+            <strong className="text-3xl text-primary">
+              {selectedChildInfo.firstName} {selectedChildInfo.lastName}
+            </strong>
+          </Link>
         </div>
       )}
       {navBar.hidden ? null : (

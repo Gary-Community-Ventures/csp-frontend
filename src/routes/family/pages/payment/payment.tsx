@@ -39,17 +39,13 @@ export default function PaymentPage() {
     }
   }, [providerIdParam, providers, setPaymentState])
 
-  const validateForm = useCallback(() => {
-    const isValid =
-      paymentState.amount > 0 &&
-      paymentState.hours > 0 &&
-      paymentState.providerId !== null
-    setIsFormValid(isValid)
-  }, [paymentState.amount, paymentState.hours, paymentState.providerId])
-
   useEffect(() => {
-    validateForm()
-  }, [validateForm])
+  const isValid =
+    paymentState.amount > 0 &&
+    paymentState.hours > 0 &&
+    paymentState.providerId !== null
+  setIsFormValid(isValid)
+}, [paymentState.amount, paymentState.hours, paymentState.providerId])
 
   const handleContinue = () => {
     if (isFormValid) {
