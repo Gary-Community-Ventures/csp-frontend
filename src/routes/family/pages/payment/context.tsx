@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 interface PaymentFlowState {
-  providerId: number | null;
+  providerId: number;
   amount: number;
   hours: number;
 }
@@ -16,14 +16,14 @@ const PaymentFlowContext = createContext<PaymentFlowContextType | undefined>(und
 
 export function PaymentFlowProvider({ children }: { children: React.ReactNode }) {
   const [paymentState, setPaymentState] = useState<PaymentFlowState>({
-    providerId: null,
+    providerId: 0,
     amount: 0,
     hours: 0,
   });
 
   const resetPaymentState = () => {
     setPaymentState({
-      providerId: null,
+      providerId: 0,
       amount: 0,
       hours: 0,
     });

@@ -9,6 +9,7 @@ import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
 import { useHideFamilyNavBar } from '@/lib/hooks'
 import { Link } from '@tanstack/react-router'
+import { paymentSchema } from '@/lib/schemas'
 
 export default function ReviewPage() {
   useHideFamilyNavBar()
@@ -18,11 +19,9 @@ export default function ReviewPage() {
   const { paymentState } = usePaymentFlowContext()
 
   useEffect(() => {
-    if (
-      paymentState.amount <= 0 ||
-      paymentState.hours <= 0 ||
-      paymentState.providerId === null
-    ) {
+    const result = paymentSchema.safeParse(paymentState)
+    if (!result.success) {
+      toast.error("Invalid payment details. Please go back and correct them.")
       navigate({ to: '/family/$childId/payment' })
     }
   }, [paymentState, navigate])

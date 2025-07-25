@@ -12,9 +12,11 @@ import {
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { usePaymentFlowContext } from './context'
 import { useFamilyContext } from '../../wrapper'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useHideFamilyNavBar } from '@/lib/hooks'
 import { Link } from '@tanstack/react-router'
+import { z } from 'zod'
+import { paymentSchema } from '@/lib/schemas'
 
 export default function PaymentPage() {
   useHideFamilyNavBar()
@@ -22,6 +24,8 @@ export default function PaymentPage() {
   const { paymentState, setPaymentState } = usePaymentFlowContext()
   const [displayAmount, setDisplayAmount] = useState<string>('')
   const [isFormValid, setIsFormValid] = useState(false)
+  const [errors, setErrors] = useState<z.ZodIssue[]>([])
+  const [showErrors, setShowErrors] = useState(false)
   const { providers } = useFamilyContext()
   const { providerId: providerIdParam } = useSearch({
     from: '/family/$childId/payment',
@@ -40,17 +44,22 @@ export default function PaymentPage() {
   }, [providerIdParam, providers, setPaymentState])
 
   useEffect(() => {
-  const isValid =
-    paymentState.amount > 0 &&
-    paymentState.hours > 0 &&
-    paymentState.providerId !== null
-  setIsFormValid(isValid)
-}, [paymentState.amount, paymentState.hours, paymentState.providerId])
+    const result = paymentSchema.safeParse(paymentState)
+    setIsFormValid(result.success)
+  }, [paymentState])
 
   const handleContinue = () => {
-    if (isFormValid) {
+    setShowErrors(true)
+    const result = paymentSchema.safeParse(paymentState)
+    if (result.success) {
       navigate({ to: '/family/$childId/payment/review' })
+    } else {
+      setErrors(result.error.issues)
     }
+  }
+
+  const getErrorMessage = (path: string) => {
+    return errors.find((err) => err.path[0] === path)?.message
   }
 
   return (
@@ -59,7 +68,7 @@ export default function PaymentPage() {
         <div className="w-full max-w-md min-w-[300px] bg-white p-6 sm:p-8 h-full">
           <form>
             <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5 h-14">
+              <div className="flex flex-col space-y-1.5 min-h-16">
                 <Label htmlFor="childcare-center">Provider</Label>
                 <Select
                   value={paymentState.providerId?.toString() || ''}
@@ -86,8 +95,13 @@ export default function PaymentPage() {
                     ))}
                   </SelectContent>
                 </Select>
+                {showErrors && getErrorMessage('providerId') && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {getErrorMessage('providerId')}
+                  </p>
+                )}
               </div>
-              <div className="flex flex-col space-y-1.5 h-14">
+              <div className="flex flex-col space-y-1.5 min-h-16">
                 <Label htmlFor="amount">Amount</Label>
                 <Input
                   id="amount"
@@ -117,8 +131,13 @@ export default function PaymentPage() {
                     setDisplayAmount(`${formatted}`)
                   }}
                 />
+                {showErrors && getErrorMessage('amount') && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {getErrorMessage('amount')}
+                  </p>
+                )}
               </div>
-              <div className="flex flex-col space-y-1.5 h-14">
+              <div className="flex flex-col space-y-1.5 min-h-16">
                 <Label htmlFor="hours">Number of Care Hours</Label>
                 <Input
                   id="hours"
@@ -131,6 +150,11 @@ export default function PaymentPage() {
                     }))
                   }
                 />
+                {showErrors && getErrorMessage('hours') && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {getErrorMessage('hours')}
+                  </p>
+                )}
               </div>
             </div>
           </form>
