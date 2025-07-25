@@ -1,6 +1,6 @@
 import {
-  Mail,
-  Home,
+  // Mail,
+  // Home,
   // BookOpen,
   // ListChecks,
   // ListTodo,

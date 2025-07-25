@@ -3,7 +3,7 @@ import { ProviderList } from '../components/providers'
 import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Link } from '@tanstack/react-router'
+// import { Link } from '@tanstack/react-router'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 
