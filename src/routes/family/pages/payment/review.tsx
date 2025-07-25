@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 
 import { Separator } from '@/components/ui/separator'
-import { makePaymentRequest } from '@/lib/requests'
+import { makePaymentRequest } from '@/lib/paymentRequests'
 import { useNavigate, useRouter } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { usePaymentFlowContext } from './context'

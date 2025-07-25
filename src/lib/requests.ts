@@ -62,22 +62,3 @@ function authError(context: RouterContext) {
   context.clerk?.redirectToSignIn()
 }
 
-export async function makePaymentRequest(context: RouterContext, paymentData: { amount: number; providerId: number; hours: number; childId: number }) {
-  const res = await fetch(backendUrl('/payment-request'), {
-    method: 'POST',
-    headers: await headersWithAuth(context),
-    body: JSON.stringify({
-      amount_in_cents: paymentData.amount,
-      google_sheets_provider_id: paymentData.providerId,
-      hours: paymentData.hours,
-      google_sheets_child_id: paymentData.childId,
-    }),
-  })
-
-  handleStatusCodes(context, res)
-  if (!res.ok) {
-    throw new Error(`Failed to make payment request: ${res.statusText}`)
-  }
-
-  return res.json()
-}
