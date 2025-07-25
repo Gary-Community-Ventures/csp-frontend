@@ -36,7 +36,7 @@ export function FamilyProvidersPage() {
                 disabled
               >
                 {/* <Link to="/family">Search</Link> */}
-                  <Text text={t.searchProvidersButton} /> {/* TODO: update text for now to add (Coming Soon) */}
+                  <Text text={t.searchProvidersButton} />
               </Button>   
               <Separator />
               <strong className="text-xl text-center">
@@ -46,7 +46,7 @@ export function FamilyProvidersPage() {
                 disabled
               >
                 {/* <Link to="/family">Search</Link> */}
-                <Text text={t.inviteFfnButton} /> {/* TODO: update text for now to add (Coming Soon) */}
+                <Text text={t.inviteFfnButton} />
               </Button>
             </div>
           </WhiteCard>
