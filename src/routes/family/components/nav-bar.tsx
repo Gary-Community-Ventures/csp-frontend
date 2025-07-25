@@ -137,21 +137,21 @@ export function FamilyNavBar() {
           links={[
             {
               to: '/family/$childId/home',
-              text: 'Home',
+              text: text(t.links.home),
               Icon: House,
             },
             /* TODO renable when messages/activity are implemented
-          {
-            to: '/family/$childId/messages',
-            text: text(t.links.messages),
-            Icon: Mail,
-          },
-          {
-            to: '/family/$childId/activity',
-            text: text(t.links.activity),
-            Icon: ListChecks,
-          },
-          */
+            {
+              to: '/family/$childId/messages',
+              text: text(t.links.messages),
+              Icon: Mail,
+            },
+            {
+              to: '/family/$childId/activity',
+              text: text(t.links.activity),
+              Icon: ListChecks,
+            },
+            */
             {
               to: '/family/$childId/providers',
               text: text(t.links.providers),
