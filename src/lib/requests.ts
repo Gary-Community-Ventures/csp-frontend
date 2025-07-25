@@ -10,7 +10,10 @@ export const DEFAULT_HEADERS = {
   Accept: 'application/json',
 }
 
-export async function handleStatusCodes(context: RouterContext, res: Response) {
+export function handleStatusCodes(context: RouterContext, res: Response) {
+  if (res.ok) {
+    return
+  }
   const error_style = {
     background: 'var(--destructive)',
     color: 'var(--primary-foreground)',
@@ -19,29 +22,25 @@ export async function handleStatusCodes(context: RouterContext, res: Response) {
   if (res.status === 401) {
     authError(context)
   } else if (res.status === 400) {
-    const errorData = await res.json();
-    toast.error(errorData.description || "Bad Request", {
+    toast.error('Bad Request', {
       style: error_style,
-    });
-  }
-  else if (res.status === 403) {
-    toast.error("You do not have permission to perform this action.", {
+    })
+  } else if (res.status === 403) {
+    toast.error('You do not have permission to perform this action.', {
       style: error_style,
-    });
+    })
   } else if (res.status === 404) {
-    toast.error("Resource not found.", {
+    toast.error('Resource not found.', {
       style: error_style,
-    });
-  }
-  else if (res.status >= 500) {
-    toast.error("Server error. Please try again later.", {
+    })
+  } else if (res.status >= 500) {
+    toast.error('Server error. Please try again later.', {
       style: error_style,
-    });
-  }
-  else if (!res.ok) {
+    })
+  } else if (!res.ok) {
     toast.error(`Unexpected error occurred: ${res.status}`, {
       style: error_style,
-    });
+    })
   }
 }
 
@@ -61,4 +60,3 @@ function authError(context: RouterContext) {
   context.clerk?.signOut()
   context.clerk?.redirectToSignIn()
 }
-

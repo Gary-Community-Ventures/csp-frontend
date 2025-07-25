@@ -1,15 +1,23 @@
 import type { RouterContext } from '@/routes/router'
 import { backendUrl, headersWithAuth, handleStatusCodes } from './requests'
 
-export async function makePaymentRequest(context: RouterContext, paymentData: { amount: number; providerId: number; hours: number; childId: number }) {
+export async function makePaymentRequest(
+  context: RouterContext,
+  paymentData: {
+    amount: number
+    providerId: number
+    hours: number
+    childId: number
+  }
+) {
   const res = await fetch(backendUrl('/payment-request'), {
     method: 'POST',
     headers: await headersWithAuth(context),
     body: JSON.stringify({
       amount_in_cents: paymentData.amount,
-      google_sheets_provider_id: paymentData.providerId,
+      provider_id: paymentData.providerId,
       hours: paymentData.hours,
-      google_sheets_child_id: paymentData.childId,
+      child_id: paymentData.childId,
     }),
   })
 
