@@ -1,45 +1,55 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useCallback } from 'react'
 
 interface PaymentFlowState {
-  providerId: number;
-  amount: number;
-  hours: number;
+  providerId: number
+  amount: number
+  hours: number
 }
 
 interface PaymentFlowContextType {
-  paymentState: PaymentFlowState;
-  setPaymentState: React.Dispatch<React.SetStateAction<PaymentFlowState>>;
-  resetPaymentState: () => void;
+  paymentState: PaymentFlowState
+  setPaymentState: React.Dispatch<React.SetStateAction<PaymentFlowState>>
+  resetPaymentState: () => void
 }
 
-const PaymentFlowContext = createContext<PaymentFlowContextType | undefined>(undefined);
+const PaymentFlowContext = createContext<PaymentFlowContextType | undefined>(
+  undefined
+)
 
-export function PaymentFlowProvider({ children }: { children: React.ReactNode }) {
+export function PaymentFlowProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const [paymentState, setPaymentState] = useState<PaymentFlowState>({
     providerId: 0,
     amount: 0,
     hours: 0,
-  });
+  })
 
-  const resetPaymentState = () => {
+  const resetPaymentState = useCallback(() => {
     setPaymentState({
       providerId: 0,
       amount: 0,
       hours: 0,
-    });
-  };
+    })
+  }, [])
 
   return (
-    <PaymentFlowContext.Provider value={{ paymentState, setPaymentState, resetPaymentState }}>
+    <PaymentFlowContext.Provider
+      value={{ paymentState, setPaymentState, resetPaymentState }}
+    >
       {children}
     </PaymentFlowContext.Provider>
-  );
+  )
 }
 
 export function usePaymentFlowContext() {
-  const context = useContext(PaymentFlowContext);
+  const context = useContext(PaymentFlowContext)
   if (context === undefined) {
-    throw new Error("usePaymentFlowContext must be used within a PaymentFlowProvider");
+    throw new Error(
+      'usePaymentFlowContext must be used within a PaymentFlowProvider'
+    )
   }
-  return context;
+  return context
 }
