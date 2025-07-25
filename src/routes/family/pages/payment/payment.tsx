@@ -18,11 +18,13 @@ import { Link } from '@tanstack/react-router'
 import { z } from 'zod'
 import { paymentSchema } from '@/lib/schemas'
 import { dollarToCents, centsToDollar } from '@/lib/currency'
+import { findProviderById } from '@/lib/providers'
 
 export default function PaymentPage() {
   useHideFamilyNavBar()
   const navigate = useNavigate()
-  const { paymentState, setPaymentState, clearPaymentState } = usePaymentFlowContext()
+  const { paymentState, setPaymentState, clearPaymentState } =
+    usePaymentFlowContext()
   const [displayAmount, setDisplayAmount] = useState<string>(
     paymentState.amount > 0 ? centsToDollar(paymentState.amount).toFixed(2) : ''
   )
@@ -36,7 +38,7 @@ export default function PaymentPage() {
 
   useEffect(() => {
     if (providerIdParam) {
-      const provider = providers.find((p) => p.id === providerIdParam)
+      const provider = findProviderById(providers, providerIdParam)
       if (provider) {
         setPaymentState((prev) => ({
           ...prev,
@@ -107,7 +109,9 @@ export default function PaymentPage() {
               <div className="flex flex-col space-y-1.5 min-h-16">
                 <Label htmlFor="amount">Amount</Label>
                 <div className="relative flex items-center">
-                  <span className="absolute left-0 pl-3 text-gray-500 pointer-events-none">$</span>
+                  <span className="absolute left-0 pl-3 text-gray-500 pointer-events-none">
+                    $
+                  </span>
                   <Input
                     id="amount"
                     type="text"
@@ -132,7 +136,9 @@ export default function PaymentPage() {
                     }}
                     onBlur={() => {
                       // Format to 2 decimal places when blurred
-                      setDisplayAmount(centsToDollar(paymentState.amount).toFixed(2))
+                      setDisplayAmount(
+                        centsToDollar(paymentState.amount).toFixed(2)
+                      )
                     }}
                     className="pl-7"
                   />
@@ -166,7 +172,9 @@ export default function PaymentPage() {
           </form>
           <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0 sm:space-x-4">
             <Button variant="outline" className="w-full sm:w-auto" asChild>
-              <Link to="/family/$childId/home" onClick={clearPaymentState}>Cancel</Link>
+              <Link to="/family/$childId/home" onClick={clearPaymentState}>
+                Cancel
+              </Link>
             </Button>
             <Button
               onClick={handleContinue}
