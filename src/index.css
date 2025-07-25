@@ -91,7 +91,13 @@
   * {
     @apply border-border outline-ring/50;
   }
-  html,
+  html {
+    @apply bg-background text-foreground min-h-screen font-sans;
+    background-color: var(--body-background);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
   body {
     @apply bg-background text-foreground min-h-screen font-sans;
     background-color: var(--body-background);
