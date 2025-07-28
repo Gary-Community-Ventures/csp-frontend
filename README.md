@@ -1,6 +1,6 @@
-# Frontend Template
+# Lala Childcare
 
-This project is a frontend template built with the following technologies:
+This project is a frontend project built with the following technologies:
 
 ## Tech Stack
 
