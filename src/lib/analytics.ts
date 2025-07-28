@@ -16,10 +16,10 @@ type PageViewEvent = {
 
 type ExternalLinkClick = {
   event: 'external-link'
-  domain: string
-  path: string
-  query: string
-  href: string
+  externalDomain: string
+  externalPath: string
+  externalQuery: string
+  externalHref: string
 }
 
 export type Event = BaseEvent | PageViewEvent | ExternalLinkClick
@@ -51,9 +51,9 @@ export function recordExternalLinkClick(href: string) {
 
   dataLayerPush({
     event: 'external-link',
-    domain: location.origin,
-    path: location.pathname,
-    query: location.search,
-    href: href,
+    externalDomain: location.origin,
+    externalPath: location.pathname,
+    externalQuery: location.search,
+    externalHref: href,
   })
 }
