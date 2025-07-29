@@ -44,11 +44,6 @@ const statuses = {
   },
 }
 
-const defaultErrorMessage = {
-  en: 'An error occurred while processing your request. Pleast try again.',
-  es: 'Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo.',
-}
-
 export const translations = {
   family: {
     navBar: {
