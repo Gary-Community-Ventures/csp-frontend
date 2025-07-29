@@ -44,6 +44,11 @@ const statuses = {
   },
 }
 
+const defaultErrorMessage = {
+  en: 'An error occurred while processing your request. Pleast try again.',
+  es: 'Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo.',
+}
+
 export const translations = {
   family: {
     navBar: {
@@ -133,6 +138,28 @@ export const translations = {
       loadMoreButton: {
         en: 'Load More',
         es: 'Cargar Más',
+      },
+      addProviderForm: {
+        header: {
+          en: 'Please select the children that go to ',
+          es: 'Por favor selecciona los niños que van a ',
+        },
+        noChildrenSelectedError: {
+          en: 'Please select at least one child',
+          es: 'Por favor selecciona al menos un niño',
+        },
+        submitButton: {
+          en: 'Submit',
+          es: 'Enviar',
+        },
+        closeButton: {
+          en: 'Close',
+          es: 'Cerrar',
+        },
+        successMessage: {
+          en: 'Successfully invited ',
+          es: 'Invitado exitosamente ',
+        },
       },
     },
   },

@@ -6,6 +6,8 @@ import {
   useCallback,
   useEffect,
   useState,
+  type FormEvent,
+  type PropsWithChildren,
 } from 'react'
 import { Header } from '@/components/header'
 import { Text, useText } from '@/translations/wrapper'
@@ -13,6 +15,24 @@ import { translations } from '@/translations/text'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useOnVisible } from '@/lib/on-visible'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
+import { useFamilyContext } from '../wrapper'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { useMatch, useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
+import z from 'zod'
+import { useValidateForm } from '@/lib/schemas'
+import { FormErrorMessage } from '@/components/form-error'
 
 type ApiResponse = {
   providers: {
@@ -50,7 +70,7 @@ export async function loadProviders({
   abortController: AbortController
   params: { childId?: number }
 }) {
-  const res = await fetch(backendUrl('/family/providers-list'), {
+  const res = await fetch(backendUrl('/family/licensed-providers'), {
     headers: await headersWithAuth(context),
     signal: abortController.signal,
   })
@@ -145,9 +165,11 @@ export default function FindProviderPage() {
                     {provider.address.zip}
                   </div>
                 </div>
-                <Button>
-                  <Text text={t.inviteButton} />
-                </Button>
+                <AddProviderForm provider={provider}>
+                  <Button>
+                    <Text text={t.inviteButton} />
+                  </Button>
+                </AddProviderForm>
               </div>
             )
           })}
@@ -159,4 +181,134 @@ export default function FindProviderPage() {
       )}
     </div>
   )
+}
+
+type AddProviderFormProps = PropsWithChildren<{ provider: Provider }>
+function AddProviderForm({ children, provider }: AddProviderFormProps) {
+  const t = translations.family.findProviderPage.addProviderForm
+  const text = useText()
+  const navigate = useNavigate()
+  const { context } = useMatch({ from: '__root__' })
+  const { children: allChildren, selectedChildInfo } = useFamilyContext()
+  const [formData, setFormData] = useState<{
+    children: number[]
+  }>({ children: [selectedChildInfo.id] })
+  const schema = z.object({
+    children: z
+      .array(z.number())
+      .min(1, { message: text(t.noChildrenSelectedError) }),
+  })
+  const [submitting, setSubmitting] = useState(false)
+
+  const { getError, submit } = useValidateForm(schema, formData)
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSubmitting(true)
+
+    submit(
+      () => {
+        submitProviders(provider, formData.children, context)
+          .then(() => {
+            toast(text(t.successMessage) + provider.name)
+            navigate({ to: '/family/$childId/providers' })
+          })
+          .finally(() => {
+            setSubmitting(false)
+          })
+      },
+      // if validation fails
+      () => {
+        setSubmitting(false)
+      }
+    )
+  }
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetContent>
+        <form id="select-provider-form" onSubmit={handleSubmit}>
+          <SheetHeader className="pt-7">
+            <SheetTitle>
+              <Header Tag="strong">
+                <Text text={t.header} />
+                {provider.name}
+              </Header>
+            </SheetTitle>
+            <SheetDescription className="sr-only">
+              <Text text={t.header} />
+            </SheetDescription>
+          </SheetHeader>
+          {allChildren.map((child) => {
+            const id = `select-provider-selected-child-${child.id}`
+            return (
+              <div key={child.id} className="px-4 py-3 flex gap-3">
+                <Checkbox
+                  id={id}
+                  checked={formData.children.includes(child.id)}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setFormData((c) => {
+                        return { ...c, children: [...c.children, child.id] }
+                      })
+                    } else {
+                      setFormData((c) => {
+                        return {
+                          ...c,
+                          children: c.children.filter(
+                            (cId) => cId !== child.id
+                          ),
+                        }
+                      })
+                    }
+                  }}
+                />
+                <Label htmlFor={id}>
+                  {child.firstName} {child.lastName}
+                </Label>
+              </div>
+            )
+          })}
+          <FormErrorMessage error={getError('children')} className="px-4" />
+        </form>
+        <SheetFooter>
+          <Button
+            type="submit"
+            form="select-provider-form"
+            disabled={submitting}
+          >
+            <Text text={t.submitButton} />
+          </Button>
+          <SheetClose asChild>
+            <Button variant="outline">
+              <Text text={t.closeButton} />
+            </Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+async function submitProviders(
+  provider: Provider,
+  childIds: number[],
+  context: RouterContext
+) {
+  const res = await fetch(backendUrl('/family/licensed-providers'), {
+    method: 'POST',
+    headers: await headersWithAuth(context),
+    body: JSON.stringify({
+      license_number: provider.licenseNumber,
+      child_ids: childIds,
+    }),
+  })
+
+  handleStatusCodes(context, res)
+  if (!res.ok) {
+    throw new Error(`Failed to invite provider: ${res.statusText}`)
+  }
+
+  return res.json()
 }

@@ -1,14 +1,31 @@
 import { cn } from '@/lib/utils'
-import { type JSX, type PropsWithChildren } from 'react'
+import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
-type HeaderProps = PropsWithChildren<{
+type TagTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'strong' | 'div'
+
+type BaseProps = {
+  children: ReactNode
   className?: string
-  Tag?: keyof JSX.IntrinsicElements
-}>
+}
 
-export function Header({ children, className, Tag = 'h2' }: HeaderProps) {
+type HeaderProps = {
+  [T in TagTypes]: {
+    Tag?: T
+  } & BaseProps &
+    Omit<ComponentPropsWithoutRef<T>, keyof BaseProps>
+}[TagTypes]
+
+export function Header({
+  children,
+  className,
+  Tag = 'h2',
+  ...rest
+}: HeaderProps) {
   return (
-    <Tag className={cn('text-3xl font-bold text-secondary', className)}>
+    <Tag
+      className={cn('text-3xl font-bold text-secondary', className)}
+      {...rest}
+    >
       {children}
     </Tag>
   )
