@@ -105,8 +105,8 @@ export const translations = {
         es: 'Busca centros de cuidado de niños o proveedores de hogares licenciados.',
       },
       searchProvidersButton: {
-        en: 'Search (Coming Soon)',
-        es: 'Buscar (Próximamente)',
+        en: 'Search',
+        es: 'Buscar',
       },
       inviteFfn: {
         en: 'Invite your Family, Friend, or Neighbor Caregiver',
