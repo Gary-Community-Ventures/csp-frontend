@@ -117,6 +117,24 @@ export const translations = {
         es: 'Invitar (Próximamente)',
       },
     },
+    findProviderPage: {
+      header: {
+        en: 'Find your Provider',
+        es: 'Buscar tu Proveedor',
+      },
+      inviteButton: {
+        en: 'Invite',
+        es: 'Invitar',
+      },
+      searchPlaceholder: {
+        en: 'Search for a Provider',
+        es: 'Buscar un Proveedor',
+      },
+      loadMoreButton: {
+        en: 'Load More',
+        es: 'Cargar Más',
+      },
+    },
   },
   provider: {
     navBar: {

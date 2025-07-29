@@ -7,7 +7,6 @@ const adminRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/admin',
   pendingComponent: LoadingPage,
-
   component: () => (
     <div>
       <h1>Admin</h1>
