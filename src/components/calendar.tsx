@@ -170,7 +170,7 @@ const Calendar: React.FC<{ maxSelection: number }> = ({ maxSelection }) => {
     } else {
       // Selection colors for current month, unlocked days
       if (selection === 'half') {
-        bgColor = 'bg-gradient-to-r from-secondary from-50% to-gray-100 to-50%';
+        bgColor = 'bg-gradient-to-r from-secondary-background from-50% to-gray-100 to-50%';
         textColor = 'text-white';
       } else if (selection === 'full') {
         bgColor = 'bg-primary';
@@ -206,7 +206,7 @@ const Calendar: React.FC<{ maxSelection: number }> = ({ maxSelection }) => {
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto">
+    <div className="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto select-none">
       {/* Header with navigation */}
       <div className="flex items-center justify-between mb-6">
         <button 
@@ -235,7 +235,7 @@ const Calendar: React.FC<{ maxSelection: number }> = ({ maxSelection }) => {
         {/* Days of week header */}
         <div className="grid grid-cols-8 gap-1 mb-2">
           <div className="text-xs font-medium text-gray-500 text-center py-2">
-            Locks
+            🔒 Closes
           </div>
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
             <div key={day} className="text-xs font-medium text-gray-500 text-center py-2">
@@ -252,10 +252,13 @@ const Calendar: React.FC<{ maxSelection: number }> = ({ maxSelection }) => {
           return (
             <div key={weekIndex} className="grid grid-cols-8 gap-1">
               {/* Lock date column */}
-              <div className={`text-xs text-center py-2 font-medium ${
+              <div className={`text-xs text-center py-2 font-medium flex items-center justify-center h-8 ${
                 isLocked ? 'text-gray-400' : 'text-gray-600'
               }`}>
-                {monday.toLocaleDateString('default', { month: 'short', day: 'numeric' })}
+                <div className="flex flex-col items-center leading-tight">
+                  <span className="text-[9px] opacity-75">Closes</span>
+                  <span className="text-[10px]">Tuesday</span>
+                </div>
               </div>
               
               {/* Days of the week */}
