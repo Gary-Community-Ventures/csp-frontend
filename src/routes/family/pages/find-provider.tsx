@@ -151,7 +151,7 @@ export default function FindProviderPage() {
       />
       <CardList
         items={filteredProviders
-          .filter((_, i) => i < renderedProviderCount)
+          .slice(0, renderedProviderCount)
           .map((provider) => {
             return (
               <div className="flex justify-between">
