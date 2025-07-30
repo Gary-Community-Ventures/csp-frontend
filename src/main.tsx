@@ -13,7 +13,7 @@ import { enUS, esES } from '@clerk/localizations'
 import ErrorFallback from '@/components/error-fallback'
 import { initializeSentry } from '@/lib/sentry'
 import { useSentryUserContext } from '@/lib/hooks'
-import { recordPageView } from '@/lib/analytics'
+import { recordPageView, useRecordUserSession } from '@/lib/analytics'
 
 initializeSentry()
 
@@ -64,6 +64,8 @@ function App() {
   const clerk = useClerk()
 
   useSentryUserContext()
+
+  useRecordUserSession()
 
   useEffect(recordPageView, [])
 

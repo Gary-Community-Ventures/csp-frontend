@@ -1,10 +1,6 @@
 import { router } from '@/routes/router'
-import path from 'path'
+import { useUser } from '@clerk/clerk-react'
 import { useEffect } from 'react'
-
-type BaseEvent = {
-  event: string
-}
 
 type PageViewEvent = {
   event: 'page-view'
@@ -14,7 +10,7 @@ type PageViewEvent = {
   pageTitle: string
 }
 
-type ExternalLinkClick = {
+type ExternalLinkClickEvent = {
   event: 'external-link'
   externalDomain: string
   externalPath: string
@@ -22,7 +18,15 @@ type ExternalLinkClick = {
   externalHref: string
 }
 
-export type Event = BaseEvent | PageViewEvent | ExternalLinkClick
+type UserSessionEvent = {
+  event: 'user-session'
+  isSignedIn: boolean
+  familyId: number | null
+  providerId: number | null
+  types: string[] | null
+}
+
+export type Event = PageViewEvent | ExternalLinkClickEvent | UserSessionEvent
 
 export function dataLayerPush(data: Event) {
   // @ts-ignore
@@ -56,4 +60,37 @@ export function recordExternalLinkClick(href: string) {
     externalQuery: location.search,
     externalHref: href,
   })
+}
+
+export function useRecordUserSession() {
+  const { user, isLoaded, isSignedIn } = useUser()
+
+  useEffect(() => {
+    if (!isLoaded) {
+      return
+    }
+
+    if (!isSignedIn) {
+      dataLayerPush({
+        event: 'user-session',
+        isSignedIn: false,
+        familyId: null,
+        providerId: null,
+        types: null,
+      })
+      return
+    }
+
+    const familyId = user.publicMetadata.family_id as number
+    const providerId = user.publicMetadata.provider_id as number
+    const types = user.publicMetadata.types as string[]
+
+    dataLayerPush({
+      event: 'user-session',
+      isSignedIn: true,
+      familyId: familyId ?? null,
+      providerId: providerId ?? null,
+      types: types ?? null,
+    })
+  }, [user, isLoaded, isSignedIn])
 }
