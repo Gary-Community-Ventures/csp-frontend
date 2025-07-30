@@ -105,8 +105,8 @@ export const translations = {
         es: 'Busca centros de cuidado de niños o proveedores de hogares licenciados.',
       },
       searchProvidersButton: {
-        en: 'Search (Coming Soon)',
-        es: 'Buscar (Próximamente)',
+        en: 'Search',
+        es: 'Buscar',
       },
       inviteFfn: {
         en: 'Invite your Family, Friend, or Neighbor Caregiver',
@@ -115,6 +115,46 @@ export const translations = {
       inviteFfnButton: {
         en: 'Invite (Coming Soon)',
         es: 'Invitar (Próximamente)',
+      },
+    },
+    findProviderPage: {
+      header: {
+        en: 'Find your Provider',
+        es: 'Buscar tu Proveedor',
+      },
+      inviteButton: {
+        en: 'Invite',
+        es: 'Invitar',
+      },
+      searchPlaceholder: {
+        en: 'Search for a Provider',
+        es: 'Buscar un Proveedor',
+      },
+      loadMoreButton: {
+        en: 'Load More',
+        es: 'Cargar Más',
+      },
+      addProviderForm: {
+        header: {
+          en: 'Please select the children that go to ',
+          es: 'Por favor selecciona los niños que van a ',
+        },
+        noChildrenSelectedError: {
+          en: 'Please select at least one child',
+          es: 'Por favor selecciona al menos un niño',
+        },
+        submitButton: {
+          en: 'Submit',
+          es: 'Enviar',
+        },
+        closeButton: {
+          en: 'Close',
+          es: 'Cerrar',
+        },
+        successMessage: {
+          en: 'Successfully invited ',
+          es: 'Invitado exitosamente ',
+        },
       },
     },
   },

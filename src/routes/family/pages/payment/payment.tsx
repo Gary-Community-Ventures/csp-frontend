@@ -15,22 +15,18 @@ import { useFamilyContext } from '../../wrapper'
 import { useEffect, useState } from 'react'
 import { useHideFamilyNavBar } from '@/lib/hooks'
 import { Link } from '@tanstack/react-router'
-import { z } from 'zod'
-import { paymentSchema } from '@/lib/schemas'
+import { paymentSchema, useValidateForm } from '@/lib/schemas'
 import { dollarToCents, centsToDollar } from '@/lib/currency'
 import { findProviderById } from '@/lib/providers'
+import { FormErrorMessage } from '@/components/form-error'
 
 export default function PaymentPage() {
   useHideFamilyNavBar()
   const navigate = useNavigate()
-  const { paymentState, setPaymentState } =
-    usePaymentFlowContext()
+  const { paymentState, setPaymentState } = usePaymentFlowContext()
   const [displayAmount, setDisplayAmount] = useState<string>(
     paymentState.amount > 0 ? centsToDollar(paymentState.amount).toFixed(2) : ''
   )
-  const [isFormValid, setIsFormValid] = useState(false)
-  const [errors, setErrors] = useState<z.ZodIssue[]>([])
-  const [showErrors, setShowErrors] = useState(false)
   const { providers } = useFamilyContext()
   const { providerId: providerIdParam } = useSearch({
     from: '/family/$childId/payment',
@@ -48,23 +44,12 @@ export default function PaymentPage() {
     }
   }, [providerIdParam, providers, setPaymentState])
 
-  useEffect(() => {
-    const result = paymentSchema.safeParse(paymentState)
-    setIsFormValid(result.success)
-  }, [paymentState])
+  const { getError, submit } = useValidateForm(paymentSchema, paymentState)
 
   const handleContinue = () => {
-    setShowErrors(true)
-    const result = paymentSchema.safeParse(paymentState)
-    if (result.success) {
+    submit(() => {
       navigate({ to: '/family/$childId/payment/review' })
-    } else {
-      setErrors(result.error.issues)
-    }
-  }
-
-  const getErrorMessage = (path: string) => {
-    return errors.find((err) => err.path[0] === path)?.message
+    })
   }
 
   return (
@@ -100,11 +85,7 @@ export default function PaymentPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                {showErrors && getErrorMessage('providerId') && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {getErrorMessage('providerId')}
-                  </p>
-                )}
+                <FormErrorMessage error={getError('providerId')} />
               </div>
               <div className="flex flex-col space-y-1.5 min-h-16">
                 <Label htmlFor="amount">Amount</Label>
@@ -143,11 +124,7 @@ export default function PaymentPage() {
                     className="pl-7"
                   />
                 </div>
-                {showErrors && getErrorMessage('amount') && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {getErrorMessage('amount')}
-                  </p>
-                )}
+                <FormErrorMessage error={getError('amount')} />
               </div>
               <div className="flex flex-col space-y-1.5 min-h-16">
                 <Label htmlFor="hours">Number of Care Hours</Label>
@@ -162,23 +139,16 @@ export default function PaymentPage() {
                     }))
                   }
                 />
-                {showErrors && getErrorMessage('hours') && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {getErrorMessage('hours')}
-                  </p>
-                )}
+                <FormErrorMessage error={getError('hours')} />
               </div>
             </div>
           </form>
           <div className="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0 sm:space-x-4">
             <Button variant="outline" className="w-full sm:w-auto" asChild>
-              <Link to="/family/$childId/home">
-                Cancel
-              </Link>
+              <Link to="/family/$childId/home">Cancel</Link>
             </Button>
             <Button
               onClick={handleContinue}
-              disabled={!isFormValid}
               className="w-full sm:w-auto"
             >
               Continue
