@@ -4,6 +4,7 @@ import { allocatedCareDaySchema, monthAllocationSchema } from '@/lib/schemas';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Button } from './ui/button';
 import { z } from 'zod';
+import { useBlocker } from '@tanstack/react-router';
 
 interface CalendarProps {
   allocation: z.infer<typeof monthAllocationSchema>;
@@ -88,47 +89,99 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
 
     const isDayLocked = careDay?.is_locked || (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart);
 
-    let bgColor = '';
-    let textColor = 'text-gray-800';
+    let dayClasses = `w-8 h-8 rounded-full flex items-center justify-center relative text-sm ${
+      isCurrentMonth && !isDayLocked ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
+    }`;
+    let innerHalfDayClass = '';
+    let textColorClass = 'text-gray-800';
+    let borderColorClass = '';
 
     if (!isCurrentMonth) {
-      textColor = 'text-gray-300';
+      textColorClass = 'text-gray-300';
     } else if (isDayLocked) {
-      bgColor = 'bg-gray-200';
-      textColor = 'text-gray-400';
+      dayClasses += ' bg-gray-200';
+      textColorClass = 'text-gray-400';
     } else if (careDay) {
-      switch (careDay.status) {
-        case 'new':
-          bgColor = 'bg-blue-200';
-          break;
-        case 'submitted':
-          bgColor = 'bg-green-200';
-          break;
-        case 'needs_resubmission':
-          bgColor = 'bg-yellow-200';
-          break;
-        case 'deleted':
-          bgColor = 'bg-red-200';
-          break;
-        default:
-          bgColor = 'bg-gray-100';
+      if (careDay.type === 'Half Day') {
+        switch (careDay.status) {
+          case 'new':
+            dayClasses += ' bg-blue-100'; // Lighter background for the full circle
+            innerHalfDayClass = 'bg-blue-200'; // Main color for the half
+            break;
+          case 'submitted':
+            dayClasses += ' bg-secondary-background'; // Neutral lighter background for submitted half-day
+            innerHalfDayClass = 'bg-primary'; // Main color for the half
+            textColorClass = 'text-primary-foreground';
+            borderColorClass = 'border-2 border-primary-foreground';
+            break;
+          case 'needs_resubmission':
+            dayClasses += ' bg-yellow-100';
+            innerHalfDayClass = 'bg-yellow-200';
+            break;
+          case 'deleted':
+            if (careDay.last_submitted_at) {
+              dayClasses += ' bg-gray-50'; // Lighter background for the full circle
+              innerHalfDayClass = 'bg-red-500'; // Red for deleted and previously submitted
+              textColorClass = 'text-white';
+            } else {
+              dayClasses += ' bg-gray-50';
+              innerHalfDayClass = 'bg-gray-100'; // Default gray for deleted but not submitted
+            }
+            break;
+          default:
+            dayClasses += ' bg-gray-50';
+            innerHalfDayClass = 'bg-gray-100';
+        }
+      } else { // Full Day
+        switch (careDay.status) {
+          case 'new':
+            dayClasses += ' bg-blue-200';
+            break;
+          case 'submitted':
+            dayClasses += ' bg-primary';
+            textColorClass = 'text-primary-foreground';
+            borderColorClass = 'border-2 border-primary-foreground';
+            break;
+          case 'needs_resubmission':
+            dayClasses += ' bg-yellow-200';
+            break;
+          case 'deleted':
+            if (careDay.last_submitted_at) {
+              dayClasses += ' bg-red-500'; // Red for deleted and previously submitted
+              textColorClass = 'text-white';
+            } else {
+              dayClasses += ' bg-gray-100'; // Default gray for deleted but not submitted
+            }
+            break;
+          default:
+            dayClasses += ' bg-gray-100';
+        }
       }
     } else {
-      bgColor = 'bg-gray-100';
+      dayClasses += ' bg-gray-100';
     }
+
+    dayClasses += ` ${borderColorClass}`;
+
+    const dayContent = (
+      <>
+        {isToday && (
+          <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        )}
+        {careDay?.type === 'Half Day' && (
+          <div className={`absolute left-0 top-0 h-full w-1/2 rounded-l-full ${innerHalfDayClass}`}></div>
+        )}
+        <span className={`relative z-10 font-medium ${textColorClass}`}>{d.getDate()}</span>
+      </>
+    );
 
     if (isDayLocked) {
       return (
         <div
           key={d.toString()}
-          className={`w-8 h-8 rounded-full flex items-center justify-center relative text-sm ${bgColor} ${textColor} ${
-            isCurrentMonth && !isDayLocked ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
-          }`}
+          className={dayClasses}
         >
-          {isToday && (
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          )}
-          <span className="relative z-10 font-medium">{d.getDate()}</span>
+          {dayContent}
         </div>
       );
     } else {
@@ -137,15 +190,10 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
           <PopoverTrigger asChild>
             <div
               key={d.toString()}
-              className={`w-8 h-8 rounded-full flex items-center justify-center relative text-sm ${bgColor} ${textColor} ${
-                isCurrentMonth && !isDayLocked ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
-              }`}
+              className={dayClasses}
               onClick={() => handleDayClick(careDay || null, d)}
             >
-              {isToday && (
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              )}
-              <span className="relative z-10 font-medium">{d.getDate()}</span>
+              {dayContent}
             </div>
           </PopoverTrigger>
           <PopoverContent className="w-auto">
@@ -159,6 +207,15 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
       );
     }
   };
+
+  const hasPendingChanges = allocation.care_days.some(
+    (careDay) =>
+      careDay.status === 'new' ||
+      careDay.status === 'needs_resubmission' ||
+      careDay.status === 'deleted',
+  );
+
+  useBlocker(() => hasPendingChanges, "You have unsaved changes. Are you sure you want to leave?");
 
   const weeks: Date[][] = [];
   for (let i = 0; i < days.length; i += 7) {
@@ -206,7 +263,7 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
       </div>
 
       <div className="mt-6 text-center">
-        <Button type="button" onClick={onSubmit}>Submit</Button>
+        <Button type="button" onClick={onSubmit} disabled={!hasPendingChanges}>Submit</Button>
       </div>
     </div>
   );
