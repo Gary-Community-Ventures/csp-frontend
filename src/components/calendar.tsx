@@ -9,11 +9,13 @@ interface CalendarProps {
   allocation: z.infer<typeof monthAllocationSchema>;
   onDateChange: (date: Date) => void;
   onSubmit: () => void;
-  onDayTypeChange: (day: z.infer<typeof allocatedCareDaySchema> | null | undefined, type: 'Full Day' | 'Half Day' | 'none') => void;
+  onDayTypeChange: (day: z.infer<typeof allocatedCareDaySchema> | null | undefined, type: 'Full Day' | 'Half Day' | 'none', selectedDate: Date) => void;
 }
 
 export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, onSubmit, onDayTypeChange }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const MIN_DATE = new Date(2025, 6, 1); // July 1, 2025 (Month is 0-indexed)
+  const today = new Date();
 
   const handleDayClick = (day: z.infer<typeof allocatedCareDaySchema> | null, date: Date) => {
     if (day?.is_locked) return;
@@ -39,15 +41,36 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
 
   const nextMonth = () => {
     const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+    const sevenDaysFromNow = new Date();
+    sevenDaysFromNow.setDate(today.getDate() + 7);
+
+    if (newDate.getFullYear() > sevenDaysFromNow.getFullYear() ||
+        (newDate.getFullYear() === sevenDaysFromNow.getFullYear() && newDate.getMonth() > sevenDaysFromNow.getMonth())) {
+      return;
+    }
+
     setCurrentDate(newDate);
     onDateChange(newDate);
   };
 
   const prevMonth = () => {
     const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+    if (newDate < MIN_DATE) {
+      return;
+    }
     setCurrentDate(newDate);
     onDateChange(newDate);
   };
+
+  const canGoPrev = currentDate.getFullYear() > MIN_DATE.getFullYear() ||
+    (currentDate.getFullYear() === MIN_DATE.getFullYear() && currentDate.getMonth() > MIN_DATE.getMonth());
+
+  const nextMonthCandidate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+  const sevenDaysFromNow = new Date();
+  sevenDaysFromNow.setDate(today.getDate() + 7);
+
+  const canGoNext = nextMonthCandidate.getFullYear() < sevenDaysFromNow.getFullYear() ||
+    (nextMonthCandidate.getFullYear() === sevenDaysFromNow.getFullYear() && nextMonthCandidate.getMonth() <= sevenDaysFromNow.getMonth());
 
   const renderDay = (d: Date) => {
     const dayStr = d.toISOString().split('T')[0];
@@ -55,12 +78,22 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
     const isCurrentMonth = d.getMonth() === currentDate.getMonth();
     const isToday = new Date().toDateString() === d.toDateString();
 
+    const currentDayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+    let lockedUntilDateStart: Date | null = null;
+    if (allocation.locked_until_date) {
+      const [year, month, day] = allocation.locked_until_date.split('-').map(Number);
+      lockedUntilDateStart = new Date(year, month - 1, day); // month is 0-indexed
+    }
+
+    const isDayLocked = careDay?.is_locked || (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart);
+
     let bgColor = '';
     let textColor = 'text-gray-800';
 
     if (!isCurrentMonth) {
       textColor = 'text-gray-300';
-    } else if (careDay?.is_locked) {
+    } else if (isDayLocked) {
       bgColor = 'bg-gray-200';
       textColor = 'text-gray-400';
     } else if (careDay) {
@@ -84,31 +117,47 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
       bgColor = 'bg-gray-100';
     }
 
-    return (
-      <Popover key={dayStr}>
-        <PopoverTrigger asChild>
-          <div
-            key={d.toString()}
-            className={`w-8 h-8 rounded-full flex items-center justify-center relative text-sm ${bgColor} ${textColor} ${
-              isCurrentMonth && !careDay?.is_locked ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
-            }`}
-            onClick={() => handleDayClick(careDay || null, d)}
-          >
-            {isToday && (
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            )}
-            <span className="relative z-10 font-medium">{d.getDate()}</span>
-          </div>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto">
-          <div className="flex flex-col space-y-2">
-            <Button onClick={() => onDayTypeChange(careDay, 'Full Day')}>Full Day</Button>
-            <Button onClick={() => onDayTypeChange(careDay, 'Half Day')}>Half Day</Button>
-            <Button variant="destructive" onClick={() => onDayTypeChange(careDay, 'none')}>Clear</Button>
-          </div>
-        </PopoverContent>
-      </Popover>
-    );
+    if (isDayLocked) {
+      return (
+        <div
+          key={d.toString()}
+          className={`w-8 h-8 rounded-full flex items-center justify-center relative text-sm ${bgColor} ${textColor} ${
+            isCurrentMonth && !isDayLocked ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
+          }`}
+        >
+          {isToday && (
+            <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          )}
+          <span className="relative z-10 font-medium">{d.getDate()}</span>
+        </div>
+      );
+    } else {
+      return (
+        <Popover key={dayStr}>
+          <PopoverTrigger asChild>
+            <div
+              key={d.toString()}
+              className={`w-8 h-8 rounded-full flex items-center justify-center relative text-sm ${bgColor} ${textColor} ${
+                isCurrentMonth && !isDayLocked ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
+              }`}
+              onClick={() => handleDayClick(careDay || null, d)}
+            >
+              {isToday && (
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              )}
+              <span className="relative z-10 font-medium">{d.getDate()}</span>
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto">
+            <div className="flex flex-col space-y-2">
+              <Button onClick={() => onDayTypeChange(careDay, 'Full Day', d)}>Full Day</Button>
+              <Button onClick={() => onDayTypeChange(careDay, 'Half Day', d)}>Half Day</Button>
+              <Button variant="destructive" onClick={() => onDayTypeChange(careDay, 'none', d)}>Clear</Button>
+            </div>
+          </PopoverContent>
+        </Popover>
+      );
+    }
   };
 
   const weeks: Date[][] = [];
@@ -120,8 +169,10 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
     <div className="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto select-none">
       <div className="flex items-center justify-between mb-6">
         <button
+          type="button"
           onClick={prevMonth}
           className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          disabled={!canGoPrev}
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
@@ -129,8 +180,10 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
           {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
         </h2>
         <button
+          type="button"
           onClick={nextMonth}
           className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          disabled={!canGoNext}
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -153,7 +206,7 @@ export const Calendar: React.FC<CalendarProps> = ({ allocation, onDateChange, on
       </div>
 
       <div className="mt-6 text-center">
-        <Button onClick={onSubmit}>Submit</Button>
+        <Button type="button" onClick={onSubmit}>Submit</Button>
       </div>
     </div>
   );

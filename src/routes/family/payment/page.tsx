@@ -32,10 +32,7 @@ export function PaymentPage() {
     queryKey: ['paymentRate', providerId, selectedChildInfo.id],
     queryFn: () => getPaymentRate(context, providerId, selectedChildInfo.id),
     enabled: !!providerId && !!selectedChildInfo.id && !!context,
-    retry: (failureCount, error) => {
-      if (error.response && error.response.status === 404) {
-        return false; // Do not retry on 404
-      }
+    retry: (failureCount) => {
       return failureCount < 3; // Retry other errors up to 3 times
     },
   });
@@ -84,7 +81,7 @@ export function PaymentPage() {
     },
   });
 
-  const handleDayTypeChange = (day: z.infer<typeof allocatedCareDaySchema> | null | undefined, type: 'Full Day' | 'Half Day' | 'none') => {
+  const handleDayTypeChange = (day: z.infer<typeof allocatedCareDaySchema> | null | undefined, type: 'Full Day' | 'Half Day' | 'none', selectedDate: Date) => {
     if (type === 'none') {
       if (day) {
         deleteCareDayMutation(day.id);
@@ -92,7 +89,7 @@ export function PaymentPage() {
     } else if (day) {
       updateCareDayMutation({ careDayId: day.id, type });
     } else {
-      createCareDayMutation({ type, date: date.toISOString().split('T')[0] });
+      createCareDayMutation({ type, date: selectedDate.toISOString().split('T')[0] });
     }
   };
 
@@ -172,6 +169,22 @@ export function PaymentPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{formatAmount(allocation?.remaining_cents || 0)}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Half Day Rate</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{formatAmount(paymentRate?.half_day_rate_cents || 0)}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Full Day Rate</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{formatAmount(paymentRate?.full_day_rate_cents || 0)}</div>
           </CardContent>
         </Card>
       </div>

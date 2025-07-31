@@ -24,6 +24,7 @@ export const allocatedCareDaySchema = z.object({
   is_deleted: z.boolean(),
   needs_resubmission: z.boolean(),
   is_new_since_submission: z.boolean(),
+  status: z.string(),
 });
 
 export const monthAllocationSchema = z.object({
@@ -35,6 +36,7 @@ export const monthAllocationSchema = z.object({
   used_cents: z.number(),
   remaining_cents: z.number(),
   over_allocation: z.boolean(),
+  locked_until_date: z.string().refine((s) => !isNaN(Date.parse(s)), { message: "Invalid date format" }),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
   care_days: z.array(allocatedCareDaySchema),
