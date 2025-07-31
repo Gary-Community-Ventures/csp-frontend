@@ -13,6 +13,7 @@ export type SelectedChildInfo = {
   firstName: string
   lastName: string
   balance: number
+  monthlyAllocation: number
 }
 
 export type Provider = {
@@ -60,6 +61,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       firstName: familyData.selected_child_info.first_name,
       lastName: familyData.selected_child_info.last_name,
       balance: familyData.selected_child_info.balance,
+      monthlyAllocation: familyData.selected_child_info.monthly_allocation,
     },
     providers: familyData.providers,
     transactions: familyData.transactions,
