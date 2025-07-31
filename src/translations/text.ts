@@ -42,7 +42,23 @@ const statuses = {
     en: 'Denied',
     es: 'Denegado',
   },
-}
+} as const
+
+const submitButton = {
+  en: 'Submit',
+  es: 'Enviar',
+} as const
+
+const translatedLanguages = {
+  en: {
+    en: 'English',
+    es: 'Inglés',
+  },
+  es: {
+    en: 'Spanish',
+    es: 'Español',
+  },
+} as const
 
 export const translations = {
   family: {
@@ -113,8 +129,8 @@ export const translations = {
         es: 'Invita a tu Familia, Amigo o Vecino',
       },
       inviteFfnButton: {
-        en: 'Invite (Coming Soon)',
-        es: 'Invitar (Próximamente)',
+        en: 'Invite',
+        es: 'Invitar',
       },
     },
     findProviderPage: {
@@ -143,10 +159,7 @@ export const translations = {
           en: 'Please select at least one child',
           es: 'Por favor selecciona al menos un niño',
         },
-        submitButton: {
-          en: 'Submit',
-          es: 'Enviar',
-        },
+        submitButton: submitButton,
         closeButton: {
           en: 'Close',
           es: 'Cerrar',
@@ -155,6 +168,50 @@ export const translations = {
           en: 'Successfully invited ',
           es: 'Invitado exitosamente ',
         },
+      },
+    },
+    inviteProviderPage: {
+      header: {
+        en: 'Invite your Family, Friend, or Neighbor Caregiver',
+        es: 'Invita a tu Familia, Amigo o Vecino',
+      },
+      emailError: {
+        en: 'Please enter a valid email address',
+        es: 'Por favor ingresa una dirección de correo electrónico válida',
+      },
+      phoneError: {
+        en: 'Please enter a valid phone number',
+        es: 'Por favor ingresa un número de teléfono válido',
+      },
+      emailLabel: {
+        en: 'Provider Email',
+        es: 'Correo Electrónico',
+      },
+      phoneLabel: {
+        en: 'Provider Phone',
+        es: 'Teléfono',
+      },
+      langLabel: {
+        en: 'What language should the invite be sent in?',
+        es: '¿Qué idioma debe ser el mensaje de invitación?',
+      },
+      langPlaceholder: {
+        en: 'Select Language',
+        es: 'Seleccionar Idioma',
+      },
+      languageOptions: translatedLanguages,
+      childrenHeader: {
+        en: 'Which children does this provider care for?',
+        es: '¿Qué niños está cubierto por este proveedor?',
+      },
+      cancelButton: {
+        en: 'Cancel',
+        es: 'Cancelar',
+      },
+      submitButton: submitButton,
+      successMessage: {
+        en: 'Invite sent successfully',
+        es: 'Invitación enviada exitosamente',
       },
     },
   },

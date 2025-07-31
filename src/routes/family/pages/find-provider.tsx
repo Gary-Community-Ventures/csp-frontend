@@ -243,9 +243,10 @@ function AddProviderForm({ children, provider }: AddProviderFormProps) {
           {allChildren.map((child) => {
             const id = `select-provider-selected-child-${child.id}`
             return (
-              <div key={child.id} className="px-4 py-3 flex gap-3">
+              <div key={child.id} className="px-4 flex gap-3">
                 <Checkbox
                   id={id}
+                  className='my-3'
                   checked={formData.children.includes(child.id)}
                   onCheckedChange={(checked) => {
                     if (checked) {
@@ -257,14 +258,14 @@ function AddProviderForm({ children, provider }: AddProviderFormProps) {
                         return {
                           ...c,
                           children: c.children.filter(
-                            (cId) => cId !== child.id
+                            (childId) => childId !== child.id
                           ),
                         }
                       })
                     }
                   }}
                 />
-                <Label htmlFor={id}>
+                <Label htmlFor={id} className='flex grow py-3'>
                   {child.firstName} {child.lastName}
                 </Label>
               </div>
