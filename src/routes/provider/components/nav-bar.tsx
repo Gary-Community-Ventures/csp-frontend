@@ -22,6 +22,7 @@ import {
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Link } from '@tanstack/react-router'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
+import { ExternalLink } from '@/components/external-link'
 import {
   Text,
   //useText
@@ -46,7 +47,9 @@ export function ProviderNavBar() {
   return (
     <>
       <div className="flex justify-between bg-primary text-primary-foreground p-5">
-        <img src="/lala_logo_white.png" className="max-h-15" alt="logo" />
+        <Link to="/provider/home">
+          <img src="/lala_logo_white.png" className="max-h-15" alt="logo" />
+        </Link>
         <div className="flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger>
@@ -65,11 +68,11 @@ export function ProviderNavBar() {
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem asChild>
-                  <a href="https://google.com/" target="_blank" rel="noopener">
+                  <ExternalLink href="https://google.com/">
                     {/*TODO: add help link*/}
                     <MessageCircleQuestionMark />
                     <Text text={t.menu.support} />
-                  </a>
+                  </ExternalLink>
                 </DropdownMenuItem>
                 <DropdownMenuLanguageSwitcher />
                 <DropdownMenuItem asChild>

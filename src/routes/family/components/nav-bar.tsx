@@ -27,6 +27,7 @@ import {
 import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
+import { ExternalLink } from '@/components/external-link'
 
 export function FamilyNavBar() {
   const t = translations.family.navBar
@@ -48,7 +49,9 @@ export function FamilyNavBar() {
   return (
     <>
       <div className="flex justify-between bg-primary text-primary-foreground p-5">
-        <img src="/lala_logo_white.png" className="max-h-15" alt="logo" />
+        <Link to="/family/$childId/home">
+          <img src="/lala_logo_white.png" className="max-h-15" alt="logo" />
+        </Link>
         <div className="flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger>
@@ -84,11 +87,11 @@ export function FamilyNavBar() {
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem asChild>
-                  <a href="https://google.com/" target="_blank" rel="noopener">
+                  <ExternalLink href="https://google.com/">
                     {/*TODO: add help link*/}
                     <MessageCircleQuestionMark />
                     <Text text={t.menu.support} />
-                  </a>
+                  </ExternalLink>
                 </DropdownMenuItem>
                 <DropdownMenuLanguageSwitcher />
                 <DropdownMenuItem asChild>

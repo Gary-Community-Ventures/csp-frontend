@@ -1,6 +1,6 @@
 import { LoadingPage } from '@/components/pages/loading-page'
 import { NotFoundPage } from '@/components/pages/not-found-page'
-import { StrictMode, type PropsWithChildren } from 'react'
+import { StrictMode, useEffect, type PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { router, type RouterContext } from '@/routes/router'
@@ -14,6 +14,7 @@ import ErrorFallback from '@/components/error-fallback'
 import { initializeSentry } from '@/lib/sentry'
 import { useSentryUserContext } from '@/lib/hooks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { recordPageView, useRecordUserSession } from '@/lib/analytics'
 
 initializeSentry()
 
@@ -69,6 +70,10 @@ function App() {
 
   useSentryUserContext()
 
+  useRecordUserSession()
+
+  useEffect(recordPageView, [])
+
   if (!isLoaded) {
     return null
   }
@@ -93,3 +98,5 @@ function App() {
     </Sentry.ErrorBoundary>
   )
 }
+
+router.history.subscribe(recordPageView)

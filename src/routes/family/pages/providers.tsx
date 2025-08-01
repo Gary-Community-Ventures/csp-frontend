@@ -3,7 +3,7 @@ import { ProviderList } from '../components/providers'
 import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-// import { Link } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 
@@ -32,19 +32,16 @@ export function FamilyProvidersPage() {
               <strong className="text-xl text-center">
                 <Text text={t.searchProviders} />
               </strong>
-              <Button
-                disabled
-              >
-                {/* <Link to="/family">Search</Link> */}
+              <Button asChild>
+                <Link to="/family/$childId/providers/find-licensed">
                   <Text text={t.searchProvidersButton} />
-              </Button>   
+                </Link>
+              </Button>
               <Separator />
               <strong className="text-xl text-center">
                 <Text text={t.inviteFfn} />
               </strong>
-              <Button
-                disabled
-              >
+              <Button disabled>
                 {/* <Link to="/family">Search</Link> */}
                 <Text text={t.inviteFfnButton} />
               </Button>

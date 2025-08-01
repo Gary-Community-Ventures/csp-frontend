@@ -4,8 +4,9 @@ import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
 import { loadFamilyData, redirectToDefaultId } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
-import { FamilyProvidersPage } from './pages/providers';
+import { FamilyProvidersPage } from './pages/providers'
 import { PaymentPage } from './payment/page'
+import FindProviderPage, { loadProviders } from './pages/find-provider'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -75,6 +76,13 @@ export const paymentRoute = createRoute({
   }),
 });
 
+export const findProviderRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'providers/find-licensed',
+  component: FindProviderPage,
+  loader: loadProviders,
+})
+
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   /* TODO renable when messages/activity are implemented
@@ -84,6 +92,7 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   providersRoute,
   settingsRoute,
   paymentRoute,
+  findProviderRoute,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([
