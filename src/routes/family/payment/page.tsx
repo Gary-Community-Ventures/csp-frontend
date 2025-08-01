@@ -21,7 +21,12 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
+import { Header } from '@/components/header'
+import { translations } from '@/translations/text'
+import { Text } from '@/translations/wrapper'
+
 export function PaymentPage() {
+  const t = translations.family.home
   const { providerId } = paymentRoute.useParams()
   const { selectedChildInfo, providers, children } = useFamilyContext()
   const { context } = paymentRoute.useRouteContext()
@@ -278,7 +283,9 @@ export function PaymentPage() {
   return (
     <div className="flex flex-col items-center gap-8 p-4">
       <div className="text-center">
-        <h2 className="text-2xl font-bold">Payment for {provider?.name}</h2>
+        <Header>
+            Payment for {provider?.name}
+        </Header>
         <p className="text-muted-foreground max-w-prose">
           Add your planned care days for {provider?.name} for {child?.firstName}. Hit
           submit when you want to send these days to your {provider?.name}. You can
