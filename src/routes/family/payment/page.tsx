@@ -12,6 +12,7 @@ import {
 import { allocatedCareDaySchema } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useBlocker } from '@tanstack/react-router'
 import React, { useState, useEffect } from 'react'
 import { z } from 'zod'
 import { paymentRoute } from '../routes'
@@ -236,6 +237,18 @@ export function PaymentPage() {
     })
   }
 
+  const hasPendingChanges = allocation?.care_days.some(
+    (careDay) =>
+      careDay.status === 'new' ||
+      careDay.status === 'needs_resubmission' ||
+      careDay.status === 'deleted'
+  )
+
+  useBlocker(
+    () => hasPendingChanges,
+    'You have unsaved changes. Are you sure you want to leave?'
+  )
+
   if (isLoadingAllocation || isLoadingPaymentRate || !context) {
     return <div>Loading...</div>
   }
@@ -283,7 +296,7 @@ export function PaymentPage() {
   const child = children.find((c) => c.id === selectedChildInfo.id)
 
   return (
-    <div className="flex flex-col items-center gap-8 p-4">
+    <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">
       <div className="text-center  w-full max-w-md md:max-w-2xl">
         <Header>Payment for {provider?.name}</Header>
         <p>
@@ -304,13 +317,22 @@ export function PaymentPage() {
           <Calendar
             allocation={allocation}
             onDateChange={setDate}
-            onSubmit={submitCareDaysMutation}
             onDayTypeChange={handleDayTypeChange}
             prevMonthAllocationFailed={prevMonthAllocationFailed}
             nextMonthAllocationFailed={nextMonthAllocationFailed}
             paymentRate={paymentRate}
           />
         )}
+      </div>
+      <div className="w-full flex justify-center">
+        <Button
+          type="button"
+          onClick={() => submitCareDaysMutation()}
+          disabled={!hasPendingChanges}
+          className="w-full max-w-md md:max-w-2xl py-3 text-lg"
+        >
+          Submit
+        </Button>
       </div>
     </div>
   )

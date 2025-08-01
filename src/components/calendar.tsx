@@ -11,23 +11,21 @@ import { z } from 'zod'
 import { useBlocker } from '@tanstack/react-router'
 
 interface CalendarProps {
-  allocation: z.infer<typeof monthAllocationSchema>
-  onDateChange: (date: Date) => void
-  onSubmit: () => void
+  allocation: z.infer<typeof monthAllocationSchema>;
+  onDateChange: (date: Date) => void;
   onDayTypeChange: (
     day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
     type: 'Full Day' | 'Half Day' | 'none',
     selectedDate: Date
-  ) => void
-  prevMonthAllocationFailed: boolean
-  nextMonthAllocationFailed: boolean
-  paymentRate: z.infer<typeof paymentRateSchema> | null
+  ) => void;
+  prevMonthAllocationFailed: boolean;
+  nextMonthAllocationFailed: boolean;
+  paymentRate: z.infer<typeof paymentRateSchema> | null;
 }
 
 export const Calendar: React.FC<CalendarProps> = ({
   allocation,
   onDateChange,
-  onSubmit,
   onDayTypeChange,
   prevMonthAllocationFailed,
   nextMonthAllocationFailed,
@@ -249,17 +247,7 @@ export const Calendar: React.FC<CalendarProps> = ({
     }
   }
 
-  const hasPendingChanges = allocation.care_days.some(
-    (careDay) =>
-      careDay.status === 'new' ||
-      careDay.status === 'needs_resubmission' ||
-      careDay.status === 'deleted'
-  )
-
-  useBlocker(
-    () => hasPendingChanges,
-    'You have unsaved changes. Are you sure you want to leave?'
-  )
+  
 
   const weeks: Date[][] = []
   for (let i = 0; i < days.length; i += 7) {
@@ -328,12 +316,8 @@ export const Calendar: React.FC<CalendarProps> = ({
         ))}
       </div>
 
-      <div className="mt-6 text-center">
-        <Button type="button" onClick={onSubmit} disabled={!hasPendingChanges}>
-          Submit
-        </Button>
-      </div>
-      <div className="mt-6 flex justify-center space-x-4 text-sm">
+      
+      <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 text-sm md:flex md:justify-center md:space-x-4">
         <div className="flex items-center space-x-2">
           <div className="w-4 h-4 rounded-full bg-blue-200"></div>
           <span>
