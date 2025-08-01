@@ -68,22 +68,27 @@ export async function getMonthAllocation(
   childId: number,
   providerId: number,
   month: number,
-  year: number,
+  year: number
 ): Promise<z.infer<typeof monthAllocationSchema>> {
   const url = backendUrl(
-    `/child/${childId}/allocation/${month}/${year}?provider_id=${providerId}`,
+    `/child/${childId}/allocation/${month}/${year}?provider_id=${providerId}`
   )
   const res = await fetch(url, {
     headers: await headersWithAuth(context),
   })
+  if (res.status === 400) {
+    const error: any = new Error('Bad Request')
+    error.response = res
+    throw error
+  }
   handleStatusCodes(context, res)
   const data = await res.json()
   try {
-    const parsedData = monthAllocationSchema.parse(data);
-    return parsedData;
+    const parsedData = monthAllocationSchema.parse(data)
+    return parsedData
   } catch (error) {
-    console.error('Zod parsing error for MonthAllocation:', error);
-    throw error; // Re-throw the error so useQuery can catch it
+    console.error('Zod parsing error for MonthAllocation:', error)
+    throw error // Re-throw the error so useQuery can catch it
   }
 }
 
