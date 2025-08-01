@@ -53,9 +53,9 @@ export default function PaymentPage() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full">
       <div className="flex flex-grow justify-center items-center h-full">
-        <div className="w-full max-w-md min-w-[300px] bg-white p-6 sm:p-8 h-full">
+        <div className="w-full max-w-md min-w-[300px] p-6 sm:p-8 h-full">
           <form>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5 min-h-16">

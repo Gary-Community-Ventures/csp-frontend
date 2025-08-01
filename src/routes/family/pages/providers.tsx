@@ -41,9 +41,10 @@ export function FamilyProvidersPage() {
               <strong className="text-xl text-center">
                 <Text text={t.inviteFfn} />
               </strong>
-              <Button disabled>
-                {/* <Link to="/family">Search</Link> */}
-                <Text text={t.inviteFfnButton} />
+              <Button>
+                <Link to="/family/$childId/providers/invite">
+                  <Text text={t.inviteFfnButton} />
+                </Link>
               </Button>
             </div>
           </WhiteCard>
