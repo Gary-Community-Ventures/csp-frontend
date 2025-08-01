@@ -30,15 +30,17 @@ export function PaymentPage() {
   const { providerId } = paymentRoute.useParams()
   const { selectedChildInfo, providers, children } = useFamilyContext()
   const { context } = paymentRoute.useRouteContext()
-  const [date, setDate] = React.useState(new Date());
-  const [prevMonthAllocationFailed, setPrevMonthAllocationFailed] = React.useState(false);
-  const [nextMonthAllocationFailed, setNextMonthAllocationFailed] = React.useState(false);
-  const queryClient = useQueryClient();
+  const [date, setDate] = React.useState(new Date())
+  const [prevMonthAllocationFailed, setPrevMonthAllocationFailed] =
+    React.useState(false)
+  const [nextMonthAllocationFailed, setNextMonthAllocationFailed] =
+    React.useState(false)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
-    setPrevMonthAllocationFailed(false);
-    setNextMonthAllocationFailed(false);
-  }, [date]);
+    setPrevMonthAllocationFailed(false)
+    setNextMonthAllocationFailed(false)
+  }, [date])
   const [halfDayRate, setHalfDayRate] = React.useState('')
   const [fullDayRate, setFullDayRate] = React.useState('')
 
@@ -282,55 +284,20 @@ export function PaymentPage() {
 
   return (
     <div className="flex flex-col items-center gap-8 p-4">
-      <div className="text-center">
-        <Header>
-            Payment for {provider?.name}
-        </Header>
-        <p className="text-muted-foreground max-w-prose">
-          Add your planned care days for {provider?.name} for {child?.firstName}. Hit
-          submit when you want to send these days to your {provider?.name}. You can
-          always modify days up until the Monday of the week care is taking place. At that point
-          the week is locked and a Transaction will be created to pay the provider for that week.
+      <div className="text-center  w-full max-w-md md:max-w-2xl">
+        <Header>Payment for {provider?.name}</Header>
+        <p>
+          Select the days you need care with {provider?.name} for{' '}
+          {child?.firstName}. Click submit to send these days to your provider.
+          You can modify days up until the Monday of the week care is taking
+          place. At that point, the week will be locked.
         </p>
       </div>
-      <div className="w-full max-w-4xl">
-        <Card>
-          <CardHeader>
-            <CardTitle>Summary</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div className="flex flex-col items-center">
-              <span className="text-sm font-medium">Total Allocation:</span>
-              <span className="text-lg font-bold">
-                {formatAmount(allocation?.allocation_cents || 0)}
-              </span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-sm font-medium">Used Allocation:</span>
-              <span className="text-lg font-bold">
-                {formatAmount(allocation?.used_cents || 0)}
-              </span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-sm font-medium">Remaining Allocation:</span>
-              <span className="text-lg font-bold">
-                {formatAmount(allocation?.remaining_cents || 0)}
-              </span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-sm font-medium">Half Day Rate:</span>
-              <span className="text-lg font-bold">
-                {formatAmount(paymentRate?.half_day_rate_cents || 0)}
-              </span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-sm font-medium">Full Day Rate:</span>
-              <span className="text-lg font-bold">
-                {formatAmount(paymentRate?.full_day_rate_cents || 0)}
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="bg-tertiary-background rounded-3xl w-full max-w-md md:max-w-2xl p-5">
+        <div className="text-sm text-center pb-2">Month Balance</div>
+        <div className="text-3xl text-center">
+          {formatAmount(allocation?.remaining_cents || 0)}
+        </div>
       </div>
       <div className="w-full flex justify-center">
         {allocation && (
@@ -341,6 +308,7 @@ export function PaymentPage() {
             onDayTypeChange={handleDayTypeChange}
             prevMonthAllocationFailed={prevMonthAllocationFailed}
             nextMonthAllocationFailed={nextMonthAllocationFailed}
+            paymentRate={paymentRate}
           />
         )}
       </div>

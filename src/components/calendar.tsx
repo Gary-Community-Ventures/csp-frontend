@@ -1,22 +1,27 @@
 import React, { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { allocatedCareDaySchema, monthAllocationSchema } from '@/lib/schemas'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
+import {
+  allocatedCareDaySchema,
+  monthAllocationSchema,
+  paymentRateSchema,
+} from '@/lib/schemas'
+import { formatAmount } from '@/lib/currency'
 import { Button } from './ui/button'
 import { z } from 'zod'
 import { useBlocker } from '@tanstack/react-router'
 
 interface CalendarProps {
-  allocation: z.infer<typeof monthAllocationSchema>;
-  onDateChange: (date: Date) => void;
-  onSubmit: () => void;
+  allocation: z.infer<typeof monthAllocationSchema>
+  onDateChange: (date: Date) => void
+  onSubmit: () => void
   onDayTypeChange: (
     day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
     type: 'Full Day' | 'Half Day' | 'none',
     selectedDate: Date
-  ) => void;
-  prevMonthAllocationFailed: boolean;
-  nextMonthAllocationFailed: boolean;
+  ) => void
+  prevMonthAllocationFailed: boolean
+  nextMonthAllocationFailed: boolean
+  paymentRate: z.infer<typeof paymentRateSchema> | null
 }
 
 export const Calendar: React.FC<CalendarProps> = ({
@@ -26,18 +31,27 @@ export const Calendar: React.FC<CalendarProps> = ({
   onDayTypeChange,
   prevMonthAllocationFailed,
   nextMonthAllocationFailed,
+  paymentRate,
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date())
   const MIN_DATE = new Date(2025, 6, 1) // July 1, 2025 (Month is 0-indexed)
   const today = new Date()
 
   const handleDayClick = (
-    day: z.infer<typeof allocatedCareDaySchema> | null,
+    day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
     date: Date
   ) => {
     if (day?.is_locked) return
 
-    // The popover will handle the day type change
+    if (day) {
+      if (day.type === 'Half Day') {
+        onDayTypeChange(day, 'Full Day', date)
+      } else {
+        onDayTypeChange(day, 'none', date)
+      }
+    } else {
+      onDayTypeChange(null, 'Half Day', date)
+    }
   }
 
   const startOfMonth = new Date(
@@ -87,8 +101,8 @@ export const Calendar: React.FC<CalendarProps> = ({
     onDateChange(newDate)
   }
 
-  const canGoPrev = !prevMonthAllocationFailed;
-  const canGoNext = !nextMonthAllocationFailed;
+  const canGoPrev = !prevMonthAllocationFailed
+  const canGoNext = !nextMonthAllocationFailed
 
   const renderDay = (d: Date) => {
     const dayStr = d.toISOString().split('T')[0]
@@ -110,7 +124,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       careDay?.is_locked ||
       (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart)
 
-    let dayClasses = `w-8 h-8 rounded-full flex items-center justify-center relative text-sm ${
+    let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
       isCurrentMonth && !isDayLocked
         ? 'cursor-pointer hover:opacity-80'
         : 'cursor-not-allowed'
@@ -171,7 +185,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         // Full Day
         switch (careDay.status) {
           case 'new':
-            dayClasses += ' bg-blue-200'
+            dayClasses += ' bg-[#b8c9be]'
             break
           case 'submitted':
             dayClasses += ' bg-primary'
@@ -183,7 +197,7 @@ export const Calendar: React.FC<CalendarProps> = ({
             break
           case 'deleted':
             if (careDay.last_submitted_at) {
-              dayClasses += ' bg-red-500' // Red for deleted and previously submitted
+              dayClasses += ' bg-[#b33363]' // Red for deleted and previously submitted
               textColorClass = 'text-white'
             } else {
               dayClasses += ' bg-gray-100' // Default gray for deleted but not submitted
@@ -197,13 +211,14 @@ export const Calendar: React.FC<CalendarProps> = ({
       dayClasses += ' bg-gray-100'
     }
 
+    if (isToday) {
+      borderColorClass = 'border-4 border-tertiary-background'
+    }
+
     dayClasses += ` ${borderColorClass}`
 
     const dayContent = (
       <>
-        {isToday && (
-          <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-        )}
         {careDay?.type === 'Half Day' && (
           <div
             className={`absolute left-0 top-0 h-full w-1/2 rounded-l-full ${innerHalfDayClass}`}
@@ -223,33 +238,13 @@ export const Calendar: React.FC<CalendarProps> = ({
       )
     } else {
       return (
-        <Popover key={dayStr}>
-          <PopoverTrigger asChild>
-            <div
-              key={d.toString()}
-              className={dayClasses}
-              onClick={() => handleDayClick(careDay || null, d)}
-            >
-              {dayContent}
-            </div>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto">
-            <div className="flex flex-col space-y-2">
-              <Button onClick={() => onDayTypeChange(careDay, 'Full Day', d)}>
-                Full Day
-              </Button>
-              <Button onClick={() => onDayTypeChange(careDay, 'Half Day', d)}>
-                Half Day
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={() => onDayTypeChange(careDay, 'none', d)}
-              >
-                Clear
-              </Button>
-            </div>
-          </PopoverContent>
-        </Popover>
+        <div
+          key={d.toString()}
+          className={dayClasses}
+          onClick={() => handleDayClick(careDay, d)}
+        >
+          {dayContent}
+        </div>
       )
     }
   }
@@ -272,7 +267,10 @@ export const Calendar: React.FC<CalendarProps> = ({
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto select-none">
+    <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl mx-auto select-none">
+      <div className="mt-6 text-center text-sm text-gray-500">
+        <p>Tap once for half day, twice for full day, three times to remove.</p>
+      </div>
       <div className="flex items-center justify-between mb-6">
         {canGoPrev ? (
           <button
@@ -304,8 +302,8 @@ export const Calendar: React.FC<CalendarProps> = ({
         )}
       </div>
 
-      <div className="space-y-2">
-        <div className="grid grid-cols-7 gap-1 mb-2">
+      <div className="space-y-4">
+        <div className="grid grid-cols-7 gap-2">
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
             <div
               key={day}
@@ -317,8 +315,15 @@ export const Calendar: React.FC<CalendarProps> = ({
         </div>
 
         {weeks.map((week, weekIndex) => (
-          <div key={weekIndex} className="grid grid-cols-7 gap-1">
-            {week.map((day) => renderDay(day))}
+          <div key={weekIndex} className="grid grid-cols-7">
+            {week.map((day) => (
+              <div
+                className="flex justify-center items-center py-1"
+                key={day.toISOString()}
+              >
+                {renderDay(day)}
+              </div>
+            ))}
           </div>
         ))}
       </div>
@@ -327,6 +332,26 @@ export const Calendar: React.FC<CalendarProps> = ({
         <Button type="button" onClick={onSubmit} disabled={!hasPendingChanges}>
           Submit
         </Button>
+      </div>
+      <div className="mt-6 flex justify-center space-x-4 text-sm">
+        <div className="flex items-center space-x-2">
+          <div className="w-4 h-4 rounded-full bg-blue-200"></div>
+          <span>
+            Needs Submission
+          </span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="w-4 h-4 rounded-full bg-primary text-primary-foreground"></div>
+          <span>Submitted</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="w-4 h-4 rounded-full bg-yellow-200"></div>
+          <span>Needs Resubmission</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="w-4 h-4 rounded-full bg-red-500"></div>
+          <span>Cancelled</span>
+        </div>
       </div>
     </div>
   )
