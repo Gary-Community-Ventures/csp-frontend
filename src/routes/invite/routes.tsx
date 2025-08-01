@@ -8,7 +8,7 @@ const inviteRoute = createRoute({
   path: '/invite',
   pendingComponent: LoadingPage,
   component: () => (
-    <main >
+    <main>
       <Outlet />
     </main>
   ),

@@ -2,7 +2,7 @@ const generalNavBar = {
   menu: {
     support: {
       en: 'Help/Support',
-      es: 'Ayuda/Soporte',
+      es: 'Ayuda/Apoyo',
     },
     yourProfile: {
       en: 'Your Profile',
@@ -106,7 +106,7 @@ export const translations = {
     providerPage: {
       header: {
         en: 'Pay your existing provider or add a new one. If you use a licensed childcare center or home, search for them below. If a friend, family member or neighbor cares for your child, invite them to be in the pilot. (They will need to apply and be approved to receive funding).',
-        es: 'Paga tu proveedor existente o agrega uno nuevo. Si usas un centro de cuidado de niños licenciado o un hogar, busca por ellos a continuación. Si un amigo, familiar o vecino cuida a tu niño, invitalos a participar en la piloto. (Necesitarán aplicar y ser aprobados para recibir fondos).',
+        es: 'Paga tu proveedor existente o agrega uno nuevo. Si usas un centro de cuidado infantil autorizado o un hogar, búscalos a continuación. Si un amigo, familiar o vecino cuida a tu niño, invitalos a participar en el piloto. (Necesitarán aplicar y ser aprobados para recibir fondos).',
       },
       yourProviders: {
         en: 'Your Providers',
@@ -118,7 +118,7 @@ export const translations = {
       },
       searchProviders: {
         en: 'Search for existing childcare centers or licensed home-based providers.',
-        es: 'Busca centros de cuidado de niños o proveedores de hogares licenciados.',
+        es: 'Busca centros de cuidado infantil o proveedores de hogar con licencia.',
       },
       searchProvidersButton: {
         en: 'Search',
@@ -177,7 +177,7 @@ export const translations = {
       },
       emailError: {
         en: 'Please enter a valid email address',
-        es: 'Por favor ingresa una dirección de correo electrónico válida',
+        es: 'Por favor ingresa un correo electrónico válido',
       },
       phoneError: {
         en: 'Please enter a valid phone number',
@@ -202,7 +202,7 @@ export const translations = {
       languageOptions: translatedLanguages,
       childrenHeader: {
         en: 'Which children does this provider care for?',
-        es: '¿Qué niños está cubierto por este proveedor?',
+        es: '¿A cuales niños cuida este proveedor?',
       },
       cancelButton: {
         en: 'Cancel',
@@ -293,7 +293,7 @@ export const translations = {
       },
       weHaveNotified: {
         en: 'We have notified about this error and will look into it.',
-        es: 'Hemos notificado sobre este error y lo investigaremos.',
+        es: 'Hemos sido notificados sobre este error y lo investigaremos.',
       },
       tryAgain: {
         en: 'Try again',
@@ -302,6 +302,42 @@ export const translations = {
       goHome: {
         en: 'Go home',
         es: 'Ir a la página de inicio',
+      },
+    },
+  },
+  invite: {
+    provider: {
+      header: {
+        en: ' wants to add you as a provider for the following children:',
+        es: ' quiere agregarte como proveedor para los siguientes niños:',
+      },
+      addFamilyHeader: {
+        en: 'Would you like to add this family?',
+        es: '¿Deseas agregar esta familia?',
+      },
+      dontHaveAccount: {
+        en: 'If you don’t have an account, you need to apply using the button below.',
+        es: 'Si no tienes una cuenta, necesitas aplicar usando el botón de abajo.',
+      },
+      dontHaveAccountButton: {
+        en: 'Apply',
+        es: 'Aplicar',
+      },
+      signIn: {
+        en: 'If you have an account, you can sign in using the button below.',
+        es: 'Si tienes una cuenta, puedes iniciar sesión usando el botón de abajo.',
+      },
+      signInButton: {
+        en: 'Sign in',
+        es: 'Iniciar sesión',
+      },
+      alreadySignedIn: {
+        en: 'Would you like to add this family?',
+        es: '¿Deseas agregar esta familia?',
+      },
+      alreadySignedInButton: {
+        en: 'Add',
+        es: 'Agregar',
       },
     },
   },
