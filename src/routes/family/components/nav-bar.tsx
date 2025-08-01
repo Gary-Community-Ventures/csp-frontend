@@ -49,7 +49,9 @@ export function FamilyNavBar() {
   return (
     <>
       <div className="flex justify-between bg-primary text-primary-foreground p-5">
-        <img src="/lala_logo_white.png" className="max-h-15" alt="logo" />
+        <Link to="/family/$childId/home">
+          <img src="/lala_logo_white.png" className="max-h-15" alt="logo" />
+        </Link>
         <div className="flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger>
