@@ -1,7 +1,7 @@
 import { LoadingPage } from '@/components/pages/loading-page'
 import { Outlet, createRoute } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
-import { ProviderInvitePage } from './pages/provider'
+import { loadProviderInvite, ProviderInvitePage } from './pages/provider'
 
 const inviteRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -14,10 +14,11 @@ const inviteRoute = createRoute({
   ),
 })
 
-const providerRoute = createRoute({
+export const providerRoute = createRoute({
   getParentRoute: () => inviteRoute,
-  path: '/provider/$familyId',
+  path: '/provider/$inviteId',
   component: ProviderInvitePage,
+  loader: loadProviderInvite,
 })
 
 export const inviteRouteTree = inviteRoute.addChildren([providerRoute])

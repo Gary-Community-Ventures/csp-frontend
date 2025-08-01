@@ -339,6 +339,18 @@ export const translations = {
         en: 'Add',
         es: 'Agregar',
       },
+      accpted: {
+        en: 'You have already successfully added this family.',
+        es: 'Ya has agregado exitosamente esta familia.',
+      },
+      toProviderHome: {
+        en: 'Go to Home',
+        es: 'Ir a Inicio',
+      },
+      successMessage: {
+        en: 'Successfully added family as a provider.',
+        es: 'Agregada exitosamente a la familia como proveedor.',
+      },
     },
   },
 } as const

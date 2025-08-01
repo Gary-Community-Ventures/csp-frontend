@@ -68,7 +68,6 @@ export async function loadProviders({
 }: {
   context: RouterContext
   abortController: AbortController
-  params: { childId?: number }
 }) {
   const res = await fetch(backendUrl('/family/licensed-providers'), {
     headers: await headersWithAuth(context),
