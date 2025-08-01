@@ -256,7 +256,12 @@ export const Calendar: React.FC<CalendarProps> = ({
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl mx-auto select-none">
-      <div className="mt-6 text-center text-sm text-gray-500">
+      <div className="flex justify-center items-center mb-4 text-sm font-medium space-x-2">
+        <span>Half Day: {formatAmount(paymentRate?.half_day_rate_cents || 0)}</span>
+        <span>•</span>
+        <span>Full Day: {formatAmount(paymentRate?.full_day_rate_cents || 0)}</span>
+      </div>
+      <div className="text-center text-sm text-gray-500 mb-4">
         <p>Tap once for half day, twice for full day, three times to remove.</p>
       </div>
       <div className="flex items-center justify-between mb-6">
@@ -333,7 +338,7 @@ export const Calendar: React.FC<CalendarProps> = ({
           <span>Needs Resubmission</span>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="w-4 h-4 rounded-full bg-red-500"></div>
+          <div className="w-4 h-4 rounded-full bg-[#b33363]"></div>
           <span>Cancelled</span>
         </div>
       </div>
