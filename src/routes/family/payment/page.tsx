@@ -273,16 +273,17 @@ export function PaymentPage() {
   }
 
   const provider = providers.find((p) => p.id === providerId)
+  const child = children.find((c) => c.id === selectedChildInfo.id)
 
   return (
     <div className="flex flex-col items-center gap-8 p-4">
       <div className="text-center">
-        <h2 className="text-2xl font-bold">Payment For {provider?.name}</h2>
+        <h2 className="text-2xl font-bold">Payment for {provider?.name}</h2>
         <p className="text-muted-foreground max-w-prose">
-          Add your planned care days for this provider for this child. Hit
-          submit when you want to send these days to your provider. You can
-          always modify days up until the Monday of the care week. At that point
-          the week is locked and a transaction will be created to pay the provider for that week.
+          Add your planned care days for {provider?.name} for {child?.firstName}. Hit
+          submit when you want to send these days to your {provider?.name}. You can
+          always modify days up until the Monday of the week care is taking place. At that point
+          the week is locked and a Transaction will be created to pay the provider for that week.
         </p>
       </div>
       <div className="w-full max-w-4xl">
