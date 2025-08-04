@@ -2,7 +2,7 @@ const generalNavBar = {
   menu: {
     support: {
       en: 'Help/Support',
-      es: 'Ayuda/Soporte',
+      es: 'Ayuda/Apoyo',
     },
     yourProfile: {
       en: 'Your Profile',
@@ -42,7 +42,23 @@ const statuses = {
     en: 'Denied',
     es: 'Denegado',
   },
-}
+} as const
+
+const submitButton = {
+  en: 'Submit',
+  es: 'Enviar',
+} as const
+
+const translatedLanguages = {
+  en: {
+    en: 'English',
+    es: 'Inglés',
+  },
+  es: {
+    en: 'Spanish',
+    es: 'Español',
+  },
+} as const
 
 export const translations = {
   family: {
@@ -90,7 +106,7 @@ export const translations = {
     providerPage: {
       header: {
         en: 'Pay your existing provider or add a new one. If you use a licensed childcare center or home, search for them below. If a friend, family member or neighbor cares for your child, invite them to be in the pilot. (They will need to apply and be approved to receive funding).',
-        es: 'Paga tu proveedor existente o agrega uno nuevo. Si usas un centro de cuidado de niños licenciado o un hogar, busca por ellos a continuación. Si un amigo, familiar o vecino cuida a tu niño, invitalos a participar en la piloto. (Necesitarán aplicar y ser aprobados para recibir fondos).',
+        es: 'Paga tu proveedor existente o agrega uno nuevo. Si usas un centro de cuidado infantil autorizado o un hogar, búscalos a continuación. Si un amigo, familiar o vecino cuida a tu niño, invitalos a participar en el piloto. (Necesitarán aplicar y ser aprobados para recibir fondos).',
       },
       yourProviders: {
         en: 'Your Providers',
@@ -102,7 +118,7 @@ export const translations = {
       },
       searchProviders: {
         en: 'Search for existing childcare centers or licensed home-based providers.',
-        es: 'Busca centros de cuidado de niños o proveedores de hogares licenciados.',
+        es: 'Busca centros de cuidado infantil o proveedores de hogar con licencia.',
       },
       searchProvidersButton: {
         en: 'Search',
@@ -113,8 +129,8 @@ export const translations = {
         es: 'Invita a tu Familia, Amigo o Vecino',
       },
       inviteFfnButton: {
-        en: 'Invite (Coming Soon)',
-        es: 'Invitar (Próximamente)',
+        en: 'Invite',
+        es: 'Invitar',
       },
     },
     findProviderPage: {
@@ -143,10 +159,7 @@ export const translations = {
           en: 'Please select at least one child',
           es: 'Por favor selecciona al menos un niño',
         },
-        submitButton: {
-          en: 'Submit',
-          es: 'Enviar',
-        },
+        submitButton: submitButton,
         closeButton: {
           en: 'Close',
           es: 'Cerrar',
@@ -154,6 +167,72 @@ export const translations = {
         successMessage: {
           en: 'Successfully invited ',
           es: 'Invitado exitosamente ',
+        },
+      },
+    },
+    inviteProviderPage: {
+      header: {
+        en: 'Invite your Family, Friend, or Neighbor Caregiver',
+        es: 'Invita a tu Familia, Amigo o Vecino',
+      },
+      emailError: {
+        en: 'Please enter a valid email address',
+        es: 'Por favor ingresa un correo electrónico válido',
+      },
+      phoneError: {
+        en: 'Please enter a valid phone number',
+        es: 'Por favor ingresa un número de teléfono válido',
+      },
+      emailLabel: {
+        en: 'Provider Email',
+        es: 'Correo Electrónico',
+      },
+      phoneLabel: {
+        en: 'Provider Phone',
+        es: 'Teléfono',
+      },
+      langLabel: {
+        en: 'What language should the invite be sent in?',
+        es: '¿Qué idioma debe ser el mensaje de invitación?',
+      },
+      langPlaceholder: {
+        en: 'Select Language',
+        es: 'Seleccionar Idioma',
+      },
+      languageOptions: translatedLanguages,
+      childrenHeader: {
+        en: 'Which children does this provider care for?',
+        es: '¿A cuales niños cuida este proveedor?',
+      },
+      cancelButton: {
+        en: 'Cancel',
+        es: 'Cancelar',
+      },
+      submitButton: submitButton,
+      successMessage: {
+        en: 'Invite sent successfully',
+        es: 'Invitación enviada exitosamente',
+      },
+      confirmation: {
+        header: {
+          en: 'Invitation Sent',
+          es: 'Invitación Enviada',
+        },
+        successMessage: {
+          en: 'An invitation has been sent to the following email and phone number.',
+          es: 'Se ha enviado una invitación al siguiente correo electrónico y número de teléfono.',
+        },
+        emailLabel: {
+          en: 'Email',
+          es: 'Correo Electrónico',
+        },
+        phoneLabel: {
+          en: 'Phone',
+          es: 'Teléfono',
+        },
+        backButton: {
+          en: 'Back to Providers',
+          es: 'Volver a Proveedores',
         },
       },
     },
@@ -236,7 +315,7 @@ export const translations = {
       },
       weHaveNotified: {
         en: 'We have notified about this error and will look into it.',
-        es: 'Hemos notificado sobre este error y lo investigaremos.',
+        es: 'Hemos sido notificados sobre este error y lo investigaremos.',
       },
       tryAgain: {
         en: 'Try again',
@@ -245,6 +324,54 @@ export const translations = {
       goHome: {
         en: 'Go home',
         es: 'Ir a la página de inicio',
+      },
+    },
+  },
+  invite: {
+    provider: {
+      header: {
+        en: ' wants to add you as a provider for the following children:',
+        es: ' quiere agregarte como proveedor para los siguientes niños:',
+      },
+      addFamilyHeader: {
+        en: 'Would you like to add this family?',
+        es: '¿Deseas agregar esta familia?',
+      },
+      dontHaveAccount: {
+        en: 'If you don’t have an account, you need to apply using the button below.',
+        es: 'Si no tienes una cuenta, necesitas aplicar usando el botón de abajo.',
+      },
+      dontHaveAccountButton: {
+        en: 'Apply',
+        es: 'Aplicar',
+      },
+      signIn: {
+        en: 'If you have an account, you can sign in using the button below.',
+        es: 'Si tienes una cuenta, puedes iniciar sesión usando el botón de abajo.',
+      },
+      signInButton: {
+        en: 'Sign in',
+        es: 'Iniciar sesión',
+      },
+      alreadySignedIn: {
+        en: 'Would you like to add this family?',
+        es: '¿Deseas agregar esta familia?',
+      },
+      alreadySignedInButton: {
+        en: 'Add',
+        es: 'Agregar',
+      },
+      accpted: {
+        en: 'You have already successfully added this family.',
+        es: 'Ya has agregado exitosamente esta familia.',
+      },
+      toProviderHome: {
+        en: 'Go to Home',
+        es: 'Ir a Inicio',
+      },
+      successMessage: {
+        en: 'Successfully added family as a provider.',
+        es: 'Agregada exitosamente a la familia como proveedor.',
       },
     },
   },

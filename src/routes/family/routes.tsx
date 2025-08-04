@@ -7,6 +7,8 @@ import { FamilyNavBar } from './components/nav-bar'
 import { FamilyProvidersPage } from './pages/providers'
 import { PaymentPage } from './payment/page'
 import FindProviderPage, { loadProviders } from './pages/find-provider'
+import { InviteProviderPage } from './pages/invite-provider'
+import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -83,6 +85,21 @@ export const findProviderRoute = createRoute({
   loader: loadProviders,
 })
 
+export const inviteProviderRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'providers/invite',
+  component: InviteProviderPage,
+})
+
+export const inviteProviderConfirmationRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'providers/invite/confirmation',
+  validateSearch: (search: { email: string; phone: string }) => {
+    return search
+  },
+  component: InviteProviderConfirmationPage,
+})
+
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   /* TODO renable when messages/activity are implemented
@@ -93,6 +110,8 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   settingsRoute,
   paymentRoute,
   findProviderRoute,
+  inviteProviderRoute,
+  inviteProviderConfirmationRoute,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([

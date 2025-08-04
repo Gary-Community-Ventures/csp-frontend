@@ -14,6 +14,7 @@ import { providerRouteTree } from './provider/routes'
 import { familyRouteTree } from './family/routes'
 import { authRouteTree } from './auth/routes'
 import type { UserResource, GetToken, LoadedClerk } from '@clerk/types'
+import { inviteRouteTree } from './invite/routes'
 
 export type RouterContext = {
   user: UserResource | null
@@ -63,6 +64,7 @@ export const routeTree = rootRoute.addChildren([
   familyRouteTree,
   authRouteTree,
   calendarRoute,
+  inviteRouteTree,
 ])
 
 export const router = new Router({

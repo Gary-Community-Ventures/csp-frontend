@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
-type TagTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'strong' | 'div'
+export type HeaderTagTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'strong' | 'div'
 
 type BaseProps = {
   children: ReactNode
@@ -9,11 +9,11 @@ type BaseProps = {
 }
 
 type HeaderProps = {
-  [T in TagTypes]: {
+  [T in HeaderTagTypes]: {
     Tag?: T
   } & BaseProps &
     Omit<ComponentPropsWithoutRef<T>, keyof BaseProps>
-}[TagTypes]
+}[HeaderTagTypes]
 
 export function Header({
   children,
