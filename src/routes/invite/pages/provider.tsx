@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { WhiteCard } from '@/components/white-card'
 import { Text, useText } from '@/translations/wrapper'
-import { SignedIn, SignedOut, SignInButton, useClerk } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, useClerk } from '@clerk/clerk-react'
 import { translations } from '@/translations/text'
 import type { RouterContext } from '@/routes/router'
 import {
