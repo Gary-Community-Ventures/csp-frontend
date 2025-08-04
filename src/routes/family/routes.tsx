@@ -1,4 +1,4 @@
-import { Outlet, createRoute, redirect } from '@tanstack/react-router'
+import { Outlet, createRoute } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
