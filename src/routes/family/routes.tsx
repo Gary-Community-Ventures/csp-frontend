@@ -10,6 +10,8 @@ import ReviewPage from './pages/payment/review'
 import ConfirmationPage from './pages/payment/confirmation'
 import { PaymentFlowProvider } from './pages/payment/context'
 import FindProviderPage, { loadProviders } from './pages/find-provider'
+import { InviteProviderPage } from './pages/invite-provider'
+import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -105,6 +107,21 @@ export const findProviderRoute = createRoute({
   loader: loadProviders,
 })
 
+export const inviteProviderRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'providers/invite',
+  component: InviteProviderPage,
+})
+
+export const inviteProviderConfirmationRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'providers/invite/confirmation',
+  validateSearch: (search: { email: string; phone: string }) => {
+    return search
+  },
+  component: InviteProviderConfirmationPage,
+})
+
 const paymentRouteTree = paymentRoute.addChildren([
   paymentIndexRoute,
   reviewRoute,
@@ -121,6 +138,8 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   settingsRoute,
   paymentRouteTree,
   findProviderRoute,
+  inviteProviderRoute,
+  inviteProviderConfirmationRoute,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([
