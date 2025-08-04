@@ -11,17 +11,77 @@ import { z } from 'zod'
 import { useBlocker } from '@tanstack/react-router'
 
 interface CalendarProps {
-  allocation: z.infer<typeof monthAllocationSchema>;
-  onDateChange: (date: Date) => void;
+  allocation: z.infer<typeof monthAllocationSchema>
+  onDateChange: (date: Date) => void
   onDayTypeChange: (
     day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
     type: 'Full Day' | 'Half Day' | 'none',
     selectedDate: Date
-  ) => void;
-  prevMonthAllocationFailed: boolean;
-  nextMonthAllocationFailed: boolean;
-  paymentRate: z.infer<typeof paymentRateSchema> | null;
+  ) => void
+  prevMonthAllocationFailed: boolean
+  nextMonthAllocationFailed: boolean
+  paymentRate: z.infer<typeof paymentRateSchema> | null
 }
+
+const getDayStyles = (status: string, type: 'Full Day' | 'Half Day') => {
+  let styles = {
+    dayClasses: '',
+    innerHalfDayClass: '',
+    textColorClass: 'text-gray-800',
+    borderColorClass: '',
+    showX: false,
+    xColorClass: '',
+  };
+
+  if (type === 'Half Day') {
+    switch (status) {
+      case 'new':
+        styles.dayClasses = 'bg-blue-100';
+        styles.innerHalfDayClass = 'bg-blue-200';
+        break;
+      case 'submitted':
+        styles.dayClasses = 'bg-secondary-background';
+        styles.innerHalfDayClass = 'bg-primary';
+        styles.textColorClass = 'text-primary-foreground';
+        styles.borderColorClass = 'border-2 border-primary-foreground';
+        break;
+      case 'needs_resubmission':
+        styles.dayClasses = 'bg-yellow-100';
+        styles.innerHalfDayClass = 'bg-yellow-200';
+        break;
+      case 'delete_not_submitted':
+        styles.dayClasses = 'bg-transparent';
+        styles.xColorClass = 'text-[#b33363]';
+        styles.showX = true;
+        break;
+      default:
+        styles.dayClasses = 'bg-gray-50';
+        styles.innerHalfDayClass = 'bg-gray-100';
+    }
+  } else { // Full Day
+    switch (status) {
+      case 'new':
+        styles.dayClasses = 'bg-blue-200';
+        break;
+      case 'submitted':
+        styles.dayClasses = 'bg-primary';
+        styles.textColorClass = 'text-primary-foreground';
+        styles.borderColorClass = 'border-2 border-primary-foreground';
+        break;
+      case 'needs_resubmission':
+        styles.dayClasses = 'bg-yellow-200';
+        break;
+      case 'delete_not_submitted':
+        styles.dayClasses = 'bg-transparent';
+        styles.xColorClass = 'text-[#b33363]';
+        styles.showX = true;
+        break;
+      default:
+        styles.dayClasses = 'bg-gray-100';
+    }
+  }
+  return styles;
+};
 
 export const Calendar: React.FC<CalendarProps> = ({
   allocation,
@@ -40,6 +100,10 @@ export const Calendar: React.FC<CalendarProps> = ({
     date: Date
   ) => {
     if (day?.is_locked) return
+
+    if (day?.is_deleted) {
+      onDayTypeChange(null, 'Half Day', date)
+    }
 
     if (day) {
       if (day.type === 'Half Day') {
@@ -128,85 +192,29 @@ export const Calendar: React.FC<CalendarProps> = ({
         : 'cursor-not-allowed'
     }`
     let innerHalfDayClass = ''
-    let textColorClass = 'text-gray-800'
+    let textColorClass = 'text-gray-800' // Default text color
     let borderColorClass = ''
+    let showX = false
+    let xColorClass = ''
 
     if (!isCurrentMonth) {
       textColorClass = 'text-gray-300'
-    } else if (isDayLocked) {
-      dayClasses += ' bg-gray-200'
-      textColorClass = 'text-gray-400'
+      dayClasses += ' bg-gray-100' // Default background for non-current month days
     } else if (careDay) {
-      if (careDay.type === 'Half Day') {
-        switch (careDay.status) {
-          case 'new':
-            dayClasses += ' bg-blue-100' // Lighter background for the full circle
-            innerHalfDayClass = 'bg-blue-200' // Main color for the half
-            break
-          case 'submitted':
-            dayClasses += ' bg-secondary-background' // Neutral lighter background for submitted half-day
-            innerHalfDayClass = 'bg-primary' // Main color for the half
-            textColorClass = 'text-primary-foreground'
-            borderColorClass = 'border-2 border-primary-foreground'
-            break
-          case 'needs_resubmission':
-            dayClasses += ' bg-yellow-100'
-            innerHalfDayClass = 'bg-yellow-200'
-            break
-          case 'deleted':
-            console.log('careDay', careDay)
-            console.log('last_submitted_at', careDay.last_submitted_at)
-            console.log('deleted_at', careDay.deleted_at)
-
-            if (
-              careDay.last_submitted_at &&
-              careDay.deleted_at &&
-              new Date(careDay.deleted_at) > new Date(careDay.last_submitted_at)
-            ) {
-              console.log(
-                new Date(careDay.deleted_at) >
-                  new Date(careDay.last_submitted_at)
-              )
-              dayClasses += ' bg-gray-50' // Lighter background for the full circle
-              innerHalfDayClass = 'bg-red-500' // Red for deleted and previously submitted
-              textColorClass = 'text-white'
-            } else {
-              dayClasses += ' bg-gray-50'
-              innerHalfDayClass = 'bg-gray-100' // Default gray for deleted but not submitted
-            }
-            break
-          default:
-            dayClasses += ' bg-gray-50'
-            innerHalfDayClass = 'bg-gray-100'
-        }
-      } else {
-        // Full Day
-        switch (careDay.status) {
-          case 'new':
-            dayClasses += ' bg-[#b8c9be]'
-            break
-          case 'submitted':
-            dayClasses += ' bg-primary'
-            textColorClass = 'text-primary-foreground'
-            borderColorClass = 'border-2 border-primary-foreground'
-            break
-          case 'needs_resubmission':
-            dayClasses += ' bg-yellow-200'
-            break
-          case 'deleted':
-            if (careDay.last_submitted_at) {
-              dayClasses += ' bg-[#b33363]' // Red for deleted and previously submitted
-              textColorClass = 'text-white'
-            } else {
-              dayClasses += ' bg-gray-100' // Default gray for deleted but not submitted
-            }
-            break
-          default:
-            dayClasses += ' bg-gray-100'
-        }
-      }
+      const styles = getDayStyles(careDay.status, careDay.type);
+      dayClasses += ` ${styles.dayClasses}`;
+      innerHalfDayClass = styles.innerHalfDayClass;
+      textColorClass = styles.textColorClass;
+      borderColorClass = styles.borderColorClass;
+      showX = styles.showX;
+      xColorClass = styles.xColorClass;
     } else {
-      dayClasses += ' bg-gray-100'
+      dayClasses += ' bg-gray-100' // Default background for empty days
+    }
+
+    // Apply locked styling *after* status styling
+    if (isDayLocked) {
+      dayClasses += ' bg-gray-200 opacity-70'; // Add grey background and slight opacity to show original color underneath
     }
 
     if (isToday) {
@@ -217,6 +225,13 @@ export const Calendar: React.FC<CalendarProps> = ({
 
     const dayContent = (
       <>
+        {showX && (
+          <div
+            className={`absolute inset-0 flex items-center justify-center text-4xl font-bold ${xColorClass}`}
+          >
+            X
+          </div>
+        )}
         {careDay?.type === 'Half Day' && (
           <div
             className={`absolute left-0 top-0 h-full w-1/2 rounded-l-full ${innerHalfDayClass}`}
@@ -247,8 +262,6 @@ export const Calendar: React.FC<CalendarProps> = ({
     }
   }
 
-  
-
   const weeks: Date[][] = []
   for (let i = 0; i < days.length; i += 7) {
     weeks.push(days.slice(i, i + 7))
@@ -256,10 +269,14 @@ export const Calendar: React.FC<CalendarProps> = ({
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl mx-auto select-none">
-      <div className="flex justify-center items-center mb-4 text-sm font-medium space-x-2">
-        <span>Half Day: {formatAmount(paymentRate?.half_day_rate_cents || 0)}</span>
+      <div className="flex justify-center items-center mb-2 text-sm font-medium space-x-2">
+        <span>
+          Half Day: {formatAmount(paymentRate?.half_day_rate_cents || 0)}
+        </span>
         <span>•</span>
-        <span>Full Day: {formatAmount(paymentRate?.full_day_rate_cents || 0)}</span>
+        <span>
+          Full Day: {formatAmount(paymentRate?.full_day_rate_cents || 0)}
+        </span>
       </div>
       <div className="text-center text-sm text-gray-500 mb-4">
         <p>Tap once for half day, twice for full day, three times to remove.</p>
@@ -321,13 +338,10 @@ export const Calendar: React.FC<CalendarProps> = ({
         ))}
       </div>
 
-      
       <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 text-sm md:flex md:justify-center md:space-x-4">
         <div className="flex items-center space-x-2">
           <div className="w-4 h-4 rounded-full bg-blue-200"></div>
-          <span>
-            Needs Submission
-          </span>
+          <span>Needs Submission</span>
         </div>
         <div className="flex items-center space-x-2">
           <div className="w-4 h-4 rounded-full bg-primary text-primary-foreground"></div>

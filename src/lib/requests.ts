@@ -193,10 +193,10 @@ export async function createPaymentRate(
     method: 'POST',
     headers: await headersWithAuth(context),
     body: JSON.stringify({
-      provider_id: providerId,
-      child_id: childId,
-      half_day_rate: halfDayRateCents,
-      full_day_rate: fullDayRateCents,
+      google_sheets_provider_id: providerId,
+      google_sheets_child_id: childId,
+      half_day_rate_cents: halfDayRateCents,
+      full_day_rate_cents: fullDayRateCents,
     }),
   })
   handleStatusCodes(context, res)

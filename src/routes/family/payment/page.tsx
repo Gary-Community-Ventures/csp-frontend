@@ -209,6 +209,7 @@ export function PaymentPage() {
     type: 'Full Day' | 'Half Day' | 'none',
     selectedDate: Date
   ) => {
+    console.log('handleDayTypeChange', { day, type, selectedDate })
     if (type === 'none') {
       if (day) {
         deleteCareDayMutation(day.id)
