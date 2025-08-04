@@ -85,7 +85,7 @@ export const allocatedCareDaySchema = z.object({
   is_deleted: z.boolean(),
   needs_resubmission: z.boolean(),
   delete_not_submitted: z.boolean(),
-  is_new_since_submission: z.boolean(),
+  is_new: z.boolean(),
   status: z.string(),
 });
 

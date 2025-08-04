@@ -210,7 +210,6 @@ export function PaymentPage() {
     type: 'Full Day' | 'Half Day' | 'none',
     selectedDate: Date
   ) => {
-    console.log('handleDayTypeChange', { day, type, selectedDate })
     if (type === 'none') {
       if (day) {
         deleteCareDayMutation(day.id)
@@ -243,7 +242,7 @@ export function PaymentPage() {
     (careDay) =>
       careDay.status === 'new' ||
       careDay.status === 'needs_resubmission' ||
-      careDay.status === 'deleted'
+      careDay.status === 'delete_not_submitted' 
   )
 
   useBlocker(
@@ -273,7 +272,6 @@ export function PaymentPage() {
               type="number"
               value={halfDayRate}
               onChange={(e) => setHalfDayRate(e.target.value)}
-              placeholder="e.g., 25.00"
             />
           </div>
           <div className="space-y-2">
@@ -283,7 +281,6 @@ export function PaymentPage() {
               type="number"
               value={fullDayRate}
               onChange={(e) => setFullDayRate(e.target.value)}
-              placeholder="e.g., 50.00"
             />
           </div>
           <Button onClick={handleSetPaymentRate} className="w-full">
