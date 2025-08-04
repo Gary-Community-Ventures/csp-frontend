@@ -213,6 +213,28 @@ export const translations = {
         en: 'Invite sent successfully',
         es: 'Invitación enviada exitosamente',
       },
+      confirmation: {
+        header: {
+          en: 'Invitation Sent',
+          es: 'Invitación Enviada',
+        },
+        successMessage: {
+          en: 'An invitation has been sent to the following email and phone number.',
+          es: 'Se ha enviado una invitación al siguiente correo electrónico y número de teléfono.',
+        },
+        emailLabel: {
+          en: 'Email',
+          es: 'Correo Electrónico',
+        },
+        phoneLabel: {
+          en: 'Phone',
+          es: 'Teléfono',
+        },
+        backButton: {
+          en: 'Back to Providers',
+          es: 'Volver a Proveedores',
+        },
+      },
     },
   },
   provider: {

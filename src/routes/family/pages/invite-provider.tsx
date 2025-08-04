@@ -48,8 +48,8 @@ export function InviteProviderPage() {
   })
 
   const [formData, setFormData] = useState<z.infer<typeof schema>>({
-    email: 'cpena@garycommunity.org', // FIXME:
-    phone: '+1 720 237 3591', // FIXME:
+    email: '',
+    phone: '',
     children: [selectedChildInfo.id],
     lang: lang,
   })
@@ -71,8 +71,13 @@ export function InviteProviderPage() {
           context
         )
           .then(() => {
-            toast(text(t.successMessage))
-            navigate({ to: '/family/$childId/providers' })
+            navigate({
+              to: '/family/$childId/providers/invite/confirmation',
+              search: {
+                email: data.email,
+                phone: data.phone,
+              },
+            })
           })
           .finally(() => {
             setSubmitting(false)
