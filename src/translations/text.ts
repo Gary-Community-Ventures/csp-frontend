@@ -62,6 +62,128 @@ const translatedLanguages = {
 
 export const translations = {
   family: {
+    calendar: {
+      halfDay: {
+        en: 'Half Day:',
+        es: 'Medio Día:',
+      },
+      fullDay: {
+        en: 'Full Day:',
+        es: 'Día Completo:',
+      },
+      tapInstructions: {
+        en: 'Tap once for half day, twice for full day, three times to remove.',
+        es: 'Toca una vez para medio día, dos veces para día completo, tres veces para eliminar.',
+      },
+      daysOfWeek: {
+        mon: {
+          en: 'Mon',
+          es: 'Lun',
+        },
+        tue: {
+          en: 'Tue',
+          es: 'Mar',
+        },
+        wed: {
+          en: 'Wed',
+          es: 'Mié',
+        },
+        thu: {
+          en: 'Thu',
+          es: 'Jue',
+        },
+        fri: {
+          en: 'Fri',
+          es: 'Vie',
+        },
+        sat: {
+          en: 'Sat',
+          es: 'Sáb',
+        },
+        sun: {
+          en: 'Sun',
+          es: 'Dom',
+        },
+      },
+      needsSubmission: {
+        en: 'Needs Submission',
+        es: 'Necesita Envío',
+      },
+      submitted: {
+        en: 'Submitted',
+        es: 'Enviado',
+      },
+      needsResubmission: {
+        en: 'Needs Resubmission',
+        es: 'Necesita Reenvío',
+      },
+      cancelled: {
+        en: 'Cancelled',
+        es: 'Cancelado',
+      },
+    },
+    paymentPage: {
+      loading: {
+        en: 'Loading...',
+        es: 'Cargando...',
+      },
+      setPaymentRates: {
+        en: 'Set Payment Rates',
+        es: 'Establecer Tarifas de Pago',
+      },
+      setPaymentRatesDescription: {
+        en: 'Before you can manage care days, please set the payment rates for this child and provider.',
+        es: 'Antes de poder gestionar los días de cuidado, por favor establece las tarifas de pago para este niño y proveedor.',
+      },
+      halfDayRate: {
+        en: 'Half Day Rate (USD)',
+        es: 'Tarifa de Medio Día (USD)',
+      },
+      fullDayRate: {
+        en: 'Full Day Rate (USD)',
+        es: 'Tarifa de Día Completo (USD)',
+      },
+      setRatesButton: {
+        en: 'Set Rates',
+        es: 'Establecer Tarifas',
+      },
+      paymentRateSuccess: {
+        en: 'Payment rate set successfully!',
+        es: '¡Tarifa de pago establecida con éxito!',
+      },
+      paymentRateError: {
+        en: 'Failed to set payment rate:',
+        es: 'Error al establecer la tarifa de pago:',
+      },
+      invalidRatesError: {
+        en: 'Please enter valid positive numbers for both rates.',
+        es: 'Por favor, introduce números positivos válidos para ambas tarifas.',
+      },
+      unsavedChangesBlocker: {
+        en: 'You have unsaved changes. Are you sure you want to leave?',
+        es: 'Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?',
+      },
+      paymentFor: {
+        en: 'Payment for',
+        es: 'Pago para',
+      },
+      paymentDescription: {
+        en: 'Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. You can modify days up until the Monday of the week care is taking place. At that point, the week will be locked.',
+        es: 'Selecciona los días de cuidado con {providerName} para {childFirstName}. Haz clic en enviar para mandar estos días a tu proveedor. Puedes modificar los días hasta el lunes de la semana en que se realizará el cuidado. En ese momento, la semana se bloqueará.',
+      },
+      monthBalance: {
+        en: 'Month Balance',
+        es: 'Balance del Mes',
+      },
+      submitButton: {
+        en: 'Submit',
+        es: 'Enviar',
+      },
+      submittingButton: {
+        en: 'Submitting...',
+        es: 'Enviando...',
+      },
+    },
     navBar: {
       menu: {
         ...generalNavBar.menu,

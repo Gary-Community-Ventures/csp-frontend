@@ -28,7 +28,7 @@ import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
 
 export function PaymentPage() {
-  const t = translations.family.home
+  const t = translations.family.paymentPage
   const { providerId } = paymentRoute.useParams()
   const { selectedChildInfo, providers, children } = useFamilyContext()
   const { context } = paymentRoute.useRouteContext()
@@ -198,10 +198,10 @@ export function PaymentPage() {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['paymentRate'] })
-      toast.success('Payment rate set successfully!')
+      toast.success(t.paymentRateSuccess.en)
     },
     onError: (error) => {
-      toast.error(`Failed to set payment rate: ${error.message}`)
+      toast.error(`${t.paymentRateError.en} ${error.message}`)
     },
   })
 
@@ -229,7 +229,7 @@ export function PaymentPage() {
     const full = parseFloat(fullDayRate) * 100
 
     if (isNaN(half) || isNaN(full) || half <= 0 || full <= 0) {
-      toast.error('Please enter valid positive numbers for both rates.')
+      toast.error(t.invalidRatesError.en)
       return
     }
     createPaymentRateMutation({
@@ -247,44 +247,43 @@ export function PaymentPage() {
 
   useBlocker(
     () => hasPendingChanges,
-    'You have unsaved changes. Are you sure you want to leave?'
+    t.unsavedChangesBlocker.en
   )
 
   if (isLoadingAllocation || isLoadingPaymentRate || !context) {
-    return <div>Loading...</div>
+    return <Text text={t.loading} />
   }
 
   if (isErrorPaymentRate || !paymentRate) {
     return (
       <Card className="w-full max-w-md mx-auto mt-8">
         <CardHeader>
-          <CardTitle>Set Payment Rates</CardTitle>
+          <CardTitle><Text text={t.setPaymentRates} /></CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p>
-            Before you can manage care days, please set the payment rates for
-            this child and provider.
-          </p>
+          <Text text={t.setPaymentRatesDescription} />
           <div className="space-y-2">
-            <Label htmlFor="halfDayRate">Half Day Rate (USD)</Label>
+            <Label htmlFor="halfDayRate"><Text text={t.halfDayRate} /></Label>
             <Input
               id="halfDayRate"
               type="number"
               value={halfDayRate}
               onChange={(e) => setHalfDayRate(e.target.value)}
+              placeholder="e.g., 25.00"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="fullDayRate">Full Day Rate (USD)</Label>
+            <Label htmlFor="fullDayRate"><Text text={t.fullDayRate} /></Label>
             <Input
               id="fullDayRate"
               type="number"
               value={fullDayRate}
               onChange={(e) => setFullDayRate(e.target.value)}
+              placeholder="e.g., 50.00"
             />
           </div>
           <Button onClick={handleSetPaymentRate} className="w-full">
-            Set Rates
+            <Text text={t.setRatesButton} />
           </Button>
         </CardContent>
       </Card>
@@ -297,16 +296,19 @@ export function PaymentPage() {
   return (
     <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">
       <div className="text-center  w-full max-w-md md:max-w-2xl">
-        <Header>Payment for {provider?.name}</Header>
-        <p>
-          Select the days you need care with {provider?.name} for{' '}
-          {child?.firstName}. Click submit to send these days to your provider.
-          You can modify days up until the Monday of the week care is taking
-          place. At that point, the week will be locked.
-        </p>
+        <Header>
+          <Text text={t.paymentFor} data={{ providerName: provider?.name }} />
+        </Header>
+        <Text
+          text={t.paymentDescription}
+          data={{
+            providerName: provider?.name,
+            childFirstName: child?.firstName,
+          }}
+        />
       </div>
       <div className="bg-tertiary-background rounded-3xl w-full max-w-md md:max-w-2xl p-5">
-        <div className="text-sm text-center pb-2">Month Balance</div>
+        <div className="text-sm text-center pb-2"><Text text={t.monthBalance} /></div>
         <div className="text-3xl text-center">
           {formatAmount(allocation?.remaining_cents || 0)}
         </div>
@@ -332,10 +334,10 @@ export function PaymentPage() {
         >
           {isSubmitting ? (
             <div className="flex items-center justify-center gap-2">
-              <Spinner /> Submitting...
+              <Spinner /> <Text text={t.submittingButton} />
             </div>
           ) : (
-            'Submit'
+            <Text text={t.submitButton} />
           )}
         </Button>
       </div>

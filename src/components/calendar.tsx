@@ -9,6 +9,8 @@ import { formatAmount } from '@/lib/currency'
 import { Button } from './ui/button'
 import { z } from 'zod'
 import { useBlocker } from '@tanstack/react-router'
+import { translations } from '@/translations/text'
+import { Text } from '@/translations/wrapper'
 
 interface CalendarProps {
   allocation: z.infer<typeof monthAllocationSchema>
@@ -91,6 +93,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   nextMonthAllocationFailed,
   paymentRate,
 }) => {
+  const t = translations.family.calendar
   const [currentDate, setCurrentDate] = useState(new Date())
   const MIN_DATE = new Date(2025, 6, 1) // July 1, 2025 (Month is 0-indexed)
   const today = new Date()
@@ -271,15 +274,15 @@ export const Calendar: React.FC<CalendarProps> = ({
     <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl mx-auto select-none">
       <div className="flex justify-center items-center mb-2 text-sm font-medium space-x-2">
         <span>
-          Half Day: {formatAmount(paymentRate?.half_day_rate_cents || 0)}
+          <Text text={t.halfDay} /> {formatAmount(paymentRate?.half_day_rate_cents || 0)}
         </span>
         <span>•</span>
         <span>
-          Full Day: {formatAmount(paymentRate?.full_day_rate_cents || 0)}
+          <Text text={t.fullDay} /> {formatAmount(paymentRate?.full_day_rate_cents || 0)}
         </span>
       </div>
       <div className="text-center text-sm text-gray-500 mb-4">
-        <p>Tap once for half day, twice for full day, three times to remove.</p>
+        <Text text={t.tapInstructions} />
       </div>
       <div className="flex items-center justify-between mb-6">
         {canGoPrev ? (
@@ -314,12 +317,12 @@ export const Calendar: React.FC<CalendarProps> = ({
 
       <div className="space-y-4">
         <div className="grid grid-cols-7 gap-2">
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+          {[t.daysOfWeek.mon, t.daysOfWeek.tue, t.daysOfWeek.wed, t.daysOfWeek.thu, t.daysOfWeek.fri, t.daysOfWeek.sat, t.daysOfWeek.sun].map((day) => (
             <div
-              key={day}
+              key={day.en}
               className="text-xs font-medium text-gray-500 text-center py-2"
             >
-              {day}
+              <Text text={day} />
             </div>
           ))}
         </div>
@@ -339,21 +342,21 @@ export const Calendar: React.FC<CalendarProps> = ({
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 text-sm md:flex md:justify-center md:space-x-4">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-x-2">
           <div className="w-4 h-4 rounded-full bg-blue-200"></div>
-          <span>Needs Submission</span>
+          <Text text={t.needsSubmission} />
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-x-2">
           <div className="w-4 h-4 rounded-full bg-primary text-primary-foreground"></div>
-          <span>Submitted</span>
+          <Text text={t.submitted} />
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-x-2">
           <div className="w-4 h-4 rounded-full bg-yellow-200"></div>
-          <span>Needs Resubmission</span>
+          <Text text={t.needsResubmission} />
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-x-2">
           <div className="w-4 h-4 rounded-full bg-[#b33363]"></div>
-          <span>Cancelled</span>
+          <Text text={t.cancelled} />
         </div>
       </div>
     </div>
