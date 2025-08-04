@@ -10,7 +10,7 @@ type ObjectPaths<T> = T extends object
     }[keyof T & string]
   : never
 
-export function useValidateForm<T extends z.ZodObject<any>>(
+export function useValidateForm<T extends z.ZodType<any, any, any>>(
   schema: T,
   data: unknown
 ) {
