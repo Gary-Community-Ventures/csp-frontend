@@ -20,6 +20,7 @@ import { useFamilyContext } from '../wrapper'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 import { toast } from 'sonner'
 
 import { Header } from '@/components/header'
@@ -169,7 +170,7 @@ export function PaymentPage() {
     },
   })
 
-  const { mutate: submitCareDaysMutation } = useMutation({
+  const { mutate: submitCareDaysMutation, isPending: isSubmitting } = useMutation({
     mutationFn: () =>
       submitCareDays(
         context,
@@ -329,10 +330,16 @@ export function PaymentPage() {
         <Button
           type="button"
           onClick={() => submitCareDaysMutation()}
-          disabled={!hasPendingChanges}
+          disabled={!hasPendingChanges || isSubmitting}
           className="w-full max-w-md md:max-w-2xl py-3 text-lg"
         >
-          Submit
+          {isSubmitting ? (
+            <div className="flex items-center justify-center gap-2">
+              <Spinner /> Submitting...
+            </div>
+          ) : (
+            'Submit'
+          )}
         </Button>
       </div>
     </div>

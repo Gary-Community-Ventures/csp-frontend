@@ -34,19 +34,19 @@ export const familyWithIdRoute = createRoute({
   ),
   loader: loadFamilyData,
   context: ({ context }) => ({ context }),
-});
+})
 
 const homeRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: '/home',
   component: FamilyHomePage,
-});
+})
 
 const providersRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: '/providers',
   component: FamilyProvidersPage,
-});
+})
 
 /* TODO renable when messages/activity are implemented
 const activityRoute = createRoute({
@@ -67,7 +67,7 @@ const settingsRoute = createRoute({
   path: '/settings',
   component: () =>
     Array.from({ length: 100 }).map((_, i) => <h2 key={i}>Family Settings</h2>),
-});
+})
 
 export const paymentRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
@@ -76,7 +76,7 @@ export const paymentRoute = createRoute({
   parseParams: (params) => ({
     providerId: Number(params.providerId),
   }),
-});
+})
 
 export const findProviderRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
