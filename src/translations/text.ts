@@ -49,6 +49,11 @@ const submitButton = {
   es: 'Enviar',
 } as const
 
+const submittingButton = {
+  en: 'Submitting...',
+  es: 'Enviando...',
+}
+
 const translatedLanguages = {
   en: {
     en: 'English',
@@ -73,7 +78,7 @@ export const translations = {
       },
       tapInstructions: {
         en: 'Tap once for half day, twice for full day, three times to remove.',
-        es: 'Toca una vez para medio día, dos veces para día completo, tres veces para eliminar.',
+        es: 'Toque una vez para medio día, toque dos veces para día completo y toque tres veces para eliminar.',
       },
       daysOfWeek: {
         mon: {
@@ -107,7 +112,7 @@ export const translations = {
       },
       needsSubmission: {
         en: 'Needs Submission',
-        es: 'Necesita Envío',
+        es: 'Necesita Presentación',
       },
       submitted: {
         en: 'Submitted',
@@ -129,11 +134,11 @@ export const translations = {
       },
       setPaymentRates: {
         en: 'Set Payment Rates',
-        es: 'Establecer Tarifas de Pago',
+        es: 'Establecer tarifas de pago',
       },
       setPaymentRatesDescription: {
         en: 'Before you can manage care days, please set the payment rates for this child and provider.',
-        es: 'Antes de poder gestionar los días de cuidado, por favor establece las tarifas de pago para este niño y proveedor.',
+        es: 'Antes de que pueda administrar los días de cuidado, establezca las tarifas de pago para este niño y proveedor.',
       },
       halfDayRate: {
         en: 'Half Day Rate (USD)',
@@ -169,20 +174,14 @@ export const translations = {
       },
       paymentDescription: {
         en: 'Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. You can modify days up until the Monday of the week care is taking place. At that point, the week will be locked.',
-        es: 'Selecciona los días de cuidado con {providerName} para {childFirstName}. Haz clic en enviar para mandar estos días a tu proveedor. Puedes modificar los días hasta el lunes de la semana en que se realizará el cuidado. En ese momento, la semana se bloqueará.',
+        es: 'Seleccione los días que necesita atención con {providerName} para {childFirstName}. Haga clic en Enviar para enviar estos días a su proveedor. Puede modificar los días hasta el lunes de la semana en que se brinde la atención. A partir de ese momento, la semana se bloqueará.',
       },
       monthBalance: {
         en: 'Month Balance',
         es: 'Balance del Mes',
       },
-      submitButton: {
-        en: 'Submit',
-        es: 'Enviar',
-      },
-      submittingButton: {
-        en: 'Submitting...',
-        es: 'Enviando...',
-      },
+      submitButton: submitButton,
+      submittingButton: submittingButton,
     },
     navBar: {
       menu: {

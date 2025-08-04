@@ -25,10 +25,11 @@ import { toast } from 'sonner'
 
 import { Header } from '@/components/header'
 import { translations } from '@/translations/text'
-import { Text } from '@/translations/wrapper'
+import { Text, useText } from '@/translations/wrapper'
 
 export function PaymentPage() {
   const t = translations.family.paymentPage
+  const text = useText()
   const { providerId } = paymentRoute.useParams()
   const { selectedChildInfo, providers, children } = useFamilyContext()
   const { context } = paymentRoute.useRouteContext()
@@ -198,10 +199,10 @@ export function PaymentPage() {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['paymentRate'] })
-      toast.success(t.paymentRateSuccess.en)
+      toast.success(text(t.paymentRateSuccess))
     },
     onError: (error) => {
-      toast.error(`${t.paymentRateError.en} ${error.message}`)
+      toast.error(`${text(t.paymentRateError)} ${error.message}`)
     },
   })
 
@@ -229,7 +230,7 @@ export function PaymentPage() {
     const full = parseFloat(fullDayRate) * 100
 
     if (isNaN(half) || isNaN(full) || half <= 0 || full <= 0) {
-      toast.error(t.invalidRatesError.en)
+      toast.error(text(t.invalidRatesError))
       return
     }
     createPaymentRateMutation({
@@ -247,7 +248,7 @@ export function PaymentPage() {
 
   useBlocker(
     () => hasPendingChanges,
-    t.unsavedChangesBlocker.en
+    text(t.unsavedChangesBlocker)
   )
 
   if (isLoadingAllocation || isLoadingPaymentRate || !context) {

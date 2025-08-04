@@ -10,7 +10,7 @@ import { Button } from './ui/button'
 import { z } from 'zod'
 import { useBlocker } from '@tanstack/react-router'
 import { translations } from '@/translations/text'
-import { Text } from '@/translations/wrapper'
+import { Text, useText } from '@/translations/wrapper'
 
 interface CalendarProps {
   allocation: z.infer<typeof monthAllocationSchema>
@@ -94,6 +94,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   paymentRate,
 }) => {
   const t = translations.family.calendar
+  const text = useText()
   const [currentDate, setCurrentDate] = useState(new Date())
   const MIN_DATE = new Date(2025, 6, 1) // July 1, 2025 (Month is 0-indexed)
   const today = new Date()
