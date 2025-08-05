@@ -24,41 +24,141 @@ interface CalendarProps {
 }
 
 const getDayStyles = (status: string) => {
-  let styles = {
+  const baseStyles = {
     dayClasses: '',
     innerHalfDayClass: '',
     textColorClass: 'text-gray-800',
     showX: false,
     xColorClass: '',
-  }
+  };
 
-  switch (status) {
-    case 'new':
-      styles.dayClasses = 'bg-blue-200'
-      styles.innerHalfDayClass = 'bg-blue-100'
-      break
-    case 'submitted':
-      styles.dayClasses = 'bg-primary'
-      styles.innerHalfDayClass = 'bg-secondary-background'
-      styles.textColorClass = 'text-primary-foreground'
-      break
-    case 'needs_resubmission':
-      styles.dayClasses = 'bg-yellow-200'
-      styles.innerHalfDayClass = 'bg-yellow-100'
-      break
-    case 'delete_not_submitted':
-      styles.dayClasses = 'bg-transparent'
-      styles.innerHalfDayClass = 'bg-transparent'
-      styles.xColorClass = 'text-[#b33363]'
-      styles.showX = true
-      break
-    default:
-      styles.dayClasses = 'bg-gray-100'
-      styles.innerHalfDayClass = 'bg-gray-100'
-  }
+  const statusStyles: { [key: string]: Partial<typeof baseStyles> } = {
+    new: { dayClasses: 'bg-blue-200', innerHalfDayClass: 'bg-blue-100' },
+    submitted: {
+      dayClasses: 'bg-primary',
+      innerHalfDayClass: 'bg-secondary-background',
+      textColorClass: 'text-primary-foreground',
+    },
+    needs_resubmission: {
+      dayClasses: 'bg-yellow-200',
+      innerHalfDayClass: 'bg-yellow-100',
+    },
+    delete_not_submitted: {
+      dayClasses: 'bg-transparent',
+      innerHalfDayClass: 'bg-transparent',
+      xColorClass: 'text-[#b33363]',
+      showX: true,
+    },
+    default: { dayClasses: 'bg-gray-100', innerHalfDayClass: 'bg-gray-100' },
+  };
 
-  return styles
+  return { ...baseStyles, ...(statusStyles[status] || statusStyles.default) };
+};
+
+interface CalendarDayProps {
+  d: Date;
+  allocation: z.infer<typeof monthAllocationSchema>;
+  currentDate: Date;
+  MIN_DATE: Date;
+  handleDayClick: (
+    day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
+    date: Date
+  ) => void;
 }
+
+const CalendarDay: React.FC<CalendarDayProps> = ({
+  d,
+  allocation,
+  currentDate,
+  handleDayClick,
+}) => {
+  const dayStr = d.toISOString().split('T')[0];
+  const careDay = allocation.care_days.find((cd) => cd.date === dayStr);
+  const isCurrentMonth = d.getMonth() === currentDate.getMonth();
+  const isToday = new Date().toDateString() === d.toDateString();
+
+  const currentDayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+  let lockedUntilDateStart: Date | null = null;
+  if (allocation.locked_until_date) {
+    const [year, month, day] = allocation.locked_until_date
+      .split('-')
+      .map(Number);
+    lockedUntilDateStart = new Date(year, month - 1, day); // month is 0-indexed
+  }
+
+  const isDayLocked =
+    careDay?.is_locked ||
+    (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart);
+
+  let cellClasses = "flex justify-center items-center py-1";
+
+  let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
+    isCurrentMonth && !isDayLocked
+      ? 'cursor-pointer hover:opacity-80'
+      : 'cursor-not-allowed'
+  }`;
+  let innerHalfDayClass = '';
+  let textColorClass = 'text-gray-800'; // Default text color
+  let showX = false;
+  let xColorClass = '';
+
+  if (!isCurrentMonth) {
+    textColorClass = 'text-gray-300';
+    dayClasses += ' bg-gray-100'; // Default background for non-current month days
+  } else if (careDay) {
+    const styles = getDayStyles(careDay.status);
+    dayClasses += ` ${styles.dayClasses}`;
+    innerHalfDayClass = styles.innerHalfDayClass;
+    textColorClass = styles.textColorClass;
+    showX = styles.showX;
+    xColorClass = styles.xColorClass;
+  } else {
+    dayClasses += ' bg-gray-100'; // Default background for empty days
+  }
+
+  // Apply locked styling *after* status styling
+  if (isDayLocked) {
+    dayClasses += ' bg-gray-200 opacity-70'; // Add grey background and slight opacity to show original color underneath
+    cellClasses += ' cursor-not-allowed bg-gray-50';
+  }
+
+  if (isToday) {
+    dayClasses += ' border-4 border-tertiary-background';
+  }
+
+  const dayContent = (
+    <>
+      {showX && (
+        <div
+          className={`absolute inset-0 flex items-center justify-center text-4xl font-bold ${xColorClass}`}
+        >
+          X
+        </div>
+      )}
+      {careDay?.type === 'Half Day' && (
+        <div
+          className={`absolute right-0 top-0 h-full w-1/2 rounded-r-full ${innerHalfDayClass}`}
+        ></div>
+      )}
+      <span className={`relative z-10 font-medium ${textColorClass}`}>
+        {d.getDate()}
+      </span>
+    </>
+  );
+
+  return (
+    <div className={cellClasses}>
+      <div
+        key={d.toString()}
+        className={dayClasses}
+        onClick={!isDayLocked ? () => handleDayClick(careDay, d) : undefined}
+      >
+        {dayContent}
+      </div>
+    </div>
+  );
+};
 
 export const Calendar: React.FC<CalendarProps> = ({
   allocation,
@@ -76,14 +176,14 @@ export const Calendar: React.FC<CalendarProps> = ({
     day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
     date: Date
   ) => {
-    if (day?.is_locked) return
-
-    if (day?.is_deleted) {
-      onDayTypeChange(null, 'Half Day', date)
+    if (day?.is_locked) {
+      return
     }
 
     if (day) {
-      if (day.type === 'Half Day') {
+      if (day.is_deleted) {
+        onDayTypeChange(null, 'Half Day', date)
+      } else if (day.type === 'Half Day') {
         onDayTypeChange(day, 'Full Day', date)
       } else {
         onDayTypeChange(day, 'none', date)
@@ -110,7 +210,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   startDate.setDate(startDate.getDate() - daysToSubtract)
 
   const days: Date[] = []
-  let day = new Date(startDate)
+  const day = new Date(startDate)
   while (day <= endOfMonth || (days.length > 0 && days.length % 7 !== 0)) {
     days.push(new Date(day))
     day.setDate(day.getDate() + 1)
@@ -144,93 +244,16 @@ export const Calendar: React.FC<CalendarProps> = ({
   const canGoNext = !nextMonthAllocationFailed
 
   const renderDay = (d: Date) => {
-    const dayStr = d.toISOString().split('T')[0]
-    const careDay = allocation.care_days.find((cd) => cd.date === dayStr)
-    const isCurrentMonth = d.getMonth() === currentDate.getMonth()
-    const isToday = new Date().toDateString() === d.toDateString()
-
-    const currentDayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate())
-
-    let lockedUntilDateStart: Date | null = null
-    if (allocation.locked_until_date) {
-      const [year, month, day] = allocation.locked_until_date
-        .split('-')
-        .map(Number)
-      lockedUntilDateStart = new Date(year, month - 1, day) // month is 0-indexed
-    }
-
-    const isDayLocked =
-      careDay?.is_locked ||
-      (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart)
-
-    let cellClasses = "flex justify-center items-center py-1"
-
-    let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
-      isCurrentMonth && !isDayLocked
-        ? 'cursor-pointer hover:opacity-80'
-        : 'cursor-not-allowed'
-    }`
-    let innerHalfDayClass = ''
-    let textColorClass = 'text-gray-800' // Default text color
-    let showX = false
-    let xColorClass = ''
-
-    if (!isCurrentMonth) {
-      textColorClass = 'text-gray-300'
-      dayClasses += ' bg-gray-100' // Default background for non-current month days
-    } else if (careDay) {
-      const styles = getDayStyles(careDay.status)
-      dayClasses += ` ${styles.dayClasses}`
-      innerHalfDayClass = styles.innerHalfDayClass
-      textColorClass = styles.textColorClass
-      showX = styles.showX
-      xColorClass = styles.xColorClass
-    } else {
-      dayClasses += ' bg-gray-100' // Default background for empty days
-    }
-
-    // Apply locked styling *after* status styling
-    if (isDayLocked) {
-      dayClasses += ' bg-gray-200 opacity-70' // Add grey background and slight opacity to show original color underneath
-      cellClasses += ' cursor-not-allowed bg-gray-50'
-    }
-
-    if (isToday) {
-      dayClasses += ' border-4 border-tertiary-background'
-    }
-
-    const dayContent = (
-      <>
-        {showX && (
-          <div
-            className={`absolute inset-0 flex items-center justify-center text-4xl font-bold ${xColorClass}`}
-          >
-            X
-          </div>
-        )}
-        {careDay?.type === 'Half Day' && (
-          <div
-            className={`absolute right-0 top-0 h-full w-1/2 rounded-r-full ${innerHalfDayClass}`}
-          ></div>
-        )}
-        <span className={`relative z-10 font-medium ${textColorClass}`}>
-          {d.getDate()}
-        </span>
-      </>
-    )
-
     return (
-      <div className={cellClasses}>
-        <div
-          key={d.toString()}
-          className={dayClasses}
-          onClick={!isDayLocked ? () => handleDayClick(careDay, d) : undefined}
-        >
-          {dayContent}
-        </div>
-      </div>
-    )
-  }
+      <CalendarDay
+        d={d}
+        allocation={allocation}
+        currentDate={currentDate}
+        MIN_DATE={MIN_DATE}
+        handleDayClick={handleDayClick}
+      />
+    );
+  };
 
   const weeks: Date[][] = []
   for (let i = 0; i < days.length; i += 7) {
@@ -316,25 +339,28 @@ export const Calendar: React.FC<CalendarProps> = ({
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 text-sm md:flex md:justify-center md:space-x-4">
-        <div className="flex items-center gap-x-2">
-          <div className="w-4 h-4 rounded-full bg-blue-200"></div>
-          <Text text={t.needsSubmission} />
-        </div>
-        <div className="flex items-center gap-x-2">
-          <div className="w-4 h-4 rounded-full bg-primary text-primary-foreground"></div>
-          <Text text={t.submitted} />
-        </div>
-        <div className="flex items-center gap-x-2">
-          <div className="w-4 h-4 rounded-full bg-yellow-200"></div>
-          <Text text={t.needsResubmission} />
-        </div>
-        <div className="flex items-center gap-x-2">
-          <div className="w-4 h-4 rounded-full bg-[#b33363]"></div>
-          <Text text={t.cancelled} />
-        </div>
+        {[{
+          colorClass: 'bg-blue-200',
+          textKey: t.needsSubmission
+        }, {
+          colorClass: 'bg-primary text-primary-foreground',
+          textKey: t.submitted
+        }, {
+          colorClass: 'bg-yellow-200',
+          textKey: t.needsResubmission
+        }, {
+          colorClass: 'bg-[#b33363]',
+          textKey: t.cancelled
+        },].map((item, index) => (
+          <div key={index} className="flex items-center gap-x-2">
+            <div className={`w-4 h-4 rounded-full ${item.colorClass}`}></div>
+            <Text text={item.textKey} />
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
 export default Calendar
+
