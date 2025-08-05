@@ -20,7 +20,6 @@ export function FamilyHomePage() {
     providers[0].id,
   )
 
-
   return (
     <>
       <section>

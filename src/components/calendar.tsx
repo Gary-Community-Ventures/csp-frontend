@@ -6,11 +6,9 @@ import {
   paymentRateSchema,
 } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
-import { Button } from './ui/button'
 import { z } from 'zod'
-import { useBlocker } from '@tanstack/react-router'
 import { translations } from '@/translations/text'
-import { Text, useText } from '@/translations/wrapper'
+import { Text } from '@/translations/wrapper'
 
 interface CalendarProps {
   allocation: z.infer<typeof monthAllocationSchema>
@@ -25,7 +23,7 @@ interface CalendarProps {
   paymentRate: z.infer<typeof paymentRateSchema> | null
 }
 
-const getDayStyles = (status: string, type: 'Full Day' | 'Half Day') => {
+const getDayStyles = (status: string) => {
   let styles = {
     dayClasses: '',
     innerHalfDayClass: '',
@@ -33,57 +31,36 @@ const getDayStyles = (status: string, type: 'Full Day' | 'Half Day') => {
     borderColorClass: '',
     showX: false,
     xColorClass: '',
-  };
-
-  if (type === 'Half Day') {
-    switch (status) {
-      case 'new':
-        styles.dayClasses = 'bg-blue-100';
-        styles.innerHalfDayClass = 'bg-blue-200';
-        break;
-      case 'submitted':
-        styles.dayClasses = 'bg-secondary-background';
-        styles.innerHalfDayClass = 'bg-primary';
-        styles.textColorClass = 'text-primary-foreground';
-        styles.borderColorClass = 'border-2 border-primary-foreground';
-        break;
-      case 'needs_resubmission':
-        styles.dayClasses = 'bg-yellow-100';
-        styles.innerHalfDayClass = 'bg-yellow-200';
-        break;
-      case 'delete_not_submitted':
-        styles.dayClasses = 'bg-transparent';
-        styles.xColorClass = 'text-[#b33363]';
-        styles.showX = true;
-        break;
-      default:
-        styles.dayClasses = 'bg-gray-50';
-        styles.innerHalfDayClass = 'bg-gray-100';
-    }
-  } else { // Full Day
-    switch (status) {
-      case 'new':
-        styles.dayClasses = 'bg-blue-200';
-        break;
-      case 'submitted':
-        styles.dayClasses = 'bg-primary';
-        styles.textColorClass = 'text-primary-foreground';
-        styles.borderColorClass = 'border-2 border-primary-foreground';
-        break;
-      case 'needs_resubmission':
-        styles.dayClasses = 'bg-yellow-200';
-        break;
-      case 'delete_not_submitted':
-        styles.dayClasses = 'bg-transparent';
-        styles.xColorClass = 'text-[#b33363]';
-        styles.showX = true;
-        break;
-      default:
-        styles.dayClasses = 'bg-gray-100';
-    }
   }
-  return styles;
-};
+
+  switch (status) {
+    case 'new':
+      styles.dayClasses = 'bg-blue-200'
+      styles.innerHalfDayClass = 'bg-blue-100'
+      break
+    case 'submitted':
+      styles.dayClasses = 'bg-primary'
+      styles.innerHalfDayClass = 'bg-secondary-background'
+      styles.textColorClass = 'text-primary-foreground'
+      styles.borderColorClass = 'border-2 border-primary-foreground'
+      break
+    case 'needs_resubmission':
+      styles.dayClasses = 'bg-yellow-200'
+      styles.innerHalfDayClass = 'bg-yellow-100'
+      break
+    case 'delete_not_submitted':
+      styles.dayClasses = 'bg-transparent'
+      styles.innerHalfDayClass = 'bg-transparent'
+      styles.xColorClass = 'text-[#b33363]'
+      styles.showX = true
+      break
+    default:
+      styles.dayClasses = 'bg-gray-100'
+      styles.innerHalfDayClass = 'bg-gray-100'
+  }
+
+  return styles
+}
 
 export const Calendar: React.FC<CalendarProps> = ({
   allocation,
@@ -94,10 +71,8 @@ export const Calendar: React.FC<CalendarProps> = ({
   paymentRate,
 }) => {
   const t = translations.family.calendar
-  const text = useText()
   const [currentDate, setCurrentDate] = useState(new Date())
-  const MIN_DATE = new Date(2025, 6, 1) // July 1, 2025 (Month is 0-indexed)
-  const today = new Date()
+  const MIN_DATE = new Date(2025, 6, 1) // July 1, 2025 (Month is 0-indexed)xw
 
   const handleDayClick = (
     day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
@@ -190,6 +165,8 @@ export const Calendar: React.FC<CalendarProps> = ({
       careDay?.is_locked ||
       (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart)
 
+    let cellClasses = "flex justify-center items-center py-1"
+
     let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
       isCurrentMonth && !isDayLocked
         ? 'cursor-pointer hover:opacity-80'
@@ -205,27 +182,25 @@ export const Calendar: React.FC<CalendarProps> = ({
       textColorClass = 'text-gray-300'
       dayClasses += ' bg-gray-100' // Default background for non-current month days
     } else if (careDay) {
-      const styles = getDayStyles(careDay.status, careDay.type);
-      dayClasses += ` ${styles.dayClasses}`;
-      innerHalfDayClass = styles.innerHalfDayClass;
-      textColorClass = styles.textColorClass;
-      borderColorClass = styles.borderColorClass;
-      showX = styles.showX;
-      xColorClass = styles.xColorClass;
+      const styles = getDayStyles(careDay.status)
+      dayClasses += ` ${styles.dayClasses}`
+      innerHalfDayClass = textColorClass = styles.textColorClass
+      borderColorClass = styles.borderColorClass
+      showX = styles.showX
+      xColorClass = styles.xColorClass
     } else {
       dayClasses += ' bg-gray-100' // Default background for empty days
     }
 
     // Apply locked styling *after* status styling
     if (isDayLocked) {
-      dayClasses += ' bg-gray-200 opacity-70'; // Add grey background and slight opacity to show original color underneath
+      dayClasses += ' bg-gray-200 opacity-70' // Add grey background and slight opacity to show original color underneath
+      cellClasses += ' cursor-not-allowed bg-gray-50'
     }
 
     if (isToday) {
-      borderColorClass = 'border-4 border-tertiary-background'
+      dayClasses += ' border-4 border-tertiary-background'
     }
-
-    dayClasses += ` ${borderColorClass}`
 
     const dayContent = (
       <>
@@ -238,7 +213,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         )}
         {careDay?.type === 'Half Day' && (
           <div
-            className={`absolute left-0 top-0 h-full w-1/2 rounded-l-full ${innerHalfDayClass}`}
+            className={`absolute right-0 top-0 h-full w-1/2 rounded-r-full ${innerHalfDayClass}`}
           ></div>
         )}
         <span className={`relative z-10 font-medium ${textColorClass}`}>
@@ -247,23 +222,17 @@ export const Calendar: React.FC<CalendarProps> = ({
       </>
     )
 
-    if (isDayLocked) {
-      return (
-        <div key={d.toString()} className={dayClasses}>
-          {dayContent}
-        </div>
-      )
-    } else {
-      return (
+    return (
+      <div className={cellClasses}>
         <div
           key={d.toString()}
           className={dayClasses}
-          onClick={() => handleDayClick(careDay, d)}
+          onClick={!isDayLocked ? () => handleDayClick(careDay, d) : undefined}
         >
           {dayContent}
         </div>
-      )
-    }
+      </div>
+    )
   }
 
   const weeks: Date[][] = []
@@ -275,11 +244,13 @@ export const Calendar: React.FC<CalendarProps> = ({
     <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl mx-auto select-none">
       <div className="flex justify-center items-center mb-2 text-sm font-medium space-x-2">
         <span>
-          <Text text={t.halfDay} /> {formatAmount(paymentRate?.half_day_rate_cents || 0)}
+          <Text text={t.halfDay} />{' '}
+          {formatAmount(paymentRate?.half_day_rate_cents || 0)}
         </span>
         <span>•</span>
         <span>
-          <Text text={t.fullDay} /> {formatAmount(paymentRate?.full_day_rate_cents || 0)}
+          <Text text={t.fullDay} />{' '}
+          {formatAmount(paymentRate?.full_day_rate_cents || 0)}
         </span>
       </div>
       <div className="text-center text-sm text-gray-500 mb-4">
@@ -318,7 +289,15 @@ export const Calendar: React.FC<CalendarProps> = ({
 
       <div className="space-y-4">
         <div className="grid grid-cols-7 gap-2">
-          {[t.daysOfWeek.mon, t.daysOfWeek.tue, t.daysOfWeek.wed, t.daysOfWeek.thu, t.daysOfWeek.fri, t.daysOfWeek.sat, t.daysOfWeek.sun].map((day) => (
+          {[
+            t.daysOfWeek.mon,
+            t.daysOfWeek.tue,
+            t.daysOfWeek.wed,
+            t.daysOfWeek.thu,
+            t.daysOfWeek.fri,
+            t.daysOfWeek.sat,
+            t.daysOfWeek.sun,
+          ].map((day) => (
             <div
               key={day.en}
               className="text-xs font-medium text-gray-500 text-center py-2"
@@ -331,10 +310,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         {weeks.map((week, weekIndex) => (
           <div key={weekIndex} className="grid grid-cols-7">
             {week.map((day) => (
-              <div
-                className="flex justify-center items-center py-1"
-                key={day.toISOString()}
-              >
+              <div className="" key={day.toISOString()}>
                 {renderDay(day)}
               </div>
             ))}
