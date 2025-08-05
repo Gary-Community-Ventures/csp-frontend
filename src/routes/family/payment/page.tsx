@@ -84,7 +84,7 @@ export function PaymentPage() {
         prevMonth.getFullYear()
       )
     },
-    enabled: !!selectedChildInfo.id && !!providerId && !!context,
+    enabled: !!selectedChildInfo.id && !!providerId && !!context && !prevMonthAllocationFailed,
     retry: (failureCount, error: any) => {
       if (error.response?.status === 400) {
         setPrevMonthAllocationFailed(true)
@@ -112,7 +112,7 @@ export function PaymentPage() {
         nextMonth.getFullYear()
       )
     },
-    enabled: !!selectedChildInfo.id && !!providerId && !!context,
+    enabled: !!selectedChildInfo.id && !!providerId && !!context && !nextMonthAllocationFailed,
     retry: (failureCount, error: any) => {
       if (error.response?.status === 400) {
         setNextMonthAllocationFailed(true)
