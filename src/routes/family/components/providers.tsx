@@ -5,6 +5,7 @@ import { Link } from '@tanstack/react-router'
 import { CardList } from '@/components/card-list'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { WhiteCard } from '@/components/white-card'
 
 type PayButtonProps = {
   provider: Provider
@@ -44,8 +45,42 @@ function PayButton({ provider }: PayButtonProps) {
   )
 }
 
-export function ProviderList() {
+type ProviderListProps = {
+  showAddProvider?: boolean 
+}
+
+export function ProviderList({ showAddProvider = false }: ProviderListProps) {
   const { providers } = useFamilyContext()
+
+  if (providers.length < 1 && showAddProvider) {
+    return (
+      <WhiteCard Tag="ul" className="py-8">
+        <div className="flex flex-col items-center justify-center text-center">
+          <Text text={translations.general.emptyState.noProvidersAddProvider} />
+          <Button asChild className="mt-4" size="lg">
+            <Link to="/family">
+              <Text text={translations.general.emptyState.addYourProvider} />
+            </Link>
+          </Button>
+        </div>
+      </WhiteCard>
+    )
+  }
+
+  if (providers.length < 1) {
+    return (
+      <WhiteCard Tag="ul" className="py-8">
+        <div className="flex flex-col items-center justify-center text-muted-foreground text-center">
+          <p className="text-lg font-semibold mb-2">
+            <Text text={translations.general.emptyState.noProvidersTitle} />
+          </p>
+          <p className="text-sm">
+            <Text text={translations.general.emptyState.noProvidersDescription} />
+          </p>
+        </div>
+      </WhiteCard>
+    )
+  }
 
   return (
     <CardList

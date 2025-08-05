@@ -1,5 +1,7 @@
 import { CardList } from '@/components/card-list'
-import { useLanguageContext } from '@/translations/wrapper'
+import { WhiteCard } from '@/components/white-card'
+import { useLanguageContext, Text } from '@/translations/wrapper'
+import { translations } from '@/translations/text'
 import { useMemo } from 'react'
 
 type TransactionAmountProps = {
@@ -44,6 +46,23 @@ export type TransationsListProps = {
 
 export function TransactionsList({ transactions }: TransationsListProps) {
   const { lang } = useLanguageContext()
+
+  if (transactions.length < 1) {
+    return (
+      <WhiteCard Tag="ul" className="py-8">
+        <div className="flex flex-col items-center justify-center text-muted-foreground text-center">
+          <p className="text-lg font-semibold mb-2">
+            <Text text={translations.general.emptyState.noTransactionsTitle} />
+          </p>
+          <p className="text-sm">
+            <Text
+              text={translations.general.emptyState.noTransactionsDescription}
+            />
+          </p>
+        </div>
+      </WhiteCard>
+    )
+  }
 
   return (
     <CardList
