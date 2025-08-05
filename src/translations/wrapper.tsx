@@ -65,24 +65,42 @@ export type TranslatableText = Partial<Record<Language, string>> &
 export function useText() {
   const { lang } = useLanguageContext()
 
-  return (text: TranslatableText) => {
-    if (text[lang] === undefined) {
+  return (
+    text: TranslatableText,
+    data?: Record<string, string | number | undefined>
+  ) => {
+    let translatedText = text[lang]
+
+    if (translatedText === undefined) {
       console.error(
         `Missing translation for ${lang}. Falling back to: ${text[DEFAULT_LANGUAGE]}\n${new Error().stack}`
       )
-      return text[DEFAULT_LANGUAGE]
+      translatedText = text[DEFAULT_LANGUAGE]
     }
 
-    return text[lang]
+    if (data) {
+      for (const key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+          const value = data[key]
+          translatedText = translatedText.replace(
+            new RegExp(`\\{${key}\\}`, 'g'),
+            String(value)
+          )
+        }
+      }
+    }
+
+    return translatedText
   }
 }
 
 type TextProps = {
   text: TranslatableText
+  data?: Record<string, string | number | undefined>
 }
 
-export function Text({ text }: TextProps) {
+export function Text({ text, data }: TextProps) {
   const textFunc = useText()
 
-  return textFunc(text)
+  return textFunc(text, data)
 }

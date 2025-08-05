@@ -13,6 +13,7 @@ import { enUS, esES } from '@clerk/localizations'
 import ErrorFallback from '@/components/error-fallback'
 import { initializeSentry } from '@/lib/sentry'
 import { useSentryUserContext } from '@/lib/hooks'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { recordPageView, useRecordUserSession } from '@/lib/analytics'
 
 initializeSentry()
@@ -23,13 +24,17 @@ if (!PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key')
 }
 
+const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <LanguageWrapper>
-      <ClerkWrapper>
-        <App />
-      </ClerkWrapper>
-    </LanguageWrapper>
+    <QueryClientProvider client={queryClient}>
+      <LanguageWrapper>
+        <ClerkWrapper>
+          <App />
+        </ClerkWrapper>
+      </LanguageWrapper>
+    </QueryClientProvider>
     <Toaster closeButton={true} />
   </StrictMode>
 )

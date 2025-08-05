@@ -13,6 +13,8 @@ type PayButtonProps = {
 function PayButton({ provider }: PayButtonProps) {
   const t = translations.family.providerList
 
+  const { selectedChildInfo } = useFamilyContext()
+
   if (provider.status === 'pending') {
     return (
       <Badge variant="destructive">
@@ -29,7 +31,13 @@ function PayButton({ provider }: PayButtonProps) {
 
   return (
     <Button asChild>
-      <Link to="/family/$childId/payment" search={{ providerId: provider.id }}>
+      <Link
+        to="/family/$childId/payment/$providerId"
+        params={{
+          childId: selectedChildInfo.id,
+          providerId: provider.id,
+        }}
+      >
         <Text text={t.payProvider} />
       </Link>
     </Button>

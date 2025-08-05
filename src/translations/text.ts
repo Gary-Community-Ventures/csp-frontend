@@ -49,6 +49,11 @@ const submitButton = {
   es: 'Enviar',
 } as const
 
+const submittingButton = {
+  en: 'Submitting...',
+  es: 'Enviando...',
+}
+
 const translatedLanguages = {
   en: {
     en: 'English',
@@ -62,6 +67,134 @@ const translatedLanguages = {
 
 export const translations = {
   family: {
+    calendar: {
+      halfDay: {
+        en: 'Half Day:',
+        es: 'Medio Día:',
+      },
+      fullDay: {
+        en: 'Full Day:',
+        es: 'Día Completo:',
+      },
+      tapInstructions: {
+        en: 'Tap once for half day, twice for full day, three times to remove.',
+        es: 'Toque una vez para medio día, toque dos veces para día completo y toque tres veces para eliminar.',
+      },
+      daysOfWeek: {
+        mon: {
+          en: 'Mon',
+          es: 'Lun',
+        },
+        tue: {
+          en: 'Tue',
+          es: 'Mar',
+        },
+        wed: {
+          en: 'Wed',
+          es: 'Mié',
+        },
+        thu: {
+          en: 'Thu',
+          es: 'Jue',
+        },
+        fri: {
+          en: 'Fri',
+          es: 'Vie',
+        },
+        sat: {
+          en: 'Sat',
+          es: 'Sáb',
+        },
+        sun: {
+          en: 'Sun',
+          es: 'Dom',
+        },
+      },
+      needsSubmission: {
+        en: 'Needs Submission',
+        es: 'Necesita Presentación',
+      },
+      submitted: {
+        en: 'Submitted',
+        es: 'Enviado',
+      },
+      needsResubmission: {
+        en: 'Needs Resubmission',
+        es: 'Necesita Reenvío',
+      },
+      cancelled: {
+        en: 'Cancelled',
+        es: 'Cancelado',
+      },
+    },
+    paymentPage: {
+      loading: {
+        en: 'Loading...',
+        es: 'Cargando...',
+      },
+      setPaymentRates: {
+        en: 'Set Payment Rates',
+        es: 'Establecer tarifas de pago',
+      },
+      setPaymentRatesDescription: {
+        en: 'Before you can manage care days, please set the payment rates for this child and provider.',
+        es: 'Antes de que pueda administrar los días de cuidado, establezca las tarifas de pago para este niño y proveedor.',
+      },
+      halfDayRate: {
+        en: 'Half Day Rate (USD)',
+        es: 'Tarifa de Medio Día (USD)',
+      },
+      fullDayRate: {
+        en: 'Full Day Rate (USD)',
+        es: 'Tarifa de Día Completo (USD)',
+      },
+      setRatesButton: {
+        en: 'Set Rates',
+        es: 'Establecer Tarifas',
+      },
+      paymentRateSuccess: {
+        en: 'Payment rate set successfully!',
+        es: '¡Tarifa de pago establecida con éxito!',
+      },
+      paymentRateError: {
+        en: 'Failed to set payment rate:',
+        es: 'Error al establecer la tarifa de pago:',
+      },
+      invalidRatesError: {
+        en: 'Please enter valid positive numbers for both rates.',
+        es: 'Por favor, introduce números positivos válidos para ambas tarifas.',
+      },
+      unsavedChangesBlocker: {
+        en: 'Are you sure you want to leave?',
+        es: '¿Estás seguro de que quieres salir?',
+      },
+      unsavedChangesBlockerDescription: {
+        en: 'Your changes haven\'t been submitted. If you leave, your provider will not receive your updates.',
+        es: 'Tus cambios no han sido enviados. Si sales, tu proveedor no recibirá tus actualizaciones.',
+      },
+      stayButton: {
+        en: 'Stay',
+        es: 'Quedarse',
+      },
+      leaveButton: {
+        en: 'Leave',
+        es: 'Salir',
+      },
+      paymentFor: {
+        en: 'Payment for {providerName}',
+        es: 'Pago para {providerName}',
+      },
+      paymentDescription: {
+        en: 'Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. You can modify days up until the Monday of the week care is taking place. At that point, the week will be locked.',
+        es: 'Seleccione los días que necesita atención con {providerName} para {childFirstName}. Haga clic en Enviar para enviar estos días a su proveedor. Puede modificar los días hasta el lunes de la semana en que se brinde la atención. A partir de ese momento, la semana se bloqueará.',
+      },
+      monthBalance: {
+        en: 'Month Balance',
+        es: 'Balance del Mes',
+      },
+      submitButton: submitButton,
+      submittingButton: submittingButton,
+    },
     navBar: {
       menu: {
         ...generalNavBar.menu,

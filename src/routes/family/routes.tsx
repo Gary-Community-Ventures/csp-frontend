@@ -5,10 +5,7 @@ import { FamilyWrapper } from './wrapper'
 import { loadFamilyData, redirectToDefaultId } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
 import { FamilyProvidersPage } from './pages/providers'
-import PaymentPage from './pages/payment/payment'
-import ReviewPage from './pages/payment/review'
-import ConfirmationPage from './pages/payment/confirmation'
-import { PaymentFlowProvider } from './pages/payment/context'
+import { PaymentPage } from './pages/payment/index'
 import FindProviderPage, { loadProviders } from './pages/find-provider'
 import { InviteProviderPage } from './pages/invite-provider'
 import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
@@ -36,6 +33,7 @@ export const familyWithIdRoute = createRoute({
     </FamilyWrapper>
   ),
   loader: loadFamilyData,
+  context: ({ context }) => ({ context }),
 })
 
 const homeRoute = createRoute({
@@ -71,33 +69,13 @@ const settingsRoute = createRoute({
     Array.from({ length: 100 }).map((_, i) => <h2 key={i}>Family Settings</h2>),
 })
 
-const paymentRoute = createRoute({
+export const paymentRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
-  path: '/payment',
-  validateSearch: (search: { providerId?: number }) => search,
-  component: () => (
-    <PaymentFlowProvider>
-      <Outlet />
-    </PaymentFlowProvider>
-  ),
-})
-
-const paymentIndexRoute = createRoute({
-  getParentRoute: () => paymentRoute,
-  path: '/',
+  path: '/payment/$providerId',
   component: PaymentPage,
-})
-
-const reviewRoute = createRoute({
-  getParentRoute: () => paymentRoute,
-  path: '/review',
-  component: ReviewPage,
-})
-
-const confirmationRoute = createRoute({
-  getParentRoute: () => paymentRoute,
-  path: '/confirmation',
-  component: ConfirmationPage,
+  parseParams: (params) => ({
+    providerId: Number(params.providerId),
+  }),
 })
 
 export const findProviderRoute = createRoute({
@@ -122,12 +100,6 @@ export const inviteProviderConfirmationRoute = createRoute({
   component: InviteProviderConfirmationPage,
 })
 
-const paymentRouteTree = paymentRoute.addChildren([
-  paymentIndexRoute,
-  reviewRoute,
-  confirmationRoute,
-])
-
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   /* TODO renable when messages/activity are implemented
@@ -136,7 +108,7 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   */
   providersRoute,
   settingsRoute,
-  paymentRouteTree,
+  paymentRoute,
   findProviderRoute,
   inviteProviderRoute,
   inviteProviderConfirmationRoute,

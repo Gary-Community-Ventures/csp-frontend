@@ -1,4 +1,4 @@
-import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/requests'
+import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/api/client'
 import type { RouterContext } from '../router'
 import { redirect } from '@tanstack/react-router'
 
