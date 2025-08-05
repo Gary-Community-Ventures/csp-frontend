@@ -8,15 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import {
-  createCareDay,
-  deleteCareDay,
-  getMonthAllocation,
-  submitCareDays,
-  updateCareDay,
-  getPaymentRate,
-  createPaymentRate,
-} from '@/lib/requests'
+import { getMonthAllocation, submitCareDays } from '@/lib/api/children'
+import { createCareDay, deleteCareDay, updateCareDay } from '@/lib/api/careDays'
+import { getPaymentRate, createPaymentRate } from '@/lib/api/paymentRates'
 import { allocatedCareDaySchema } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'

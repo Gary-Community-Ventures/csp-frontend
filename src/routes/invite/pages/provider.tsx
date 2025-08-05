@@ -11,7 +11,7 @@ import {
   DEFAULT_HEADERS,
   handleStatusCodes,
   headersWithAuth,
-} from '@/lib/requests'
+} from '@/lib/api/client'
 import { providerRoute } from '../routes'
 import { Link, useMatch, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
