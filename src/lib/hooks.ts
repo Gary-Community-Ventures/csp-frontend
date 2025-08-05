@@ -55,7 +55,7 @@ export function useHideFamilyNavBar() {
 export function useCurrentMonthBalance(
   context: RouterModule.RouterContext,
   childId: number,
-  providerId: number,
+  providerId?: number
 ) {
   const now = new Date()
   const currentMonth = now.getMonth() + 1
@@ -65,13 +65,19 @@ export function useCurrentMonthBalance(
     queryKey: [
       'currentMonthAllocation',
       childId,
-      providerId,
       currentMonth,
       currentYear,
+      providerId,
     ],
     queryFn: () =>
-      getMonthAllocation(context, childId, providerId, currentMonth, currentYear),
-    enabled: !!childId && !!providerId && !!context,
+      getMonthAllocation(
+        context,
+        childId,
+        currentMonth,
+        currentYear,
+        providerId
+      ),
+    enabled: !!childId && !!context,
     retry: false, // Do not retry on failure, as per requirement
     throwOnError: false, // Do not throw error, handle it gracefully
   })

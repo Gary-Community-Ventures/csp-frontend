@@ -10,14 +10,13 @@ import { familyRoute } from '../routes'
 
 export function FamilyHomePage() {
   const t = translations.family.home
-  const { transactions, selectedChildInfo, providers } = useFamilyContext()
+  const { transactions, selectedChildInfo } = useFamilyContext()
   
   const context = familyRoute.useRouteContext()
 
   const balance = useCurrentMonthBalance(
     context,
     selectedChildInfo.id,
-    providers[0].id,
   )
 
   return (

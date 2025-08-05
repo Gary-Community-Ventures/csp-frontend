@@ -66,13 +66,14 @@ function authError(context: RouterContext) {
 export async function getMonthAllocation(
   context: RouterContext,
   childId: number,
-  providerId: number,
   month: number,
-  year: number
+  year: number,
+  providerId?: number | undefined
 ): Promise<z.infer<typeof monthAllocationSchema>> {
-  const url = backendUrl(
-    `/child/${childId}/allocation/${month}/${year}?provider_id=${providerId}`
-  )
+  let url = backendUrl(`/child/${childId}/allocation/${month}/${year}`)
+  if (providerId !== undefined) {
+    url += `?provider_id=${providerId}`
+  }
   const res = await fetch(url, {
     headers: await headersWithAuth(context),
   })
@@ -97,13 +98,18 @@ export async function createCareDay(
   allocationId: number,
   providerId: number,
   date: string,
-  type: 'Full Day' | 'Half Day',
+  type: 'Full Day' | 'Half Day'
 ) {
   const url = backendUrl('/care-days')
   const res = await fetch(url, {
     method: 'POST',
     headers: await headersWithAuth(context),
-    body: JSON.stringify({ allocation_id: allocationId, provider_id: providerId, date, type }),
+    body: JSON.stringify({
+      allocation_id: allocationId,
+      provider_id: providerId,
+      date,
+      type,
+    }),
   })
   handleStatusCodes(context, res)
   return res.json()
@@ -112,7 +118,7 @@ export async function createCareDay(
 export async function updateCareDay(
   context: RouterContext,
   careDayId: number,
-  type: 'Full Day' | 'Half Day',
+  type: 'Full Day' | 'Half Day'
 ) {
   const url = backendUrl(`/care-days/${careDayId}`)
   const res = await fetch(url, {
@@ -139,10 +145,10 @@ export async function submitCareDays(
   childId: number,
   providerId: number,
   month: number,
-  year: number,
+  year: number
 ) {
   const url = backendUrl(
-    `/child/${childId}/provider/${providerId}/allocation/${month}/${year}/submit`,
+    `/child/${childId}/provider/${providerId}/allocation/${month}/${year}/submit`
   )
   const res = await fetch(url, {
     method: 'POST',
@@ -155,7 +161,7 @@ export async function submitCareDays(
 export async function getPaymentRate(
   context: RouterContext,
   providerId: number,
-  childId: number,
+  childId: number
 ): Promise<z.infer<typeof paymentRateSchema> | null> {
   const url = backendUrl(`/payment-rates/${providerId}/${childId}`)
   const res = await fetch(url, {
@@ -163,21 +169,23 @@ export async function getPaymentRate(
   })
 
   if (!res.ok) {
-    const errorData = await res.json();
-    if (res.status === 404 && errorData.error === "Payment rate not found") {
-      return null;
+    const errorData = await res.json()
+    if (res.status === 404 && errorData.error === 'Payment rate not found') {
+      return null
     } else {
-      handleStatusCodes(context, res);
-      throw new Error(errorData.error || `Request failed with status ${res.status}`);
+      handleStatusCodes(context, res)
+      throw new Error(
+        errorData.error || `Request failed with status ${res.status}`
+      )
     }
   }
 
   try {
-    const parsedData = paymentRateSchema.parse(await res.json());
-    return parsedData;
+    const parsedData = paymentRateSchema.parse(await res.json())
+    return parsedData
   } catch (error) {
-    console.error('Zod parsing error for PaymentRate:', error);
-    throw error;
+    console.error('Zod parsing error for PaymentRate:', error)
+    throw error
   }
 }
 
@@ -186,7 +194,7 @@ export async function createPaymentRate(
   providerId: number,
   childId: number,
   halfDayRateCents: number,
-  fullDayRateCents: number,
+  fullDayRateCents: number
 ) {
   const url = backendUrl('/payment-rates')
   const res = await fetch(url, {

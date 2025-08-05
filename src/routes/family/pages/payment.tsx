@@ -67,9 +67,9 @@ export function PaymentPage() {
       getMonthAllocation(
         context,
         selectedChildInfo.id,
-        providerId,
         date.getMonth() + 1,
-        date.getFullYear()
+        date.getFullYear(),
+        providerId
       ),
     enabled: !!selectedChildInfo.id && !!providerId && !!context,
   })
@@ -87,9 +87,9 @@ export function PaymentPage() {
       return getMonthAllocation(
         context,
         selectedChildInfo.id,
-        providerId,
         prevMonth.getMonth() + 1,
-        prevMonth.getFullYear()
+        prevMonth.getFullYear(),
+        providerId
       )
     },
     enabled:
@@ -119,9 +119,9 @@ export function PaymentPage() {
       return getMonthAllocation(
         context,
         selectedChildInfo.id,
-        providerId,
         nextMonth.getMonth() + 1,
-        nextMonth.getFullYear()
+        nextMonth.getFullYear(),
+        providerId
       )
     },
     enabled:
