@@ -1,6 +1,14 @@
 import { Calendar } from '@/components/calendar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import {
   createCareDay,
   deleteCareDay,
   getMonthAllocation,
@@ -84,7 +92,11 @@ export function PaymentPage() {
         prevMonth.getFullYear()
       )
     },
-    enabled: !!selectedChildInfo.id && !!providerId && !!context && !prevMonthAllocationFailed,
+    enabled:
+      !!selectedChildInfo.id &&
+      !!providerId &&
+      !!context &&
+      !prevMonthAllocationFailed,
     retry: (failureCount, error: any) => {
       if (error.response?.status === 400) {
         setPrevMonthAllocationFailed(true)
@@ -112,7 +124,11 @@ export function PaymentPage() {
         nextMonth.getFullYear()
       )
     },
-    enabled: !!selectedChildInfo.id && !!providerId && !!context && !nextMonthAllocationFailed,
+    enabled:
+      !!selectedChildInfo.id &&
+      !!providerId &&
+      !!context &&
+      !nextMonthAllocationFailed,
     retry: (failureCount, error: any) => {
       if (error.response?.status === 400) {
         setNextMonthAllocationFailed(true)
@@ -171,19 +187,20 @@ export function PaymentPage() {
     },
   })
 
-  const { mutate: submitCareDaysMutation, isPending: isSubmitting } = useMutation({
-    mutationFn: () =>
-      submitCareDays(
-        context,
-        selectedChildInfo.id,
-        providerId,
-        date.getMonth() + 1,
-        date.getFullYear()
-      ),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['allocation'] })
-    },
-  })
+  const { mutate: submitCareDaysMutation, isPending: isSubmitting } =
+    useMutation({
+      mutationFn: () =>
+        submitCareDays(
+          context,
+          selectedChildInfo.id,
+          providerId,
+          date.getMonth() + 1,
+          date.getFullYear()
+        ),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['allocation'] })
+      },
+    })
 
   const { mutate: createPaymentRateMutation } = useMutation({
     mutationFn: (variables: {
@@ -243,13 +260,13 @@ export function PaymentPage() {
     (careDay) =>
       careDay.status === 'new' ||
       careDay.status === 'needs_resubmission' ||
-      careDay.status === 'delete_not_submitted' 
+      careDay.status === 'delete_not_submitted'
   )
 
-  useBlocker(
-    () => hasPendingChanges,
-    text(t.unsavedChangesBlocker)
-  )
+  const blocker = useBlocker({
+    shouldBlockFn: () => !!hasPendingChanges,
+    withResolver: true,
+  })
 
   if (isLoadingAllocation || isLoadingPaymentRate || !context) {
     return <Text text={t.loading} />
@@ -259,12 +276,16 @@ export function PaymentPage() {
     return (
       <Card className="w-full max-w-md mx-auto mt-8">
         <CardHeader>
-          <CardTitle><Text text={t.setPaymentRates} /></CardTitle>
+          <CardTitle>
+            <Text text={t.setPaymentRates} />
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <Text text={t.setPaymentRatesDescription} />
           <div className="space-y-2">
-            <Label htmlFor="halfDayRate"><Text text={t.halfDayRate} /></Label>
+            <Label htmlFor="halfDayRate">
+              <Text text={t.halfDayRate} />
+            </Label>
             <Input
               id="halfDayRate"
               type="number"
@@ -274,7 +295,9 @@ export function PaymentPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="fullDayRate"><Text text={t.fullDayRate} /></Label>
+            <Label htmlFor="fullDayRate">
+              <Text text={t.fullDayRate} />
+            </Label>
             <Input
               id="fullDayRate"
               type="number"
@@ -296,6 +319,42 @@ export function PaymentPage() {
 
   return (
     <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">
+      {blocker.status === 'blocked' ? (
+        <Dialog
+          open={blocker.status === 'blocked'}
+          onOpenChange={(isOpen) => {
+            if (!isOpen) {
+              blocker.reset?.()
+            }
+          }}
+        >
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{text(t.unsavedChangesBlocker)}</DialogTitle>
+              <DialogDescription>
+                {text(t.unsavedChangesBlockerDescription)}
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  blocker.reset()
+                }}
+              >
+                {text(t.stayButton)}
+              </Button>
+              <Button
+                onClick={() => {
+                  blocker.proceed()
+                }}
+              >
+                {text(t.leaveButton)}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      ) : null}
       <div className="text-center  w-full max-w-md md:max-w-2xl">
         <Header>
           <Text text={t.paymentFor} data={{ providerName: provider?.name }} />
@@ -309,7 +368,9 @@ export function PaymentPage() {
         />
       </div>
       <div className="bg-tertiary-background rounded-3xl w-full max-w-md md:max-w-2xl p-5">
-        <div className="text-sm text-center pb-2"><Text text={t.monthBalance} /></div>
+        <div className="text-sm text-center pb-2">
+          <Text text={t.monthBalance} />
+        </div>
         <div className="text-3xl text-center">
           {formatAmount(allocation?.remaining_cents || 0)}
         </div>

@@ -165,12 +165,24 @@ export const translations = {
         es: 'Por favor, introduce números positivos válidos para ambas tarifas.',
       },
       unsavedChangesBlocker: {
-        en: 'You have unsaved changes. Are you sure you want to leave?',
-        es: 'Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?',
+        en: 'Are you sure you want to leave?',
+        es: '¿Estás seguro de que quieres salir?',
+      },
+      unsavedChangesBlockerDescription: {
+        en: 'Your changes haven\'t been submitted. If you leave, your provider will not receive your updates.',
+        es: 'Tus cambios no han sido enviados. Si sales, tu proveedor no recibirá tus actualizaciones.',
+      },
+      stayButton: {
+        en: 'Stay',
+        es: 'Quedarse',
+      },
+      leaveButton: {
+        en: 'Leave',
+        es: 'Salir',
       },
       paymentFor: {
-        en: 'Payment for',
-        es: 'Pago para',
+        en: 'Payment for {providerName}',
+        es: 'Pago para {providerName}',
       },
       paymentDescription: {
         en: 'Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. You can modify days up until the Monday of the week care is taking place. At that point, the week will be locked.',
