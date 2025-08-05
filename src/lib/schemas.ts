@@ -61,15 +61,11 @@ export function useValidateForm<T extends z.ZodType<any, any, any>>(
   return { getError, submit }
 }
 
-export const paymentSchema = z.object({
-  amount: z.number().min(1, "Amount must be greater than 0"),
-  hours: z.number().min(1, "Hours must be greater than 0"),
-  providerId: z.number().refine((val) => val !== 0, { message: "Provider is required" }),
-});
-
 export const allocatedCareDaySchema = z.object({
-  date: z.string().refine((s) => !isNaN(Date.parse(s)), { message: "Invalid date format" }),
-  type: z.enum(["Full Day", "Half Day"]),
+  date: z
+    .string()
+    .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
+  type: z.enum(['Full Day', 'Half Day']),
   provider_google_sheets_id: z.number(),
   id: z.number(),
   care_month_allocation_id: z.number(),
@@ -87,39 +83,45 @@ export const allocatedCareDaySchema = z.object({
   delete_not_submitted: z.boolean(),
   is_new: z.boolean(),
   status: z.string(),
-});
+})
 
 export const monthAllocationSchema = z.object({
   id: z.number(),
-  date: z.string().refine((s) => !isNaN(Date.parse(s)), { message: "Invalid date format" }),
+  date: z
+    .string()
+    .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   allocation_cents: z.number(),
   google_sheets_child_id: z.number(),
   used_days: z.number(),
   used_cents: z.number(),
   remaining_cents: z.number(),
   over_allocation: z.boolean(),
-  locked_until_date: z.string().refine((s) => !isNaN(Date.parse(s)), { message: "Invalid date format" }),
+  locked_until_date: z
+    .string()
+    .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
   care_days: z.array(allocatedCareDaySchema),
-});
+})
 
 export const childBaseSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
-  date_of_birth: z.string().refine((s) => !isNaN(Date.parse(s)), { message: "Invalid date format" }),
-});
+  date_of_birth: z
+    .string()
+    .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
+})
 
 export const childCreateSchema = childBaseSchema.extend({
   family_id: z.number(),
-});
+})
 
 export const childSchema = childBaseSchema.extend({
   id: z.number(),
   family_id: z.number(),
   created_at: z.string().datetime().nullable().default(null),
   updated_at: z.string().datetime().nullable().default(null),
-});
+})
 
 export const paymentRequestSchema = z.object({
   id: z.number(),
@@ -131,7 +133,7 @@ export const paymentRequestSchema = z.object({
   email_sent_successfully: z.boolean(),
   processed: z.boolean(),
   processed_date: z.string().nullable(),
-});
+})
 
 export const paymentRateSchema = z.object({
   id: z.number(),
@@ -139,4 +141,4 @@ export const paymentRateSchema = z.object({
   google_sheets_child_id: z.number(),
   half_day_rate_cents: z.number(),
   full_day_rate_cents: z.number(),
-});
+})

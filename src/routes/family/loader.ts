@@ -65,7 +65,6 @@ export type SelectedChildInfo = {
   first_name: string
   last_name: string
   balance: number
-  monthly_allocation: number
 }
 
 export type Provider = {

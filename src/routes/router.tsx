@@ -1,4 +1,3 @@
-import { calendarRoute } from './calendar/routes';
 import { EnvironmentBanner } from '@/components/ui/environment-banner'
 
 import {
@@ -63,7 +62,6 @@ export const routeTree = rootRoute.addChildren([
   providerRouteTree,
   familyRouteTree,
   authRouteTree,
-  calendarRoute,
   inviteRouteTree,
 ])
 
