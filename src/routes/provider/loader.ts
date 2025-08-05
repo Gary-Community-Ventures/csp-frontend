@@ -1,4 +1,8 @@
-import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/api/client'
+import {
+  backendUrl,
+  handleStatusCodes,
+  headersWithAuth,
+} from '@/lib/api/client'
 import type { RouterContext } from '../router'
 
 export async function loadProviderData({
@@ -8,25 +12,30 @@ export async function loadProviderData({
   context: RouterContext
   abortController: AbortController
 }) {
-  const res = await fetch(backendUrl('/provider'), {
-    headers: await headersWithAuth(context),
-    signal: abortController.signal,
-  })
+  try {
+    const res = await fetch(backendUrl('/provider'), {
+      headers: await headersWithAuth(context),
+      signal: abortController.signal,
+    })
 
-  handleStatusCodes(context, res)
+    handleStatusCodes(context, res)
 
-  const rawJson = await res.json()
+    const rawJson = await res.json()
 
-  const json: Provider = {
-    ...rawJson,
-    transactions: rawJson.transactions.map((payment: any) => ({
-      ...payment,
-      date: new Date(payment.date),
-    })),
-  }
+    const json: Provider = {
+      ...rawJson,
+      transactions: rawJson.transactions.map((payment: any) => ({
+        ...payment,
+        date: new Date(payment.date),
+      })),
+    }
 
-  return {
-    providerData: json,
+    return {
+      providerData: json,
+    }
+  } catch (error) {
+    console.error('Error loading provider data:', error)
+    throw error // Re-throw the error to be caught by the router's errorComponent
   }
 }
 

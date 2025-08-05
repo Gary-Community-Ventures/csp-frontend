@@ -1,12 +1,17 @@
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import * as Sentry from '@sentry/react'
+import { useRouter } from '@tanstack/react-router'
 
 function ErrorFallback({
-  resetError,
+  error,
 }: {
   error: unknown
-  resetError: () => void
 }) {
+  const router = useRouter()
+
+  Sentry.captureException(error)
+
   const t = translations.general.errorFallback
 
   return (
@@ -20,13 +25,15 @@ function ErrorFallback({
         </p>
         <div className="space-x-4">
           <button
-            onClick={resetError}
+            onClick={() => router.invalidate()}
             className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
           >
             <Text text={t.tryAgain} />
           </button>
           <button
-            onClick={() => (window.location.href = '/')}
+            onClick={() => router.navigate({
+              to: '/'
+            })}
             className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/90"
           >
             <Text text={t.goHome} />

@@ -1,4 +1,5 @@
 import { EnvironmentBanner } from '@/components/ui/environment-banner'
+import ErrorFallback from '@/components/error-fallback'
 
 import {
   Outlet,
@@ -31,6 +32,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       </Wrapper>
     )
   },
+  errorComponent: ErrorFallback,
 })
 
 export const redirectToProviderOrFamily = createRoute({

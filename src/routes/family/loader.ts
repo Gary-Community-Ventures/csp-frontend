@@ -1,4 +1,8 @@
-import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/api/client'
+import {
+  backendUrl,
+  handleStatusCodes,
+  headersWithAuth,
+} from '@/lib/api/client'
 import type { RouterContext } from '../router'
 import { redirect } from '@tanstack/react-router'
 
@@ -16,25 +20,30 @@ export async function loadFamilyData({
     urlPath += `/${params.childId}`
   }
 
-  const res = await fetch(backendUrl(urlPath), {
-    headers: await headersWithAuth(context),
-    signal: abortController.signal,
-  })
+  try {
+    const res = await fetch(backendUrl(urlPath), {
+      headers: await headersWithAuth(context),
+      signal: abortController.signal,
+    })
 
-  handleStatusCodes(context, res)
+    handleStatusCodes(context, res)
 
-  const rawJson = await res.json()
+    const rawJson = await res.json()
 
-  const json: Family = {
-    ...rawJson,
-    transactions: rawJson.transactions.map((cg: any) => ({
-      ...cg,
-      date: new Date(cg.date),
-    })),
-  }
+    const json: Family = {
+      ...rawJson,
+      transactions: rawJson.transactions.map((cg: any) => ({
+        ...cg,
+        date: new Date(cg.date),
+      })),
+    }
 
-  return {
-    familyData: json,
+    return {
+      familyData: json,
+    }
+  } catch (error) {
+    console.error('Error loading family data:', error)
+    throw error // Re-throw the error to be caught by the router's errorComponent
   }
 }
 
