@@ -169,7 +169,7 @@ export const translations = {
         es: '¿Estás seguro de que quieres salir?',
       },
       unsavedChangesBlockerDescription: {
-        en: 'Your changes haven\'t been submitted. If you leave, your provider will not receive your updates.',
+        en: "Your changes haven't been submitted. If you leave, your provider will not receive your updates.",
         es: 'Tus cambios no han sido enviados. Si sales, tu proveedor no recibirá tus actualizaciones.',
       },
       stayButton: {
@@ -451,8 +451,8 @@ export const translations = {
         es: 'Algo salió mal',
       },
       weHaveNotified: {
-        en: 'We have notified about this error and will look into it.',
-        es: 'Hemos sido notificados sobre este error y lo investigaremos.',
+        en: 'We have been notified and are working to fix the issue.',
+        es: 'Hemos sido notificados y estamos trabajando para solucionar el problema.',
       },
       tryAgain: {
         en: 'Try again',
@@ -461,6 +461,40 @@ export const translations = {
       goHome: {
         en: 'Go home',
         es: 'Ir a la página de inicio',
+      },
+    },
+    emptyState: {
+      noTransactionsTitle: {
+        en: 'No Transactions Yet',
+        es: 'Aún no hay transacciones',
+      },
+      noTransactionsDescription: {
+        en: 'Once you have transactions, they will appear here.',
+        es: 'Una vez que tengas transacciones, aparecerán aquí.',
+      },
+      noChildrenTitle: {
+        en: 'No Children Yet',
+        es: 'Aún no hay niños',
+      },
+      noChildrenDescription: {
+        en: 'Once you add children, they will appear here.',
+        es: 'Una vez que agregues niños, aparecerán aquí.',
+      },
+      noProvidersTitle: {
+        en: 'No Providers Yet',
+        es: 'Aún no hay proveedores',
+      },
+      noProvidersDescription: {
+        en: 'Once you add providers, they will appear here. Add your providers below.',
+        es: 'Una vez que agregues proveedores, aparecerán aquí. Agrega tus proveedores a continuación.',
+      },
+      noProvidersAddProvider: {
+        en: 'To get started, add your childcare center or invite a new caregiver.',
+        es: 'Para comenzar, agrega tu centro de cuidado infantil o invita a un nuevo cuidador.',
+      },
+      addYourProvider: {
+        en: '+ Add your provider',
+        es: '+ Agregar tu proveedor',
       },
     },
   },

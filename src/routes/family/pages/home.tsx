@@ -40,7 +40,7 @@ export function FamilyHomePage() {
           <Header>
             <Text text={t.providers} />
           </Header>
-          <ProviderList />
+          <ProviderList showAddProvider={true} />
         </section>
         <section>
           <Header>

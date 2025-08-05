@@ -1,9 +1,7 @@
+import { ChildrenList } from '@/components/children-list'
 import { Header } from '@/components/header'
 import { WhiteCard } from '@/components/white-card'
 import { useProviderContext } from '../wrapper'
-import { CardList } from '@/components/card-list'
-// import { Button } from '@/components/ui/button'
-// import { Link } from '@tanstack/react-router'
 import { TransactionsList } from '@/components/transactions'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
@@ -26,21 +24,7 @@ export function ProviderHomePage() {
         <Header>
           <Text text={t.children} />
         </Header>
-        <CardList
-          items={children.map((child) => (
-            <div className="flex justify-between">
-              <strong className="text-lg">
-                {child.firstName} {child.lastName}
-              </strong>
-              {/* TODO enable when messages are implemented */}
-              {/*<Button asChild>
-                <Link to="/provider/messages">
-                  <Text text={t.messageParent} />
-                </Link>
-              </Button>*/}
-            </div>
-          ))}
-        />
+        <ChildrenList children={children} />
       </section>
       <section>
         <Header>
