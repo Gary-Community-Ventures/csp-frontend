@@ -28,7 +28,6 @@ const getDayStyles = (status: string) => {
     dayClasses: '',
     innerHalfDayClass: '',
     textColorClass: 'text-gray-800',
-    borderColorClass: '',
     showX: false,
     xColorClass: '',
   }
@@ -42,7 +41,6 @@ const getDayStyles = (status: string) => {
       styles.dayClasses = 'bg-primary'
       styles.innerHalfDayClass = 'bg-secondary-background'
       styles.textColorClass = 'text-primary-foreground'
-      styles.borderColorClass = 'border-2 border-primary-foreground'
       break
     case 'needs_resubmission':
       styles.dayClasses = 'bg-yellow-200'
@@ -174,7 +172,6 @@ export const Calendar: React.FC<CalendarProps> = ({
     }`
     let innerHalfDayClass = ''
     let textColorClass = 'text-gray-800' // Default text color
-    let borderColorClass = ''
     let showX = false
     let xColorClass = ''
 
@@ -186,7 +183,6 @@ export const Calendar: React.FC<CalendarProps> = ({
       dayClasses += ` ${styles.dayClasses}`
       innerHalfDayClass = styles.innerHalfDayClass
       textColorClass = styles.textColorClass
-      borderColorClass = styles.borderColorClass
       showX = styles.showX
       xColorClass = styles.xColorClass
     } else {
