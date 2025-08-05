@@ -3,6 +3,8 @@ import { monthAllocationSchema } from '../schemas'
 import { z } from 'zod'
 import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 
+export type GetMonthAllocationResponse = z.infer<typeof monthAllocationSchema>
+
 export async function getMonthAllocation(
   context: RouterContext,
   childId: number,
@@ -17,8 +19,12 @@ export async function getMonthAllocation(
   const res = await fetch(url, {
     headers: await headersWithAuth(context),
   })
+  interface CustomError extends Error {
+  response?: Response;
+}
+
   if (res.status === 400) {
-    const error: any = new Error('Bad Request')
+    const error: CustomError = new Error('Bad Request')
     error.response = res
     throw error
   }

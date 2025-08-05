@@ -3,6 +3,8 @@ import { paymentRateSchema } from '../schemas'
 import { z } from 'zod'
 import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 
+export type GetPaymentRateResponse = z.infer<typeof paymentRateSchema>
+
 export async function getPaymentRate(
   context: RouterContext,
   providerId: number,
