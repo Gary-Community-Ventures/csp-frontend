@@ -184,7 +184,8 @@ export const Calendar: React.FC<CalendarProps> = ({
     } else if (careDay) {
       const styles = getDayStyles(careDay.status)
       dayClasses += ` ${styles.dayClasses}`
-      innerHalfDayClass = textColorClass = styles.textColorClass
+      innerHalfDayClass = styles.innerHalfDayClass
+      textColorClass = styles.textColorClass
       borderColorClass = styles.borderColorClass
       showX = styles.showX
       xColorClass = styles.xColorClass
