@@ -64,11 +64,15 @@ export function PaymentPage() {
   }
 
   if (allocationQuery.isLoading || paymentRateQuery.isLoading) {
-    return <LoadingPage/>
+    return <LoadingPage />
   }
 
   if (paymentRateQuery.isError || !paymentRateQuery.data) {
-    return <SetPaymentRateForm createPaymentRateMutation={createPaymentRateMutation} />
+    return (
+      <SetPaymentRateForm
+        createPaymentRateMutation={createPaymentRateMutation}
+      />
+    )
   }
 
   const provider = providers.find((p) => p.id === providerId)

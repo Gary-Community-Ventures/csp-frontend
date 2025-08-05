@@ -17,13 +17,13 @@ interface CareCalendarProps {
   paymentRate: GetPaymentRateResponse
 }
 
-export function CareCalendar({ 
-  allocation, 
-  setDate, 
-  handleDayTypeChange, 
-  prevMonthAllocationFailed, 
-  nextMonthAllocationFailed, 
-  paymentRate 
+export function CareCalendar({
+  allocation,
+  setDate,
+  handleDayTypeChange,
+  prevMonthAllocationFailed,
+  nextMonthAllocationFailed,
+  paymentRate,
 }: CareCalendarProps) {
   return (
     <div className="w-full flex justify-center">

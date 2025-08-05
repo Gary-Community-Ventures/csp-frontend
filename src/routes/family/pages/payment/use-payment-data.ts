@@ -10,7 +10,7 @@ import { useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 
 interface CustomError extends Error {
-  response?: Response;
+  response?: Response
 }
 
 export function usePaymentData() {

@@ -16,7 +16,9 @@ interface SetPaymentRateFormProps {
   }
 }
 
-export function SetPaymentRateForm({ createPaymentRateMutation }: SetPaymentRateFormProps) {
+export function SetPaymentRateForm({
+  createPaymentRateMutation,
+}: SetPaymentRateFormProps) {
   const t = translations.family.paymentPage
   const text = useText()
   const [halfDayRate, setHalfDayRate] = React.useState('')

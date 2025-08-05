@@ -16,7 +16,9 @@ interface ConfirmUnsavedChangesDialogProps {
   blocker: ReturnType<typeof useBlocker>
 }
 
-export function ConfirmUnsavedChangesDialog({ blocker }: ConfirmUnsavedChangesDialogProps) {
+export function ConfirmUnsavedChangesDialog({
+  blocker,
+}: ConfirmUnsavedChangesDialogProps) {
   const t = translations.family.paymentPage
   const text = useText()
 
