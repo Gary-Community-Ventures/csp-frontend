@@ -1,5 +1,5 @@
 import { Link, type LinkProps } from '@tanstack/react-router'
-import { useIsMobile } from '@/lib/hooks/use-is-mobile'
+import { useIsMobile } from '@/lib/is-mobile'
 
 export function Logo(props: LinkProps) {
   const isMobile = useIsMobile()

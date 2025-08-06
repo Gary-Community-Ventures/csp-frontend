@@ -6,19 +6,20 @@ export function useIsMobile(breakpoint = MOBILE_BREAKPOINT) {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    // Check if window is defined to avoid SSR issues
+    if (window === undefined) {
+      return
+    }
+
     const checkIsMobile = () => {
-      if (typeof window !== 'undefined') {
-        setIsMobile(window.innerWidth < breakpoint)
-      }
+      setIsMobile(window.innerWidth < breakpoint)
     }
 
     checkIsMobile()
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', checkIsMobile)
-      return () => {
-        window.removeEventListener('resize', checkIsMobile)
-      }
+    window.addEventListener('resize', checkIsMobile)
+    return () => {
+      window.removeEventListener('resize', checkIsMobile)
     }
   }, [breakpoint])
 
