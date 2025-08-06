@@ -1,4 +1,4 @@
-import { Outlet, createRoute } from '@tanstack/react-router'
+import { Outlet, createRoute, redirect } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
 import { ProviderHomePage } from './pages/home'
 import { ProviderNavBar } from './components/nav-bar'
@@ -8,6 +8,21 @@ import { ProviderWrapper } from './wrapper'
 export const providerRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/provider',
+})
+
+export const providerWithoutHomeRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/',
+  beforeLoad: () => {
+    throw redirect({
+      to: '/provider/home',
+    })
+  },
+})
+
+export const providerWithHomeRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/home',
   component: () => (
     <ProviderWrapper>
       <ProviderNavBar />
@@ -20,8 +35,8 @@ export const providerRoute = createRoute({
 })
 
 const homeRoute = createRoute({
-  getParentRoute: () => providerRoute,
-  path: '/home',
+  getParentRoute: () => providerWithHomeRoute,
+  path: '/',
   component: ProviderHomePage,
 })
 
@@ -52,7 +67,10 @@ const settingsRoute = createRoute({
 */
 
 export const providerRouteTree = providerRoute.addChildren([
-  homeRoute,
+  providerWithoutHomeRoute,
+  providerWithHomeRoute.addChildren([
+    homeRoute,
+  ]),
   // childrenRoute,
   // resourcesRoute,
   // helpRoute,
