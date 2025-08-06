@@ -8,7 +8,7 @@ export function Logo({ to }: { to: string }) {
     <Link to={to}>
       <img
         src={isMobile ? "/cap_circle_logo_white.png" : "/cap_full_logo_white.png"}
-        className="max-h-13"
+        className="max-h-12"
         alt="logo"
       />
     </Link>
