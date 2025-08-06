@@ -1,15 +1,11 @@
 import { Link, type LinkProps } from '@tanstack/react-router'
 import { useIsMobile } from '@/lib/hooks/use-is-mobile'
 
-type LogoProps = {
-  linkProps: LinkProps
-}
-
-export function Logo({ linkProps }: LogoProps) {
+export function Logo(props: LinkProps) {
   const isMobile = useIsMobile()
 
   return (
-    <Link {...linkProps}>
+    <Link {...props}>
       <img
         src={isMobile ? "/cap_circle_logo_white.png" : "/cap_full_logo_white.png"}
         className="max-h-8"
