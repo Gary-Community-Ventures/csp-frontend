@@ -66,11 +66,13 @@ const settingsRoute = createRoute({
 })
 */
 
+const providerWithHomeRouteChildren = providerWithHomeRoute.addChildren([
+  homeRoute,
+])
+
 export const providerRouteTree = providerRoute.addChildren([
   providerWithoutHomeRoute,
-  providerWithHomeRoute.addChildren([
-    homeRoute,
-  ]),
+  providerWithHomeRouteChildren,
   // childrenRoute,
   // resourcesRoute,
   // helpRoute,
