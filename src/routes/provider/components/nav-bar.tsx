@@ -28,6 +28,7 @@ import {
   //useText
 } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { Logo } from '@/components/logo'
 
 export function ProviderNavBar() {
   const t = translations.provider.navBar
@@ -47,9 +48,7 @@ export function ProviderNavBar() {
   return (
     <>
       <div className="flex justify-between bg-primary text-primary-foreground p-5">
-        <Link to="/provider/home">
-          <img src="/lala_logo_white.png" className="max-h-15" alt="logo" />
-        </Link>
+        <Logo to="/provider/home" />
         <div className="flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger>
