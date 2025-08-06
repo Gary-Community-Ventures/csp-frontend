@@ -316,10 +316,6 @@ export const translations = {
         en: 'Please enter a valid phone number',
         es: 'Por favor ingresa un número de teléfono válido',
       },
-      emailOrPhoneError: {
-        en: 'Either email or phone number is required',
-        es: 'Se requiere correo electrónico o número de teléfono',
-      },
       emailLabel: {
         en: 'Provider Email',
         es: 'Correo Electrónico',

@@ -14,7 +14,7 @@ export function InviteProviderConfirmationPage() {
   })
 
   useEffect(() => {
-    if (!search.email && !search.phone) {
+    if (!search.email || !search.phone) {
       navigate({ to: '/family/$childId/providers/invite' })
     }
   }, [search, navigate])
