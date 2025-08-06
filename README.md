@@ -1,4 +1,4 @@
-# Lala Childcare
+# CAP Colorado Portal
 
 This project is a frontend project built with the following technologies:
 
