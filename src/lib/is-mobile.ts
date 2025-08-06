@@ -7,7 +7,7 @@ export function useIsMobile(breakpoint = MOBILE_BREAKPOINT) {
 
   useEffect(() => {
     // Check if window is defined to avoid SSR issues
-    if (window === undefined) {
+    if (typeof window === 'undefined') {
       return
     }
 
