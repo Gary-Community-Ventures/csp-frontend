@@ -8,6 +8,7 @@ import {
   UserRound,
   ArrowRightLeft,
 } from 'lucide-react'
+import { Logo } from '@/components/logo'
 import { NavBar } from '@/components/nav-bar'
 import { useFamilyContext } from '../wrapper'
 import { Link, useNavigate } from '@tanstack/react-router'
@@ -49,9 +50,7 @@ export function FamilyNavBar() {
   return (
     <>
       <div className="flex justify-between bg-primary text-primary-foreground p-5">
-        <Link to="/family/$childId/home">
-          <img src="/lala_logo_white.png" className="max-h-15" alt="logo" />
-        </Link>
+        <Logo to="/family/$childId/home" />
         <div className="flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger>
