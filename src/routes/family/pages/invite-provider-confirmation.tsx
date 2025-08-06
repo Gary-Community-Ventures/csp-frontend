@@ -14,7 +14,7 @@ export function InviteProviderConfirmationPage() {
   })
 
   useEffect(() => {
-    if (!search.email || !search.phone) {
+    if (!search.email && !search.phone) {
       navigate({ to: '/family/$childId/providers/invite' })
     }
   }, [search, navigate])
@@ -30,16 +30,18 @@ export function InviteProviderConfirmationPage() {
         </p>
         <p>
           <span className="font-bold">
-            <Text text={t.emailLabel} />:
+            <Text text={t.emailLabel} />
           </span>{' '}
           {search.email}
         </p>
-        <p>
-          <span className="font-bold">
-            <Text text={t.phoneLabel} />:
-          </span>{' '}
-          {search.phone}
-        </p>
+        {search.phone !== '' && (
+          <p>
+            <span className="font-bold">
+              <Text text={t.phoneLabel} />
+            </span>{' '}
+            {search.phone}
+          </p>
+        )}
       </WhiteCard>
       <Button className="w-full mt-10" asChild>
         <Link to="/family/$childId/providers">

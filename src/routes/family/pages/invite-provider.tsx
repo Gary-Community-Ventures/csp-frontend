@@ -15,7 +15,11 @@ import { useState } from 'react'
 import { FormErrorMessage } from '@/components/form-error'
 import { Button } from '@/components/ui/button'
 import { Link, useMatch, useNavigate } from '@tanstack/react-router'
-import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/api/client'
+import {
+  backendUrl,
+  handleStatusCodes,
+  headersWithAuth,
+} from '@/lib/api/client'
 import type { RouterContext } from '@/routes/router'
 import { useFamilyContext } from '../wrapper'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -41,7 +45,9 @@ export function InviteProviderPage() {
     phone: z
       .string()
       .transform((val) => val.replace(/\D/g, ''))
-      .refine((val) => val.length === 10, { message: text(t.phoneError) }),
+      .refine((val) => val.length === 0 || val.length === 10, {
+        message: text(t.phoneError),
+      }),
     children: z.array(z.number()),
     lang: z.enum(LANGUAGES),
   })
@@ -229,7 +235,7 @@ async function handleInviteProvider(
     headers: await headersWithAuth(context),
     body: JSON.stringify({
       provider_email: email,
-      provider_cell: `+1${phone}`,
+      provider_cell: phone === '' ? null : `+1${phone}`,
       child_ids: childIds,
       lang: lang,
     }),

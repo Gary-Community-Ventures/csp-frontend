@@ -356,12 +356,12 @@ export const translations = {
           es: 'Se ha enviado una invitación al siguiente correo electrónico y número de teléfono.',
         },
         emailLabel: {
-          en: 'Email',
-          es: 'Correo Electrónico',
+          en: 'Email:',
+          es: 'Correo Electrónico:',
         },
         phoneLabel: {
-          en: 'Phone',
-          es: 'Teléfono',
+          en: 'Phone:',
+          es: 'Teléfono:',
         },
         backButton: {
           en: 'Back to Providers',
