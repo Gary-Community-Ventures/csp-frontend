@@ -203,7 +203,6 @@ export function InviteProviderPage() {
                 ))}
               </SelectContent>
             </Select>
-            <FormErrorMessage error={getError('phone')} />
           </div>
         </div>
         <Button
