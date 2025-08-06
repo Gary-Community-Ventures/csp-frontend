@@ -11,19 +11,16 @@ import { familyRoute } from '../routes'
 export function FamilyHomePage() {
   const t = translations.family.home
   const { transactions, selectedChildInfo } = useFamilyContext()
-  
+
   const context = familyRoute.useRouteContext()
 
-  const balance = useCurrentMonthBalance(
-    context,
-    selectedChildInfo.id,
-  )
+  const balance = useCurrentMonthBalance(context, selectedChildInfo.id)
 
   return (
     <>
       <section>
         {balance !== undefined && (
-          <h1 className="p-5 w-full">
+          <h1 className="px-5 pt-5 w-full">
             <div className="bg-tertiary-background rounded-3xl w-full p-5">
               <div className="text-sm text-center">
                 <Text text={t.balance} />
@@ -35,7 +32,7 @@ export function FamilyHomePage() {
           </h1>
         )}
       </section>
-      <div className="px-5">
+      <div className="px-5 pt-5">
         <section className="mb-5">
           <Header>
             <Text text={t.providers} />

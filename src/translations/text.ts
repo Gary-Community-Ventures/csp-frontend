@@ -316,10 +316,6 @@ export const translations = {
         en: 'Please enter a valid phone number',
         es: 'Por favor ingresa un número de teléfono válido',
       },
-      emailOrPhoneError: {
-        en: 'Either email or phone number is required',
-        es: 'Se requiere correo electrónico o número de teléfono',
-      },
       emailLabel: {
         en: 'Provider Email',
         es: 'Correo Electrónico',
@@ -360,12 +356,12 @@ export const translations = {
           es: 'Se ha enviado una invitación al siguiente correo electrónico y número de teléfono.',
         },
         emailLabel: {
-          en: 'Email',
-          es: 'Correo Electrónico',
+          en: 'Email:',
+          es: 'Correo Electrónico:',
         },
         phoneLabel: {
-          en: 'Phone',
-          es: 'Teléfono',
+          en: 'Phone:',
+          es: 'Teléfono:',
         },
         backButton: {
           en: 'Back to Providers',

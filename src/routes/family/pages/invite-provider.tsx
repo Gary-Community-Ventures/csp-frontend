@@ -15,7 +15,11 @@ import { useState } from 'react'
 import { FormErrorMessage } from '@/components/form-error'
 import { Button } from '@/components/ui/button'
 import { Link, useMatch, useNavigate } from '@tanstack/react-router'
-import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/api/client'
+import {
+  backendUrl,
+  handleStatusCodes,
+  headersWithAuth,
+} from '@/lib/api/client'
 import type { RouterContext } from '@/routes/router'
 import { useFamilyContext } from '../wrapper'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -36,36 +40,17 @@ export function InviteProviderPage() {
   const { children, selectedChildInfo } = useFamilyContext()
   const [submitting, setSubmitting] = useState(false)
 
-  const schema = z
-    .object({
-      email: z.preprocess(
-        (val) => (val === '' ? undefined : val),
-        z.string().email({ message: text(t.emailError) }).optional()
-      ),
-      phone: z
-        .string()
-        .transform((val) => val.replace(/\D/g, ''))
-        .refine((val) => val.length === 0 || val.length === 10, {
-          message: text(t.phoneError),
-        })
-        .optional(),
-      children: z.array(z.number()),
-      lang: z.enum(LANGUAGES),
-    })
-    .superRefine((data, ctx) => {
-      if (!data.email && !data.phone) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ['email'],
-          message: text(t.emailOrPhoneError),
-        })
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ['phone'],
-          message: text(t.emailOrPhoneError),
-        })
-      }
-    })
+  const schema = z.object({
+    email: z.string().email({ message: text(t.emailError) }),
+    phone: z
+      .string()
+      .transform((val) => val.replace(/\D/g, ''))
+      .refine((val) => val.length === 0 || val.length === 10, {
+        message: text(t.phoneError),
+      }),
+    children: z.array(z.number()),
+    lang: z.enum(LANGUAGES),
+  })
 
   const [formData, setFormData] = useState<z.infer<typeof schema>>({
     email: '',
@@ -94,8 +79,8 @@ export function InviteProviderPage() {
             navigate({
               to: '/family/$childId/providers/invite/confirmation',
               search: {
-                email: data.email ?? '',
-                phone: data.phone ?? '',
+                email: data.email,
+                phone: data.phone,
               },
             })
           })
@@ -218,7 +203,6 @@ export function InviteProviderPage() {
                 ))}
               </SelectContent>
             </Select>
-            <FormErrorMessage error={getError('phone')} />
           </div>
         </div>
         <Button
@@ -239,8 +223,8 @@ export function InviteProviderPage() {
 }
 
 async function handleInviteProvider(
-  email: string | undefined,
-  phone: string | undefined,
+  email: string,
+  phone: string,
   childIds: number[],
   lang: Language,
   context: RouterContext
@@ -249,8 +233,8 @@ async function handleInviteProvider(
     method: 'POST',
     headers: await headersWithAuth(context),
     body: JSON.stringify({
-      provider_email: email ? email : "",
-      provider_cell: phone ? `+1${phone}` : "",
+      provider_email: email,
+      provider_cell: phone === '' ? null : `+1${phone}`,
       child_ids: childIds,
       lang: lang,
     }),
