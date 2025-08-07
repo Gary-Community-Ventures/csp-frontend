@@ -4,6 +4,8 @@ import { ProviderHomePage } from './pages/home'
 import { ProviderNavBar } from './components/nav-bar'
 import { loadProviderData } from './loader'
 import { ProviderWrapper } from './wrapper'
+import { InviteFamilyPage } from './pages/invite-family'
+import { InviteFamilyConfirmationPage } from './pages/invite-family-confirmation'
 
 export const providerRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -23,6 +25,21 @@ const homeRoute = createRoute({
   getParentRoute: () => providerRoute,
   path: '/home',
   component: ProviderHomePage,
+})
+
+const inviteFamilyRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/families/invite',
+  component: InviteFamilyPage,
+})
+
+export const inviteFamilyConfirmationRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: 'families/invite/confirmation',
+  validateSearch: (search: { email: string; phone: string }) => {
+    return search
+  },
+  component: InviteFamilyConfirmationPage,
 })
 
 /* TODO renable when other pages are implemented
@@ -53,6 +70,8 @@ const settingsRoute = createRoute({
 
 export const providerRouteTree = providerRoute.addChildren([
   homeRoute,
+  inviteFamilyRoute,
+  inviteFamilyConfirmationRoute,
   // childrenRoute,
   // resourcesRoute,
   // helpRoute,

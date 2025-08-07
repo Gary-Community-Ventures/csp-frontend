@@ -44,6 +44,17 @@ export function handleStatusCodes(context: RouterContext, res: Response) {
   }
 }
 
+export async function headersWithAuthOptional(context: RouterContext) {
+  if (context.user === null || !context.isSignedIn) {
+    return DEFAULT_HEADERS
+  }
+
+  return {
+    ...DEFAULT_HEADERS,
+    Authorization: `Bearer ${await context.getToken()}`,
+  }
+}
+
 export async function headersWithAuth(context: RouterContext) {
   if (context.user === null || !context.isSignedIn) {
     authError(context)

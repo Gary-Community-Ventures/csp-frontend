@@ -113,11 +113,11 @@ export function ProviderInvitePage() {
         {accepted ? (
           <>
             <Header className="text-xl">
-              <Text text={t.accpted} />
+              <Text text={t.accepted} />
             </Header>
             <Button asChild>
               <Link to="/provider/home">
-                <Text text={t.toProviderHome} />
+                <Text text={t.toHome} />
               </Link>
             </Button>
           </>

@@ -3,11 +3,11 @@ import { useEffect } from 'react'
 import { InviteConfirmation } from '@/components/invite-confirmation'
 import { translations } from '@/translations/text'
 
-export function InviteProviderConfirmationPage() {
-  const t = translations.family.inviteProviderPage.confirmationPage
+export function InviteFamilyConfirmationPage() {
+  const t = translations.provider.inviteFamilyPage.confirmationPage
   const navigate = useNavigate()
   const search = useSearch({
-    from: '/family/$childId/providers/invite/confirmation',
+    from: '/provider/families/invite/confirmation',
   })
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function InviteProviderConfirmationPage() {
   return (
     <InviteConfirmation
       {...search}
-      backLinkProps={{ to: '/family/$childId/providers' }}
+      backLinkProps={{ to: '/provider/home' }}
       backLinkText={t.backButton}
     />
   )
