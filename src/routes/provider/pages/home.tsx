@@ -5,6 +5,9 @@ import { useProviderContext } from '../wrapper'
 import { TransactionsList } from '@/components/transactions'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { Button } from '@/components/ui/button'
+import { Link } from '@tanstack/react-router'
+import { Plus } from 'lucide-react'
 
 export function ProviderHomePage() {
   const t = translations.provider.home
@@ -21,9 +24,17 @@ export function ProviderHomePage() {
         </section>
       )}
       <section className="mb-5">
-        <Header>
-          <Text text={t.children} />
-        </Header>
+        <div className="flex justify-between">
+          <Header>
+            <Text text={t.children} />
+          </Header>
+          <Button variant="link" asChild className="text-lg">
+            <Link to="/provider/families/invite">
+              <Plus className="size-6" />
+              <Text text={t.inviteFamily} />
+            </Link>
+          </Button>
+        </div>
         <ChildrenList children={children} />
       </section>
       <section>

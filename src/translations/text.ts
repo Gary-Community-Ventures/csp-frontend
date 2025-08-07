@@ -386,6 +386,10 @@ export const translations = {
         en: 'Children',
         es: 'Niños',
       },
+      inviteFamily: {
+        en: 'ADD A FAMILY',
+        es: 'AGREGAR FAMILIA',
+      },
       messageParent: {
         en: 'Message Parent',
         es: 'Mensaje al Padre',
