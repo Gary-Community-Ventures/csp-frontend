@@ -28,7 +28,7 @@ export function ProviderHomePage() {
           <Header>
             <Text text={t.children} />
           </Header>
-          <Button variant="link" asChild className="text-lg">
+          <Button variant="link" size="textLarge" asChild>
             <Link to="/provider/families/invite">
               <Plus className="size-6" />
               <Text text={t.inviteFamily} />
