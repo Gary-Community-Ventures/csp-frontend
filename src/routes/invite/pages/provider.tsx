@@ -19,12 +19,12 @@ import { ExternalLink } from '@/components/external-link'
 
 type ApiResponse = {
   children: {
-    id: number
+    id: string
     first_name: string
     last_name: string
   }[]
   family: {
-    id: number
+    id: string
     first_name: string
     last_name: string
   }
@@ -33,12 +33,12 @@ type ApiResponse = {
 
 type Invite = {
   children: {
-    id: number
+    id: string
     firstName: string
     lastName: string
   }[]
   family: {
-    id: number
+    id: string
     firstName: string
     lastName: string
   }

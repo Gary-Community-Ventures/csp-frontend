@@ -9,27 +9,27 @@ import {
 import { familyWithIdRoute } from './routes'
 
 export type SelectedChildInfo = {
-  id: number
+  id: string
   firstName: string
   lastName: string
   balance: number
 }
 
 export type Provider = {
-  id: number
+  id: string
   name: string
   status: 'approved' | 'pending' | 'denied'
 }
 
 export type Transaction = {
-  id: number
+  id: string
   name: string
   amount: number
   date: Date
 }
 
 export type Child = {
-  id: number
+  id: string
   firstName: string
   lastName: string
 }

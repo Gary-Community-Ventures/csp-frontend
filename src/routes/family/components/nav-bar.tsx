@@ -44,7 +44,7 @@ export function FamilyNavBar() {
   }
 
   const changeChild = (id: string) => {
-    navigate({ from: '/family/$childId/home', params: { childId: Number(id) } })
+    navigate({ from: '/family/$childId/home', params: { childId: id } })
   }
 
   return (

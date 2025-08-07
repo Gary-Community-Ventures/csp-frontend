@@ -190,11 +190,11 @@ function AddProviderForm({ children, provider }: AddProviderFormProps) {
   const { context } = useMatch({ from: '__root__' })
   const { children: allChildren, selectedChildInfo } = useFamilyContext()
   const [formData, setFormData] = useState<{
-    children: number[]
+    children: string[]
   }>({ children: [selectedChildInfo.id] })
   const schema = z.object({
     children: z
-      .array(z.number())
+      .array(z.string())
       .min(1, { message: text(t.noChildrenSelectedError) }),
   })
   const [submitting, setSubmitting] = useState(false)
@@ -293,7 +293,7 @@ function AddProviderForm({ children, provider }: AddProviderFormProps) {
 
 async function submitProviders(
   provider: Provider,
-  childIds: number[],
+  childIds: string[],
   context: RouterContext
 ) {
   const res = await fetch(backendUrl('/family/licensed-providers'), {

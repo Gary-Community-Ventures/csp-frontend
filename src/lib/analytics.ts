@@ -21,8 +21,8 @@ type ExternalLinkClickEvent = {
 type UserSessionEvent = {
   event: 'user-session'
   isSignedIn: boolean
-  familyId: number | null
-  providerId: number | null
+  familyId: string | null
+  providerId: string | null
   types: string[] | null
 }
 
@@ -81,8 +81,8 @@ export function useRecordUserSession() {
       return
     }
 
-    const familyId = user.publicMetadata.family_id as number
-    const providerId = user.publicMetadata.provider_id as number
+    const familyId = user.publicMetadata.family_id as string
+    const providerId = user.publicMetadata.provider_id as string
     const types = user.publicMetadata.types as string[]
 
     dataLayerPush({

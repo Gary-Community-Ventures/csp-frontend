@@ -54,8 +54,8 @@ export function useHideFamilyNavBar() {
 
 export function useCurrentMonthBalance(
   context: RouterModule.RouterContext,
-  childId: number,
-  providerId?: number
+  childId: string,
+  providerId?: string
 ) {
   const now = new Date()
   const currentMonth = now.getMonth() + 1

@@ -4,7 +4,7 @@ import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 export async function createCareDay(
   context: RouterContext,
   allocationId: number,
-  providerId: number,
+  providerId: string,
   date: string,
   type: 'Full Day' | 'Half Day'
 ) {
