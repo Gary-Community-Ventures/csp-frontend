@@ -98,12 +98,16 @@ export async function loadFamilyInvite({
   }
 }
 
-const APPLY_FORM_URL = 'https://form.jotform.com/252036367719058'
+const BASE_APPLY_FORM_URL = 'https://form.jotform.com/252036367719058'
 
 export function FamilyInvitePage() {
   const t = translations.invite.family
   const clerk = useClerk()
   const { invite } = familyRoute.useLoaderData()
+  const { inviteId } = familyRoute.useParams()
+
+  const formUrl = new URL(BASE_APPLY_FORM_URL)
+  formUrl.searchParams.append('link_id', inviteId)
 
   const providerName =
     invite.provider.firstName + ' ' + invite.provider.lastName
@@ -139,7 +143,7 @@ export function FamilyInvitePage() {
                 <Text text={t.joinNow} />
               </p>
               <Button asChild>
-                <ExternalLink href={APPLY_FORM_URL}>
+                <ExternalLink href={formUrl.href}>
                   <Text text={t.applyButton} />
                 </ExternalLink>
               </Button>
@@ -163,7 +167,7 @@ export function FamilyInvitePage() {
                     <Text text={t.noChildren} />
                   </p>
                   <Button asChild>
-                    <ExternalLink href={APPLY_FORM_URL}>
+                    <ExternalLink href={formUrl.href}>
                       <Text text={t.applyButton} />
                     </ExternalLink>
                   </Button>
