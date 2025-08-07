@@ -24,7 +24,7 @@ export function ProviderHomePage() {
         </section>
       )}
       <section className="mb-5">
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-wrap w-full">
           <Header>
             <Text text={t.children} />
           </Header>
