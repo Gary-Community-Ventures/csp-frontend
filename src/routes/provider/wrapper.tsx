@@ -5,7 +5,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react'
-import { providerRoute } from './routes'
+import { providerWithHomeRoute } from './routes'
 
 export type ProviderInfo = {
   id: number
@@ -50,7 +50,7 @@ const ProviderContext = createContext<ProviderContextType | undefined>(
 )
 
 export function ProviderWrapper({ children }: { children: React.ReactNode }) {
-  const { providerData } = providerRoute.useLoaderData()
+  const { providerData } = providerWithHomeRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 
   const providerContext: ProviderContextType = {
