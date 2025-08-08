@@ -542,12 +542,8 @@ export const translations = {
   invite: {
     provider: {
       header: {
-        en: ' wants to add you as a provider for the following children:',
-        es: ' quiere agregarte como proveedor para los siguientes niños:',
-      },
-      addFamilyHeader: {
-        en: 'Would you like to add this family?',
-        es: '¿Deseas agregar esta familia?',
+        en: ' wants to add you as a provider for ',
+        es: ' quiere agregarte como proveedor para ',
       },
       dontHaveAccount: {
         en: 'If you don’t have an account, you need to apply using the button below.',
@@ -578,6 +574,14 @@ export const translations = {
       successMessage: {
         en: 'Successfully added family as a provider.',
         es: 'Agregada exitosamente a la familia como proveedor.',
+      },
+      alreadyCaringFor: {
+        en: 'You are already caring for this child.',
+        es: 'Ya estás cuidando a este niño.',
+      },
+      atMaxChildCount: {
+        en: 'You have reached the maximum number of children you can care for.',
+        es: 'Has alcanzado el número máximo de niños que puedes cuidar.',
       },
     },
     family: {
