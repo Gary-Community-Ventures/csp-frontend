@@ -25,7 +25,7 @@ interface CalendarProps {
 
 const getDayStyles = (status: string) => {
   const baseStyles = {
-    dayClasses: '',
+    colorClasses: '',
     innerHalfDayClass: '',
     textColorClass: 'text-gray-800',
     showX: false,
@@ -33,23 +33,21 @@ const getDayStyles = (status: string) => {
   }
 
   const statusStyles: { [key: string]: Partial<typeof baseStyles> } = {
-    new: { dayClasses: 'bg-blue-200', innerHalfDayClass: 'bg-blue-100' },
+    new: {
+      colorClasses: 'bg-tertiary-background',
+    },
     submitted: {
-      dayClasses: 'bg-primary',
-      innerHalfDayClass: 'bg-secondary-background',
-      textColorClass: 'text-primary-foreground',
+      colorClasses: 'bg-[#778C7F]',
     },
     needs_resubmission: {
-      dayClasses: 'bg-yellow-200',
-      innerHalfDayClass: 'bg-yellow-100',
+      colorClasses: 'bg-tertiary-background',
     },
     delete_not_submitted: {
-      dayClasses: 'bg-transparent',
-      innerHalfDayClass: 'bg-transparent',
+      colorClasses: 'bg-transparent',
       xColorClass: 'text-[#b33363]',
       showX: true,
     },
-    default: { dayClasses: 'bg-gray-100', innerHalfDayClass: 'bg-gray-100' },
+    default: { colorClasses: 'bg-gray-100' },
   }
 
   return { ...baseStyles, ...(statusStyles[status] || statusStyles.default) }
@@ -98,7 +96,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       ? 'cursor-pointer hover:opacity-80'
       : 'cursor-not-allowed'
   }`
-  let innerHalfDayClass = ''
+  let colorClass = ''
   let textColorClass = 'text-gray-800' // Default text color
   let showX = false
   let xColorClass = ''
@@ -108,8 +106,12 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
     dayClasses += ' bg-gray-100' // Default background for non-current month days
   } else if (careDay) {
     const styles = getDayStyles(careDay.status)
-    dayClasses += ` ${styles.dayClasses}`
-    innerHalfDayClass = styles.innerHalfDayClass
+    if (careDay?.type === 'Half Day') {
+      dayClasses += ' bg-gray-100' // Half Day background
+    } else {
+      dayClasses += ` ${styles.colorClasses}` // Apply status-specific background
+    }
+    colorClass = styles.colorClasses
     textColorClass = styles.textColorClass
     showX = styles.showX
     xColorClass = styles.xColorClass
@@ -119,12 +121,12 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
 
   // Apply locked styling *after* status styling
   if (isDayLocked) {
-    dayClasses += ' bg-gray-200 opacity-70' // Add grey background and slight opacity to show original color underneath
+    dayClasses += ' bg-gray-200 bg-opacity-70' // Add grey background and slight opacity to show original color underneath
     cellClasses += ' cursor-not-allowed bg-gray-50'
   }
 
   if (isToday) {
-    dayClasses += ' border-4 border-tertiary-background'
+    dayClasses += ' border-4 border-primary'
   }
 
   const dayContent = (
@@ -138,7 +140,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       )}
       {careDay?.type === 'Half Day' && (
         <div
-          className={`absolute right-0 top-0 h-full w-1/2 rounded-r-full ${innerHalfDayClass}`}
+          className={`absolute left-0 top-0 h-full w-1/2 rounded-l-full ${colorClass}`}
         ></div>
       )}
       <span className={`relative z-10 font-medium ${textColorClass}`}>
@@ -206,8 +208,7 @@ export const Calendar: React.FC<CalendarProps> = ({
 
   const startDate = new Date(startOfMonth)
   const dayOfWeek = startDate.getDay()
-  const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1
-  startDate.setDate(startDate.getDate() - daysToSubtract)
+  startDate.setDate(startDate.getDate() - dayOfWeek)
 
   const days: Date[] = []
   const day = new Date(startDate)
@@ -310,13 +311,13 @@ export const Calendar: React.FC<CalendarProps> = ({
       <div className="space-y-4">
         <div className="grid grid-cols-7 gap-2">
           {[
+            t.daysOfWeek.sun,
             t.daysOfWeek.mon,
             t.daysOfWeek.tue,
             t.daysOfWeek.wed,
             t.daysOfWeek.thu,
             t.daysOfWeek.fri,
             t.daysOfWeek.sat,
-            t.daysOfWeek.sun,
           ].map((day) => (
             <div
               key={day.en}
@@ -341,19 +342,15 @@ export const Calendar: React.FC<CalendarProps> = ({
       <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 text-sm md:flex md:justify-center md:space-x-4">
         {[
           {
-            colorClass: 'bg-blue-200',
+            colorClass: 'bg-tertiary-background',
             textKey: t.needsSubmission,
           },
           {
-            colorClass: 'bg-primary text-primary-foreground',
+            colorClass: 'bg-[#778C7F]',
             textKey: t.submitted,
           },
           {
-            colorClass: 'bg-yellow-200',
-            textKey: t.needsResubmission,
-          },
-          {
-            colorClass: 'bg-[#b33363]',
+            colorClass: 'bg-[#B53333]',
             textKey: t.cancelled,
           },
         ].map((item, index) => (
