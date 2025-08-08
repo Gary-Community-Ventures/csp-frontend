@@ -10,7 +10,7 @@ import {
 
 // NOTE: don't forget to update the Clerk localizations
 export const LANGUAGES = ['en', 'es'] as const
-export const LOCALE_NAMES: Record<Language, string> = {
+export const LANGUAGE_NAMES: Record<Language, string> = {
   en: 'English',
   es: 'Español',
 }

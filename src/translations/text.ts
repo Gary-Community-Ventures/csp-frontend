@@ -52,6 +52,36 @@ const submitButton = {
 const submittingButton = {
   en: 'Submitting...',
   es: 'Enviando...',
+} as const
+
+const cancelButton = {
+  en: 'Cancel',
+  es: 'Cancelar',
+} as const
+
+const successMessage = {
+  en: 'Invite sent successfully',
+  es: 'Invitación enviada exitosamente',
+} as const
+
+const emailError = {
+  en: 'Please enter a valid email address',
+  es: 'Por favor ingresa un correo electrónico válido',
+} as const
+
+const phoneError = {
+  en: 'Please enter a valid phone number',
+  es: 'Por favor ingresa un número de teléfono válido',
+} as const
+
+const signInButton = {
+  en: 'Sign in',
+  es: 'Iniciar sesión',
+}
+
+const returnHomeButton = {
+  en: 'Return home',
+  es: 'Volver a inicio',
 }
 
 const translatedLanguages = {
@@ -308,61 +338,17 @@ export const translations = {
         en: 'Invite your Family, Friend, or Neighbor Caregiver',
         es: 'Invita a tu Familia, Amigo o Vecino',
       },
-      emailError: {
-        en: 'Please enter a valid email address',
-        es: 'Por favor ingresa un correo electrónico válido',
-      },
-      phoneError: {
-        en: 'Please enter a valid phone number',
-        es: 'Por favor ingresa un número de teléfono válido',
-      },
-      emailLabel: {
-        en: 'Provider Email',
-        es: 'Correo Electrónico',
-      },
-      phoneLabel: {
-        en: 'Provider Phone',
-        es: 'Teléfono',
-      },
-      langLabel: {
-        en: 'What language should the invite be sent in?',
-        es: '¿Qué idioma debe ser el mensaje de invitación?',
-      },
-      langPlaceholder: {
-        en: 'Select Language',
-        es: 'Seleccionar Idioma',
-      },
+      emailError: emailError,
+      phoneError: phoneError,
+      successMessage: successMessage,
+      cancelButton: cancelButton,
+      submitButton: submitButton,
       languageOptions: translatedLanguages,
       childrenHeader: {
         en: 'Which children does this provider care for?',
         es: '¿A cuales niños cuida este proveedor?',
       },
-      cancelButton: {
-        en: 'Cancel',
-        es: 'Cancelar',
-      },
-      submitButton: submitButton,
-      successMessage: {
-        en: 'Invite sent successfully',
-        es: 'Invitación enviada exitosamente',
-      },
-      confirmation: {
-        header: {
-          en: 'Invitation Sent',
-          es: 'Invitación Enviada',
-        },
-        successMessage: {
-          en: 'An invitation has been sent to the following email and phone number.',
-          es: 'Se ha enviado una invitación al siguiente correo electrónico y número de teléfono.',
-        },
-        emailLabel: {
-          en: 'Email:',
-          es: 'Correo Electrónico:',
-        },
-        phoneLabel: {
-          en: 'Phone:',
-          es: 'Teléfono:',
-        },
+      confirmationPage: {
         backButton: {
           en: 'Back to Providers',
           es: 'Volver a Proveedores',
@@ -400,6 +386,10 @@ export const translations = {
         en: 'Children',
         es: 'Niños',
       },
+      inviteFamily: {
+        en: 'ADD A FAMILY',
+        es: 'AGREGAR FAMILIA',
+      },
       messageParent: {
         en: 'Message Parent',
         es: 'Mensaje al Padre',
@@ -407,6 +397,20 @@ export const translations = {
       payments: {
         en: 'Recent Payments',
         es: 'Pagos Recientes',
+      },
+    },
+    inviteFamilyPage: {
+      header: {
+        en: 'Invite Family',
+        es: 'Invitar Familia',
+      },
+      emailError: emailError,
+      phoneError: phoneError,
+      successMessage: successMessage,
+      cancelButton: cancelButton,
+      submitButton: submitButton,
+      confirmationPage: {
+        backButton: returnHomeButton,
       },
     },
   },
@@ -493,6 +497,47 @@ export const translations = {
         es: '+ Agregar tu proveedor',
       },
     },
+    inviteInputs: {
+      emailLabel: {
+        en: 'Email',
+        es: 'Correo Electrónico',
+      },
+      phoneLabel: {
+        en: 'Phone',
+        es: 'Teléfono',
+      },
+      langLabel: {
+        en: 'What language should the invite be sent in?',
+        es: '¿Qué idioma debe ser el mensaje de invitación?',
+      },
+      langPlaceholder: {
+        en: 'Select Language',
+        es: 'Seleccionar Idioma',
+      },
+      languageOptions: translatedLanguages,
+    },
+    inviteConfirmation: {
+      header: {
+        en: 'Invitation Sent',
+        es: 'Invitación Enviada',
+      },
+      successMessage: {
+        en: 'An invitation has been sent to the following email and phone number.',
+        es: 'Se ha enviado una invitación al siguiente correo electrónico y número de teléfono.',
+      },
+      emailLabel: {
+        en: 'Email:',
+        es: 'Correo Electrónico:',
+      },
+      phoneLabel: {
+        en: 'Phone:',
+        es: 'Teléfono:',
+      },
+      backButton: {
+        en: 'Back to Providers',
+        es: 'Volver a Proveedores',
+      },
+    },
   },
   invite: {
     provider: {
@@ -516,10 +561,7 @@ export const translations = {
         en: 'If you have an account, you can sign in using the button below.',
         es: 'Si tienes una cuenta, puedes iniciar sesión usando el botón de abajo.',
       },
-      signInButton: {
-        en: 'Sign in',
-        es: 'Iniciar sesión',
-      },
+      signInButton: signInButton,
       alreadySignedIn: {
         en: 'Would you like to add this family?',
         es: '¿Deseas agregar esta familia?',
@@ -528,17 +570,66 @@ export const translations = {
         en: 'Add',
         es: 'Agregar',
       },
-      accpted: {
+      accepted: {
         en: 'You have already successfully added this family.',
         es: 'Ya has agregado exitosamente esta familia.',
       },
-      toProviderHome: {
-        en: 'Go to Home',
-        es: 'Ir a Inicio',
-      },
+      toHome: returnHomeButton,
       successMessage: {
         en: 'Successfully added family as a provider.',
         es: 'Agregada exitosamente a la familia como proveedor.',
+      },
+    },
+    family: {
+      header: {
+        en: ' wants to add you as a family to provide child care for!',
+        es: ' quiere agregarlos como familia para el cuidado infantil.',
+      },
+      joinNow: {
+        en: 'Join now by creating your account and applying!',
+        es: '¡Únase ahora creando su cuenta y aplicando!',
+      },
+      applyButton: {
+        en: 'Apply',
+        es: 'Aplicar',
+      },
+      alreadyHaveAccount: {
+        en: 'Join now by signing into your account!',
+        es: '¡Únase ahora iniciando sesión en su cuenta!',
+      },
+      signInButton: signInButton,
+      noChildren: {
+        en: "Seems like you don't have any children to select child care for. Apply now as a family to start receiving child care.",
+        es: 'Parece que no tiene hijos para seleccionar el cuidado infantil. Aplique ahora como familia para comenzar a recibir cuidado infantil.',
+      },
+      toHome: returnHomeButton,
+      alreadyAccepted: {
+        part1: {
+          en: "You're all set! You have successfully connected with ",
+          es: '¡Listo! Se ha conectado con ',
+        },
+        part2: {
+          en: " for your family's childcare needs.",
+          es: ' para el cuidado infantil de su familia.',
+        },
+      },
+      selectChildren: {
+        part1: {
+          en: 'Almost there! To accept the childcare services from ',
+          es: '¡Ya casi! Para aceptar los servicios de cuidado infantil de ',
+        },
+        part2: {
+          en: ', please select the child(ren) who will be receiving care.',
+          es: ', seleccione el/los niño(s) que recibirán cuidado infantil.',
+        },
+      },
+      acceptButton: {
+        en: 'Accept Invitation',
+        es: 'Aceptar Invitación',
+      },
+      selectChildrenError: {
+        en: 'Please select at least one child',
+        es: 'Por favor selecciona al menos un niño',
       },
     },
   },

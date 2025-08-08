@@ -7,10 +7,10 @@ export type GetMonthAllocationResponse = z.infer<typeof monthAllocationSchema>
 
 export async function getMonthAllocation(
   context: RouterContext,
-  childId: number,
+  childId: string,
   month: number,
   year: number,
-  providerId?: number | undefined
+  providerId?: string | undefined
 ): Promise<z.infer<typeof monthAllocationSchema>> {
   let url = backendUrl(`/child/${childId}/allocation/${month}/${year}`)
   if (providerId !== undefined) {
@@ -41,8 +41,8 @@ export async function getMonthAllocation(
 
 export async function submitCareDays(
   context: RouterContext,
-  childId: number,
-  providerId: number,
+  childId: string,
+  providerId: string,
   month: number,
   year: number
 ) {

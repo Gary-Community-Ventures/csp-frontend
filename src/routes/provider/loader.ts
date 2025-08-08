@@ -40,25 +40,25 @@ export async function loadProviderData({
 }
 
 export type ProviderInfo = {
-  id: number
+  id: string
   first_name: string
   last_name: string
 }
 
 export type Transaction = {
-  id: number
+  id: string
   name: string
   amount: number
   date: Date
 }
 
 export type Curriculum = {
-  id: number
+  id: string
   description: string
 }
 
 export type Child = {
-  id: number
+  id: string
   first_name: string
   last_name: string
 }

@@ -13,7 +13,7 @@ export async function loadFamilyData({
 }: {
   context: RouterContext
   abortController: AbortController
-  params: { childId?: number }
+  params: { childId?: string }
 }) {
   let urlPath = '/family'
   if (params.childId !== undefined) {
@@ -70,27 +70,27 @@ export async function redirectToDefaultId({
 }
 
 export type SelectedChildInfo = {
-  id: number
+  id: string
   first_name: string
   last_name: string
   balance: number
 }
 
 export type Provider = {
-  id: number
+  id: string
   name: string
   status: 'approved' | 'pending' | 'denied'
 }
 
 export type Transaction = {
-  id: number
+  id: string
   name: string
   amount: number
   date: Date
 }
 
 export type Child = {
-  id: number
+  id: string
   first_name: string
   last_name: string
 }
