@@ -8,9 +8,9 @@ import { translations } from '@/translations/text'
 import type { RouterContext } from '@/routes/router'
 import {
   backendUrl,
-  DEFAULT_HEADERS,
   handleStatusCodes,
   headersWithAuth,
+  headersWithAuthOptional,
 } from '@/lib/api/client'
 import { providerRoute } from '../routes'
 import { Link, useMatch, useNavigate } from '@tanstack/react-router'
@@ -63,7 +63,7 @@ export async function loadProviderInvite({
   const res = await fetch(
     backendUrl(`/family/provider-invite/${params.inviteId}`),
     {
-      headers: DEFAULT_HEADERS,
+      headers: await headersWithAuthOptional(context),
       signal: abortController.signal,
     }
   )
