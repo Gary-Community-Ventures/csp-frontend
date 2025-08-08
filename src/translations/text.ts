@@ -4,6 +4,10 @@ const generalNavBar = {
       en: 'Help/Support',
       es: 'Ayuda/Apoyo',
     },
+    supportLinks: {
+      en: 'https://www.capcolorado.org/en/contact',
+      es: 'https://www.capcolorado.org/es/contact',
+    },
     yourProfile: {
       en: 'Your Profile',
       es: 'Tu Perfil',

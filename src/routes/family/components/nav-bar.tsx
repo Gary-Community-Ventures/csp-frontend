@@ -29,7 +29,6 @@ import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
 import { ExternalLink } from '@/components/external-link'
-import { SUPPORT_LINK } from '@/lib/constants'
 
 export function FamilyNavBar() {
   const t = translations.family.navBar
@@ -87,7 +86,7 @@ export function FamilyNavBar() {
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem asChild>
-                  <ExternalLink href={SUPPORT_LINK}>
+                  <ExternalLink href={text(t.menu.supportLinks)}>
                     <MessageCircleQuestionMark />
                     <Text text={t.menu.support} />
                   </ExternalLink>
