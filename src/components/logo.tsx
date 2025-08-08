@@ -8,7 +8,7 @@ type LogoProps = { variant?: LogoVariant } & LinkProps
 const LOGO_PATHS: Record<LogoVariant, { desktop: string; mobile: string }> = {
   color: {
     desktop: '/cap_full_logo_color.png',
-    mobile: '/cap_desktop_logo_color.png',
+    mobile: '/cap_full_logo_color.png',
   },
   white: {
     desktop: '/cap_full_logo_white.png',

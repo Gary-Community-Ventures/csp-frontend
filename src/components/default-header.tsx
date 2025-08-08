@@ -18,7 +18,7 @@ export function DefaultHeader() {
   const { lang, setLang } = useLanguageContext()
 
   return (
-    <div className="flex items-center justify-between p-5">
+    <div className="flex items-center justify-between p-5 flex-col md:flex-row">
       <Logo variant="color" />
       <Select
         value={lang}
