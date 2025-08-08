@@ -175,7 +175,7 @@ export function ProviderInvitePage() {
                 </Button>
               ) : (
                 <>
-                  <p className="text-xl">
+                  <p className="text-xl text-center">
                     <Text text={t.notProvider} />
                   </p>
                   <Button asChild>

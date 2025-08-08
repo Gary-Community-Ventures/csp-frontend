@@ -584,8 +584,8 @@ export const translations = {
         es: 'Agregada exitosamente a la familia como proveedor.',
       },
       notProvider: {
-        en: 'Seems like you are not a provider. Apply now as a provider to start receiving money for child care.',
-        es: 'Parece que no eres un proveedor. Aplique ahora como proveedor para comenzar a recibir dinero por el cuidado infantil.',
+        en: 'Oops! This account isn’t set up as a provider yet. You’ll need to become a provider to accept family invites and get paid for childcare.',
+        es: '¡Oops! Esta cuenta aún no está configurada como proveedor. Necesitarás convertirte en proveedor para aceptar invitaciones familiares y recibir pagos por el cuidado infantil.',
       },
     },
     family: {
