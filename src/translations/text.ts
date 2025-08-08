@@ -4,6 +4,10 @@ const generalNavBar = {
       en: 'Help/Support',
       es: 'Ayuda/Apoyo',
     },
+    supportLinks: {
+      en: 'https://www.capcolorado.org/en/contact',
+      es: 'https://www.capcolorado.org/es/contact',
+    },
     yourProfile: {
       en: 'Your Profile',
       es: 'Tu Perfil',
@@ -582,6 +586,10 @@ export const translations = {
       atMaxChildCount: {
         en: 'You have reached the maximum number of children you can care for.',
         es: 'Has alcanzado el número máximo de niños que puedes cuidar.',
+      },
+      notProvider: {
+        en: 'Oops! This account isn’t set up as a provider yet. You’ll need to become a provider to accept family invites and get paid for childcare.',
+        es: '¡Oops! Esta cuenta aún no está configurada como proveedor. Necesitarás convertirte en proveedor para aceptar invitaciones familiares y recibir pagos por el cuidado infantil.',
       },
     },
     family: {

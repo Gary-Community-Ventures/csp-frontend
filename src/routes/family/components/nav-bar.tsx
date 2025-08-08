@@ -86,8 +86,7 @@ export function FamilyNavBar() {
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem asChild>
-                  <ExternalLink href="https://google.com/">
-                    {/*TODO: add help link*/}
+                  <ExternalLink href={text(t.menu.supportLinks)}>
                     <MessageCircleQuestionMark />
                     <Text text={t.menu.support} />
                   </ExternalLink>
