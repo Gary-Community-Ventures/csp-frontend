@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { WhiteCard } from '@/components/white-card'
 import { Text, useText } from '@/translations/wrapper'
-import { SignedIn, SignedOut, useClerk } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-react'
 import { translations } from '@/translations/text'
 import type { RouterContext } from '@/routes/router'
 import {
@@ -16,6 +16,8 @@ import { providerRoute } from '../routes'
 import { Link, useMatch, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { ExternalLink } from '@/components/external-link'
+import { useMemo } from 'react'
+import { CLERK_PROVIDER_TYPE } from '@/lib/constants'
 
 type ApiResponse = {
   children: {
@@ -91,6 +93,7 @@ export function ProviderInvitePage() {
   const { inviteId } = providerRoute.useParams()
   const { context } = useMatch({ from: '__root__' })
   const { invite } = providerRoute.useLoaderData()
+  const { user, isLoaded, isSignedIn } = useUser()
   const clerk = useClerk()
   const navigate = useNavigate()
   const { children, family, accepted } = invite
@@ -98,6 +101,16 @@ export function ProviderInvitePage() {
 
   const formUrl = new URL(BASE_APPLY_FORM_URL)
   formUrl.searchParams.append('link_id', inviteId)
+
+  const isProvider = useMemo(() => {
+    if (!isLoaded || !isSignedIn) {
+      return false
+    }
+
+    const types = user.publicMetadata.types as string[]
+
+    return types.includes(CLERK_PROVIDER_TYPE)
+  }, [user, isLoaded, isSignedIn])
 
   return (
     <WhiteCard className="container m-auto mt-10">
@@ -149,16 +162,29 @@ export function ProviderInvitePage() {
               </Button>
             </SignedOut>
             <SignedIn>
-              <Button
-                onClick={() =>
-                  acceptInvite(inviteId, context).then(() => {
-                    navigate({ to: '/provider/home' })
-                    toast(text(t.successMessage))
-                  })
-                }
-              >
-                <Text text={t.alreadySignedInButton} />
-              </Button>
+              {isProvider ? (
+                <Button
+                  onClick={() =>
+                    acceptInvite(inviteId, context).then(() => {
+                      navigate({ to: '/provider/home' })
+                      toast(text(t.successMessage))
+                    })
+                  }
+                >
+                  <Text text={t.alreadySignedInButton} />
+                </Button>
+              ) : (
+                <>
+                  <p className="text-xl text-center">
+                    <Text text={t.notProvider} />
+                  </p>
+                  <Button asChild>
+                    <ExternalLink href={formUrl.href}>
+                      <Text text={t.dontHaveAccountButton} />
+                    </ExternalLink>
+                  </Button>
+                </>
+              )}
             </SignedIn>
           </>
         )}

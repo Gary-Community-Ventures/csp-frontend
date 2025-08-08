@@ -23,16 +23,13 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Link } from '@tanstack/react-router'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
 import { ExternalLink } from '@/components/external-link'
-import {
-  Text,
-  //useText
-} from '@/translations/wrapper'
+import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Logo } from '@/components/logo'
 
 export function ProviderNavBar() {
   const t = translations.provider.navBar
-  // const text = useText()
+  const text = useText()
   const { providerInfo, navBar, isAlsoFamily } = useProviderContext()
   const { user, isLoaded, isSignedIn } = useUser()
   const clerk = useClerk()
@@ -67,8 +64,7 @@ export function ProviderNavBar() {
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem asChild>
-                  <ExternalLink href="https://google.com/">
-                    {/*TODO: add help link*/}
+                  <ExternalLink href={text(t.menu.supportLinks)}>
                     <MessageCircleQuestionMark />
                     <Text text={t.menu.support} />
                   </ExternalLink>
