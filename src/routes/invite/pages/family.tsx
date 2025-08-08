@@ -196,7 +196,7 @@ function AcceptForm({ familyChildren, providerName }: AcceptFormProps) {
 
   const schema = z.object({
     children: z
-      .array(z.number())
+      .array(z.string())
       .min(1, { message: text(t.selectChildrenError) }),
   })
   const [formData, setFormData] = useState<z.infer<typeof schema>>({
