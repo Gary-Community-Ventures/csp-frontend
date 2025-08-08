@@ -83,6 +83,8 @@ export async function loadProviderInvite({
   }
 }
 
+const BASE_APPLY_FORM_URL = 'https://form.jotform.com/252056647581159'
+
 export function ProviderInvitePage() {
   const t = translations.invite.provider
   const text = useText()
@@ -93,6 +95,9 @@ export function ProviderInvitePage() {
   const navigate = useNavigate()
   const { children, family, accepted } = invite
   const familyName = family.firstName + ' ' + family.lastName
+
+  const formUrl = new URL(BASE_APPLY_FORM_URL)
+  formUrl.searchParams.append('link_id', inviteId)
 
   return (
     <WhiteCard className="container m-auto mt-10">
@@ -113,11 +118,11 @@ export function ProviderInvitePage() {
         {accepted ? (
           <>
             <Header className="text-xl">
-              <Text text={t.accpted} />
+              <Text text={t.accepted} />
             </Header>
             <Button asChild>
               <Link to="/provider/home">
-                <Text text={t.toProviderHome} />
+                <Text text={t.toHome} />
               </Link>
             </Button>
           </>
@@ -131,7 +136,7 @@ export function ProviderInvitePage() {
                 <Text text={t.dontHaveAccount} />
               </p>
               <Button asChild>
-                <ExternalLink href="https://form.jotform.com/252056647581159">
+                <ExternalLink href={formUrl.href}>
                   <Text text={t.dontHaveAccountButton} />
                 </ExternalLink>
               </Button>

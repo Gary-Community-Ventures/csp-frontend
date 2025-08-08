@@ -9,10 +9,8 @@ import {
 import { translations } from '@/translations/text'
 import z from 'zod'
 import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
 import { useValidateForm } from '@/lib/schemas'
 import { useState } from 'react'
-import { FormErrorMessage } from '@/components/form-error'
 import { Button } from '@/components/ui/button'
 import { Link, useMatch, useNavigate } from '@tanstack/react-router'
 import {
@@ -23,13 +21,7 @@ import {
 import type { RouterContext } from '@/routes/router'
 import { useFamilyContext } from '../wrapper'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { InviteInputs } from '@/components/invite-inputs'
 
 export function InviteProviderPage() {
   const t = translations.family.inviteProviderPage
@@ -140,71 +132,14 @@ export function InviteProviderPage() {
         <Header className="py-5">
           <Text text={t.header} />
         </Header>
-        <div className="flex flex-col gap-3">
-          <div>
-            <Label htmlFor="invite-provider-email-input">
-              <Text text={t.emailLabel} />
-            </Label>
-            <Input
-              type="email"
-              id="invite-provider-email-input"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData((prev) => {
-                  return { ...prev, email: e.target.value }
-                })
-              }
-            />
-            <FormErrorMessage error={getError('email')} />
-          </div>
-          <div>
-            <Label htmlFor="invite-provider-phone-input">
-              <Text text={t.phoneLabel} />
-            </Label>
-            <Input
-              type="tel"
-              id="invite-provider-phone-input"
-              value={formData.phone}
-              onChange={(e) =>
-                setFormData((prev) => {
-                  return { ...prev, phone: e.target.value }
-                })
-              }
-            />
-            <FormErrorMessage error={getError('phone')} />
-          </div>
-          <div>
-            <Label htmlFor="invite-provider-lang-select">
-              <Text text={t.langLabel} />
-            </Label>
-            <Select
-              value={formData.lang}
-              onValueChange={(value) => {
-                if (!LANGUAGES.includes(value as Language)) {
-                  return
-                }
-
-                setFormData((prev) => {
-                  return { ...prev, lang: value as Language }
-                })
-              }}
-            >
-              <SelectTrigger
-                id="invite-provider-lang-select"
-                className="w-full"
-              >
-                <SelectValue placeholder={text(t.langPlaceholder)} />
-              </SelectTrigger>
-              <SelectContent>
-                {LANGUAGES.map((lang) => (
-                  <SelectItem key={lang} value={lang}>
-                    {text(t.languageOptions[lang])}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        <InviteInputs
+          formData={formData}
+          setEmail={(email) => setFormData((prev) => ({ ...prev, email }))}
+          setPhone={(phone) => setFormData((prev) => ({ ...prev, phone }))}
+          setLang={(lang) => setFormData((prev) => ({ ...prev, lang }))}
+          emailError={getError('email')}
+          phoneError={getError('phone')}
+        />
         <Button
           type="submit"
           className="mt-10 mb-3 w-full"

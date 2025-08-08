@@ -9,7 +9,7 @@ import {
 } from './ui/dropdown-menu'
 import {
   LANGUAGES,
-  LOCALE_NAMES,
+  LANGUAGE_NAMES,
   Text,
   useLanguageContext,
   type Language,
@@ -38,7 +38,7 @@ export function DropdownMenuLanguageSwitcher() {
           >
             {LANGUAGES.map((lang) => (
               <DropdownMenuRadioItem key={lang} value={lang}>
-                {LOCALE_NAMES[lang]}
+                {LANGUAGE_NAMES[lang]}
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>
