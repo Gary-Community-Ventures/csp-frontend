@@ -8,25 +8,25 @@ import {
 import { providerWithHomeRoute } from './routes'
 
 export type ProviderInfo = {
-  id: number
+  id: string
   firstName: string
   lastName: string
 }
 
 export type Transaction = {
-  id: number
+  id: string
   name: string
   amount: number
   date: Date
 }
 
 export type Curriculum = {
-  id: number
+  id: string
   description: string
 }
 
 export type Child = {
-  id: number
+  id: string
   firstName: string
   lastName: string
 }

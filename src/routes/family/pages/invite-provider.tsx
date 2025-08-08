@@ -48,7 +48,7 @@ export function InviteProviderPage() {
       .refine((val) => val.length === 0 || val.length === 10, {
         message: text(t.phoneError),
       }),
-    children: z.array(z.number()),
+    children: z.array(z.string()),
     lang: z.enum(LANGUAGES),
   })
 
@@ -225,7 +225,7 @@ export function InviteProviderPage() {
 async function handleInviteProvider(
   email: string,
   phone: string,
-  childIds: number[],
+  childIds: string[],
   lang: Language,
   context: RouterContext
 ) {

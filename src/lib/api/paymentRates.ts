@@ -7,8 +7,8 @@ export type GetPaymentRateResponse = z.infer<typeof paymentRateSchema>
 
 export async function getPaymentRate(
   context: RouterContext,
-  providerId: number,
-  childId: number
+  providerId: string,
+  childId: string
 ): Promise<z.infer<typeof paymentRateSchema> | null> {
   const url = backendUrl(`/payment-rates/${providerId}/${childId}`)
   const res = await fetch(url, {
@@ -38,8 +38,8 @@ export async function getPaymentRate(
 
 export async function createPaymentRate(
   context: RouterContext,
-  providerId: number,
-  childId: number,
+  providerId: string,
+  childId: string,
   halfDayRateCents: number,
   fullDayRateCents: number
 ) {

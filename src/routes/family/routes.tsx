@@ -74,7 +74,7 @@ export const paymentRoute = createRoute({
   path: '/payment/$providerId',
   component: PaymentPage,
   parseParams: (params) => ({
-    providerId: Number(params.providerId),
+    providerId: params.providerId,
   }),
 })
 

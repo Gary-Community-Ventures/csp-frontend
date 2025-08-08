@@ -2,7 +2,7 @@ import type { Provider } from 'src/routes/family/wrapper'
 
 export const findProviderById = (
   providers: Provider[],
-  providerId: number | null
+  providerId: string | null
 ) => {
   if (providerId === null) {
     return undefined

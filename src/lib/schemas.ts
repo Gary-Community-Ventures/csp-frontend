@@ -66,7 +66,7 @@ export const allocatedCareDaySchema = z.object({
     .string()
     .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   type: z.enum(['Full Day', 'Half Day']),
-  provider_google_sheets_id: z.number(),
+  provider_google_sheets_id: z.string(),
   id: z.number(),
   care_month_allocation_id: z.number(),
   amount_cents: z.number(),
@@ -91,7 +91,7 @@ export const monthAllocationSchema = z.object({
     .string()
     .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   allocation_cents: z.number(),
-  google_sheets_child_id: z.number(),
+  google_sheets_child_id: z.string(),
   used_days: z.number(),
   used_cents: z.number(),
   remaining_cents: z.number(),
@@ -104,32 +104,13 @@ export const monthAllocationSchema = z.object({
   care_days: z.array(allocatedCareDaySchema),
 })
 
-export const childBaseSchema = z.object({
-  first_name: z.string(),
-  last_name: z.string(),
-  date_of_birth: z
-    .string()
-    .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
-})
-
-export const childCreateSchema = childBaseSchema.extend({
-  family_id: z.number(),
-})
-
-export const childSchema = childBaseSchema.extend({
-  id: z.number(),
-  family_id: z.number(),
-  created_at: z.string().datetime().nullable().default(null),
-  updated_at: z.string().datetime().nullable().default(null),
-})
-
 export const paymentRequestSchema = z.object({
   id: z.number(),
   care_day_ids: z.array(z.number()),
   care_days_count: z.number(),
   amount: z.string(),
-  provider_google_sheets_id: z.number(),
-  child_google_sheets_id: z.number(),
+  provider_google_sheets_id: z.string(),
+  child_google_sheets_id: z.string(),
   email_sent_successfully: z.boolean(),
   processed: z.boolean(),
   processed_date: z.string().nullable(),
@@ -137,8 +118,8 @@ export const paymentRequestSchema = z.object({
 
 export const paymentRateSchema = z.object({
   id: z.number(),
-  google_sheets_provider_id: z.number(),
-  google_sheets_child_id: z.number(),
+  google_sheets_provider_id: z.string(),
+  google_sheets_child_id: z.string(),
   half_day_rate_cents: z.number(),
   full_day_rate_cents: z.number(),
 })
