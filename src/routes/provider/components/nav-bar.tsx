@@ -29,6 +29,7 @@ import {
 } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Logo } from '@/components/logo'
+import { SUPPORT_LINK } from '@/lib/constants'
 
 export function ProviderNavBar() {
   const t = translations.provider.navBar
@@ -67,8 +68,7 @@ export function ProviderNavBar() {
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem asChild>
-                  <ExternalLink href="https://google.com/">
-                    {/*TODO: add help link*/}
+                  <ExternalLink href={SUPPORT_LINK}>
                     <MessageCircleQuestionMark />
                     <Text text={t.menu.support} />
                   </ExternalLink>

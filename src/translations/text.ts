@@ -579,6 +579,10 @@ export const translations = {
         en: 'Successfully added family as a provider.',
         es: 'Agregada exitosamente a la familia como proveedor.',
       },
+      notProvider: {
+        en: 'Seems like you are not a provider. Apply now as a provider to start receiving money for child care.',
+        es: 'Parece que no eres un proveedor. Aplique ahora como proveedor para comenzar a recibir dinero por el cuidado infantil.',
+      },
     },
     family: {
       header: {
