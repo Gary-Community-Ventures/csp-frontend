@@ -25,13 +25,13 @@ import { FormErrorMessage } from '@/components/form-error'
 
 type ApiResponse = {
   provider: {
-    id: number
+    id: string
     first_name: string
     last_name: string
   }
   children:
     | {
-        id: number
+        id: string
         first_name: string
         last_name: string
       }[]
@@ -40,14 +40,14 @@ type ApiResponse = {
 }
 
 type Child = {
-  id: number
+  id: string
   firstName: string
   lastName: string
 }
 
 type Invite = {
   provider: {
-    id: number
+    id: string
     firstName: string
     lastName: string
   }
@@ -281,7 +281,7 @@ function AcceptForm({ familyChildren, providerName }: AcceptFormProps) {
 
 async function acceptInvite(
   inviteId: string,
-  childIds: number[],
+  childIds: string[],
   context: RouterContext
 ) {
   const res = await fetch(
