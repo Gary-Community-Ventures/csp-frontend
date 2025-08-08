@@ -2,7 +2,7 @@ import { Header } from '@/components/header'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { WhiteCard } from '@/components/white-card'
-import { Text, useText } from '@/translations/wrapper'
+import { Text } from '@/translations/wrapper'
 import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-react'
 import { translations } from '@/translations/text'
 import type { RouterContext } from '@/routes/router'
@@ -75,23 +75,6 @@ export async function loadProviderInvite({
   return {
     invite: {
       child: {
-        id: 0,
-        firstName: '{first_name}',
-        lastName: '{last_name}',
-      },
-      family: {
-        id: 0,
-        firstName: '{first_name}',
-        lastName: '{last_name}',
-      },
-      accepted: false,
-      alreadyCaringFor: false,
-      atMaxChildCount: true,
-    }
-  }
-  return {
-    invite: {
-      child: {
         id: rawJson.child.id,
         firstName: rawJson.child.first_name,
         lastName: rawJson.child.last_name,
@@ -104,35 +87,30 @@ export async function loadProviderInvite({
       accepted: rawJson.accepted,
       alreadyCaringFor: rawJson.already_caring_for,
       atMaxChildCount: rawJson.at_max_child_count,
-
     } satisfies Invite,
   }
 }
 
 const BASE_APPLY_FORM_URL = 'https://form.jotform.com/252056647581159'
 
+function useFormUrl() {
+  const { inviteId } = providerRoute.useParams()
+
+  const formUrl = new URL(BASE_APPLY_FORM_URL)
+  formUrl.searchParams.append('link_id', inviteId)
+
+  return formUrl.href
+}
+
 export function ProviderInvitePage() {
   const t = translations.invite.provider
-  const { inviteId } = providerRoute.useParams()
   const { invite } = providerRoute.useLoaderData()
-  const { user, isLoaded, isSignedIn } = useUser()
   const clerk = useClerk()
   const { child, family, accepted } = invite
   const familyName = family.firstName + ' ' + family.lastName
   const childName = child.firstName + ' ' + child.lastName
 
-  const formUrl = new URL(BASE_APPLY_FORM_URL)
-  formUrl.searchParams.append('link_id', inviteId)
-
-  const isProvider = useMemo(() => {
-    if (!isLoaded || !isSignedIn) {
-      return false
-    }
-
-    const types = user.publicMetadata.types as string[]
-
-    return types.includes(CLERK_PROVIDER_TYPE)
-  }, [user, isLoaded, isSignedIn])
+  const formUrl = useFormUrl()
 
   return (
     <WhiteCard className="container m-auto mt-10">
@@ -160,7 +138,7 @@ export function ProviderInvitePage() {
                 <Text text={t.dontHaveAccount} />
               </p>
               <Button asChild>
-                <ExternalLink href={formUrl.href}>
+                <ExternalLink href={formUrl}>
                   <Text text={t.dontHaveAccountButton} />
                 </ExternalLink>
               </Button>
@@ -174,29 +152,6 @@ export function ProviderInvitePage() {
             </SignedOut>
             <SignedIn>
               <SignedInOptions />
-              {isProvider ? (
-                <Button
-                  onClick={() =>
-                    acceptInvite(inviteId, context).then(() => {
-                      navigate({ to: '/provider/home' })
-                      toast(text(t.successMessage))
-                    })
-                  }
-                >
-                  <Text text={t.alreadySignedInButton} />
-                </Button>
-              ) : (
-                <>
-                  <p className="text-xl text-center">
-                    <Text text={t.notProvider} />
-                  </p>
-                  <Button asChild>
-                    <ExternalLink href={formUrl.href}>
-                      <Text text={t.dontHaveAccountButton} />
-                    </ExternalLink>
-                  </Button>
-                </>
-              )}
             </SignedIn>
           </>
         )}
@@ -212,7 +167,35 @@ function SignedInOptions() {
   const { context } = useMatch({ from: '__root__' })
   const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
+  const { user, isLoaded, isSignedIn } = useUser()
+  const formUrl = useFormUrl()
+
+  const isProvider = useMemo(() => {
+    if (!isLoaded || !isSignedIn) {
+      return false
+    }
+
+    const types = user.publicMetadata.types as string[]
+
+    return types.includes(CLERK_PROVIDER_TYPE)
+  }, [user, isLoaded, isSignedIn])
+
   const { alreadyCaringFor, atMaxChildCount } = invite
+
+  if (!isProvider) {
+    return (
+      <>
+        <p className="text-xl text-center">
+          <Text text={t.notProvider} />
+        </p>
+        <Button asChild>
+          <ExternalLink href={formUrl}>
+            <Text text={t.dontHaveAccountButton} />
+          </ExternalLink>
+        </Button>
+      </>
+    )
+  }
 
   if (alreadyCaringFor) {
     return (
