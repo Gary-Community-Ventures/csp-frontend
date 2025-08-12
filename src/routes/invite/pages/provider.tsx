@@ -105,12 +105,23 @@ function useFormUrl() {
 export function ProviderInvitePage() {
   const t = translations.invite.provider
   const { invite } = providerRoute.useLoaderData()
+  const { user, isLoaded, isSignedIn } = useUser()
   const clerk = useClerk()
   const { child, family, accepted } = invite
   const familyName = family.firstName + ' ' + family.lastName
   const childName = child.firstName + ' ' + child.lastName
 
   const formUrl = useFormUrl()
+
+  const isProvider = useMemo(() => {
+    if (!isLoaded || !isSignedIn) {
+      return false
+    }
+
+    const types = user.publicMetadata.types as string[]
+
+    return types.includes(CLERK_PROVIDER_TYPE)
+  }, [user, isLoaded, isSignedIn])
 
   return (
     <WhiteCard className="container m-auto mt-10">
