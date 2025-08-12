@@ -658,5 +658,57 @@ export const translations = {
         es: 'Por favor selecciona al menos un niño',
       },
     },
+    family: {
+      header: {
+        en: ' wants to add you as a family to provide child care for!',
+        es: ' quiere agregarlos como familia para el cuidado infantil.',
+      },
+      joinNow: {
+        en: 'Join now by creating your account and applying!',
+        es: '¡Únase ahora creando su cuenta y aplicando!',
+      },
+      applyButton: {
+        en: 'Apply',
+        es: 'Aplicar',
+      },
+      alreadyHaveAccount: {
+        en: 'Join now by signing into your account!',
+        es: '¡Únase ahora iniciando sesión en su cuenta!',
+      },
+      signInButton: signInButton,
+      noChildren: {
+        en: "Seems like you don't have any children to select child care for. Apply now as a family to start receiving child care.",
+        es: 'Parece que no tiene hijos para seleccionar el cuidado infantil. Aplique ahora como familia para comenzar a recibir cuidado infantil.',
+      },
+      toHome: returnHomeButton,
+      alreadyAccepted: {
+        part1: {
+          en: "You're all set! You have successfully connected with ",
+          es: '¡Listo! Se ha conectado con ',
+        },
+        part2: {
+          en: " for your family's childcare needs.",
+          es: ' para el cuidado infantil de su familia.',
+        },
+      },
+      selectChildren: {
+        part1: {
+          en: 'Almost there! To accept the childcare services from ',
+          es: '¡Ya casi! Para aceptar los servicios de cuidado infantil de ',
+        },
+        part2: {
+          en: ', please select the child(ren) who will be receiving care.',
+          es: ', seleccione el/los niño(s) que recibirán cuidado infantil.',
+        },
+      },
+      acceptButton: {
+        en: 'Accept Invitation',
+        es: 'Aceptar Invitación',
+      },
+      selectChildrenError: {
+        en: 'Please select at least one child',
+        es: 'Por favor selecciona al menos un niño',
+      },
+    },
   },
 } as const
