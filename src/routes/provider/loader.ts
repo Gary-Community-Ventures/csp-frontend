@@ -20,11 +20,11 @@ export async function loadProviderData({
 
     handleStatusCodes(context, res)
 
-    const rawJson = await res.json()
+    const rawJson = await res.json() as Provider
 
     const json: Provider = {
       ...rawJson,
-      transactions: rawJson.transactions.map((payment: any) => ({
+      transactions: rawJson.transactions.map((payment) => ({
         ...payment,
         date: new Date(payment.date),
       })),

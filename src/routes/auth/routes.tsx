@@ -4,17 +4,19 @@ import { SignInPage } from './pages/sign-in'
 import { SignUpPage } from './pages/sign-up'
 import { useBackgroundColor } from '@/lib/hooks'
 
+function Layout() {
+  useBackgroundColor('var(--secondary-background)')
+  return (
+    <main className="flex justify-center py-10">
+      <Outlet />
+    </main>
+  )
+}
+
 const authRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/auth',
-  component: () => {
-    useBackgroundColor('var(--secondary-background)')
-    return (
-      <main className="flex justify-center py-10">
-        <Outlet />
-      </main>
-    )
-  },
+  component: Layout,
 })
 
 export const signInRoute = createRoute({

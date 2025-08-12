@@ -28,11 +28,11 @@ export async function loadFamilyData({
 
     handleStatusCodes(context, res)
 
-    const rawJson = await res.json()
+    const rawJson = await res.json() as Family
 
     const json: Family = {
       ...rawJson,
-      transactions: rawJson.transactions.map((cg: any) => ({
+      transactions: rawJson.transactions.map((cg) => ({
         ...cg,
         date: new Date(cg.date),
       })),
