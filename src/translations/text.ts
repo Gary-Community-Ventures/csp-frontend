@@ -4,6 +4,10 @@ const generalNavBar = {
       en: 'Help/Support',
       es: 'Ayuda/Apoyo',
     },
+    supportLinks: {
+      en: 'https://www.capcolorado.org/en/contact',
+      es: 'https://www.capcolorado.org/es/contact',
+    },
     yourProfile: {
       en: 'Your Profile',
       es: 'Tu Perfil',
@@ -152,9 +156,9 @@ export const translations = {
         en: 'Needs Resubmission',
         es: 'Necesita Reenvío',
       },
-      cancelled: {
-        en: 'Cancelled',
-        es: 'Cancelado',
+      cancel: {
+        en: 'Cancel',
+        es: 'Cancelar',
       },
     },
     paymentPage: {
@@ -542,12 +546,8 @@ export const translations = {
   invite: {
     provider: {
       header: {
-        en: ' wants to add you as a provider for the following children:',
-        es: ' quiere agregarte como proveedor para los siguientes niños:',
-      },
-      addFamilyHeader: {
-        en: 'Would you like to add this family?',
-        es: '¿Deseas agregar esta familia?',
+        en: ' wants to add you as a provider for ',
+        es: ' quiere agregarte como proveedor para ',
       },
       dontHaveAccount: {
         en: 'If you don’t have an account, you need to apply using the button below.',
@@ -578,6 +578,84 @@ export const translations = {
       successMessage: {
         en: 'Successfully added family as a provider.',
         es: 'Agregada exitosamente a la familia como proveedor.',
+      },
+      alreadyCaringFor: {
+        en: 'You are already caring for this child.',
+        es: 'Ya estás cuidando a este niño.',
+      },
+      atMaxChildCount: {
+        en: 'You have reached the maximum number of children you can care for.',
+        es: 'Has alcanzado el número máximo de niños que puedes cuidar.',
+      },
+      notProvider: {
+        en: 'Oops! This account isn’t set up as a provider yet. You’ll need to become a provider to accept family invites and get paid for childcare.',
+        es: '¡Oops! Esta cuenta aún no está configurada como proveedor. Necesitarás convertirte en proveedor para aceptar invitaciones familiares y recibir pagos por el cuidado infantil.',
+      },
+    },
+    family: {
+      header: {
+        en: ' wants to add you as a family to provide child care for!',
+        es: ' quiere agregarlos como familia para el cuidado infantil.',
+      },
+      joinNow: {
+        en: 'Join now by creating your account and applying!',
+        es: '¡Únase ahora creando su cuenta y aplicando!',
+      },
+      applyButton: {
+        en: 'Apply',
+        es: 'Aplicar',
+      },
+      alreadyHaveAccount: {
+        en: 'Join now by signing into your account!',
+        es: '¡Únase ahora iniciando sesión en su cuenta!',
+      },
+      signInButton: signInButton,
+      noChildren: {
+        en: "Seems like you don't have any children to select child care for. Apply now as a family to start receiving child care.",
+        es: 'Parece que no tiene hijos para seleccionar el cuidado infantil. Aplique ahora como familia para comenzar a recibir cuidado infantil.',
+      },
+      toHome: returnHomeButton,
+      alreadyAccepted: {
+        part1: {
+          en: "You're all set! You have successfully connected with ",
+          es: '¡Listo! Se ha conectado con ',
+        },
+        part2: {
+          en: " for your family's childcare needs.",
+          es: ' para el cuidado infantil de su familia.',
+        },
+      },
+      selectChildren: {
+        part1: {
+          en: 'Almost there! To accept the childcare services from ',
+          es: '¡Ya casi! Para aceptar los servicios de cuidado infantil de ',
+        },
+        part2: {
+          en: ', please select the child(ren) who will be receiving care.',
+          es: ', seleccione el/los niño(s) que recibirán cuidado infantil.',
+        },
+      },
+      noSlotsRemaining: {
+        en: 'Sorry, there are no more childcare slots available for this provider.',
+        es: 'Lo sentimos, no hay más espacios de cuidado infantil disponibles para este proveedor.',
+      },
+      maxSlotsReached: {
+        part1: {
+          en: 'This provider can only accept ',
+          es: 'Este proveedor solo puede aceptar ',
+        },
+        part2: {
+          en: ' more child(ren)',
+          es: ' más niño(s)',
+        },
+      },
+      acceptButton: {
+        en: 'Accept Invitation',
+        es: 'Aceptar Invitación',
+      },
+      selectChildrenError: {
+        en: 'Please select at least one child',
+        es: 'Por favor selecciona al menos un niño',
       },
     },
     family: {

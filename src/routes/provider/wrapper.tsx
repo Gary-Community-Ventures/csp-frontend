@@ -42,6 +42,7 @@ export type ProviderContextType = {
   transactions: Transaction[]
   curriculum: Curriculum | null
   navBar: NavBarContext
+  maxChildCount: number
   isAlsoFamily: boolean
 }
 
@@ -68,6 +69,7 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
     }),
     transactions: providerData.transactions,
     curriculum: providerData.curriculum,
+    maxChildCount: providerData.max_child_count,
     isAlsoFamily: providerData.is_also_family,
     navBar: {
       setHidden,

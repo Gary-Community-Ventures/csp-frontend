@@ -69,4 +69,5 @@ export type Provider = {
   transactions: Transaction[]
   curriculum: Curriculum | null
   is_also_family: boolean
+  max_child_count: number
 }
