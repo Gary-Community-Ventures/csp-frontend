@@ -635,6 +635,20 @@ export const translations = {
           es: ', seleccione el/los niño(s) que recibirán cuidado infantil.',
         },
       },
+      noSlotsRemaining: {
+        en: 'Sorry, there are no more childcare slots available for this provider.',
+        es: 'Lo sentimos, no hay más espacios de cuidado infantil disponibles para este proveedor.',
+      },
+      maxSlotsReached: {
+        part1: {
+          en: 'This provider can only accept ',
+          es: 'Este proveedor solo puede aceptar ',
+        },
+        part2: {
+          en: ' more child(ren)',
+          es: ' más niño(s)',
+        },
+      },
       acceptButton: {
         en: 'Accept Invitation',
         es: 'Aceptar Invitación',

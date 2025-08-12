@@ -37,6 +37,8 @@ type ApiResponse = {
       }[]
     | null
   accepted: boolean
+  is_already_provider: boolean
+  remaining_slots: number
 }
 
 type Child = {
@@ -53,6 +55,8 @@ type Invite = {
   }
   children: Child[] | null
   accepted: boolean
+  isAlreadyProvider: boolean
+  remainingSlots: number
 }
 
 export async function loadFamilyInvite({
@@ -94,6 +98,8 @@ export async function loadFamilyInvite({
       },
       children: children,
       accepted: rawJson.accepted,
+      isAlreadyProvider: rawJson.is_already_provider,
+      remainingSlots: rawJson.remaining_slots,
     } satisfies Invite,
   }
 }
@@ -113,6 +119,8 @@ export function FamilyInvitePage() {
     invite.provider.firstName + ' ' + invite.provider.lastName
   const accepted = invite.accepted
   const children = invite.children
+  const remainingSlots = invite.remainingSlots
+  const isAlreadyProvider = invite.isAlreadyProvider
 
   return (
     <WhiteCard className="container m-auto mt-10">
@@ -136,7 +144,7 @@ export function FamilyInvitePage() {
               </Link>
             </Button>
           </>
-        ) : (
+        ) : remainingSlots > 0 ? (
           <>
             <SignedOut>
               <p>
@@ -156,10 +164,13 @@ export function FamilyInvitePage() {
               </Button>
             </SignedOut>
             <SignedIn>
-              {children !== null ? (
+              {children !== null &&
+              (children.length > 0 || isAlreadyProvider) ? (
                 <AcceptForm
                   familyChildren={children}
                   providerName={providerName}
+                  remainingSlots={remainingSlots}
+                  isAlreadyProvider={isAlreadyProvider}
                 />
               ) : (
                 <>
@@ -175,6 +186,24 @@ export function FamilyInvitePage() {
               )}
             </SignedIn>
           </>
+        ) : (
+          <>
+            <p>
+              <Text text={t.noSlotsRemaining} />
+            </p>
+            <SignedIn>
+              <Button asChild>
+                <Link to="/provider/home">
+                  <Text text={t.toHome} />
+                </Link>
+              </Button>
+            </SignedIn>
+            <SignedOut>
+              <Button onClick={() => clerk.redirectToSignIn()}>
+                <Text text={t.signInButton} />
+              </Button>
+            </SignedOut>
+          </>
         )}
       </section>
     </WhiteCard>
@@ -184,9 +213,16 @@ export function FamilyInvitePage() {
 type AcceptFormProps = {
   familyChildren: Child[]
   providerName: string
+  remainingSlots: number
+  isAlreadyProvider: boolean
 }
 
-function AcceptForm({ familyChildren, providerName }: AcceptFormProps) {
+function AcceptForm({
+  familyChildren,
+  providerName,
+  remainingSlots,
+  isAlreadyProvider,
+}: AcceptFormProps) {
   const t = translations.invite.family
   const text = useText()
   const { inviteId } = familyRoute.useParams()
@@ -197,7 +233,10 @@ function AcceptForm({ familyChildren, providerName }: AcceptFormProps) {
   const schema = z.object({
     children: z
       .array(z.string())
-      .min(1, { message: text(t.selectChildrenError) }),
+      .min(1, { message: text(t.selectChildrenError) })
+      .max(remainingSlots, {
+        message: `${text(t.maxSlotsReached.part1)}${remainingSlots}${text(t.maxSlotsReached.part2)}`,
+      }),
   })
   const [formData, setFormData] = useState<z.infer<typeof schema>>({
     children: [],
@@ -224,6 +263,23 @@ function AcceptForm({ familyChildren, providerName }: AcceptFormProps) {
       () => {
         setSubmitting(false)
       }
+    )
+  }
+
+  if (familyChildren.length === 0 && isAlreadyProvider) {
+    return (
+      <>
+        <p>
+          <Text text={t.alreadyAccepted.part1} />
+          {providerName}
+          <Text text={t.alreadyAccepted.part2} />
+        </p>
+        <Button asChild>
+          <Link to="/provider/home">
+            <Text text={t.toHome} />
+          </Link>
+        </Button>
+      </>
     )
   }
 
