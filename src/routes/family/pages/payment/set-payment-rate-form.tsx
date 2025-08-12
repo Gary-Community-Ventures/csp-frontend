@@ -1,12 +1,37 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { translations } from '@/translations/text'
-import { Text, useText } from '@/translations/wrapper'
+import { Text } from '@/translations/wrapper'
 import React from 'react'
-import { toast } from 'sonner'
 import { dollarToCents } from '@/lib/currency'
+import { useValidateForm } from '@/lib/schemas'
+import { z } from 'zod'
+import { FormErrorMessage } from '@/components/form-error'
+
+const paymentRateFormSchema = z.object({
+  halfDayRate: z.string().refine(
+    (val) => {
+      const num = parseFloat(val)
+      return !isNaN(num) && num > 0
+    },
+    {
+      message: 'Rate must be a positive number',
+    }
+  ),
+  fullDayRate: z.string().refine(
+    (val) => {
+      const num = parseFloat(val)
+      return !isNaN(num) && num > 0
+    },
+    {
+      message: 'Rate must be a positive number',
+    }
+  ),
+})
+
+export type PaymentRateForm = z.infer<typeof paymentRateFormSchema>
 
 interface SetPaymentRateFormProps {
   createPaymentRateMutation: {
@@ -21,53 +46,49 @@ export function SetPaymentRateForm({
   createPaymentRateMutation,
 }: SetPaymentRateFormProps) {
   const t = translations.family.paymentPage
-  const text = useText()
-  const [halfDayRate, setHalfDayRate] = React.useState('')
-  const [fullDayRate, setFullDayRate] = React.useState('')
+  const [formData, setFormData] = React.useState<PaymentRateForm>({
+    halfDayRate: '',
+    fullDayRate: '',
+  })
+  const { getError, submit } = useValidateForm(paymentRateFormSchema, formData)
 
-  const handleRateChange = (
-    setter: React.Dispatch<React.SetStateAction<string>>,
-    value: string,
-  ) => {
+  const handleSetPaymentRate = () => {
+    submit((data) => {
+      createPaymentRateMutation.mutate({
+        halfDayRateCents: dollarToCents(data.halfDayRate),
+        fullDayRateCents: dollarToCents(data.fullDayRate),
+      })
+    })
+  }
+
+  const handleRateChange = (field: keyof PaymentRateForm, value: string) => {
     const sanitizedValue = value.replace(/[^0-9.]/g, '')
     const parts = sanitizedValue.split('.')
     if (parts.length > 2) {
-      // Only one dot allowed, so we prevent further input by not setting state
       return
     }
     if (parts[1] && parts[1].length > 2) {
-      setter(parts[0] + '.' + parts[1].substring(0, 2))
+      setFormData((prev) => ({
+        ...prev,
+        [field]: parts[0] + '.' + parts[1].substring(0, 2),
+      }))
     } else {
-      setter(sanitizedValue)
+      setFormData((prev) => ({ ...prev, [field]: sanitizedValue }))
     }
   }
 
-  const handleBlur = (
-    setter: React.Dispatch<React.SetStateAction<string>>,
-    value: string,
-  ) => {
+  const handleBlur = (field: keyof PaymentRateForm, value: string) => {
     if (value) {
       const floatValue = parseFloat(value)
       if (!isNaN(floatValue)) {
-        setter(floatValue.toFixed(2))
+        setFormData((prev) => ({
+          ...prev,
+          [field]: floatValue.toFixed(2),
+        }))
       } else {
-        setter('')
+        setFormData((prev) => ({ ...prev, [field]: '' }))
       }
     }
-  }
-
-  const handleSetPaymentRate = () => {
-    const half = dollarToCents(halfDayRate)
-    const full = dollarToCents(fullDayRate)
-
-    if (isNaN(half) || isNaN(full) || half <= 0 || full <= 0) {
-      toast.error(text(t.invalidRatesError))
-      return
-    }
-    createPaymentRateMutation.mutate({
-      halfDayRateCents: half,
-      fullDayRateCents: full,
-    })
   }
 
   return (
@@ -93,14 +114,15 @@ export function SetPaymentRateForm({
                 type="text"
                 inputMode="decimal"
                 className="pl-7"
-                value={halfDayRate}
+                value={formData.halfDayRate}
                 onChange={(e) =>
-                  handleRateChange(setHalfDayRate, e.target.value)
+                  handleRateChange('halfDayRate', e.target.value)
                 }
-                onBlur={(e) => handleBlur(setHalfDayRate, e.target.value)}
+                onBlur={(e) => handleBlur('halfDayRate', e.target.value)}
                 placeholder="0.00"
               />
             </div>
+            <FormErrorMessage error={getError('halfDayRate')} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="fullDayRate">
@@ -115,14 +137,15 @@ export function SetPaymentRateForm({
                 type="text"
                 inputMode="decimal"
                 className="pl-7"
-                value={fullDayRate}
+                value={formData.fullDayRate}
                 onChange={(e) =>
-                  handleRateChange(setFullDayRate, e.target.value)
+                  handleRateChange('fullDayRate', e.target.value)
                 }
-                onBlur={(e) => handleBlur(setFullDayRate, e.target.value)}
+                onBlur={(e) => handleBlur('fullDayRate', e.target.value)}
                 placeholder="0.00"
               />
             </div>
+            <FormErrorMessage error={getError('fullDayRate')} />
           </div>
         </div>
         <Button onClick={handleSetPaymentRate} className="w-full mt-4">
