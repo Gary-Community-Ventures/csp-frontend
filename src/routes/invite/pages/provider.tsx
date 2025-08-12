@@ -19,10 +19,6 @@ import { ExternalLink } from '@/components/external-link'
 import { useMemo, useState } from 'react'
 import { CLERK_PROVIDER_TYPE } from '@/lib/constants'
 
-let a = 1
-a = '1'
-console.error(a)
-
 type ApiResponse = {
   child: {
     id: string
