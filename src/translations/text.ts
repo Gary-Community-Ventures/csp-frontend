@@ -156,9 +156,9 @@ export const translations = {
         en: 'Needs Resubmission',
         es: 'Necesita Reenvío',
       },
-      cancelled: {
-        en: 'Cancelled',
-        es: 'Cancelado',
+      cancel: {
+        en: 'Cancel',
+        es: 'Cancelar',
       },
     },
     paymentPage: {
