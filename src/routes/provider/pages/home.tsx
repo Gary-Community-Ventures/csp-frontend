@@ -11,7 +11,8 @@ import { Plus } from 'lucide-react'
 
 export function ProviderHomePage() {
   const t = translations.provider.home
-  const { children, transactions, curriculum } = useProviderContext()
+  const { children, transactions, curriculum, maxChildCount } =
+    useProviderContext()
 
   return (
     <div className="p-5">
@@ -28,12 +29,14 @@ export function ProviderHomePage() {
           <Header>
             <Text text={t.children} />
           </Header>
-          <Button variant="link" size="textLarge" asChild>
-            <Link to="/provider/families/invite">
-              <Plus className="size-6" />
-              <Text text={t.inviteFamily} />
-            </Link>
-          </Button>
+          {maxChildCount - children.length > 0 && (
+            <Button variant="link" size="textLarge" asChild>
+              <Link to="/provider/families/invite">
+                <Plus className="size-6" />
+                <Text text={t.inviteFamily} />
+              </Link>
+            </Button>
+          )}
         </div>
         <ChildrenList children={children} />
       </section>
