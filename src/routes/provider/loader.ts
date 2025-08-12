@@ -20,7 +20,7 @@ export async function loadProviderData({
 
     handleStatusCodes(context, res)
 
-    const rawJson = await res.json() as Provider
+    const rawJson = (await res.json()) as Provider
 
     const json: Provider = {
       ...rawJson,

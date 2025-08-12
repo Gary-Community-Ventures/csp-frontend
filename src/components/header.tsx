@@ -1,7 +1,15 @@
 import { cn } from '@/lib/utils'
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
-export type HeaderTagTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'strong' | 'div'
+export type HeaderTagTypes =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'strong'
+  | 'div'
 
 type BaseProps = {
   children: ReactNode

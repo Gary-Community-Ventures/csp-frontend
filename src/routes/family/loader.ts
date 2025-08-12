@@ -28,7 +28,7 @@ export async function loadFamilyData({
 
     handleStatusCodes(context, res)
 
-    const rawJson = await res.json() as Family
+    const rawJson = (await res.json()) as Family
 
     const json: Family = {
       ...rawJson,
