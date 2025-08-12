@@ -351,7 +351,7 @@ export const Calendar: React.FC<CalendarProps> = ({
           },
           {
             colorClass: 'bg-[#B53333]',
-            textKey: t.cancelled,
+            textKey: t.cancel,
           },
         ].map((item, index) => (
           <div key={index} className="flex items-center gap-x-2">
