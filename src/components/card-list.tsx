@@ -8,7 +8,7 @@ type CardListProps = {
 
 export function CardList({ items }: CardListProps) {
   return (
-    <WhiteCard Tag='ul' className='py-0'>
+    <WhiteCard Tag="ul" className="py-0">
       {items.map((item, index) => (
         <Fragment key={index}>
           <li className="py-5">{item}</li>

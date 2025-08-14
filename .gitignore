@@ -40,15 +40,6 @@ dist/
 # macOS
 .DS_Store
 
-# npm package manager
-package-lock.json
-
-# yarn package manager
-yarn.lock
-
-# pnpm package manager
-pnpm-lock.yaml
-
 # editorconfig
 .editorconfig
 

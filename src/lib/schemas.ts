@@ -10,7 +10,7 @@ type ObjectPaths<T> = T extends object
     }[keyof T & string]
   : never
 
-export function useValidateForm<T extends z.ZodSchema<any, any, any>>(
+export function useValidateForm<T extends z.ZodSchema<any, any, any>>( // eslint-disable-line @typescript-eslint/no-explicit-any
   schema: T,
   data: unknown
 ) {
@@ -31,7 +31,7 @@ export function useValidateForm<T extends z.ZodSchema<any, any, any>>(
     }
 
     setErrors(result.error.issues)
-  }, [data, lang])
+  }, [data, lang, showErrors, schema])
 
   const submit = (
     onSuccess: (data: z.infer<T>) => void,

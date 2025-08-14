@@ -20,8 +20,8 @@ export async function getMonthAllocation(
     headers: await headersWithAuth(context),
   })
   interface CustomError extends Error {
-  response?: Response;
-}
+    response?: Response
+  }
 
   if (res.status === 400) {
     const error: CustomError = new Error('Bad Request')

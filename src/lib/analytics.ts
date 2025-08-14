@@ -29,7 +29,7 @@ type UserSessionEvent = {
 export type Event = PageViewEvent | ExternalLinkClickEvent | UserSessionEvent
 
 export function dataLayerPush(data: Event) {
-  // @ts-ignore
+  // @ts-expect-error window.dataLayer is added by google analytics
   const dataLayer: Event[] = window.dataLayer || []
 
   dataLayer.push(data)
