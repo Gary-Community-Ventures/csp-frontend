@@ -2,7 +2,7 @@ import { useFamilyContext } from '../../../wrapper'
 import { Button } from '@/components/ui/button'
 import { LoadingPage } from '@/components/pages/loading-page'
 import { translations } from '@/translations/text'
-import { Text, useLanguageContext } from '@/translations/wrapper'
+import { Text, useText, useLanguageContext } from '@/translations/wrapper'
 import { usePaymentData } from '../use-payment-data'
 import { formatAmount, dollarToCents } from '@/lib/currency'
 import React from 'react'
@@ -14,6 +14,11 @@ import { FormErrorMessage } from '@/components/form-error'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
 import { lumpPaymentConfirmationRoute } from '../../../routes'
+import { useMutation } from '@tanstack/react-query' // Import useMutation
+import { createLumpSum } from '@/lib/api/lumpSums' // Import createLumpSum
+import { toast } from 'sonner' // Import toast
+import { paymentRoute } from '../../../routes' // Import paymentRoute to get context
+import { Spinner } from '@/components/ui/spinner' // Import Spinner for loading state
 
 import { monthAllocationSchema } from '@/lib/schemas'
 
@@ -34,6 +39,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
   const t = translations.family.lumpPaymentPage
   const { providers, children, selectedChildInfo } = useFamilyContext()
   const { lang } = useLanguageContext()
+  const text = useText()
   const {
     allocationQuery,
     paymentRateQuery,
@@ -41,6 +47,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
     nextMonthAllocation,
   } = usePaymentData()
   const navigate = useNavigate()
+  const { context } = paymentRoute.useRouteContext() // Get context
 
   const [formData, setFormData] = React.useState<LumpSumForm>({
     amount: '',
@@ -98,10 +105,14 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
   const provider = providers.find((p) => p.id === providerId)
   const child = children.find((c) => c.id === selectedChildInfo.id)
 
-  const handleSubmit = () => {
-    submit(() => {
-      // This is where the mutation would be called.
-      // For now, just navigating.
+  const lumpSumMutation = useMutation({
+    mutationFn: (data: {
+      allocation_id: number
+      provider_id: string
+      amount_cents: number
+    }) => createLumpSum(context, data),
+    onSuccess: () => {
+      toast.success(text(t.lumpPaymentSuccess))
       navigate({
         to: lumpPaymentConfirmationRoute.to,
         search: {
@@ -110,8 +121,26 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
           month: selectedAllocation?.date || '',
           hours: formData.hours,
           amount: formData.amount,
+          providerId: providerId,
         },
       })
+    },
+    onError: (error) => {
+      toast.error(`Failed to submit lump sum payment: ${error.message}`)
+    },
+  })
+
+  const handleSubmit = () => {
+    submit(() => {
+      if (selectedAllocation) {
+        lumpSumMutation.mutate({
+          allocation_id: selectedAllocation.id,
+          provider_id: providerId,
+          amount_cents: dollarToCents(formData.amount),
+        })
+      } else {
+        toast.error('No allocation selected.')
+      }
     })
   }
 
@@ -218,9 +247,16 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
         <Button
           type="button"
           onClick={handleSubmit}
+          disabled={lumpSumMutation.isPending} // Disable button while pending
           className="w-full max-w-md md:max-w-2xl py-3 text-lg"
         >
-          <Text text={t.submitButton} />
+          {lumpSumMutation.isPending ? (
+            <div className="flex items-center justify-center gap-2">
+              <Spinner /> <Text text={translations.general.loadingPage.loading} />
+            </div>
+          ) : (
+            <Text text={t.submitButton} />
+          )}
         </Button>
       </div>
     </div>

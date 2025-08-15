@@ -1,4 +1,4 @@
-import { Outlet, createRoute } from '@tanstack/react-router'
+import { Outlet, createRoute, redirect } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
@@ -105,12 +105,40 @@ export const lumpPaymentConfirmationRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: 'payment/lump-payment/confirmation',
   component: LumpSumConfirmationPage,
+  beforeLoad: ({ search, params }) => {
+    const { childId } = params as { childId: string }
+
+    const typedSearch = search as {
+      providerName?: string
+      childName?: string
+      month?: string
+      hours?: string
+      amount?: string
+      providerId?: string
+    }
+
+    if (
+      !typedSearch.providerName ||
+      !typedSearch.childName ||
+      !typedSearch.month ||
+      !typedSearch.hours ||
+      !typedSearch.amount ||
+      !typedSearch.providerId
+    ) {
+      throw redirect({
+        to: paymentRoute.to,
+        params: { childId: childId, providerId: typedSearch.providerId || '' },
+      })
+    }
+    return {}
+  },
   validateSearch: (search: {
     providerName: string
     childName: string
     month: string
     hours: string
     amount: string
+    providerId: string
   }) => {
     return search
   },

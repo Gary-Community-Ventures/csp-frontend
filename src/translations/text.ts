@@ -253,6 +253,10 @@ export const translations = {
         en: 'Month Balance',
         es: 'Balance del Mes',
       },
+      lumpPaymentSuccess: {
+        en: 'Payment successful!',
+        es: '¡Pago exitoso!',
+      },
     },
     lumpSumConfirmationPage: {
       header: {
