@@ -1,14 +1,15 @@
-import { Outlet, createRoute } from '@tanstack/react-router'
+import { Outlet, createRoute, redirect } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
 import { loadFamilyData, redirectToDefaultId } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
 import { FamilyProvidersPage } from './pages/providers'
-import { PaymentPage } from './pages/payment/index'
+import { PaymentPage } from './pages/payment/payment'
 import FindProviderPage, { loadProviders } from './pages/find-provider'
 import { InviteProviderPage } from './pages/invite-provider'
 import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
+import { LumpSumConfirmationPage } from './pages/payment/lump-payment/lump-payment-confirmation'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -100,6 +101,49 @@ export const inviteProviderConfirmationRoute = createRoute({
   component: InviteProviderConfirmationPage,
 })
 
+export const lumpPaymentConfirmationRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'payment/lump-payment/confirmation',
+  component: LumpSumConfirmationPage,
+  beforeLoad: ({ search, params }) => {
+    const { childId } = params as { childId: string }
+
+    const typedSearch = search as {
+      providerName?: string
+      childName?: string
+      month?: string
+      hours?: string
+      amount?: string
+      providerId?: string
+    }
+
+    if (
+      !typedSearch.providerName ||
+      !typedSearch.childName ||
+      !typedSearch.month ||
+      !typedSearch.hours ||
+      !typedSearch.amount ||
+      !typedSearch.providerId
+    ) {
+      throw redirect({
+        to: paymentRoute.to,
+        params: { childId: childId, providerId: typedSearch.providerId || '' },
+      })
+    }
+    return {}
+  },
+  validateSearch: (search: {
+    providerName: string
+    childName: string
+    month: string
+    hours: string
+    amount: string
+    providerId: string
+  }) => {
+    return search
+  },
+})
+
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   /* TODO renable when messages/activity are implemented
@@ -112,6 +156,7 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   findProviderRoute,
   inviteProviderRoute,
   inviteProviderConfirmationRoute,
+  lumpPaymentConfirmationRoute,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([
