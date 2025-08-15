@@ -254,6 +254,40 @@ export const translations = {
         es: 'Balance del Mes',
       },
     },
+    lumpSumConfirmationPage: {
+      header: {
+        en: 'Payment Submitted',
+        es: 'Pago Enviado',
+      },
+      successMessage: {
+        en: 'Your payment has been successfully submitted.',
+        es: 'Su pago ha sido enviado exitosamente.',
+      },
+      providerLabel: {
+        en: 'Provider',
+        es: 'Proveedor',
+      },
+      childLabel: {
+        en: 'Child',
+        es: 'Niño',
+      },
+      monthLabel: {
+        en: 'Month',
+        es: 'Mes',
+      },
+      hoursLabel: {
+        en: 'Hours',
+        es: 'Horas',
+      },
+      amountLabel: {
+        en: 'Amount',
+        es: 'Monto',
+      },
+      backButton: {
+        en: 'Back to Home',
+        es: 'Volver a Inicio',
+      },
+    },
     navBar: {
       menu: {
         ...generalNavBar.menu,

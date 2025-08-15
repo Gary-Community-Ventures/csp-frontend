@@ -2,8 +2,8 @@ import { paymentRoute } from '../../routes'
 import { useFamilyContext } from '../../wrapper'
 
 import { translations } from '@/translations/text'
-import { CalendarPaymentPage } from './calendar-payment'
-import { LumpPaymentPage } from './lump-payment'
+import { CalendarPaymentPage } from './calendar-payment/calendar-payment'
+import { LumpPaymentPage } from './lump-payment/lump-payment'
 import { Text } from '@/translations/wrapper'
 import { Header } from '@/components/header'
 
@@ -31,7 +31,7 @@ export function PaymentPage() {
 
   return (
     <div className="flex flex-col items-center p-4 min-w-[320px] pb-8">
-      <div className="text-center  w-full max-w-md md:max-w-2xl">
+      <div className="text-center w-full max-w-md md:max-w-2xl">
         <Header>
           <Text text={t.paymentFor} data={{ providerName: provider?.name }} />
         </Header>

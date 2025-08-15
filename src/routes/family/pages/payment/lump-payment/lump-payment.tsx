@@ -1,9 +1,9 @@
-import { useFamilyContext } from '../../wrapper'
+import { useFamilyContext } from '../../../wrapper'
 import { Button } from '@/components/ui/button'
 import { LoadingPage } from '@/components/pages/loading-page'
 import { translations } from '@/translations/text'
 import { Text, useLanguageContext } from '@/translations/wrapper'
-import { usePaymentData } from './use-payment-data'
+import { usePaymentData } from '../use-payment-data'
 import { formatAmount, dollarToCents } from '@/lib/currency'
 import React from 'react'
 import { Input } from '@/components/ui/input'
@@ -12,6 +12,8 @@ import { z } from 'zod'
 import { useValidateForm } from '@/lib/schemas'
 import { FormErrorMessage } from '@/components/form-error'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useNavigate } from '@tanstack/react-router'
+import { lumpPaymentConfirmationRoute } from '../../../routes'
 
 import { monthAllocationSchema } from '@/lib/schemas'
 
@@ -38,6 +40,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
     prevMonthAllocation,
     nextMonthAllocation,
   } = usePaymentData()
+  const navigate = useNavigate()
 
   const [formData, setFormData] = React.useState<LumpSumForm>({
     amount: '',
@@ -92,12 +95,22 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
     setFormData((prev) => ({ ...prev, hours: sanitizedValue }))
   }
 
+  const provider = providers.find((p) => p.id === providerId)
+  const child = children.find((c) => c.id === selectedChildInfo.id)
+
   const handleSubmit = () => {
     submit(() => {
-      console.log({
-        amount: dollarToCents(formData.amount),
-        hours: parseFloat(formData.hours),
-        allocationId: selectedAllocation?.id,
+      // This is where the mutation would be called.
+      // For now, just navigating.
+      navigate({
+        to: lumpPaymentConfirmationRoute.to,
+        search: {
+          providerName: provider?.name || '',
+          childName: child?.firstName || '',
+          month: selectedAllocation?.date || '',
+          hours: formData.hours,
+          amount: formData.amount,
+        },
       })
     })
   }
@@ -115,9 +128,6 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
   if (allocationQuery.isLoading || paymentRateQuery.isLoading) {
     return <LoadingPage />
   }
-
-  const provider = providers.find((p) => p.id === providerId)
-  const child = children.find((c) => c.id === selectedChildInfo.id)
 
   return (
     <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">

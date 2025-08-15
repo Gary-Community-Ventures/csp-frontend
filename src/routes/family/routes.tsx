@@ -9,6 +9,7 @@ import { PaymentPage } from './pages/payment/payment'
 import FindProviderPage, { loadProviders } from './pages/find-provider'
 import { InviteProviderPage } from './pages/invite-provider'
 import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
+import { LumpSumConfirmationPage } from './pages/payment/lump-payment/lump-payment-confirmation'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -100,6 +101,21 @@ export const inviteProviderConfirmationRoute = createRoute({
   component: InviteProviderConfirmationPage,
 })
 
+export const lumpPaymentConfirmationRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'payment/lump-payment/confirmation',
+  component: LumpSumConfirmationPage,
+  validateSearch: (search: {
+    providerName: string
+    childName: string
+    month: string
+    hours: string
+    amount: string
+  }) => {
+    return search
+  },
+})
+
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   /* TODO renable when messages/activity are implemented
@@ -112,6 +128,7 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   findProviderRoute,
   inviteProviderRoute,
   inviteProviderConfirmationRoute,
+  lumpPaymentConfirmationRoute,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([
