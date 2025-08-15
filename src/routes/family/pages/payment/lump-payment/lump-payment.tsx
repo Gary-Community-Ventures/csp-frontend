@@ -14,11 +14,11 @@ import { FormErrorMessage } from '@/components/form-error'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
 import { lumpPaymentConfirmationRoute } from '../../../routes'
-import { useMutation } from '@tanstack/react-query' // Import useMutation
-import { createLumpSum } from '@/lib/api/lumpSums' // Import createLumpSum
-import { toast } from 'sonner' // Import toast
-import { paymentRoute } from '../../../routes' // Import paymentRoute to get context
-import { Spinner } from '@/components/ui/spinner' // Import Spinner for loading state
+import { useMutation } from '@tanstack/react-query'
+import { createLumpSum } from '@/lib/api/lumpSums'
+import { toast } from 'sonner'
+import { paymentRoute } from '../../../routes'
+import { Spinner } from '@/components/ui/spinner'
 
 import { monthAllocationSchema } from '@/lib/schemas'
 
@@ -126,7 +126,15 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
       })
     },
     onError: (error) => {
-      toast.error(`Failed to submit lump sum payment: ${error.message}`)
+      console.error('Lump sum payment error:', error)
+      if (
+        error instanceof Error &&
+        error.message === 'MONTHLY_ALLOCATION_EXCEEDED'
+      ) {
+        toast.error(text(t.monthlyAllocationExceededError))
+      } else {
+        toast.error(`Failed to submit lump sum payment`)
+      }
     },
   })
 

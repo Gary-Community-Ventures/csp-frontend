@@ -257,6 +257,10 @@ export const translations = {
         en: 'Payment successful!',
         es: '¡Pago exitoso!',
       },
+      monthlyAllocationExceededError: {
+        en: 'Adding this payment would exceed the monthly allocation.',
+        es: 'Agregar este pago excedería la asignación mensual.',
+      },
     },
     lumpSumConfirmationPage: {
       header: {
