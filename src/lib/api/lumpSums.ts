@@ -32,9 +32,10 @@ export async function createLumpSum(
       typeof responseData === 'object' &&
       responseData !== null &&
       'error' in responseData &&
-      (responseData as any).error === 'Adding this lump sum would exceed monthly allocation'
+      (responseData as any).error ===
+        'Adding this lump sum would exceed monthly allocation'
     ) {
-      throw new Error('MONTHLY_ALLOCATION_EXCEEDED');
+      throw new Error('MONTHLY_ALLOCATION_EXCEEDED')
     }
     console.error('Zod parsing error for AllocatedLumpSumResponse:', error)
     throw error
