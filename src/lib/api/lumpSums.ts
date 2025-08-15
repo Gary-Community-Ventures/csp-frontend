@@ -32,7 +32,8 @@ export async function createLumpSum(
       typeof responseData === 'object' &&
       responseData !== null &&
       'error' in responseData &&
-      (responseData as any).error ===
+      typeof (responseData as { error: unknown }).error === 'string' &&
+      (responseData as { error: string }).error ===
         'Adding this lump sum would exceed monthly allocation'
     ) {
       throw new Error('MONTHLY_ALLOCATION_EXCEEDED')
