@@ -14,7 +14,7 @@ interface CustomError extends Error {
 }
 
 export function usePaymentData() {
-  const t = translations.family.paymentPage
+  const t = translations.family.calendarPaymentPage
   const text = useText()
   const { providerId } = paymentRoute.useParams()
   const { selectedChildInfo } = useFamilyContext()
@@ -50,7 +50,7 @@ export function usePaymentData() {
     enabled: !!selectedChildInfo.id && !!providerId && !!context,
   })
 
-  useQuery({
+  const prevMonthAllocationQuery = useQuery({
     queryKey: [
       'allocation',
       selectedChildInfo.id,
@@ -82,7 +82,7 @@ export function usePaymentData() {
     },
   })
 
-  useQuery({
+  const nextMonthAllocationQuery = useQuery({
     queryKey: [
       'allocation',
       selectedChildInfo.id,
@@ -205,6 +205,8 @@ export function usePaymentData() {
     deleteCareDayMutation,
     submitCareDaysMutation,
     createPaymentRateMutation,
+    prevMonthAllocation: prevMonthAllocationQuery.data,
+    nextMonthAllocation: nextMonthAllocationQuery.data,
     prevMonthAllocationFailed,
     nextMonthAllocationFailed,
   }

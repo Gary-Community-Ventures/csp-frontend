@@ -161,7 +161,7 @@ export const translations = {
         es: 'Cancelar',
       },
     },
-    paymentPage: {
+    calendarPaymentPage: {
       loading: {
         en: 'Loading...',
         es: 'Cargando...',
@@ -214,10 +214,6 @@ export const translations = {
         en: 'Leave',
         es: 'Salir',
       },
-      paymentFor: {
-        en: 'Payment for {providerName}',
-        es: 'Pago para {providerName}',
-      },
       paymentDescription: {
         en: 'Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. You can modify days up until the Monday of the week care is taking place. At that point, the week will be locked.',
         es: 'Seleccione los días que necesita atención con {providerName} para {childFirstName}. Haga clic en Enviar para enviar estos días a su proveedor. Puede modificar los días hasta el lunes de la semana en que se brinde la atención. A partir de ese momento, la semana se bloqueará.',
@@ -228,6 +224,35 @@ export const translations = {
       },
       submitButton: submitButton,
       submittingButton: submittingButton,
+    },
+    paymentPage: {
+      providerNotFound: {
+        en: 'Provider not found',
+        es: 'Proveedor no encontrado',
+      },
+      paymentFor: {
+        en: 'Payment for {providerName}',
+        es: 'Pago para {providerName}',
+      },
+    },
+    lumpPaymentPage: {
+      paymentDescription: {
+        en: 'Submit the payment amount and hours to {providerName} for {childFirstName}.',
+        es: 'Enviar el monto del pago y las horas a {providerName} para {childFirstName}.',
+      },
+      amountLabel: {
+        en: 'Amount (USD)',
+        es: 'Monto (USD)',
+      },
+      hoursLabel: {
+        en: 'Hours',
+        es: 'Horas',
+      },
+      submitButton: submitButton,
+      monthBalance: {
+        en: 'Month Balance',
+        es: 'Balance del Mes',
+      },
     },
     navBar: {
       menu: {

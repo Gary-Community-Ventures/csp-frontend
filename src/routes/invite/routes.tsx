@@ -8,7 +8,6 @@ import { DefaultHeader } from '@/components/default-header'
 const inviteRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/invite',
-  pendingComponent: LoadingPage,
   component: () => (
     <>
       <DefaultHeader />
@@ -18,6 +17,8 @@ const inviteRoute = createRoute({
     </>
   ),
 })
+
+inviteRoute.options.pendingComponent = LoadingPage
 
 export const providerRoute = createRoute({
   getParentRoute: () => inviteRoute,

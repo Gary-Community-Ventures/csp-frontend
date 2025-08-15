@@ -45,7 +45,7 @@ interface SetPaymentRateFormProps {
 export function SetPaymentRateForm({
   createPaymentRateMutation,
 }: SetPaymentRateFormProps) {
-  const t = translations.family.paymentPage
+  const t = translations.family.calendarPaymentPage
   const [formData, setFormData] = React.useState<PaymentRateForm>({
     halfDayRate: '',
     fullDayRate: '',

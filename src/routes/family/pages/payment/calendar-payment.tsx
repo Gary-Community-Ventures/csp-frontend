@@ -1,10 +1,9 @@
 import { useBlocker } from '@tanstack/react-router'
 import { z } from 'zod'
-import { paymentRoute } from '../../routes'
+
 import { useFamilyContext } from '../../wrapper'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
-import { Header } from '@/components/header'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
 import { usePaymentData } from './use-payment-data'
@@ -15,9 +14,8 @@ import { allocatedCareDaySchema } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
 import { LoadingPage } from '@/components/pages/loading-page'
 
-export function PaymentPage() {
-  const t = translations.family.paymentPage
-  const { providerId } = paymentRoute.useParams()
+export function CalendarPaymentPage({ providerId }: { providerId: string }) {
+  const t = translations.family.calendarPaymentPage
   const { providers, children, selectedChildInfo } = useFamilyContext()
   const {
     setDate,
@@ -82,9 +80,6 @@ export function PaymentPage() {
     <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">
       <ConfirmUnsavedChangesDialog blocker={blocker} />
       <div className="text-center  w-full max-w-md md:max-w-2xl">
-        <Header>
-          <Text text={t.paymentFor} data={{ providerName: provider?.name }} />
-        </Header>
         <Text
           text={t.paymentDescription}
           data={{
