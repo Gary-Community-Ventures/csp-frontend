@@ -2,7 +2,7 @@ import { useFamilyContext } from '../../wrapper'
 import { Button } from '@/components/ui/button'
 import { LoadingPage } from '@/components/pages/loading-page'
 import { translations } from '@/translations/text'
-import { Text } from '@/translations/wrapper'
+import { Text, useLanguageContext } from '@/translations/wrapper'
 import { usePaymentData } from './use-payment-data'
 import { formatAmount, dollarToCents } from '@/lib/currency'
 import React from 'react'
@@ -12,6 +12,10 @@ import { z } from 'zod'
 import { useValidateForm } from '@/lib/schemas'
 import { FormErrorMessage } from '@/components/form-error'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+
+import { monthAllocationSchema } from '@/lib/schemas'
+
+export type GetMonthAllocation = z.infer<typeof monthAllocationSchema>
 
 const lumpSumSchema = z.object({
   amount: z.string().refine((val) => parseFloat(val) > 0, {
@@ -27,11 +31,10 @@ type LumpSumForm = z.infer<typeof lumpSumSchema>
 export function LumpPaymentPage({ providerId }: { providerId: string }) {
   const t = translations.family.lumpPaymentPage
   const { providers, children, selectedChildInfo } = useFamilyContext()
+  const { lang } = useLanguageContext()
   const {
     allocationQuery,
     paymentRateQuery,
-    date,
-    setDate,
     prevMonthAllocation,
     nextMonthAllocation,
   } = usePaymentData()
@@ -41,24 +44,18 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
     hours: '',
   })
 
+  const [selectedAllocation, setSelectedAllocation] =
+    React.useState<GetMonthAllocation | null>(null)
+
   const { getError, submit } = useValidateForm(lumpSumSchema, formData)
 
   const currentAllocation = allocationQuery.data
 
-  const allocations = [
-    prevMonthAllocation,
-    currentAllocation,
-    nextMonthAllocation,
-  ].filter(Boolean)
-
-  const selectedAllocation = allocations.find((alloc) => {
-    if (!alloc) return false
-    const allocDate = new Date(alloc.date)
-    return (
-      allocDate.getFullYear() === date.getFullYear() &&
-      allocDate.getMonth() === date.getMonth()
-    )
-  })
+  React.useEffect(() => {
+    if (currentAllocation) {
+      setSelectedAllocation(currentAllocation)
+    }
+  }, [currentAllocation])
 
   const handleAmountChange = (value: string) => {
     const sanitizedValue = value.replace(/[^0-9.]/g, '')
@@ -106,11 +103,13 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
   }
 
   const goToPrevMonth = () => {
-    setDate(new Date(date.getFullYear(), date.getMonth() - 1, 1))
+    if (!prevMonthAllocation) return
+    setSelectedAllocation(prevMonthAllocation)
   }
 
   const goToNextMonth = () => {
-    setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1))
+    if (!nextMonthAllocation) return
+    setSelectedAllocation(nextMonthAllocation)
   }
 
   if (allocationQuery.isLoading || paymentRateQuery.isLoading) {
@@ -143,7 +142,12 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
             <ChevronLeft />
           </Button>
           <div className="text-lg font-semibold">
-            {date.toLocaleString('default', { month: 'long', year: 'numeric' })}
+            {selectedAllocation &&
+              new Date(selectedAllocation.date).toLocaleString(lang, {
+                month: 'long',
+                year: 'numeric',
+                timeZone: 'UTC',
+              })}
           </div>
           <Button
             onClick={goToNextMonth}
