@@ -1,10 +1,15 @@
 import type { RouterContext } from '@/routes/router'
-import { allocatedLumpSumResponseSchema, createLumpSumRequestSchema } from '../schemas'
+import {
+  allocatedLumpSumResponseSchema,
+  createLumpSumRequestSchema,
+} from '../schemas'
 import { z } from 'zod'
 import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 
 export type CreateLumpSumRequest = z.infer<typeof createLumpSumRequestSchema>
-export type AllocatedLumpSumResponse = z.infer<typeof allocatedLumpSumResponseSchema>
+export type AllocatedLumpSumResponse = z.infer<
+  typeof allocatedLumpSumResponseSchema
+>
 
 export async function createLumpSum(
   context: RouterContext,

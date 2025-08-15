@@ -252,7 +252,8 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
         >
           {lumpSumMutation.isPending ? (
             <div className="flex items-center justify-center gap-2">
-              <Spinner /> <Text text={translations.general.loadingPage.loading} />
+              <Spinner />{' '}
+              <Text text={translations.general.loadingPage.loading} />
             </div>
           ) : (
             <Text text={t.submitButton} />

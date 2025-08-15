@@ -129,10 +129,10 @@ export const allocatedLumpSumResponseSchema = z.object({
   care_month_allocation_id: z.number(),
   provider_google_sheets_id: z.string(),
   amount_cents: z.number(),
-});
+})
 
 export const createLumpSumRequestSchema = z.object({
   allocation_id: z.number(),
   provider_id: z.string(),
   amount_cents: z.number(),
-});
+})
