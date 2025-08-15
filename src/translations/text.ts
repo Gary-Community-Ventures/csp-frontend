@@ -81,12 +81,12 @@ const phoneError = {
 const signInButton = {
   en: 'Sign in',
   es: 'Iniciar sesión',
-}
+} as const
 
 const returnHomeButton = {
   en: 'Return home',
   es: 'Volver a inicio',
-}
+} as const
 
 const translatedLanguages = {
   en: {
@@ -248,6 +248,20 @@ export const translations = {
           es: 'Proveedores',
         },
       },
+      notificationBanner: {
+        applicationPending: {
+          en: 'Application awaiting approval',
+          es: 'Solicitud pendiente de aprobación',
+        },
+        applicationDenied: {
+          en: 'Unfortunately, your application was denied for this child',
+          es: 'Lamentablemente, tu solicitud fue rechazada para este niño',
+        },
+        attendance: {
+          en: 'Submit your care hours for last week',
+          es: 'Envía tus horas de cuidado para la última semana',
+        },
+      },
     },
     home: {
       balance: {
@@ -359,6 +373,38 @@ export const translations = {
         },
       },
     },
+    attendance: {
+      header: {
+        en: 'Log Your Care',
+        es: 'Registre Tu Asistencia',
+      },
+      description: {
+        en: 'Please confirm the hours of care you received for each child. If you did not receive care, please enter 0.',
+        es: 'Confirme las horas de cuidado que recibió para cada niño. Si no recibió cuidado, ingrese 0.',
+      },
+      inputPlaceholder: {
+        en: 'Total Hours of Care',
+        es: 'Horas de Cuidado Totales',
+      },
+      required: {
+        en: 'This field is required',
+        es: 'Este campo es obligatorio',
+      },
+      success: {
+        en: 'Attendance submitted successfully',
+        es: 'Asistencia enviada exitosamente',
+      },
+      allSet: {
+        en: 'All of your attendance has been submitted.',
+        es: 'Toda tu asistencia ha sido enviada.',
+      },
+      allSetDescription: {
+        en: 'Come back next week to submit your attendance for this week.',
+        es: 'Vuelve la semana siguiente para enviar tu asistencia para esta semana.',
+      },
+      returnHome: returnHomeButton,
+      submit: submitButton
+    },
   },
   provider: {
     navBar: {
@@ -429,6 +475,12 @@ export const translations = {
       loading: {
         en: 'Loading...',
         es: 'Cargando...',
+      },
+    },
+    banner: {
+      actionRequired: {
+        en: 'Action Required: ',
+        es: 'Acción Requerida: ',
       },
     },
     notFoundPage: {
