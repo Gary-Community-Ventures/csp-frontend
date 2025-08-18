@@ -134,7 +134,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
       ) {
         toast.error(text(t.monthlyAllocationExceededError))
       } else {
-        toast.error(`Failed to submit lump sum payment`)
+        toast.error(text(t.lumpPaymentError))
       }
     },
   })
@@ -148,28 +148,25 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
           amount_cents: dollarToCents(formData.amount),
         })
       } else {
-        toast.error('No allocation selected.')
+        toast.error(text(t.lumpPaymentError))
       }
     })
   }
 
   const goToPrevMonth = () => {
     if (!prevMonthAllocation) return
-    const [year, month, day] = prevMonthAllocation.date.split('-').map(Number);
+    const [year, month, day] = prevMonthAllocation.date.split('-').map(Number)
     // Month is 0-indexed in JavaScript Date objects, so subtract 1
-    const newDate = new Date(year, month - 1, day);
-    console.log('Going to previous month:', newDate);
-    setDate(newDate);
+    const newDate = new Date(year, month - 1, day)
+    setDate(newDate)
   }
 
   const goToNextMonth = () => {
     if (!nextMonthAllocation) return
-    const [year, month, day] = nextMonthAllocation.date.split('-').map(Number);
+    const [year, month, day] = nextMonthAllocation.date.split('-').map(Number)
     // Month is 0-indexed in JavaScript Date objects, so subtract 1
-    const newDate = new Date(year, month - 1, day);
-    console.log('Going to next month:', newDate);
-    console.log('Setting date to:', newDate);
-    setDate(newDate);
+    const newDate = new Date(year, month - 1, day)
+    setDate(newDate)
   }
 
   if (allocationQuery.isLoading || paymentRateQuery.isLoading) {

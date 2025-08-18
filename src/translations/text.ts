@@ -261,6 +261,10 @@ export const translations = {
         en: 'Adding this payment would exceed the monthly allocation.',
         es: 'Agregar este pago excedería la asignación mensual.',
       },
+      lumpPaymentError: {
+        en: 'Failed to submit payment',
+        es: 'Error al enviar el pago',
+      },
     },
     lumpSumConfirmationPage: {
       header: {
