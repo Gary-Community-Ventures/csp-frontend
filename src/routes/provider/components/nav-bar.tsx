@@ -26,6 +26,7 @@ import { ExternalLink } from '@/components/external-link'
 import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Logo } from '@/components/logo'
+import { NotificationBanner } from '@/components/notification-banner'
 
 export function ProviderNavBar() {
   const t = translations.provider.navBar
@@ -93,6 +94,7 @@ export function ProviderNavBar() {
           </DropdownMenu>
         </div>
       </div>
+      <ProviderNotificationBanner notification={navBar.notifications[0]} />
       <div className="flex justify-center items-center p-5 bg-white">
         <strong className="text-3xl text-primary">
           {providerInfo.firstName} {providerInfo.lastName}
@@ -126,4 +128,48 @@ export function ProviderNavBar() {
       /> */}
     </>
   )
+}
+
+type NotificationBannerRawData = {
+  type: 'application_denied' | 'attendance' | 'application_pending'
+}
+
+type ProviderNotificationBannerProps = {
+  notification?: NotificationBannerRawData
+}
+
+function ProviderNotificationBanner({
+  notification,
+}: ProviderNotificationBannerProps) {
+  const t = translations.provider.navBar.notificationBanner
+
+  if (notification === undefined) {
+    return null
+  }
+
+  if (notification.type === 'application_pending') {
+    return (
+      <NotificationBanner>
+        <Text text={t.applicationPending} />
+      </NotificationBanner>
+    )
+  }
+
+  if (notification.type === 'application_denied') {
+    return (
+      <NotificationBanner>
+        <Text text={t.applicationDenied} />
+      </NotificationBanner>
+    )
+  }
+
+  if (notification.type === 'attendance') {
+    return (
+      <NotificationBanner link={{ to: '/provider/attendance' }}>
+        <Text text={t.attendance} />
+      </NotificationBanner>
+    )
+  }
+
+  return null
 }

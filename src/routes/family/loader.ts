@@ -96,7 +96,7 @@ export type Child = {
 }
 
 export type Notification = {
-  type: 'application_pending' | 'attendance'
+  type: 'application_pending' | 'application_denied' | 'attendance'
 }
 
 export type Family = {

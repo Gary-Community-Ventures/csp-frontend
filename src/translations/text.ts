@@ -99,6 +99,17 @@ const translatedLanguages = {
   },
 } as const
 
+const notificationBanner = {
+  applicationPending: {
+    en: 'Application awaiting approval',
+    es: 'Solicitud pendiente de aprobación',
+  },
+  attendance: {
+    en: 'Submit your care hours for last week',
+    es: 'Envía tus horas de cuidado para la última semana',
+  },
+} as const
+
 export const translations = {
   family: {
     calendar: {
@@ -249,17 +260,10 @@ export const translations = {
         },
       },
       notificationBanner: {
-        applicationPending: {
-          en: 'Application awaiting approval',
-          es: 'Solicitud pendiente de aprobación',
-        },
+        ...notificationBanner,
         applicationDenied: {
           en: 'Unfortunately, your application was denied for this child',
           es: 'Lamentablemente, tu solicitud fue rechazada para este niño',
-        },
-        attendance: {
-          en: 'Submit your care hours for last week',
-          es: 'Envía tus horas de cuidado para la última semana',
         },
       },
     },
@@ -403,7 +407,7 @@ export const translations = {
         es: 'Vuelve la semana siguiente para enviar tu asistencia para esta semana.',
       },
       returnHome: returnHomeButton,
-      submit: submitButton
+      submit: submitButton,
     },
   },
   provider: {
@@ -424,6 +428,13 @@ export const translations = {
         attendance: {
           en: 'Attendance',
           es: 'Asistencia',
+        },
+      },
+      notificationBanner: {
+        ...notificationBanner,
+        applicationDenied: {
+          en: 'Unfortunately, your application was denied',
+          es: 'Lamentablemente, tu solicitud fue rechazada',
         },
       },
     },
