@@ -250,8 +250,8 @@ export const translations = {
       },
       submitButton: submitButton,
       monthBalance: {
-        en: 'Month Balance',
-        es: 'Balance del Mes',
+        en: 'Balance',
+        es: 'Balance',
       },
       lumpPaymentSuccess: {
         en: 'Payment successful!',

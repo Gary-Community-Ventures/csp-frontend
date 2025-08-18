@@ -41,6 +41,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
   const { lang } = useLanguageContext()
   const text = useText()
   const {
+    setDate,
     allocationQuery,
     paymentRateQuery,
     prevMonthAllocation,
@@ -154,12 +155,21 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
 
   const goToPrevMonth = () => {
     if (!prevMonthAllocation) return
-    setSelectedAllocation(prevMonthAllocation)
+    const [year, month, day] = prevMonthAllocation.date.split('-').map(Number);
+    // Month is 0-indexed in JavaScript Date objects, so subtract 1
+    const newDate = new Date(year, month - 1, day);
+    console.log('Going to previous month:', newDate);
+    setDate(newDate);
   }
 
   const goToNextMonth = () => {
     if (!nextMonthAllocation) return
-    setSelectedAllocation(nextMonthAllocation)
+    const [year, month, day] = nextMonthAllocation.date.split('-').map(Number);
+    // Month is 0-indexed in JavaScript Date objects, so subtract 1
+    const newDate = new Date(year, month - 1, day);
+    console.log('Going to next month:', newDate);
+    console.log('Setting date to:', newDate);
+    setDate(newDate);
   }
 
   if (allocationQuery.isLoading || paymentRateQuery.isLoading) {
@@ -178,7 +188,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
         />
       </div>
 
-      <div className="bg-tertiary-background rounded-3xl w-full max-w-md md:max-w-2xl p-5">
+      <div className="w-full max-w-md md:max-w-2xl">
         <div className="flex items-center justify-center gap-4">
           <Button
             onClick={goToPrevMonth}
@@ -205,11 +215,14 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
             <ChevronRight />
           </Button>
         </div>
-        <div className="text-sm text-center pb-2">
-          <Text text={t.monthBalance} />
-        </div>
-        <div className="text-3xl text-center">
-          {formatAmount(selectedAllocation?.remaining_cents || 0)}
+
+        <div className="bg-tertiary-background rounded-3xl w-full max-w-md md:max-w-2xl p-5">
+          <div className="text-sm text-center pb-2">
+            <Text text={t.monthBalance} />
+          </div>
+          <div className="text-3xl text-center">
+            {formatAmount(selectedAllocation?.remaining_cents || 0)}
+          </div>
         </div>
       </div>
 
