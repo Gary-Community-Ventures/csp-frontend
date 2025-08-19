@@ -1,12 +1,7 @@
 import { Header } from '@/components/header'
 import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import {
-  Fragment,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from 'react'
+import { Fragment, useState, type Dispatch, type SetStateAction } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { useHideFamilyNavBar } from '@/lib/hooks'
