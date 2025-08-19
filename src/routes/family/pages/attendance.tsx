@@ -3,15 +3,11 @@ import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import {
   Fragment,
-  useEffect,
   useState,
   type Dispatch,
   type SetStateAction,
 } from 'react'
-import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
-import z from 'zod'
-import { FormErrorMessage } from '@/components/form-error'
 import { Button } from '@/components/ui/button'
 import { useHideFamilyNavBar } from '@/lib/hooks'
 import type { RouterContext } from '@/routes/router'
@@ -24,7 +20,6 @@ import { attendanceRoute } from '../routes'
 import { Link, useMatch, useRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { dateInRange, useFormatDate, weekRange } from '@/lib/dates'
-import { Label } from '@/components/ui/label'
 import { AttendanceInput } from '@/components/attendance-input'
 
 type ApiResponse = {
