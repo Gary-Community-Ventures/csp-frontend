@@ -7,6 +7,7 @@ import { ProviderWrapper } from './wrapper'
 import { InviteFamilyPage } from './pages/invite-family'
 import { InviteFamilyConfirmationPage } from './pages/invite-family-confirmation'
 import { AttendancePage, loadAttendance } from './pages/attendance'
+import { ResourcesPage } from './pages/resources'
 
 export const providerRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -60,6 +61,12 @@ export const attendanceRoute = createRoute({
   loader: loadAttendance,
 })
 
+const resourcesRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/resources',
+  component: ResourcesPage,
+})
+
 /* TODO renable when other pages are implemented
 const childrenRoute = createRoute({
   getParentRoute: () => providerRoute,
@@ -67,11 +74,6 @@ const childrenRoute = createRoute({
   component: () => <h2>Messages</h2>,
 })
 
-const resourcesRoute = createRoute({
-  getParentRoute: () => providerRoute,
-  path: '/activity',
-  component: () => <h2>Activity</h2>,
-})
 
 const helpRoute = createRoute({
   getParentRoute: () => providerRoute,
@@ -92,6 +94,7 @@ export const providerRouteTree = providerRoute.addChildren([
   inviteFamilyRoute,
   inviteFamilyConfirmationRoute,
   attendanceRoute,
+  resourcesRoute,
   // childrenRoute,
   // resourcesRoute,
   // helpRoute,
