@@ -16,7 +16,6 @@ export function weekRange(date: Date): [Date, Date] {
   utcEndOfWeekDate.setUTCDate(utcEndOfWeekDate.getUTCDate() + DAYS_IN_WEEK)
   utcEndOfWeekDate.setUTCMilliseconds(utcEndOfWeekDate.getUTCMilliseconds() - 1) // get previous day
 
-
   return [utcWeekStartDate, utcEndOfWeekDate]
 }
 
