@@ -6,7 +6,7 @@ import { loadProviderData } from './loader'
 import { ProviderWrapper } from './wrapper'
 import { InviteFamilyPage } from './pages/invite-family'
 import { InviteFamilyConfirmationPage } from './pages/invite-family-confirmation'
-import { AttendancePage } from './pages/attendance'
+import { AttendancePage, loadAttendance } from './pages/attendance'
 
 export const providerRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -57,6 +57,7 @@ export const attendanceRoute = createRoute({
   getParentRoute: () => providerRoute,
   path: '/attendance',
   component: AttendancePage,
+  loader: loadAttendance,
 })
 
 /* TODO renable when other pages are implemented

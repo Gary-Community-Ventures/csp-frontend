@@ -45,5 +45,3 @@ export function NavBar({ links, sticky = false }: NavBarProps) {
     </NavigationMenu>
   )
 }
-
-

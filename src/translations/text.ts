@@ -110,6 +110,35 @@ const notificationBanner = {
   },
 } as const
 
+const attendance = {
+  header: {
+    en: 'Log Your Care',
+    es: 'Registre Tu Asistencia',
+  },
+  inputPlaceholder: {
+    en: 'Total Hours of Care',
+    es: 'Horas de Cuidado Totales',
+  },
+  required: {
+    en: 'This field is required',
+    es: 'Este campo es obligatorio',
+  },
+  success: {
+    en: 'Attendance submitted successfully',
+    es: 'Asistencia enviada exitosamente',
+  },
+  allSet: {
+    en: 'All of your attendance has been submitted.',
+    es: 'Toda tu asistencia ha sido enviada.',
+  },
+  allSetDescription: {
+    en: 'Come back next week to submit your attendance for this week.',
+    es: 'Vuelve la semana siguiente para enviar tu asistencia para esta semana.',
+  },
+  returnHome: returnHomeButton,
+  submit: submitButton,
+} as const
+
 export const translations = {
   family: {
     calendar: {
@@ -378,36 +407,11 @@ export const translations = {
       },
     },
     attendance: {
-      header: {
-        en: 'Log Your Care',
-        es: 'Registre Tu Asistencia',
-      },
+      ...attendance,
       description: {
-        en: 'Please confirm the hours of care you received for each child. If you did not receive care, please enter 0.',
-        es: 'Confirme las horas de cuidado que recibió para cada niño. Si no recibió cuidado, ingrese 0.',
+        en: 'Please confirm the hours of care you received for each child for the week. If you did not receive care, please enter 0.',
+        es: 'Confirme las horas de cuidado que recibió para cada niño para la semana. Si no recibió cuidado, ingrese 0.',
       },
-      inputPlaceholder: {
-        en: 'Total Hours of Care',
-        es: 'Horas de Cuidado Totales',
-      },
-      required: {
-        en: 'This field is required',
-        es: 'Este campo es obligatorio',
-      },
-      success: {
-        en: 'Attendance submitted successfully',
-        es: 'Asistencia enviada exitosamente',
-      },
-      allSet: {
-        en: 'All of your attendance has been submitted.',
-        es: 'Toda tu asistencia ha sido enviada.',
-      },
-      allSetDescription: {
-        en: 'Come back next week to submit your attendance for this week.',
-        es: 'Vuelve la semana siguiente para enviar tu asistencia para esta semana.',
-      },
-      returnHome: returnHomeButton,
-      submit: submitButton,
     },
   },
   provider: {
@@ -472,6 +476,13 @@ export const translations = {
       submitButton: submitButton,
       confirmationPage: {
         backButton: returnHomeButton,
+      },
+    },
+    attendance: {
+      ...attendance,
+      description: {
+        en: 'Please confirm the hours of care you provided for each child for the week. If you did not provide care, please enter 0.',
+        es: 'Confirme las horas de cuidado que proporcionó para cada niño para la semana. Si no proporcionó cuidado, ingrese 0.',
       },
     },
   },

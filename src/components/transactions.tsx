@@ -1,6 +1,6 @@
 import { CardList } from '@/components/card-list'
 import { WhiteCard } from '@/components/white-card'
-import { useLanguageContext, Text } from '@/translations/wrapper'
+import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { useMemo } from 'react'
 import { useFormatDate } from '@/lib/dates'

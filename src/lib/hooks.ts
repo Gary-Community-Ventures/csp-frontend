@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useUser } from '@clerk/clerk-react'
 import * as Sentry from '@sentry/react'
 import { useFamilyContext } from '../routes/family/wrapper'
+import { useProviderContext } from '../routes/provider/wrapper'
 import { useQuery } from '@tanstack/react-query'
 import { getMonthAllocation } from '@/lib/api/children'
 import * as RouterModule from '@/routes/router'
@@ -42,6 +43,18 @@ export function useSentryUserContext() {
 
 export function useHideFamilyNavBar() {
   const { navBar } = useFamilyContext()
+
+  useEffect(() => {
+    navBar.setHidden(true)
+
+    return () => {
+      navBar.setHidden(false)
+    }
+  }, [navBar])
+}
+
+export function useHideProviderNavBar() {
+  const { navBar } = useProviderContext()
 
   useEffect(() => {
     navBar.setHidden(true)

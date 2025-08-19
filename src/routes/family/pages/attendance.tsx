@@ -2,7 +2,6 @@ import { Header } from '@/components/header'
 import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Fragment, useEffect, useState } from 'react'
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import z from 'zod'
@@ -19,6 +18,7 @@ import { attendanceRoute } from '../routes'
 import { Link, useMatch, useRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { dateInRange, useFormatDate, weekRange } from '@/lib/dates'
+import { Label } from '@/components/ui/label'
 
 type ApiResponse = {
   attendance: {
@@ -150,7 +150,6 @@ function attendanceIsValid(attendance: {
   return !Object.values(attendance).some((value) => value === null)
 }
 
-// TODO: handle dates
 export function AttendancePage() {
   const t = translations.family.attendance
   const text = useText()
@@ -174,7 +173,7 @@ export function AttendancePage() {
         <p className="text-center">
           <Text text={t.allSetDescription} />
         </p>
-        <div className="text-center">
+        <div className="text-center pt-3">
           <Button asChild>
             <Link to="/family/$childId/home">
               <Text text={t.returnHome} />
@@ -208,18 +207,18 @@ export function AttendancePage() {
   }
 
   return (
-    <div className="p-5 container mx-auto">
-      <Header Tag="h1" className="text-center text-xl">
+    <div className="p-5 w-md md:w-2xl mx-auto">
+      <Header Tag="h1" className="text-center">
         <Text text={t.header} />
       </Header>
       <p className="text-center">
         <Text text={t.description} />
       </p>
-      <form className="pt-10" onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
         {weeks.map((week) => {
           return (
             <div key={week.range[0].toString()} className="pb-5">
-              <p className="text-center text-quaternary">
+              <p className="text-center text-quaternary py-8">
                 <span className="inline-block">
                   {formatDate(week.range[0])}
                 </span>
@@ -291,12 +290,8 @@ function HoursInput({
   const id = `attendance-${provider.id}-${attendanceId}`
 
   useEffect(() => {
-    if (value === null) {
-      onChange(null)
-      return
-    }
     onChange(value)
-  }, [value])
+  }, [value]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="py-2">
