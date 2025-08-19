@@ -1,11 +1,8 @@
 import { Header } from '@/components/header'
 import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { Separator } from '@/components/ui/separator'
-import { Input } from '@/components/ui/input'
-import z from 'zod'
-import { FormErrorMessage } from '@/components/form-error'
 import { Button } from '@/components/ui/button'
 
 import type { RouterContext } from '@/routes/router'
@@ -19,6 +16,7 @@ import { Link, useMatch, useRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { dateInRange, useFormatDate, weekRange } from '@/lib/dates'
 import { attendanceRoute } from '../routes'
+import { AttendanceInput } from '@/components/attendance-input'
 
 type ApiResponse = {
   attendance: {
@@ -200,13 +198,13 @@ export function AttendancePage() {
               {week.attendance.map((attendanceRecord, i) => {
                 return (
                   <Fragment key={attendanceRecord.id}>
-                    <HoursInput
+                    <AttendanceInput
+                      label={`${attendanceRecord.child.firstName} ${attendanceRecord.child.lastName}`}
                       attendanceId={attendanceRecord.id}
                       submitted={submitted}
                       onChange={(value) =>
                         handleHoursInputChange(attendanceRecord.id, value)
                       }
-                      child={attendanceRecord.child}
                     />
                     {i < week.attendance.length - 1 && <Separator />}
                   </Fragment>
@@ -219,67 +217,6 @@ export function AttendancePage() {
           <Text text={t.submit} />
         </Button>
       </form>
-    </div>
-  )
-}
-
-type HoursInputProps = {
-  attendanceId: string
-  submitted: boolean
-  onChange: (value: number | null) => void
-  child: Child
-}
-
-function HoursInput({
-  attendanceId,
-  submitted,
-  onChange,
-  child,
-}: HoursInputProps) {
-  const t = translations.provider.attendance
-  const text = useText()
-
-  const schema = z.number().nonnegative().int()
-
-  const [value, setValue] = useState<number | null>(null)
-
-  const id = `attendance-${attendanceId}-${child.id}`
-
-  useEffect(() => {
-    onChange(value)
-  }, [value]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  return (
-    <div className="py-2">
-      <div className="flex justify-between">
-        <p className="font-bold">
-          {child.firstName} {child.lastName}
-        </p>
-        <div className="max-w-[15rem]">
-          <Input
-            id={id}
-            type="number"
-            placeholder={text(t.inputPlaceholder)}
-            value={value === null ? '' : String(value)}
-            onChange={(event) => {
-              const rawValue = event.target.value
-              if (rawValue === '') {
-                setValue(null)
-                return
-              }
-
-              const value = Number(rawValue)
-
-              if (!Number.isNaN(value) && schema.safeParse(value).success) {
-                setValue(value)
-              }
-            }}
-          />
-          <FormErrorMessage
-            error={value === null && submitted ? text(t.required) : undefined}
-          />
-        </div>
-      </div>
     </div>
   )
 }

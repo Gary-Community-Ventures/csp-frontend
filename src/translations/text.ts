@@ -115,14 +115,6 @@ const attendance = {
     en: 'Log Your Care',
     es: 'Registre Tu Asistencia',
   },
-  inputPlaceholder: {
-    en: 'Total Hours of Care',
-    es: 'Horas de Cuidado Totales',
-  },
-  required: {
-    en: 'This field is required',
-    es: 'Este campo es obligatorio',
-  },
   success: {
     en: 'Attendance submitted successfully',
     es: 'Asistencia enviada exitosamente',
@@ -614,6 +606,16 @@ export const translations = {
       backButton: {
         en: 'Back to Providers',
         es: 'Volver a Proveedores',
+      },
+    },
+    attendanceInput: {
+      inputPlaceholder: {
+        en: 'Total Hours of Care',
+        es: 'Horas de Cuidado Totales',
+      },
+      required: {
+        en: 'This field is required',
+        es: 'Este campo es obligatorio',
       },
     },
   },
