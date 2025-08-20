@@ -48,12 +48,14 @@ function OfflineWrapper({ children }: PropsWithChildren) {
   useEffect(() => {
     const handleOnline = () => setIsOnline(true)
 
-    const controller = new AbortController();
+    const controller = new AbortController()
 
-    window.addEventListener('online', handleOnline, { signal: controller.signal });
+    window.addEventListener('online', handleOnline, {
+      signal: controller.signal,
+    })
 
     return () => {
-      controller.abort();
+      controller.abort()
     }
   }, [])
 
