@@ -1,6 +1,6 @@
 import type { Child } from 'src/routes/family/wrapper'
 
-export const findProviderById = (children: Child[], childId: string | null) => {
+export const findChildById = (children: Child[], childId: string | null) => {
   if (childId === null) {
     return undefined
   }
