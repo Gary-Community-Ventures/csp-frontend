@@ -22,9 +22,10 @@ const authRoute = createRoute({
 export const signInRoute = createRoute({
   getParentRoute: () => authRoute,
   path: '/sign-in',
-  validateSearch: (search: Record<string, unknown>) => ({
-    redirect_url: (search.redirect_url as string) || undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>) => {
+    const redirect_url = search.redirect_url as string | undefined
+    return { redirect_url }
+  },
   component: SignInPage,
 })
 

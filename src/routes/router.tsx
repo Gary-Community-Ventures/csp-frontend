@@ -40,7 +40,10 @@ export const redirectToProviderOrFamily = createRoute({
   path: '/',
   beforeLoad: ({ context }) => {
     if (context.user === null) {
-      throw redirect({ to: '/auth/sign-in' })
+      throw redirect({
+        to: '/auth/sign-in',
+        search: { redirect_url: undefined },
+      })
     }
 
     const types = context.user.publicMetadata.types
