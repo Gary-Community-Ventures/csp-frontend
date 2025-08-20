@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { Text, useLanguageContext } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { lumpPaymentConfirmationRoute } from '../../../routes'
+import { lumpPaymentConfirmationRoute } from '@/routes/family/routes'
 import { formatAmount } from '@/lib/currency'
 import { Header } from '@/components/header'
 

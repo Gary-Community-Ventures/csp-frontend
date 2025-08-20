@@ -1,4 +1,4 @@
-import { paymentRoute } from '../../routes'
+import { paymentRoute } from '@/routes/family/routes'
 import { useFamilyContext } from '../../wrapper'
 
 import { translations } from '@/translations/text'
