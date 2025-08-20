@@ -6,7 +6,7 @@ import { translations } from '@/translations/text'
 import { Text, useText, useLanguageContext } from '@/translations/wrapper'
 import { usePaymentData } from '../use-payment-data'
 import { formatAmount, dollarToCents } from '@/lib/currency'
-import React from 'react'
+import { useMemo, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { z } from 'zod'
@@ -53,23 +53,19 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
   const navigate = useNavigate()
   const context = paymentRoute.useRouteContext()
 
-  const [formData, setFormData] = React.useState<LumpSumForm>({
+  const [formData, setFormData] = useState<LumpSumForm>({
     amount: '',
     hours: '',
   })
 
-  const [selectedAllocation, setSelectedAllocation] =
-    React.useState<GetMonthAllocation | null>(null)
-
   const { getError, submit } = useValidateForm(lumpSumSchema, formData)
 
-  const currentAllocation = allocationQuery.data
-
-  React.useEffect(() => {
-    if (currentAllocation) {
-      setSelectedAllocation(currentAllocation)
+  const selectedAllocation = useMemo(() => {
+    if (!allocationQuery.data) {
+      return null
     }
-  }, [currentAllocation])
+    return allocationQuery.data
+  }, [allocationQuery.data])
 
   const handleAmountChange = (value: string) => {
     const sanitizedValue = value.replace(/[^0-9.]/g, '')
