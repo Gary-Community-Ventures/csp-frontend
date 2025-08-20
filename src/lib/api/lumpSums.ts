@@ -29,12 +29,8 @@ export async function createLumpSum(
     return parsedData
   } catch (error: unknown) {
     if (
-      typeof responseData === 'object' &&
-      responseData !== null &&
-      'error' in responseData &&
-      typeof (responseData as { error: unknown }).error === 'string' &&
-      (responseData as { error: string }).error ===
-        'Adding this lump sum would exceed monthly allocation'
+      error instanceof Error &&
+      error.message === 'Adding this lump sum would exceed monthly allocation'
     ) {
       throw new Error('MONTHLY_ALLOCATION_EXCEEDED')
     }
