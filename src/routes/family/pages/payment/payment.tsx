@@ -1,5 +1,5 @@
 import { paymentRoute } from '@/routes/family/routes'
-import { useFamilyContext } from '../../wrapper'
+import { useFamilyContext } from '@/routes/family/wrapper'
 
 import { translations } from '@/translations/text'
 import { CalendarPaymentPage } from './calendar-payment/calendar-payment'

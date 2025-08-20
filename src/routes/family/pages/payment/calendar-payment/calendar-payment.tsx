@@ -1,7 +1,7 @@
 import { useBlocker } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { useFamilyContext } from '../../../wrapper'
+import { useFamilyContext } from '@/routes/family/wrapper'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { translations } from '@/translations/text'

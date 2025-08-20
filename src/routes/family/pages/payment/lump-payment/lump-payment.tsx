@@ -1,4 +1,4 @@
-import { useFamilyContext } from '../../../wrapper'
+import { useFamilyContext } from '@/routes/family/wrapper'
 import { Button } from '@/components/ui/button'
 import { LoadingPage } from '@/components/pages/loading-page'
 import { translations } from '@/translations/text'
