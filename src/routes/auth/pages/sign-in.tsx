@@ -12,8 +12,11 @@ export function SignInPage() {
 
   // Validate redirectUrl to prevent open redirect vulnerabilities.
   // Only allow redirects to the VITE_BACKEND_DOMAIN.
-  const isValidRedirectUrl = redirectUrl && redirectUrl.startsWith(backendDomain)
-  const finalRedirectUrl = isValidRedirectUrl ? decodeURIComponent(redirectUrl) : undefined
+  const isValidRedirectUrl =
+    redirectUrl && redirectUrl.startsWith(backendDomain)
+  const finalRedirectUrl = isValidRedirectUrl
+    ? decodeURIComponent(redirectUrl)
+    : undefined
 
   useEffect(() => {
     if (isSignedIn && finalRedirectUrl) {
