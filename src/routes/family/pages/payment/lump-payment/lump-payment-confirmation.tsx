@@ -18,7 +18,7 @@ export function LumpSumConfirmationPage() {
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
       <div className="text-center">
-        <Header className="text-2xl font-bold">
+        <Header Tag="h1" className="text-2xl font-bold">
           <Text text={t.header} />
         </Header>
         <p className="text-lg">
