@@ -1,4 +1,5 @@
 import { useFamilyContext } from '@/routes/family/wrapper'
+import type { Provider } from '@/routes/family/wrapper'
 import { Button } from '@/components/ui/button'
 import { LoadingPage } from '@/components/pages/loading-page'
 import { translations } from '@/translations/text'
@@ -19,6 +20,7 @@ import { createLumpSum } from '@/lib/api/lumpSums'
 import { toast } from 'sonner'
 import { paymentRoute } from '@/routes/family/routes'
 import { Spinner } from '@/components/ui/spinner'
+import { findChildById } from '@/lib/children'
 
 import { monthAllocationSchema } from '@/lib/schemas'
 
@@ -35,9 +37,9 @@ const lumpSumSchema = z.object({
 
 type LumpSumForm = z.infer<typeof lumpSumSchema>
 
-export function LumpPaymentPage({ providerId }: { providerId: string }) {
+export function LumpPaymentPage({ provider }: { provider: Provider }) {
   const t = translations.family.lumpPaymentPage
-  const { providers, children, selectedChildInfo } = useFamilyContext()
+  const { children, selectedChildInfo } = useFamilyContext()
   const { lang } = useLanguageContext()
   const text = useText()
   const {
@@ -103,8 +105,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
     setFormData((prev) => ({ ...prev, hours: sanitizedValue }))
   }
 
-  const provider = providers.find((p) => p.id === providerId)
-  const child = children.find((c) => c.id === selectedChildInfo.id)
+  const child = findChildById(children, selectedChildInfo.id)
 
   const lumpSumMutation = useMutation({
     mutationFn: (data: {
@@ -122,7 +123,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
           month: selectedAllocation?.date || '',
           hours: formData.hours,
           amount: formData.amount,
-          providerId: providerId,
+          providerId: provider.id,
         },
       })
     },
@@ -144,7 +145,7 @@ export function LumpPaymentPage({ providerId }: { providerId: string }) {
       if (selectedAllocation) {
         lumpSumMutation.mutate({
           allocation_id: selectedAllocation.id,
-          provider_id: providerId,
+          provider_id: provider.id,
           amount_cents: dollarToCents(formData.amount),
         })
       } else {

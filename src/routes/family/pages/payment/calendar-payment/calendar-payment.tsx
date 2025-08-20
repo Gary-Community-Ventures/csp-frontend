@@ -2,6 +2,7 @@ import { useBlocker } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { useFamilyContext } from '@/routes/family/wrapper'
+import type { Provider } from '@/routes/family/wrapper'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { translations } from '@/translations/text'
@@ -13,10 +14,11 @@ import { ConfirmUnsavedChangesDialog } from './confirm-unsaved-changes-dialog'
 import { allocatedCareDaySchema } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
 import { LoadingPage } from '@/components/pages/loading-page'
+import { findChildById } from '@/lib/children'
 
-export function CalendarPaymentPage({ providerId }: { providerId: string }) {
+export function CalendarPaymentPage({ provider }: { provider: Provider }) {
   const t = translations.family.calendarPaymentPage
-  const { providers, children, selectedChildInfo } = useFamilyContext()
+  const { children, selectedChildInfo } = useFamilyContext()
   const {
     setDate,
     allocationQuery,
@@ -73,8 +75,7 @@ export function CalendarPaymentPage({ providerId }: { providerId: string }) {
     )
   }
 
-  const provider = providers.find((p) => p.id === providerId)
-  const child = children.find((c) => c.id === selectedChildInfo.id)
+  const child = findChildById(children, selectedChildInfo.id)
 
   return (
     <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">

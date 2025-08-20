@@ -6,13 +6,14 @@ import { CalendarPaymentPage } from './calendar-payment/calendar-payment'
 import { LumpPaymentPage } from './lump-payment/lump-payment'
 import { Text } from '@/translations/wrapper'
 import { Header } from '@/components/header'
+import { findProviderById } from '@/lib/providers'
 
 export function PaymentPage() {
   const t = translations.family.paymentPage
   const { providerId } = paymentRoute.useParams()
   const { providers } = useFamilyContext()
 
-  const provider = providers.find((p) => p.id === providerId)
+  const provider = findProviderById(providers, providerId)
 
   if (!provider) {
     return (
@@ -23,10 +24,10 @@ export function PaymentPage() {
       </div>
     )
   }
-  let pageContent = <LumpPaymentPage providerId={providerId} />
+  let pageContent = <LumpPaymentPage provider={provider} />
 
   if (provider.type === 'ffn') {
-    pageContent = <CalendarPaymentPage providerId={providerId} />
+    pageContent = <CalendarPaymentPage provider={provider} />
   }
 
   return (
