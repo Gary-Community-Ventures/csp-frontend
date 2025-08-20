@@ -5,6 +5,7 @@ import { translations } from '@/translations/text'
 import { lumpPaymentConfirmationRoute } from '@/routes/family/routes'
 import { formatAmount } from '@/lib/currency'
 import { Header } from '@/components/header'
+import { formatMonthForDisplay } from '@/lib/date-utils'
 
 export function LumpSumConfirmationPage() {
   const t = translations.family.lumpSumConfirmationPage
@@ -42,13 +43,7 @@ export function LumpSumConfirmationPage() {
           <span className="font-semibold">
             <Text text={t.monthLabel} />
           </span>
-          <span>
-            {new Date(month).toLocaleString(lang, {
-              month: 'long',
-              year: 'numeric',
-              timeZone: 'UTC',
-            })}
-          </span>
+          <span>{formatMonthForDisplay(month, lang)}</span>
         </div>
         <div className="flex justify-between py-2 border-b">
           <span className="font-semibold">

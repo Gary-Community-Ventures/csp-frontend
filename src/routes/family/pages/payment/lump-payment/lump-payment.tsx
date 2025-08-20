@@ -20,6 +20,7 @@ import { createLumpSum } from '@/lib/api/lumpSums'
 import { toast } from 'sonner'
 import { paymentRoute } from '@/routes/family/routes'
 import { Spinner } from '@/components/ui/spinner'
+import { formatMonthForDisplay, parseAndValidateDate } from '@/lib/date-utils'
 import { findChildById } from '@/lib/children'
 
 import { monthAllocationSchema } from '@/lib/schemas'
@@ -156,18 +157,18 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
 
   const goToPrevMonth = () => {
     if (!prevMonthAllocation) return
-    const [year, month, day] = prevMonthAllocation.date.split('-').map(Number)
-    // Month is 0-indexed in JavaScript Date objects, so subtract 1
-    const newDate = new Date(year, month - 1, day)
-    setDate(newDate)
+    const newDate = parseAndValidateDate(prevMonthAllocation.date)
+    if (newDate) {
+      setDate(newDate)
+    }
   }
 
   const goToNextMonth = () => {
     if (!nextMonthAllocation) return
-    const [year, month, day] = nextMonthAllocation.date.split('-').map(Number)
-    // Month is 0-indexed in JavaScript Date objects, so subtract 1
-    const newDate = new Date(year, month - 1, day)
-    setDate(newDate)
+    const newDate = parseAndValidateDate(nextMonthAllocation.date)
+    if (newDate) {
+      setDate(newDate)
+    }
   }
 
   if (allocationQuery.isLoading || paymentRateQuery.isLoading) {
@@ -198,11 +199,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
           </Button>
           <div className="text-lg font-semibold">
             {selectedAllocation &&
-              new Date(selectedAllocation.date).toLocaleString(lang, {
-                month: 'long',
-                year: 'numeric',
-                timeZone: 'UTC',
-              })}
+              formatMonthForDisplay(selectedAllocation.date, lang)}
           </div>
           <Button
             onClick={goToNextMonth}
