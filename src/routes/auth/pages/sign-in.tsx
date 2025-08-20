@@ -2,7 +2,7 @@ import { SignIn } from '@clerk/clerk-react'
 import { useSearch } from '@tanstack/react-router'
 
 export function SignInPage() {
-  const search = useSearch({ from: '/auth/sign-in' }) // Specify the route
+  const search = useSearch({ from: '/auth/sign-in' })
 
   const redirectUrl = search.redirect_url
   const backendDomain = import.meta.env.VITE_BACKEND_DOMAIN
