@@ -51,7 +51,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
     nextMonthAllocation,
   } = usePaymentData()
   const navigate = useNavigate()
-  const { context } = paymentRoute.useRouteContext() // Get context
+  const context = paymentRoute.useRouteContext()
 
   const [formData, setFormData] = React.useState<LumpSumForm>({
     amount: '',
