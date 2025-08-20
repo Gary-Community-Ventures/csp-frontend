@@ -1,11 +1,8 @@
 import { SignIn } from '@clerk/clerk-react'
 import { useSearch } from '@tanstack/react-router'
-import { useUser } from '@clerk/clerk-react'
-import { useEffect } from 'react'
 
 export function SignInPage() {
   const search = useSearch({ from: '/auth/sign-in' }) // Specify the route
-  const { isSignedIn } = useUser()
 
   const redirectUrl = search.redirect_url
   const backendDomain = import.meta.env.VITE_BACKEND_DOMAIN
@@ -17,12 +14,6 @@ export function SignInPage() {
   const finalRedirectUrl = isValidRedirectUrl
     ? decodeURIComponent(redirectUrl)
     : undefined
-
-  useEffect(() => {
-    if (isSignedIn && finalRedirectUrl) {
-      window.location.href = finalRedirectUrl
-    }
-  }, [isSignedIn, finalRedirectUrl])
 
   return (
     <div>
