@@ -56,6 +56,7 @@ function ClerkWrapper({ children }: PropsWithChildren) {
       appearance={{
         variables: { colorPrimary: 'var(--primary)' },
       }}
+      allowedRedirectOrigins={[import.meta.env.VITE_BACKEND_DOMAIN]}
       localization={locale}
     >
       {children}
