@@ -6,10 +6,20 @@ import { loadProviderData } from './loader'
 import { ProviderWrapper } from './wrapper'
 import { InviteFamilyPage } from './pages/invite-family'
 import { InviteFamilyConfirmationPage } from './pages/invite-family-confirmation'
+import { AttendancePage, loadAttendance } from './pages/attendance'
 
 export const providerRoute = createRoute({
   getParentRoute: () => rootRoute,
+  component: () => (
+    <ProviderWrapper>
+      <ProviderNavBar />
+      <main>
+        <Outlet />
+      </main>
+    </ProviderWrapper>
+  ),
   path: '/provider',
+  loader: loadProviderData,
 })
 
 export const providerWithoutHomeRoute = createRoute({
@@ -22,23 +32,9 @@ export const providerWithoutHomeRoute = createRoute({
   },
 })
 
-export const providerWithHomeRoute = createRoute({
+const homeRoute = createRoute({
   getParentRoute: () => providerRoute,
   path: '/home',
-  component: () => (
-    <ProviderWrapper>
-      <ProviderNavBar />
-      <main>
-        <Outlet />
-      </main>
-    </ProviderWrapper>
-  ),
-  loader: loadProviderData,
-})
-
-const homeRoute = createRoute({
-  getParentRoute: () => providerWithHomeRoute,
-  path: '/',
   component: ProviderHomePage,
 })
 
@@ -55,6 +51,13 @@ export const inviteFamilyConfirmationRoute = createRoute({
     return search
   },
   component: InviteFamilyConfirmationPage,
+})
+
+export const attendanceRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/attendance',
+  component: AttendancePage,
+  loader: loadAttendance,
 })
 
 /* TODO renable when other pages are implemented
@@ -83,15 +86,12 @@ const settingsRoute = createRoute({
 })
 */
 
-const providerWithHomeRouteChildren = providerWithHomeRoute.addChildren([
+export const providerRouteTree = providerRoute.addChildren([
+  providerWithoutHomeRoute,
   homeRoute,
   inviteFamilyRoute,
   inviteFamilyConfirmationRoute,
-])
-
-export const providerRouteTree = providerRoute.addChildren([
-  providerWithoutHomeRoute,
-  providerWithHomeRouteChildren,
+  attendanceRoute,
   // childrenRoute,
   // resourcesRoute,
   // helpRoute,

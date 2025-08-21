@@ -34,7 +34,12 @@ export type Child = {
   lastName: string
 }
 
+export type Notification = {
+  type: 'application_pending' | 'application_denied' | 'attendance'
+}
+
 export type NavBarContext = {
+  notifications: Notification[]
   setHidden: Dispatch<SetStateAction<boolean>>
   hidden: boolean
 }
@@ -72,6 +77,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
     }),
     isAlsoProvider: familyData.is_also_provider,
     navBar: {
+      notifications: familyData.notifications,
       setHidden,
       hidden,
     },
