@@ -21,7 +21,16 @@ export function SignInPage() {
   }
   const finalRedirectUrl = isValidRedirectUrl
     ? decodeURIComponent(redirectUrl)
-    : undefined
+  let finalRedirectUrl: string | undefined;
+  if (isValidRedirectUrl) {
+    try {
+      finalRedirectUrl = decodeURIComponent(redirectUrl);
+    } catch (e) {
+      finalRedirectUrl = undefined;
+    }
+  } else {
+    finalRedirectUrl = undefined;
+  }
 
   return (
     <div>
