@@ -258,17 +258,10 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
         <Button
           type="button"
           onClick={handleSubmit}
-          disabled={lumpSumMutation.isPending} // Disable button while pending
+          loading={lumpSumMutation.isPending}
           className="w-full max-w-md md:max-w-2xl py-3 text-lg"
         >
-          {lumpSumMutation.isPending ? (
-            <div className="flex items-center justify-center gap-2">
-              <Spinner />{' '}
-              <Text text={translations.general.loadingPage.loading} />
-            </div>
-          ) : (
-            <Text text={t.submitButton} />
-          )}
+          <Text text={t.submitButton} />
         </Button>
       </div>
     </div>
