@@ -19,7 +19,6 @@ import { useMutation } from '@tanstack/react-query'
 import { createLumpSum } from '@/lib/api/lumpSums'
 import { toast } from 'sonner'
 import { paymentRoute } from '@/routes/family/routes'
-import { Spinner } from '@/components/ui/spinner'
 import { formatMonthForDisplay, parseAndValidateDate } from '@/lib/date-utils'
 import { findChildById } from '@/lib/children'
 
