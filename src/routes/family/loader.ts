@@ -95,10 +95,15 @@ export type Child = {
   last_name: string
 }
 
+export type Notification = {
+  type: 'application_pending' | 'application_denied' | 'attendance'
+}
+
 export type Family = {
   selected_child_info: SelectedChildInfo
   providers: Provider[]
   transactions: Transaction[]
   children: Child[]
+  notifications: Notification[]
   is_also_provider: boolean
 }

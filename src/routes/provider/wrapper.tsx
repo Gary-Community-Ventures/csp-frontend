@@ -5,7 +5,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react'
-import { providerWithHomeRoute } from './routes'
+import { providerRoute } from './routes'
 
 export type ProviderInfo = {
   id: string
@@ -31,7 +31,12 @@ export type Child = {
   lastName: string
 }
 
+export type Notification = {
+  type: 'application_pending' | 'application_denied' | 'attendance'
+}
+
 export type NavBarContext = {
+  notifications: Notification[]
   setHidden: Dispatch<SetStateAction<boolean>>
   hidden: boolean
 }
@@ -51,7 +56,7 @@ const ProviderContext = createContext<ProviderContextType | undefined>(
 )
 
 export function ProviderWrapper({ children }: { children: React.ReactNode }) {
-  const { providerData } = providerWithHomeRoute.useLoaderData()
+  const { providerData } = providerRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 
   const providerContext: ProviderContextType = {
@@ -72,6 +77,7 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
     maxChildCount: providerData.max_child_count,
     isAlsoFamily: providerData.is_also_family,
     navBar: {
+      notifications: providerData.notifications,
       setHidden,
       hidden,
     },

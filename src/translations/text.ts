@@ -81,12 +81,12 @@ const phoneError = {
 const signInButton = {
   en: 'Sign in',
   es: 'Iniciar sesión',
-}
+} as const
 
 const returnHomeButton = {
   en: 'Return home',
   es: 'Volver a inicio',
-}
+} as const
 
 const translatedLanguages = {
   en: {
@@ -97,6 +97,38 @@ const translatedLanguages = {
     en: 'Spanish',
     es: 'Español',
   },
+} as const
+
+const notificationBanner = {
+  applicationPending: {
+    en: 'Application awaiting approval',
+    es: 'Solicitud pendiente de aprobación',
+  },
+  attendance: {
+    en: 'Submit your care hours for last week',
+    es: 'Envía tus horas de cuidado para la última semana',
+  },
+} as const
+
+const attendance = {
+  header: {
+    en: 'Log Your Care',
+    es: 'Registre Tu Asistencia',
+  },
+  success: {
+    en: 'Attendance submitted successfully',
+    es: 'Asistencia enviada exitosamente',
+  },
+  allSet: {
+    en: 'All of your attendance has been submitted.',
+    es: 'Toda tu asistencia ha sido enviada.',
+  },
+  allSetDescription: {
+    en: 'Come back next week to submit your attendance for this week.',
+    es: 'Vuelve la semana siguiente para enviar tu asistencia para esta semana.',
+  },
+  returnHome: returnHomeButton,
+  submit: submitButton,
 } as const
 
 export const translations = {
@@ -248,6 +280,13 @@ export const translations = {
           es: 'Proveedores',
         },
       },
+      notificationBanner: {
+        ...notificationBanner,
+        applicationDenied: {
+          en: 'Unfortunately, your application was denied for this child',
+          es: 'Lamentablemente, tu solicitud fue rechazada para este niño',
+        },
+      },
     },
     home: {
       balance: {
@@ -359,6 +398,13 @@ export const translations = {
         },
       },
     },
+    attendance: {
+      ...attendance,
+      description: {
+        en: 'Please confirm the hours of care you received for each child for the week. If you did not receive care, please enter 0.',
+        es: 'Confirme las horas de cuidado que recibió para cada niño para la semana. Si no recibió cuidado, ingrese 0.',
+      },
+    },
   },
   provider: {
     navBar: {
@@ -378,6 +424,13 @@ export const translations = {
         attendance: {
           en: 'Attendance',
           es: 'Asistencia',
+        },
+      },
+      notificationBanner: {
+        ...notificationBanner,
+        applicationDenied: {
+          en: 'Unfortunately, your application was denied',
+          es: 'Lamentablemente, tu solicitud fue rechazada',
         },
       },
     },
@@ -417,6 +470,13 @@ export const translations = {
         backButton: returnHomeButton,
       },
     },
+    attendance: {
+      ...attendance,
+      description: {
+        en: 'Please confirm the hours of care you provided for each child for the week. If you did not provide care, please enter 0.',
+        es: 'Confirme las horas de cuidado que proporcionó para cada niño para la semana. Si no proporcionó cuidado, ingrese 0.',
+      },
+    },
   },
   general: {
     lanuageSwitcher: {
@@ -429,6 +489,12 @@ export const translations = {
       loading: {
         en: 'Loading...',
         es: 'Cargando...',
+      },
+    },
+    banner: {
+      actionRequired: {
+        en: 'Action Required: ',
+        es: 'Acción Requerida: ',
       },
     },
     notFoundPage: {
@@ -540,6 +606,16 @@ export const translations = {
       backButton: {
         en: 'Back to Providers',
         es: 'Volver a Proveedores',
+      },
+    },
+    attendanceInput: {
+      inputPlaceholder: {
+        en: 'Total Hours of Care',
+        es: 'Horas de Cuidado Totales',
+      },
+      required: {
+        en: 'This field is required',
+        es: 'Este campo es obligatorio',
       },
     },
   },
