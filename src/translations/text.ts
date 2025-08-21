@@ -236,6 +236,14 @@ export const translations = {
       },
     },
     lumpPaymentPage: {
+      amountRequired: {
+        en: 'Amount must be a positive number',
+        es: 'El monto debe ser un número positivo',
+      },
+      hoursRequired: {
+        en: 'Hours must be a positive number',
+        es: 'Las horas deben ser un número positivo',
+      },
       paymentDescription: {
         en: 'Submit the payment amount and hours to {providerName} for {childFirstName}.',
         es: 'Enviar el monto del pago y las horas a {providerName} para {childFirstName}.',

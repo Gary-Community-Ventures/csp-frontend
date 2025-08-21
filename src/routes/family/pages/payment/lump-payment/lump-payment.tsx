@@ -27,17 +27,6 @@ import { monthAllocationSchema } from '@/lib/schemas'
 
 export type GetMonthAllocation = z.infer<typeof monthAllocationSchema>
 
-const lumpSumSchema = z.object({
-  amount: z.string().refine((val) => parseFloat(val) > 0, {
-    message: 'Amount must be a positive number',
-  }),
-  hours: z.string().refine((val) => parseFloat(val) > 0, {
-    message: 'Hours must be a positive number',
-  }),
-})
-
-type LumpSumForm = z.infer<typeof lumpSumSchema>
-
 export function LumpPaymentPage({ provider }: { provider: Provider }) {
   const t = translations.family.lumpPaymentPage
   const { children, selectedChildInfo } = useFamilyContext()
@@ -52,6 +41,16 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
   } = usePaymentData()
   const navigate = useNavigate()
   const context = paymentRoute.useRouteContext()
+
+  const lumpSumSchema = z.object({
+    amount: z.string().refine((val) => parseFloat(val) > 0, {
+      message: text(t.amountRequired),
+    }),
+    hours: z.string().refine((val) => parseFloat(val) > 0, {
+      message: text(t.hoursRequired),
+    }),
+  })
+  type LumpSumForm = z.infer<typeof lumpSumSchema>
 
   const [formData, setFormData] = useState<LumpSumForm>({
     amount: '',
