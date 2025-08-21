@@ -456,6 +456,24 @@ export const translations = {
         es: 'Pagos Recientes',
       },
     },
+    resources: {
+      title: {
+        en: 'Resources',
+        es: 'Recursos',
+      },
+      description: {
+        en: "A key step to fully participate in the CAP program and receive payments from families is to complete mandatory health and safety training. We've put together a series of online videos and readings that you can access from home.",
+        es: 'Un paso clave para participar completamente en el programa CAP y recibir pagos de familias es completar el entrenamiento obligatorio de salud y seguridad. Hemos creado una serie de videos y lecturas en línea que puedes acceder desde casa.',
+      },
+      getStarted: {
+        en: 'Get Started',
+        es: 'Empezar',
+      },
+      getStartedLink: {
+        en: 'https://docs.google.com/document/d/1SBK4GkX5kzHG5JByqhRKw_w2I0d1t4eCEcPMrp-KpgU/edit?tab=t.0',
+        es: 'https://docs.google.com/document/d/1RVW3gSiCPRFQeekaKGGpEh1TXJzCvZi3R82Nu3y-bgk/edit?tab=t.0',
+      },
+    },
     inviteFamilyPage: {
       header: {
         en: 'Invite Family',

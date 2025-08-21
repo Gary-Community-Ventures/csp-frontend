@@ -1,7 +1,7 @@
 import {
   // Mail,
-  // Home,
-  // BookOpen,
+  Home,
+  BookOpen,
   // ListChecks,
   // ListTodo,
   MessageCircleQuestionMark,
@@ -9,7 +9,7 @@ import {
   UserRound,
   ArrowRightLeft,
 } from 'lucide-react'
-// import { NavBar } from '@/components/nav-bar'
+import { NavBar } from '@/components/nav-bar'
 import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
 import { useProviderContext } from '../wrapper'
 import {
@@ -100,32 +100,32 @@ export function ProviderNavBar() {
           {providerInfo.firstName} {providerInfo.lastName}
         </strong>
       </div>
-      {/* <NavBar
+      <NavBar
         sticky={true}
         links={[
           { to: '/provider/home', text: text(t.links.home), Icon: Home },
-          {
-            to: '/provider/messages',
-            text: text(t.links.messages),
-            Icon: Mail,
-          },
-          {
-            to: '/provider/activity',
-            text: text(t.links.activity),
-            Icon: ListChecks,
-          },
           {
             to: '/provider/resources',
             text: text(t.links.resources),
             Icon: BookOpen,
           },
-          {
-            to: '/provider/attendance',
-            text: text(t.links.attendance),
-            Icon: ListTodo,
-          },
+          // {
+          //   to: '/provider/messages',
+          //   text: text(t.links.messages),
+          //   Icon: Mail,
+          // },
+          // {
+          //   to: '/provider/activity',
+          //   text: text(t.links.activity),
+          //   Icon: ListChecks,
+          // },
+          // {
+          //   to: '/provider/attendance',
+          //   text: text(t.links.attendance),
+          //   Icon: ListTodo,
+          // },
         ]}
-      /> */}
+      />
     </>
   )
 }
