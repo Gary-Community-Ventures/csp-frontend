@@ -1,11 +1,8 @@
 import { Header } from '@/components/header'
 import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { Fragment, useEffect, useState } from 'react'
-import { Input } from '@/components/ui/input'
+import { Fragment, useState, type Dispatch, type SetStateAction } from 'react'
 import { Separator } from '@/components/ui/separator'
-import z from 'zod'
-import { FormErrorMessage } from '@/components/form-error'
 import { Button } from '@/components/ui/button'
 import { useHideFamilyNavBar } from '@/lib/hooks'
 import type { RouterContext } from '@/routes/router'
@@ -18,7 +15,7 @@ import { attendanceRoute } from '../routes'
 import { Link, useMatch, useRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { dateInRange, useFormatDate, weekRange } from '@/lib/dates'
-import { Label } from '@/components/ui/label'
+import { AttendanceInput } from '@/components/attendance-input'
 
 type ApiResponse = {
   attendance: {
@@ -55,11 +52,11 @@ type ChildrenWithAttendance = {
     id: string
     provider: Provider
   }[]
-}[]
+}
 
 type Week = {
   range: [Date, Date]
-  attendance: ChildrenWithAttendance
+  attendance: ChildrenWithAttendance[]
 }
 
 export async function loadAttendance({
@@ -229,31 +226,11 @@ export function AttendancePage() {
               </p>
               {week.attendance.map((child) => {
                 return (
-                  <section key={child.child.id}>
-                    <Header>
-                      {child.child.firstName} {child.child.lastName}
-                    </Header>
-                    {child.rows.map((row, i) => {
-                      return (
-                        <Fragment key={row.id}>
-                          <HoursInput
-                            provider={row.provider}
-                            attendanceId={row.id}
-                            submitted={submitted}
-                            onChange={(value) => {
-                              setValues((prev) => {
-                                return {
-                                  ...prev,
-                                  [row.id]: value,
-                                }
-                              })
-                            }}
-                          />
-                          {i < child.rows.length - 1 && <Separator />}
-                        </Fragment>
-                      )
-                    })}
-                  </section>
+                  <ChildAttendance
+                    child={child}
+                    submitted={submitted}
+                    setValues={setValues}
+                  />
                 )
               })}
             </div>
@@ -267,62 +244,43 @@ export function AttendancePage() {
   )
 }
 
-type HoursInputProps = {
-  provider: Provider
-  attendanceId: string
+type ChildAttendanceProps = {
+  child: ChildrenWithAttendance
   submitted: boolean
-  onChange: (value: number | null) => void
+  setValues: Dispatch<SetStateAction<{ [key: string]: number | null }>>
 }
 
-function HoursInput({
-  provider,
-  attendanceId,
+function ChildAttendance({
+  child,
   submitted,
-  onChange,
-}: HoursInputProps) {
-  const t = translations.family.attendance
-  const text = useText()
-
-  const schema = z.number().nonnegative().int()
-
-  const [value, setValue] = useState<number | null>(null)
-
-  const id = `attendance-${provider.id}-${attendanceId}`
-
-  useEffect(() => {
-    onChange(value)
-  }, [value]) // eslint-disable-line react-hooks/exhaustive-deps
-
+  setValues,
+}: ChildAttendanceProps) {
   return (
-    <div className="py-2">
-      <div className="flex justify-between">
-        <Label htmlFor={id}>{provider.name}</Label>
-        <div className="max-w-[15rem]">
-          <Input
-            id={id}
-            type="number"
-            placeholder={text(t.inputPlaceholder)}
-            value={value === null ? '' : String(value)}
-            onChange={(event) => {
-              const rawValue = event.target.value
-              if (rawValue === '') {
-                setValue(null)
-                return
-              }
-
-              const value = Number(rawValue)
-
-              if (!Number.isNaN(value) && schema.safeParse(value).success) {
-                setValue(value)
-              }
-            }}
-          />
-          <FormErrorMessage
-            error={value === null && submitted ? text(t.required) : undefined}
-          />
-        </div>
-      </div>
-    </div>
+    <section key={child.child.id}>
+      <Header>
+        {child.child.firstName} {child.child.lastName}
+      </Header>
+      {child.rows.map((row, i) => {
+        return (
+          <Fragment key={row.id}>
+            <AttendanceInput
+              label={row.provider.name}
+              attendanceId={row.id}
+              submitted={submitted}
+              onChange={(value) => {
+                setValues((prev) => {
+                  return {
+                    ...prev,
+                    [row.id]: value,
+                  }
+                })
+              }}
+            />
+            {i < child.rows.length - 1 && <Separator />}
+          </Fragment>
+        )
+      })}
+    </section>
   )
 }
 
