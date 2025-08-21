@@ -35,6 +35,9 @@ export const familyWithIdRoute = createRoute({
   ),
   loader: loadFamilyData,
   context: ({ context }) => ({ context }),
+  parseParams: (params) => ({
+    childId: params.childId,
+  }),
 })
 
 const homeRoute = createRoute({
@@ -106,7 +109,7 @@ export const lumpPaymentConfirmationRoute = createRoute({
   path: 'payment/lump-payment/confirmation',
   component: LumpSumConfirmationPage,
   beforeLoad: ({ search, params }) => {
-    const { childId } = params as { childId: string }
+    const { childId } = params
 
     const typedSearch = search as {
       providerName?: string
