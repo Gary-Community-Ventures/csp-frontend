@@ -608,6 +608,16 @@ export const translations = {
         es: 'Volver a Proveedores',
       },
     },
+    offlinePage: {
+      title: {
+        en: 'You are offline!',
+        es: '¡Estás desconectado!',
+      },
+      message: {
+        en: 'It looks like you are offline. Please check your internet connection.',
+        es: 'Parece que estás desconectado. Por favor, revisa tu conexión a Internet.',
+      },
+    },
     attendanceInput: {
       inputPlaceholder: {
         en: 'Total Hours of Care',
