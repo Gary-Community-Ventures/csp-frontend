@@ -12,9 +12,6 @@ export function SignInPage() {
   let finalRedirectUrl: string | undefined = undefined
   if (redirectUrl && backendDomain) {
     try {
-      const url = new URL(redirectUrl)
-      const isValidRedirectUrl = url.origin === backendDomain
-      if (isValidRedirectUrl) {
       const decodedRedirectUrl = decodeURIComponent(redirectUrl)
       const url = new URL(decodedRedirectUrl)
       const isValidRedirectUrl = url.origin === backendDomain
