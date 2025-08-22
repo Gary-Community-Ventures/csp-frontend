@@ -204,7 +204,7 @@ export function AttendancePage() {
   }
 
   return (
-    <div className="p-5 w-md md:w-2xl mx-auto">
+    <div className="p-5 max-w-md md:max-w-2xl mx-auto">
       <Header Tag="h1" className="text-center">
         <Text text={t.header} />
       </Header>
@@ -257,7 +257,7 @@ function ChildAttendance({
 }: ChildAttendanceProps) {
   return (
     <section key={child.child.id}>
-      <Header>
+      <Header className="text-xl text-center">
         {child.child.firstName} {child.child.lastName}
       </Header>
       {child.rows.map((row, i) => {

@@ -1,24 +1,24 @@
 import { useBlocker } from '@tanstack/react-router'
 import { z } from 'zod'
-import { paymentRoute } from '../../routes'
-import { useFamilyContext } from '../../wrapper'
+
+import { useFamilyContext } from '@/routes/family/wrapper'
+import type { Provider } from '@/routes/family/wrapper'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
-import { Header } from '@/components/header'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
-import { usePaymentData } from './use-payment-data'
+import { usePaymentData } from '../use-payment-data'
 import { SetPaymentRateForm } from './set-payment-rate-form'
 import { CareCalendar } from './care-calendar'
 import { ConfirmUnsavedChangesDialog } from './confirm-unsaved-changes-dialog'
 import { allocatedCareDaySchema } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
 import { LoadingPage } from '@/components/pages/loading-page'
+import { findChildById } from '@/lib/children'
 
-export function PaymentPage() {
-  const t = translations.family.paymentPage
-  const { providerId } = paymentRoute.useParams()
-  const { providers, children, selectedChildInfo } = useFamilyContext()
+export function CalendarPaymentPage({ provider }: { provider: Provider }) {
+  const t = translations.family.calendarPaymentPage
+  const { children, selectedChildInfo } = useFamilyContext()
   const {
     setDate,
     allocationQuery,
@@ -75,16 +75,12 @@ export function PaymentPage() {
     )
   }
 
-  const provider = providers.find((p) => p.id === providerId)
-  const child = children.find((c) => c.id === selectedChildInfo.id)
+  const child = findChildById(children, selectedChildInfo.id)
 
   return (
     <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">
       <ConfirmUnsavedChangesDialog blocker={blocker} />
       <div className="text-center  w-full max-w-md md:max-w-2xl">
-        <Header>
-          <Text text={t.paymentFor} data={{ providerName: provider?.name }} />
-        </Header>
         <Text
           text={t.paymentDescription}
           data={{

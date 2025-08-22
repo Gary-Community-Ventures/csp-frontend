@@ -193,7 +193,7 @@ export const translations = {
         es: 'Cancelar',
       },
     },
-    paymentPage: {
+    calendarPaymentPage: {
       loading: {
         en: 'Loading...',
         es: 'Cargando...',
@@ -246,10 +246,6 @@ export const translations = {
         en: 'Leave',
         es: 'Salir',
       },
-      paymentFor: {
-        en: 'Payment for {providerName}',
-        es: 'Pago para {providerName}',
-      },
       paymentDescription: {
         en: 'Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. You can modify days up until the Monday of the week care is taking place. At that point, the week will be locked.',
         es: 'Seleccione los días que necesita atención con {providerName} para {childFirstName}. Haga clic en Enviar para enviar estos días a su proveedor. Puede modificar los días hasta el lunes de la semana en que se brinde la atención. A partir de ese momento, la semana se bloqueará.',
@@ -260,6 +256,89 @@ export const translations = {
       },
       submitButton: submitButton,
       submittingButton: submittingButton,
+    },
+    paymentPage: {
+      providerNotFound: {
+        en: 'Provider not found',
+        es: 'Proveedor no encontrado',
+      },
+      paymentFor: {
+        en: 'Payment for {providerName}',
+        es: 'Pago para {providerName}',
+      },
+    },
+    lumpPaymentPage: {
+      amountRequired: {
+        en: 'Amount must be a positive number',
+        es: 'El monto debe ser un número positivo',
+      },
+      hoursRequired: {
+        en: 'Hours must be a positive number',
+        es: 'Las horas deben ser un número positivo',
+      },
+      paymentDescription: {
+        en: 'Submit the payment amount and hours to {providerName} for {childFirstName}.',
+        es: 'Enviar el monto del pago y las horas a {providerName} para {childFirstName}.',
+      },
+      amountLabel: {
+        en: 'Amount (USD)',
+        es: 'Monto (USD)',
+      },
+      hoursLabel: {
+        en: 'Hours',
+        es: 'Horas',
+      },
+      submitButton: submitButton,
+      monthBalance: {
+        en: 'Balance',
+        es: 'Balance',
+      },
+      lumpPaymentSuccess: {
+        en: 'Payment successful!',
+        es: '¡Pago exitoso!',
+      },
+      monthlyAllocationExceededError: {
+        en: 'Adding this payment would exceed the monthly allocation.',
+        es: 'Agregar este pago excedería la asignación mensual.',
+      },
+      lumpPaymentError: {
+        en: 'Failed to submit payment',
+        es: 'Error al enviar el pago',
+      },
+    },
+    lumpSumConfirmationPage: {
+      header: {
+        en: 'Payment Submitted',
+        es: 'Pago Enviado',
+      },
+      successMessage: {
+        en: 'Your payment has been successfully submitted.',
+        es: 'Su pago ha sido enviado exitosamente.',
+      },
+      providerLabel: {
+        en: 'Provider',
+        es: 'Proveedor',
+      },
+      childLabel: {
+        en: 'Child',
+        es: 'Niño',
+      },
+      monthLabel: {
+        en: 'Month',
+        es: 'Mes',
+      },
+      hoursLabel: {
+        en: 'Hours',
+        es: 'Horas',
+      },
+      amountLabel: {
+        en: 'Amount',
+        es: 'Monto',
+      },
+      backButton: {
+        en: 'Back to Home',
+        es: 'Volver a Inicio',
+      },
     },
     navBar: {
       menu: {
@@ -511,8 +590,8 @@ export const translations = {
     },
     banner: {
       actionRequired: {
-        en: 'Action Required: ',
-        es: 'Acción Requerida: ',
+        en: 'ACTION REQUIRED: ',
+        es: 'ACCIÓN REQUERIDA: ',
       },
     },
     notFoundPage: {
