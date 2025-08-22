@@ -35,7 +35,7 @@ import { Label } from '@/components/ui/label'
 import { useMatch, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import z from 'zod'
-import { useValidateForm } from '@/lib/schemas'
+import { useValidateForm, useZodSchema } from '@/lib/schemas'
 import { FormErrorMessage } from '@/components/form-error'
 
 type ApiResponse = {
@@ -196,11 +196,13 @@ function AddProviderForm({ children, provider }: AddProviderFormProps) {
   const [formData, setFormData] = useState<{
     children: string[]
   }>({ children: [selectedChildInfo.id] })
-  const schema = z.object({
-    children: z
-      .array(z.string())
-      .min(1, { message: text(t.noChildrenSelectedError) }),
-  })
+  const schema = useZodSchema(
+    z.object({
+      children: z
+        .array(z.string())
+        .min(1, { message: text(t.noChildrenSelectedError) }),
+    })
+  )
   const [submitting, setSubmitting] = useState(false)
 
   const { getError, submit } = useValidateForm(schema, formData)
@@ -280,7 +282,7 @@ function AddProviderForm({ children, provider }: AddProviderFormProps) {
           <Button
             type="submit"
             form="select-provider-form"
-            disabled={submitting}
+            loading={submitting}
           >
             <Text text={t.submitButton} />
           </Button>

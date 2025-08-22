@@ -8,9 +8,9 @@ import {
 } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Link, useMatch, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import z from 'zod'
-import { useValidateForm } from '@/lib/schemas'
+import { useValidateForm, useZodSchema } from '@/lib/schemas'
 import { InviteInputs } from '@/components/invite-inputs'
 import { Button } from '@/components/ui/button'
 import type { RouterContext } from '@/routes/router'
@@ -28,16 +28,18 @@ export function InviteFamilyPage() {
   const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
 
-  const schema = z.object({
-    email: z.string().email({ message: text(t.emailError) }),
-    phone: z
-      .string()
-      .transform((val) => val.replace(/\D/g, ''))
-      .refine((val) => val.length === 0 || val.length === 10, {
-        message: text(t.phoneError),
-      }),
-    lang: z.enum(LANGUAGES),
-  })
+  const schema = useZodSchema(
+    z.object({
+      email: z.string().email({ message: text(t.emailError) }),
+      phone: z
+        .string()
+        .transform((val) => val.replace(/\D/g, ''))
+        .refine((val) => val.length === 0 || val.length === 10, {
+          message: text(t.phoneError),
+        }),
+      lang: z.enum(LANGUAGES),
+    })
+  )
 
   const [formData, setFormData] = useState<z.infer<typeof schema>>({
     email: '',
@@ -88,7 +90,7 @@ export function InviteFamilyPage() {
         <Button
           type="submit"
           className="mt-10 mb-3 w-full"
-          disabled={submitting}
+          loading={submitting}
         >
           <Text text={t.submitButton} />
         </Button>
