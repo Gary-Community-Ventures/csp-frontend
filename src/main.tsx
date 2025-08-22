@@ -20,7 +20,7 @@ import { OfflinePage } from './components/pages/offline-page'
 initializeSentry()
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
-const BACKEEND_DOMAIN = import.meta.env.VITE_BACKEND_DOMAIN
+const BACKEND_DOMAIN = import.meta.env.VITE_BACKEND_DOMAIN
 
 if (!PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key')
