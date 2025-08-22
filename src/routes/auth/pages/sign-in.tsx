@@ -9,24 +9,17 @@ export function SignInPage() {
 
   // Validate redirectUrl to prevent open redirect vulnerabilities.
   // Only allow redirects to the VITE_BACKEND_DOMAIN.
-  let isValidRedirectUrl = false
-  if (redirectUrl) {
+  let finalRedirectUrl: string | undefined = undefined
+  if (redirectUrl && backendDomain) {
     try {
       const url = new URL(redirectUrl)
-      isValidRedirectUrl = url.origin === backendDomain
+      const isValidRedirectUrl = url.origin === backendDomain
+      if (isValidRedirectUrl) {
+        finalRedirectUrl = decodeURIComponent(redirectUrl)
+      }
     } catch (e) {
-      isValidRedirectUrl = false
+      console.error('Invalid redirect URL', e)
     }
-  }
-  let finalRedirectUrl: string | undefined
-  if (isValidRedirectUrl && redirectUrl) {
-    try {
-      finalRedirectUrl = decodeURIComponent(redirectUrl)
-    } catch (e) {
-      finalRedirectUrl = undefined
-    }
-  } else {
-    finalRedirectUrl = undefined
   }
 
   return (
