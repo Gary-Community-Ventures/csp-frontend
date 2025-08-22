@@ -80,6 +80,7 @@ export type Provider = {
   id: string
   name: string
   status: 'approved' | 'pending' | 'denied'
+  type: 'ffn' | 'lhb' | 'center'
 }
 
 export type Transaction = {

@@ -19,7 +19,7 @@ interface ConfirmUnsavedChangesDialogProps {
 export function ConfirmUnsavedChangesDialog({
   blocker,
 }: ConfirmUnsavedChangesDialogProps) {
-  const t = translations.family.paymentPage
+  const t = translations.family.calendarPaymentPage
   const text = useText()
 
   if (blocker.status !== 'blocked') return null
