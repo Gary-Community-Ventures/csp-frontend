@@ -15,7 +15,11 @@ export function SignInPage() {
       const url = new URL(redirectUrl)
       const isValidRedirectUrl = url.origin === backendDomain
       if (isValidRedirectUrl) {
-        finalRedirectUrl = decodeURIComponent(redirectUrl)
+      const decodedRedirectUrl = decodeURIComponent(redirectUrl)
+      const url = new URL(decodedRedirectUrl)
+      const isValidRedirectUrl = url.origin === backendDomain
+      if (isValidRedirectUrl) {
+        finalRedirectUrl = decodedRedirectUrl
       }
     } catch (e) {
       console.error('Invalid redirect URL', e)
