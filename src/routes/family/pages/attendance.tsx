@@ -257,7 +257,7 @@ function ChildAttendance({
 }: ChildAttendanceProps) {
   return (
     <section key={child.child.id}>
-      <Header>
+      <Header className='text-xl text-center'>
         {child.child.firstName} {child.child.lastName}
       </Header>
       {child.rows.map((row, i) => {
