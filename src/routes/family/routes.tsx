@@ -11,6 +11,7 @@ import FindProviderPage, { loadProviders } from './pages/find-provider'
 import { InviteProviderPage } from './pages/invite-provider'
 import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
 import { LumpSumConfirmationPage } from './pages/payment/lump-payment/lump-payment-confirmation'
+import { AttendancePage, loadAttendance } from './pages/attendance'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -119,6 +120,13 @@ export const lumpPaymentConfirmationRoute = createRoute({
   }),
 })
 
+export const attendanceRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'attendance',
+  component: AttendancePage,
+  loader: loadAttendance,
+})
+
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   /* TODO renable when messages/activity are implemented
@@ -132,6 +140,7 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   inviteProviderRoute,
   inviteProviderConfirmationRoute,
   lumpPaymentConfirmationRoute,
+  attendanceRoute,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([

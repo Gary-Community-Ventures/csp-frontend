@@ -29,6 +29,7 @@ import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
 import { ExternalLink } from '@/components/external-link'
+import { NotificationBanner } from '@/components/notification-banner'
 
 export function FamilyNavBar() {
   const t = translations.family.navBar
@@ -115,6 +116,9 @@ export function FamilyNavBar() {
           </DropdownMenu>
         </div>
       </div>
+      {!navBar.hidden && (
+        <FamilyNotificationBanner notification={navBar.notifications[0]} />
+      )}
       {navBar.hidden ? (
         <div className="w-full bg-primary p-5 pt-0 flex justify-center items-center">
           <Link to="/family/$childId/home">
@@ -131,6 +135,9 @@ export function FamilyNavBar() {
             </strong>
           </Link>
         </div>
+      )}
+      {navBar.hidden && (
+        <FamilyNotificationBanner notification={navBar.notifications[0]} />
       )}
       {navBar.hidden ? null : (
         <NavBar
@@ -163,4 +170,48 @@ export function FamilyNavBar() {
       )}
     </>
   )
+}
+
+type NotificationBannerRawData = {
+  type: 'application_denied' | 'attendance' | 'application_pending'
+}
+
+type FamilyNotificationBannerProps = {
+  notification?: NotificationBannerRawData
+}
+
+function FamilyNotificationBanner({
+  notification,
+}: FamilyNotificationBannerProps) {
+  const t = translations.family.navBar.notificationBanner
+
+  if (notification === undefined) {
+    return null
+  }
+
+  if (notification.type === 'application_pending') {
+    return (
+      <NotificationBanner>
+        <Text text={t.applicationPending} />
+      </NotificationBanner>
+    )
+  }
+
+  if (notification.type === 'application_denied') {
+    return (
+      <NotificationBanner>
+        <Text text={t.applicationDenied} />
+      </NotificationBanner>
+    )
+  }
+
+  if (notification.type === 'attendance') {
+    return (
+      <NotificationBanner link={{ to: '/family/$childId/attendance' }}>
+        <Text text={t.attendance} />
+      </NotificationBanner>
+    )
+  }
+
+  return null
 }
