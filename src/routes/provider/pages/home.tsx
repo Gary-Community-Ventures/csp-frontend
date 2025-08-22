@@ -30,7 +30,7 @@ export function ProviderHomePage() {
             <Text text={t.children} />
           </Header>
           {maxChildCount - children.length > 0 && (
-            <Button variant="link" size="textLarge" asChild>
+            <Button variant="linkButton" size="textLarge" asChild>
               <Link to="/provider/families/invite">
                 <Plus className="size-6" />
                 <Text text={t.inviteFamily} />

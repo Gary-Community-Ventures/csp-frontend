@@ -1,8 +1,9 @@
 import { CardList } from '@/components/card-list'
 import { WhiteCard } from '@/components/white-card'
-import { useLanguageContext, Text } from '@/translations/wrapper'
+import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { useMemo } from 'react'
+import { useFormatDate } from '@/lib/dates'
 
 type TransactionAmountProps = {
   amount: number
@@ -45,7 +46,7 @@ export type TransationsListProps = {
 }
 
 export function TransactionsList({ transactions }: TransationsListProps) {
-  const { lang } = useLanguageContext()
+  const formatDate = useFormatDate()
 
   if (transactions.length < 1) {
     return (
@@ -71,11 +72,7 @@ export function TransactionsList({ transactions }: TransationsListProps) {
           <div>
             <strong className="text-lg">{transaction.name}</strong>
             <div className="text-muted-foreground text-sm">
-              {transaction.date.toLocaleDateString(lang, {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
+              {formatDate(transaction.date)}
             </div>
           </div>
           <TransactionAmount amount={transaction.amount} />

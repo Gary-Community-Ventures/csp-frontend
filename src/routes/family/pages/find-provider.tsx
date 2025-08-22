@@ -1,4 +1,8 @@
-import { backendUrl, handleStatusCodes, headersWithAuth } from '@/lib/api/client'
+import {
+  backendUrl,
+  handleStatusCodes,
+  headersWithAuth,
+} from '@/lib/api/client'
 import type { RouterContext } from '@/routes/router'
 import { findProviderRoute } from '../routes'
 import { CardList } from '@/components/card-list'
@@ -245,7 +249,7 @@ function AddProviderForm({ children, provider }: AddProviderFormProps) {
               <div key={child.id} className="px-4 flex gap-3">
                 <Checkbox
                   id={id}
-                  className='my-3'
+                  className="my-3"
                   checked={formData.children.includes(child.id)}
                   onCheckedChange={(checked) => {
                     if (checked) {
@@ -264,7 +268,7 @@ function AddProviderForm({ children, provider }: AddProviderFormProps) {
                     }
                   }}
                 />
-                <Label htmlFor={id} className='flex grow py-3'>
+                <Label htmlFor={id} className="flex grow py-3">
                   {child.firstName} {child.lastName}
                 </Label>
               </div>

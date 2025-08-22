@@ -28,11 +28,11 @@ export async function loadFamilyData({
 
     handleStatusCodes(context, res)
 
-    const rawJson = await res.json()
+    const rawJson = (await res.json()) as Family
 
     const json: Family = {
       ...rawJson,
-      transactions: rawJson.transactions.map((cg: any) => ({
+      transactions: rawJson.transactions.map((cg) => ({
         ...cg,
         date: new Date(cg.date),
       })),
@@ -80,6 +80,7 @@ export type Provider = {
   id: string
   name: string
   status: 'approved' | 'pending' | 'denied'
+  type: 'ffn' | 'lhb' | 'center'
 }
 
 export type Transaction = {
@@ -95,10 +96,15 @@ export type Child = {
   last_name: string
 }
 
+export type Notification = {
+  type: 'application_pending' | 'application_denied' | 'attendance'
+}
+
 export type Family = {
   selected_child_info: SelectedChildInfo
   providers: Provider[]
   transactions: Transaction[]
   children: Child[]
+  notifications: Notification[]
   is_also_provider: boolean
 }

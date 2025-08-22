@@ -3,11 +3,7 @@ import { translations } from '@/translations/text'
 import * as Sentry from '@sentry/react'
 import { useRouter } from '@tanstack/react-router'
 
-function ErrorFallback({
-  error,
-}: {
-  error: unknown
-}) {
+function ErrorFallback({ error }: { error: unknown }) {
   const router = useRouter()
 
   Sentry.captureException(error)
@@ -31,9 +27,11 @@ function ErrorFallback({
             <Text text={t.tryAgain} />
           </button>
           <button
-            onClick={() => router.navigate({
-              to: '/'
-            })}
+            onClick={() =>
+              router.navigate({
+                to: '/',
+              })
+            }
             className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/90"
           >
             <Text text={t.goHome} />

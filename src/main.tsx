@@ -1,6 +1,6 @@
 import { LoadingPage } from '@/components/pages/loading-page'
 import { NotFoundPage } from '@/components/pages/not-found-page'
-import { StrictMode, useEffect, type PropsWithChildren } from 'react'
+import { StrictMode, useEffect, useState, type PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { router, type RouterContext } from '@/routes/router'
@@ -15,6 +15,7 @@ import { initializeSentry } from '@/lib/sentry'
 import { useSentryUserContext } from '@/lib/hooks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { recordPageView, useRecordUserSession } from '@/lib/analytics'
+import { OfflinePage } from './components/pages/offline-page'
 
 initializeSentry()
 
@@ -30,14 +31,40 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <LanguageWrapper>
-        <ClerkWrapper>
-          <App />
-        </ClerkWrapper>
+        <OfflineWrapper>
+          <ClerkWrapper>
+            <App />
+          </ClerkWrapper>
+        </OfflineWrapper>
       </LanguageWrapper>
     </QueryClientProvider>
     <Toaster closeButton={true} />
   </StrictMode>
 )
+
+function OfflineWrapper({ children }: PropsWithChildren) {
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true)
+
+    const controller = new AbortController()
+
+    window.addEventListener('online', handleOnline, {
+      signal: controller.signal,
+    })
+
+    return () => {
+      controller.abort()
+    }
+  }, [])
+
+  if (!isOnline) {
+    return <OfflinePage />
+  }
+
+  return <>{children}</>
+}
 
 function ClerkWrapper({ children }: PropsWithChildren) {
   const { lang } = useLanguageContext()

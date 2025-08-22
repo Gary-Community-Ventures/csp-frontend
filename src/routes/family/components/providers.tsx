@@ -46,7 +46,7 @@ function PayButton({ provider }: PayButtonProps) {
 }
 
 type ProviderListProps = {
-  showAddProvider?: boolean 
+  showAddProvider?: boolean
 }
 
 export function ProviderList({ showAddProvider = false }: ProviderListProps) {
@@ -75,7 +75,9 @@ export function ProviderList({ showAddProvider = false }: ProviderListProps) {
             <Text text={translations.general.emptyState.noProvidersTitle} />
           </p>
           <p className="text-sm">
-            <Text text={translations.general.emptyState.noProvidersDescription} />
+            <Text
+              text={translations.general.emptyState.noProvidersDescription}
+            />
           </p>
         </div>
       </WhiteCard>

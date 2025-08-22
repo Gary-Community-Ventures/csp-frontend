@@ -1,14 +1,17 @@
 import { Outlet, createRoute } from '@tanstack/react-router'
+import { z } from 'zod'
 import { rootRoute } from '@/routes/router'
 import { FamilyHomePage } from './pages/home'
 import { FamilyWrapper } from './wrapper'
 import { loadFamilyData, redirectToDefaultId } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
 import { FamilyProvidersPage } from './pages/providers'
-import { PaymentPage } from './pages/payment/index'
+import { PaymentPage } from './pages/payment/payment'
 import FindProviderPage, { loadProviders } from './pages/find-provider'
 import { InviteProviderPage } from './pages/invite-provider'
 import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
+import { LumpSumConfirmationPage } from './pages/payment/lump-payment/lump-payment-confirmation'
+import { AttendancePage, loadAttendance } from './pages/attendance'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -34,6 +37,9 @@ export const familyWithIdRoute = createRoute({
   ),
   loader: loadFamilyData,
   context: ({ context }) => ({ context }),
+  parseParams: (params) => ({
+    childId: params.childId,
+  }),
 })
 
 const homeRoute = createRoute({
@@ -100,6 +106,27 @@ export const inviteProviderConfirmationRoute = createRoute({
   component: InviteProviderConfirmationPage,
 })
 
+export const lumpPaymentConfirmationRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'payment/lump-payment/confirmation',
+  component: LumpSumConfirmationPage,
+  validateSearch: z.object({
+    providerName: z.string(),
+    childName: z.string(),
+    month: z.string(),
+    hours: z.string(),
+    amount: z.string(),
+    providerId: z.string(),
+  }),
+})
+
+export const attendanceRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'attendance',
+  component: AttendancePage,
+  loader: loadAttendance,
+})
+
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   /* TODO renable when messages/activity are implemented
@@ -112,6 +139,8 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   findProviderRoute,
   inviteProviderRoute,
   inviteProviderConfirmationRoute,
+  lumpPaymentConfirmationRoute,
+  attendanceRoute,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([

@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getMonthAllocation, submitCareDays } from '@/lib/api/children'
 import { createCareDay, deleteCareDay, updateCareDay } from '@/lib/api/careDays'
 import { getPaymentRate, createPaymentRate } from '@/lib/api/paymentRates'
-import { useFamilyContext } from '../../wrapper'
-import { paymentRoute } from '../../routes'
+import { useFamilyContext } from '@/routes/family/wrapper'
+import { paymentRoute } from '@/routes/family/routes'
 import React, { useEffect } from 'react'
 import { toast } from 'sonner'
 import { useText } from '@/translations/wrapper'
@@ -14,7 +14,7 @@ interface CustomError extends Error {
 }
 
 export function usePaymentData() {
-  const t = translations.family.paymentPage
+  const t = translations.family.calendarPaymentPage
   const text = useText()
   const { providerId } = paymentRoute.useParams()
   const { selectedChildInfo } = useFamilyContext()
@@ -50,7 +50,7 @@ export function usePaymentData() {
     enabled: !!selectedChildInfo.id && !!providerId && !!context,
   })
 
-  useQuery({
+  const prevMonthAllocationQuery = useQuery({
     queryKey: [
       'allocation',
       selectedChildInfo.id,
@@ -82,7 +82,7 @@ export function usePaymentData() {
     },
   })
 
-  useQuery({
+  const nextMonthAllocationQuery = useQuery({
     queryKey: [
       'allocation',
       selectedChildInfo.id,
@@ -205,6 +205,8 @@ export function usePaymentData() {
     deleteCareDayMutation,
     submitCareDaysMutation,
     createPaymentRateMutation,
+    prevMonthAllocation: prevMonthAllocationQuery.data,
+    nextMonthAllocation: nextMonthAllocationQuery.data,
     prevMonthAllocationFailed,
     nextMonthAllocationFailed,
   }

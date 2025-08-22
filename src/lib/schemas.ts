@@ -10,7 +10,7 @@ type ObjectPaths<T> = T extends object
     }[keyof T & string]
   : never
 
-export function useValidateForm<T extends z.ZodSchema<any, any, any>>(
+export function useValidateForm<T extends z.ZodSchema<any, any, any>>( // eslint-disable-line @typescript-eslint/no-explicit-any
   schema: T,
   data: unknown
 ) {
@@ -31,7 +31,7 @@ export function useValidateForm<T extends z.ZodSchema<any, any, any>>(
     }
 
     setErrors(result.error.issues)
-  }, [data, lang])
+  }, [data, lang, showErrors, schema])
 
   const submit = (
     onSuccess: (data: z.infer<T>) => void,
@@ -122,4 +122,19 @@ export const paymentRateSchema = z.object({
   google_sheets_child_id: z.string(),
   half_day_rate_cents: z.number(),
   full_day_rate_cents: z.number(),
+})
+
+export const allocatedLumpSumResponseSchema = z.object({
+  id: z.number(),
+  care_month_allocation_id: z.number(),
+  provider_google_sheets_id: z.string(),
+  amount_cents: z.number(),
+  hours: z.number().nullable().default(null),
+})
+
+export const createLumpSumRequestSchema = z.object({
+  allocation_id: z.number(),
+  provider_id: z.string(),
+  amount_cents: z.number(),
+  hours: z.number().min(0),
 })
