@@ -84,7 +84,7 @@ function ClerkWrapper({ children }: PropsWithChildren) {
       appearance={{
         variables: { colorPrimary: 'var(--primary)' },
       }}
-      allowedRedirectOrigins={BACKEEND_DOMAIN ? [BACKEEND_DOMAIN] : undefined}
+      allowedRedirectOrigins={BACKEND_DOMAIN ? [BACKEND_DOMAIN] : undefined}
       localization={locale}
     >
       {children}
