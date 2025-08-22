@@ -204,7 +204,7 @@ export function AttendancePage() {
   }
 
   return (
-    <div className="p-5 w-md md:w-2xl mx-auto">
+    <div className="p-5 max-w-md md:max-w-2xl mx-auto">
       <Header Tag="h1" className="text-center">
         <Text text={t.header} />
       </Header>
