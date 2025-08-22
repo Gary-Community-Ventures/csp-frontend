@@ -61,10 +61,13 @@ export function useValidateForm<T extends z.ZodSchema<any, any, any>>( // eslint
   return { getError, submit }
 }
 
-export function useZodSchema<T>(schema: z.ZodType<T>, otherDeps?: DependencyList) {
+export function useZodSchema<T>(
+  schema: z.ZodType<T>,
+  otherDeps?: DependencyList
+) {
   const { lang } = useLanguageContext()
 
-  return useMemo(() => schema, [lang, ...(otherDeps ?? [])])
+  return useMemo(() => schema, [lang, ...(otherDeps ?? [])]) // eslint-disable-line react-hooks/exhaustive-deps
 }
 
 export const allocatedCareDaySchema = z.object({
