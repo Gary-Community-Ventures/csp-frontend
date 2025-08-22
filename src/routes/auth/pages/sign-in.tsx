@@ -23,8 +23,8 @@ export function SignInPage() {
       if (isValidRedirectUrl) {
         finalRedirectUrl = decodedRedirectUrl
       }
-    } catch (e) {
-      console.error('Invalid redirect URL encountered')
+    } catch {
+      console.error('Invalid redirect_url parameter')
     }
   }
 
