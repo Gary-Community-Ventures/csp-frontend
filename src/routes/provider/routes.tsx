@@ -6,10 +6,21 @@ import { loadProviderData } from './loader'
 import { ProviderWrapper } from './wrapper'
 import { InviteFamilyPage } from './pages/invite-family'
 import { InviteFamilyConfirmationPage } from './pages/invite-family-confirmation'
+import { AttendancePage, loadAttendance } from './pages/attendance'
+import { ResourcesPage } from './pages/resources'
 
 export const providerRoute = createRoute({
   getParentRoute: () => rootRoute,
+  component: () => (
+    <ProviderWrapper>
+      <ProviderNavBar />
+      <main>
+        <Outlet />
+      </main>
+    </ProviderWrapper>
+  ),
   path: '/provider',
+  loader: loadProviderData,
 })
 
 export const providerWithoutHomeRoute = createRoute({
@@ -22,23 +33,9 @@ export const providerWithoutHomeRoute = createRoute({
   },
 })
 
-export const providerWithHomeRoute = createRoute({
+const homeRoute = createRoute({
   getParentRoute: () => providerRoute,
   path: '/home',
-  component: () => (
-    <ProviderWrapper>
-      <ProviderNavBar />
-      <main>
-        <Outlet />
-      </main>
-    </ProviderWrapper>
-  ),
-  loader: loadProviderData,
-})
-
-const homeRoute = createRoute({
-  getParentRoute: () => providerWithHomeRoute,
-  path: '/',
   component: ProviderHomePage,
 })
 
@@ -57,6 +54,19 @@ export const inviteFamilyConfirmationRoute = createRoute({
   component: InviteFamilyConfirmationPage,
 })
 
+export const attendanceRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/attendance',
+  component: AttendancePage,
+  loader: loadAttendance,
+})
+
+const resourcesRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/resources',
+  component: ResourcesPage,
+})
+
 /* TODO renable when other pages are implemented
 const childrenRoute = createRoute({
   getParentRoute: () => providerRoute,
@@ -64,11 +74,6 @@ const childrenRoute = createRoute({
   component: () => <h2>Messages</h2>,
 })
 
-const resourcesRoute = createRoute({
-  getParentRoute: () => providerRoute,
-  path: '/activity',
-  component: () => <h2>Activity</h2>,
-})
 
 const helpRoute = createRoute({
   getParentRoute: () => providerRoute,
@@ -83,15 +88,13 @@ const settingsRoute = createRoute({
 })
 */
 
-const providerWithHomeRouteChildren = providerWithHomeRoute.addChildren([
+export const providerRouteTree = providerRoute.addChildren([
+  providerWithoutHomeRoute,
   homeRoute,
   inviteFamilyRoute,
   inviteFamilyConfirmationRoute,
-])
-
-export const providerRouteTree = providerRoute.addChildren([
-  providerWithoutHomeRoute,
-  providerWithHomeRouteChildren,
+  attendanceRoute,
+  resourcesRoute,
   // childrenRoute,
   // resourcesRoute,
   // helpRoute,

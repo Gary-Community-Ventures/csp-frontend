@@ -1,7 +1,7 @@
 import {
   // Mail,
-  // Home,
-  // BookOpen,
+  Home,
+  BookOpen,
   // ListChecks,
   // ListTodo,
   MessageCircleQuestionMark,
@@ -9,7 +9,7 @@ import {
   UserRound,
   ArrowRightLeft,
 } from 'lucide-react'
-// import { NavBar } from '@/components/nav-bar'
+import { NavBar } from '@/components/nav-bar'
 import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
 import { useProviderContext } from '../wrapper'
 import {
@@ -26,6 +26,7 @@ import { ExternalLink } from '@/components/external-link'
 import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Logo } from '@/components/logo'
+import { NotificationBanner } from '@/components/notification-banner'
 
 export function ProviderNavBar() {
   const t = translations.provider.navBar
@@ -93,37 +94,82 @@ export function ProviderNavBar() {
           </DropdownMenu>
         </div>
       </div>
+      <ProviderNotificationBanner notification={navBar.notifications[0]} />
       <div className="flex justify-center items-center p-5 bg-white">
         <strong className="text-3xl text-primary">
           {providerInfo.firstName} {providerInfo.lastName}
         </strong>
       </div>
-      {/* <NavBar
+      <NavBar
         sticky={true}
         links={[
           { to: '/provider/home', text: text(t.links.home), Icon: Home },
-          {
-            to: '/provider/messages',
-            text: text(t.links.messages),
-            Icon: Mail,
-          },
-          {
-            to: '/provider/activity',
-            text: text(t.links.activity),
-            Icon: ListChecks,
-          },
           {
             to: '/provider/resources',
             text: text(t.links.resources),
             Icon: BookOpen,
           },
-          {
-            to: '/provider/attendance',
-            text: text(t.links.attendance),
-            Icon: ListTodo,
-          },
+          // {
+          //   to: '/provider/messages',
+          //   text: text(t.links.messages),
+          //   Icon: Mail,
+          // },
+          // {
+          //   to: '/provider/activity',
+          //   text: text(t.links.activity),
+          //   Icon: ListChecks,
+          // },
+          // {
+          //   to: '/provider/attendance',
+          //   text: text(t.links.attendance),
+          //   Icon: ListTodo,
+          // },
         ]}
-      /> */}
+      />
     </>
   )
+}
+
+type NotificationBannerRawData = {
+  type: 'application_denied' | 'attendance' | 'application_pending'
+}
+
+type ProviderNotificationBannerProps = {
+  notification?: NotificationBannerRawData
+}
+
+function ProviderNotificationBanner({
+  notification,
+}: ProviderNotificationBannerProps) {
+  const t = translations.provider.navBar.notificationBanner
+
+  if (notification === undefined) {
+    return null
+  }
+
+  if (notification.type === 'application_pending') {
+    return (
+      <NotificationBanner>
+        <Text text={t.applicationPending} />
+      </NotificationBanner>
+    )
+  }
+
+  if (notification.type === 'application_denied') {
+    return (
+      <NotificationBanner>
+        <Text text={t.applicationDenied} />
+      </NotificationBanner>
+    )
+  }
+
+  if (notification.type === 'attendance') {
+    return (
+      <NotificationBanner link={{ to: '/provider/attendance' }}>
+        <Text text={t.attendance} />
+      </NotificationBanner>
+    )
+  }
+
+  return null
 }
