@@ -6,6 +6,9 @@ export function SignInPage() {
 
   const redirectUrl = search.redirect_url
   const backendDomain = import.meta.env.VITE_BACKEND_DOMAIN
+  if (!backendDomain) {
+    console.error('VITE_BACKEND_DOMAIN environment variable is missing. Redirect validation will not be performed.');
+  }
 
   // Validate redirectUrl to prevent open redirect vulnerabilities.
   // Only allow redirects to the VITE_BACKEND_DOMAIN.
