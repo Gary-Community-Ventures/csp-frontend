@@ -9,7 +9,7 @@ import {
 import { translations } from '@/translations/text'
 import z from 'zod'
 import { Label } from '@/components/ui/label'
-import { useValidateForm } from '@/lib/schemas'
+import { useValidateForm, useZodSchema } from '@/lib/schemas'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Link, useMatch, useNavigate } from '@tanstack/react-router'
@@ -32,17 +32,19 @@ export function InviteProviderPage() {
   const { children, selectedChildInfo } = useFamilyContext()
   const [submitting, setSubmitting] = useState(false)
 
-  const schema = z.object({
-    email: z.string().email({ message: text(t.emailError) }),
-    phone: z
-      .string()
-      .transform((val) => val.replace(/\D/g, ''))
-      .refine((val) => val.length === 0 || val.length === 10, {
-        message: text(t.phoneError),
-      }),
-    children: z.array(z.string()),
-    lang: z.enum(LANGUAGES),
-  })
+  const schema = useZodSchema(
+    z.object({
+      email: z.string().email({ message: text(t.emailError) }),
+      phone: z
+        .string()
+        .transform((val) => val.replace(/\D/g, ''))
+        .refine((val) => val.length === 0 || val.length === 10, {
+          message: text(t.phoneError),
+        }),
+      children: z.array(z.string()),
+      lang: z.enum(LANGUAGES),
+    })
+  )
 
   const [formData, setFormData] = useState<z.infer<typeof schema>>({
     email: '',
@@ -143,7 +145,7 @@ export function InviteProviderPage() {
         <Button
           type="submit"
           className="mt-10 mb-3 w-full"
-          disabled={submitting}
+          loading={submitting}
         >
           <Text text={t.submitButton} />
         </Button>

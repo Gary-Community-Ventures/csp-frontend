@@ -10,7 +10,7 @@ import { useMemo, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { z } from 'zod'
-import { useValidateForm } from '@/lib/schemas'
+import { useValidateForm, useZodSchema } from '@/lib/schemas'
 import { FormErrorMessage } from '@/components/form-error'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
@@ -41,14 +41,16 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
   const navigate = useNavigate()
   const context = paymentRoute.useRouteContext()
 
-  const lumpSumSchema = z.object({
-    amount: z.string().refine((val) => parseFloat(val) > 0, {
-      message: text(t.amountRequired),
-    }),
-    hours: z.string().refine((val) => parseFloat(val) > 0, {
-      message: text(t.hoursRequired),
-    }),
-  })
+  const lumpSumSchema = useZodSchema(
+    z.object({
+      amount: z.string().refine((val) => parseFloat(val) > 0, {
+        message: text(t.amountRequired),
+      }),
+      hours: z.string().refine((val) => parseFloat(val) > 0, {
+        message: text(t.hoursRequired),
+      }),
+    })
+  )
   type LumpSumForm = z.infer<typeof lumpSumSchema>
 
   const [formData, setFormData] = useState<LumpSumForm>({
