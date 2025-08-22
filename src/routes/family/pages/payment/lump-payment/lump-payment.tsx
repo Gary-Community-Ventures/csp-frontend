@@ -107,6 +107,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
       allocation_id: number
       provider_id: string
       amount_cents: number
+      hours: number
     }) => createLumpSum(context, data),
     onSuccess: () => {
       toast.success(text(t.lumpPaymentSuccess))
@@ -142,6 +143,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
           allocation_id: selectedAllocation.id,
           provider_id: provider.id,
           amount_cents: dollarToCents(formData.amount),
+          hours: parseFloat(formData.hours),
         })
       } else {
         toast.error(text(t.lumpPaymentError))
