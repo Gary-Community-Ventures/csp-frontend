@@ -511,8 +511,8 @@ export const translations = {
     },
     banner: {
       actionRequired: {
-        en: 'Action Required: ',
-        es: 'Acción Requerida: ',
+        en: 'ACTION REQUIRED: ',
+        es: 'ACCIÓN REQUERIDA: ',
       },
     },
     notFoundPage: {
