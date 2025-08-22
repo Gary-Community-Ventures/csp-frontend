@@ -22,7 +22,7 @@ export function SignInPage() {
         finalRedirectUrl = decodedRedirectUrl
       }
     } catch (e) {
-      console.error('Invalid redirect URL', e)
+      console.error('Invalid redirect URL encountered')
     }
   }
 
