@@ -7,7 +7,6 @@ import { loadFamilyData, redirectToDefaultId } from './loader'
 import { FamilyNavBar } from './components/nav-bar'
 import { FamilyProvidersPage } from './pages/providers'
 import { PaymentPage } from './pages/payment/payment'
-import FindProviderPage, { loadProviders } from './pages/find-provider'
 import { InviteProviderPage } from './pages/invite-provider'
 import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
 import { LumpSumConfirmationPage } from './pages/payment/lump-payment/lump-payment-confirmation'
@@ -84,13 +83,6 @@ export const paymentRoute = createRoute({
   }),
 })
 
-export const findProviderRoute = createRoute({
-  getParentRoute: () => familyWithIdRoute,
-  path: 'providers/find-licensed',
-  component: FindProviderPage,
-  loader: loadProviders,
-})
-
 export const inviteProviderRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: 'providers/invite',
@@ -136,7 +128,6 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   providersRoute,
   settingsRoute,
   paymentRoute,
-  findProviderRoute,
   inviteProviderRoute,
   inviteProviderConfirmationRoute,
   lumpPaymentConfirmationRoute,

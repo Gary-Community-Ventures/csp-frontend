@@ -401,64 +401,19 @@ export const translations = {
         en: 'Add a Provider',
         es: 'Agregar un Proveedor',
       },
-      searchProviders: {
-        en: 'Search for existing childcare centers or licensed home-based providers.',
-        es: 'Busca centros de cuidado infantil o proveedores de hogar con licencia.',
-      },
-      searchProvidersButton: {
-        en: 'Search',
-        es: 'Buscar',
-      },
-      inviteFfn: {
-        en: 'Invite your Family, Friend, or Neighbor Caregiver',
-        es: 'Invita a tu Familia, Amigo o Vecino',
-      },
-      inviteFfnButton: {
-        en: 'Invite',
-        es: 'Invitar',
-      },
-    },
-    findProviderPage: {
-      header: {
-        en: 'Find your Provider',
-        es: 'Buscar tu Proveedor',
+      invite: {
+        en: 'Invite your provider',
+        es: 'Invita tu proveedor',
       },
       inviteButton: {
         en: 'Invite',
         es: 'Invitar',
       },
-      searchPlaceholder: {
-        en: 'Search for a Provider',
-        es: 'Buscar un Proveedor',
-      },
-      loadMoreButton: {
-        en: 'Load More',
-        es: 'Cargar Más',
-      },
-      addProviderForm: {
-        header: {
-          en: 'Please select the children that go to ',
-          es: 'Por favor selecciona los niños que van a ',
-        },
-        noChildrenSelectedError: {
-          en: 'Please select at least one child',
-          es: 'Por favor selecciona al menos un niño',
-        },
-        submitButton: submitButton,
-        closeButton: {
-          en: 'Close',
-          es: 'Cerrar',
-        },
-        successMessage: {
-          en: 'Successfully invited ',
-          es: 'Invitado exitosamente ',
-        },
-      },
     },
     inviteProviderPage: {
       header: {
-        en: 'Invite your Family, Friend, or Neighbor Caregiver',
-        es: 'Invita a tu Familia, Amigo o Vecino',
+        en: 'Invite your provider',
+        es: 'Invita tu proveedor',
       },
       emailError: emailError,
       phoneError: phoneError,
