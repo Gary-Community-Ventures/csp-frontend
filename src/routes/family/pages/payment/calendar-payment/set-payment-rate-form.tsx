@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
-import React from 'react'
+import { useState } from 'react'
 import { dollarToCents } from '@/lib/currency'
 import { useValidateForm } from '@/lib/schemas'
 import { z } from 'zod'
@@ -46,7 +46,7 @@ export function SetPaymentRateForm({
   createPaymentRateMutation,
 }: SetPaymentRateFormProps) {
   const t = translations.family.calendarPaymentPage
-  const [formData, setFormData] = React.useState<PaymentRateForm>({
+  const [formData, setFormData] = useState<PaymentRateForm>({
     halfDayRate: '',
     fullDayRate: '',
   })
