@@ -7,6 +7,7 @@ import {
   type SetStateAction,
 } from 'react'
 import { familyWithIdRoute } from './routes'
+import type { FamilyPaymentHistoryResponse } from '@/lib/api/paymentHistory'
 
 export type SelectedChildInfo = {
   id: string
@@ -52,12 +53,13 @@ export type FamilyContext = {
   navBar: NavBarContext
   children: Child[]
   isAlsoProvider: boolean
+  paymentHistory: FamilyPaymentHistoryResponse
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
 
 export function FamilyWrapper({ children }: PropsWithChildren) {
-  const { familyData } = familyWithIdRoute.useLoaderData()
+  const { familyData, paymentHistory } = familyWithIdRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 
   const familyContext: FamilyContext = {
@@ -77,6 +79,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       }
     }),
     isAlsoProvider: familyData.is_also_provider,
+    paymentHistory,
     navBar: {
       notifications: familyData.notifications,
       setHidden,

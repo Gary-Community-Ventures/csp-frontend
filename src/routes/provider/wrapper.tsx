@@ -6,6 +6,7 @@ import {
   type SetStateAction,
 } from 'react'
 import { providerRoute } from './routes'
+import type { ProviderPaymentHistoryResponse } from '@/lib/api/paymentHistory'
 
 export type ProviderInfo = {
   id: string
@@ -49,6 +50,7 @@ export type ProviderContextType = {
   navBar: NavBarContext
   maxChildCount: number
   isAlsoFamily: boolean
+  paymentHistory: ProviderPaymentHistoryResponse
 }
 
 const ProviderContext = createContext<ProviderContextType | undefined>(
@@ -56,7 +58,7 @@ const ProviderContext = createContext<ProviderContextType | undefined>(
 )
 
 export function ProviderWrapper({ children }: { children: React.ReactNode }) {
-  const { providerData } = providerRoute.useLoaderData()
+  const { providerData, paymentHistory } = providerRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 
   const providerContext: ProviderContextType = {
@@ -76,6 +78,7 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
     curriculum: providerData.curriculum,
     maxChildCount: providerData.max_child_count,
     isAlsoFamily: providerData.is_also_family,
+    paymentHistory,
     navBar: {
       notifications: providerData.notifications,
       setHidden,
