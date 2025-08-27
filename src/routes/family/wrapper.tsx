@@ -23,12 +23,6 @@ export type Provider = {
   type: 'ffn' | 'lhb' | 'center'
 }
 
-export type Transaction = {
-  id: string
-  name: string
-  amount: number
-  date: Date
-}
 
 export type Child = {
   id: string
@@ -49,7 +43,6 @@ export type NavBarContext = {
 export type FamilyContext = {
   selectedChildInfo: SelectedChildInfo
   providers: Provider[]
-  transactions: Transaction[]
   navBar: NavBarContext
   children: Child[]
   isAlsoProvider: boolean
@@ -70,7 +63,6 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       balance: familyData.selected_child_info.balance,
     },
     providers: familyData.providers,
-    transactions: familyData.transactions,
     children: familyData.children.map((child) => {
       return {
         id: child.id,

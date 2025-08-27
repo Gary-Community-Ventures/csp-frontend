@@ -14,12 +14,6 @@ export type ProviderInfo = {
   lastName: string
 }
 
-export type Transaction = {
-  id: string
-  name: string
-  amount: number
-  date: Date
-}
 
 export type Curriculum = {
   id: string
@@ -45,7 +39,6 @@ export type NavBarContext = {
 export type ProviderContextType = {
   providerInfo: ProviderInfo
   children: Child[]
-  transactions: Transaction[]
   curriculum: Curriculum | null
   navBar: NavBarContext
   maxChildCount: number
@@ -74,7 +67,6 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
         lastName: child.last_name,
       }
     }),
-    transactions: providerData.transactions,
     curriculum: providerData.curriculum,
     maxChildCount: providerData.max_child_count,
     isAlsoFamily: providerData.is_also_family,

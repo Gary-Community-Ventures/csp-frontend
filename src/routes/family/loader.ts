@@ -43,13 +43,7 @@ export async function loadFamilyData({
 
     const rawJson = (await familyRes.json()) as Family
 
-    const json: Family = {
-      ...rawJson,
-      transactions: rawJson.transactions.map((cg) => ({
-        ...cg,
-        date: new Date(cg.date),
-      })),
-    }
+    const json: Family = rawJson
 
     return {
       familyData: json,
@@ -97,12 +91,6 @@ export type Provider = {
   type: 'ffn' | 'lhb' | 'center'
 }
 
-export type Transaction = {
-  id: string
-  name: string
-  amount: number
-  date: Date
-}
 
 export type Child = {
   id: string
@@ -117,7 +105,6 @@ export type Notification = {
 export type Family = {
   selected_child_info: SelectedChildInfo
   providers: Provider[]
-  transactions: Transaction[]
   children: Child[]
   notifications: Notification[]
   is_also_provider: boolean

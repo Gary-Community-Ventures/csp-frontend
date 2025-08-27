@@ -5,6 +5,8 @@ import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Badge } from '@/components/ui/badge'
+import { Text } from '@/translations/wrapper'
+import { translations } from '@/translations/text'
 import { toast } from 'sonner'
 import { CreditCard, Building2, AlertCircle, CheckCircle2 } from 'lucide-react'
 import { 
@@ -29,7 +31,7 @@ export function PaymentSettingsPage() {
       setSelectedMethod(settings.payment_method as 'card' | 'ach' | null)
     } catch (error) {
       console.error('Failed to load payment settings:', error)
-      toast.error('Failed to load payment settings')
+      toast.error(translations.provider.paymentSettings.failedToLoad.en)
     } finally {
       setLoading(false)
     }
@@ -49,11 +51,11 @@ export function PaymentSettingsPage() {
       }
       
       await updatePaymentMethod(context, request)
-      toast.success('Payment method updated successfully')
+      toast.success(translations.provider.paymentSettings.paymentMethod.updateSuccess.en)
       await loadPaymentSettings()
     } catch (error) {
       console.error('Failed to update payment method:', error)
-      toast.error('Failed to update payment method')
+      toast.error(translations.provider.paymentSettings.paymentMethod.updateError.en)
     } finally {
       setUpdating(false)
     }
@@ -61,12 +63,12 @@ export function PaymentSettingsPage() {
 
   const getStatusBadge = (status: string | null, available: boolean) => {
     if (!available) {
-      return <Badge variant="outline">Not Available</Badge>
+      return <Badge variant="outline"><Text text={translations.provider.paymentSettings.status.notAvailable} /></Badge>
     }
     if (status === 'Active') {
-      return <Badge className="bg-green-100 text-green-800 border-green-300">Active</Badge>
+      return <Badge className="bg-green-100 text-green-800 border-green-300"><Text text={translations.provider.paymentSettings.status.active} /></Badge>
     }
-    return <Badge variant="destructive">Not Active</Badge>
+    return <Badge variant="destructive"><Text text={translations.provider.paymentSettings.status.notActive} /></Badge>
   }
 
   const getValidationMessage = () => {
@@ -92,10 +94,10 @@ export function PaymentSettingsPage() {
   if (loading) {
     return (
       <div className="p-5">
-        <Header>Payment Settings</Header>
+        <Header><Text text={translations.provider.paymentSettings.title} /></Header>
         <WhiteCard>
           <div className="flex items-center justify-center py-8">
-            Loading payment settings...
+            <Text text={translations.provider.paymentSettings.loading} />
           </div>
         </WhiteCard>
       </div>
@@ -105,10 +107,10 @@ export function PaymentSettingsPage() {
   if (!paymentSettings) {
     return (
       <div className="p-5">
-        <Header>Payment Settings</Header>
+        <Header><Text text={translations.provider.paymentSettings.title} /></Header>
         <WhiteCard>
           <div className="text-center py-8 text-red-600">
-            Failed to load payment settings. Please try again.
+            <Text text={translations.provider.paymentSettings.failedToLoad} />
           </div>
         </WhiteCard>
       </div>
@@ -122,17 +124,17 @@ export function PaymentSettingsPage() {
 
   return (
     <div className="p-5 space-y-6">
-      <Header>Payment Settings</Header>
+      <Header><Text text={translations.provider.paymentSettings.title} /></Header>
 
       {/* Current Status */}
       <WhiteCard>
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">Payment Status</h3>
+          <h3 className="text-lg font-semibold"><Text text={translations.provider.paymentSettings.paymentStatus.title} /></h3>
           {getValidationMessage()}
           {paymentSettings.payable ? (
-            <div className="text-green-700">✅ Ready to receive payments</div>
+            <div className="text-green-700"><Text text={translations.provider.paymentSettings.paymentStatus.readyToReceive} /></div>
           ) : (
-            <div className="text-red-700">❌ Not ready to receive payments</div>
+            <div className="text-red-700"><Text text={translations.provider.paymentSettings.paymentStatus.notReady} /></div>
           )}
         </div>
       </WhiteCard>
@@ -140,7 +142,7 @@ export function PaymentSettingsPage() {
       {/* Payment Method Selection */}
       <WhiteCard>
         <div className="space-y-6">
-          <h3 className="text-lg font-semibold">Payment Method</h3>
+          <h3 className="text-lg font-semibold"><Text text={translations.provider.paymentSettings.paymentMethod.title} /></h3>
           
           <RadioGroup 
             value={selectedMethod || ''} 
@@ -158,9 +160,9 @@ export function PaymentSettingsPage() {
                 <label htmlFor="card" className="flex items-center gap-3 cursor-pointer">
                   <CreditCard className="size-6 text-blue-600" />
                   <div>
-                    <div className="font-medium">Virtual Card</div>
+                    <div className="font-medium"><Text text={translations.provider.paymentSettings.paymentMethod.virtualCard.title} /></div>
                     <div className="text-sm text-gray-600">
-                      Receive payments via virtual card
+                      <Text text={translations.provider.paymentSettings.paymentMethod.virtualCard.description} />
                     </div>
                   </div>
                 </label>
@@ -184,9 +186,9 @@ export function PaymentSettingsPage() {
                 <label htmlFor="ach" className="flex items-center gap-3 cursor-pointer">
                   <Building2 className="size-6 text-green-600" />
                   <div>
-                    <div className="font-medium">ACH/Direct Pay</div>
+                    <div className="font-medium"><Text text={translations.provider.paymentSettings.paymentMethod.ach.title} /></div>
                     <div className="text-sm text-gray-600">
-                      Receive payments via ACH bank transfer
+                      <Text text={translations.provider.paymentSettings.paymentMethod.ach.description} />
                     </div>
                   </div>
                 </label>
@@ -207,7 +209,7 @@ export function PaymentSettingsPage() {
               disabled={!canUpdate}
               loading={updating}
             >
-              Update Payment Method
+              <Text text={translations.provider.paymentSettings.paymentMethod.updateButton} />
             </Button>
           </div>
         </div>
@@ -216,24 +218,24 @@ export function PaymentSettingsPage() {
       {/* Additional Info */}
       <WhiteCard>
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold">Additional Information</h3>
+          <h3 className="text-lg font-semibold"><Text text={translations.provider.paymentSettings.additionalInfo.title} /></h3>
           <div className="text-sm text-gray-600 space-y-2">
-            <div>Provider ID: {paymentSettings.provider_id}</div>
+            <div><Text text={translations.provider.paymentSettings.additionalInfo.providerId} />: {paymentSettings.provider_id}</div>
             {paymentSettings.chek_user_id && (
-              <div>Chek User ID: {paymentSettings.chek_user_id}</div>
+              <div><Text text={translations.provider.paymentSettings.additionalInfo.chekUserId} />: {paymentSettings.chek_user_id}</div>
             )}
             {paymentSettings.payment_method_updated_at && (
               <div>
-                Last Updated: {new Date(paymentSettings.payment_method_updated_at).toLocaleString()}
+                <Text text={translations.provider.paymentSettings.additionalInfo.lastUpdated} />: {new Date(paymentSettings.payment_method_updated_at).toLocaleString()}
               </div>
             )}
             {paymentSettings.last_sync && (
               <div>
-                Last Sync: {new Date(paymentSettings.last_sync).toLocaleString()}
+                <Text text={translations.provider.paymentSettings.additionalInfo.lastSync} />: {new Date(paymentSettings.last_sync).toLocaleString()}
               </div>
             )}
             {paymentSettings.needs_refresh && (
-              <div className="text-amber-600">⚠️ Payment status needs refresh</div>
+              <div className="text-amber-600"><Text text={translations.provider.paymentSettings.additionalInfo.needsRefresh} /></div>
             )}
           </div>
         </div>

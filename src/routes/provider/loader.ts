@@ -36,13 +36,7 @@ export async function loadProviderData({
 
     const rawJson = (await providerRes.json()) as Provider
 
-    const json: Provider = {
-      ...rawJson,
-      transactions: rawJson.transactions.map((payment) => ({
-        ...payment,
-        date: new Date(payment.date),
-      })),
-    }
+    const json: Provider = rawJson
 
     return {
       providerData: json,
@@ -60,12 +54,6 @@ export type ProviderInfo = {
   last_name: string
 }
 
-export type Transaction = {
-  id: string
-  name: string
-  amount: number
-  date: Date
-}
 
 export type Curriculum = {
   id: string
@@ -85,7 +73,6 @@ export type Notification = {
 export type Provider = {
   provider_info: ProviderInfo
   children: Child[]
-  transactions: Transaction[]
   curriculum: Curriculum | null
   notifications: Notification[]
   is_also_family: boolean

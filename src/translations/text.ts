@@ -48,6 +48,21 @@ const statuses = {
   },
 } as const
 
+const paymentStatuses = {
+  success: {
+    en: 'Success',
+    es: 'Exitoso',
+  },
+  failed: {
+    en: 'Failed',
+    es: 'Fallido',
+  },
+  pending: {
+    en: 'Pending',
+    es: 'Pendiente',
+  },
+} as const
+
 const submitButton = {
   en: 'Submit',
   es: 'Enviar',
@@ -535,6 +550,112 @@ export const translations = {
         es: 'Pagos Recientes',
       },
     },
+    paymentSettings: {
+      title: {
+        en: 'Payment Settings',
+        es: 'Configuración de Pagos',
+      },
+      loading: {
+        en: 'Loading payment settings...',
+        es: 'Cargando configuración de pagos...',
+      },
+      failedToLoad: {
+        en: 'Failed to load payment settings. Please try again.',
+        es: 'Error al cargar la configuración de pagos. Inténtalo de nuevo.',
+      },
+      paymentStatus: {
+        title: {
+          en: 'Payment Status',
+          es: 'Estado de Pago',
+        },
+        readyToReceive: {
+          en: '✅ Ready to receive payments',
+          es: '✅ Listo para recibir pagos',
+        },
+        notReady: {
+          en: '❌ Not ready to receive payments',
+          es: '❌ No listo para recibir pagos',
+        },
+      },
+      paymentMethod: {
+        title: {
+          en: 'Payment Method',
+          es: 'Método de Pago',
+        },
+        virtualCard: {
+          title: {
+            en: 'Virtual Card',
+            es: 'Tarjeta Virtual',
+          },
+          description: {
+            en: 'Receive payments via virtual card',
+            es: 'Recibir pagos mediante tarjeta virtual',
+          },
+        },
+        ach: {
+          title: {
+            en: 'ACH/Direct Pay',
+            es: 'ACH/Pago Directo',
+          },
+          description: {
+            en: 'Receive payments via ACH bank transfer',
+            es: 'Recibir pagos mediante transferencia bancaria ACH',
+          },
+        },
+        updateButton: {
+          en: 'Update Payment Method',
+          es: 'Actualizar Método de Pago',
+        },
+        updateSuccess: {
+          en: 'Payment method updated successfully',
+          es: 'Método de pago actualizado exitosamente',
+        },
+        updateError: {
+          en: 'Failed to update payment method',
+          es: 'Error al actualizar el método de pago',
+        },
+      },
+      additionalInfo: {
+        title: {
+          en: 'Additional Information',
+          es: 'Información Adicional',
+        },
+        providerId: {
+          en: 'Provider ID',
+          es: 'ID del Proveedor',
+        },
+        chekUserId: {
+          en: 'Chek User ID',
+          es: 'ID de Usuario Chek',
+        },
+        lastUpdated: {
+          en: 'Last Updated',
+          es: 'Última Actualización',
+        },
+        lastSync: {
+          en: 'Last Sync',
+          es: 'Última Sincronización',
+        },
+        needsRefresh: {
+          en: '⚠️ Payment status needs refresh',
+          es: '⚠️ El estado de pago necesita actualización',
+        },
+      },
+      status: {
+        active: {
+          en: 'Active',
+          es: 'Activo',
+        },
+        notActive: {
+          en: 'Not Active',
+          es: 'No Activo',
+        },
+        notAvailable: {
+          en: 'Not Available',
+          es: 'No Disponible',
+        },
+      },
+    },
     resources: {
       title: {
         en: 'Resources',
@@ -639,6 +760,18 @@ export const translations = {
         en: 'Once you have transactions, they will appear here.',
         es: 'Una vez que tengas transacciones, aparecerán aquí.',
       },
+      noPaymentsTitle: {
+        en: 'No Payments',
+        es: 'Sin Pagos',
+      },
+      noFamilyPaymentsDescription: {
+        en: 'You haven\'t made any payments yet.',
+        es: 'Aún no has realizado ningún pago.',
+      },
+      noProviderPaymentsDescription: {
+        en: 'You haven\'t received any payments yet.',
+        es: 'Aún no has recibido ningún pago.',
+      },
       noChildrenTitle: {
         en: 'No Children Yet',
         es: 'Aún no hay niños',
@@ -704,6 +837,25 @@ export const translations = {
         en: 'Back to Providers',
         es: 'Volver a Proveedores',
       },
+    },
+    paymentHistory: {
+      child: {
+        en: 'Child',
+        es: 'Niño',
+      },
+      family: {
+        en: 'Family',
+        es: 'Familia',
+      },
+      month: {
+        en: 'Month',
+        es: 'Mes',
+      },
+      paymentMethod: {
+        en: 'Payment Method',
+        es: 'Método de Pago',
+      },
+      status: paymentStatuses,
     },
     offlinePage: {
       title: {
