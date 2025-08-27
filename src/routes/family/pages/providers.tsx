@@ -2,7 +2,6 @@ import { Header } from '@/components/header'
 import { ProviderList } from '../components/providers'
 import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { Link } from '@tanstack/react-router'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
@@ -30,20 +29,11 @@ export function FamilyProvidersPage() {
           <WhiteCard>
             <div className="flex gap-5 items-center justify-center flex-col">
               <strong className="text-xl text-center">
-                <Text text={t.searchProviders} />
-              </strong>
-              <Button asChild>
-                <Link to="/family/$childId/providers/find-licensed">
-                  <Text text={t.searchProvidersButton} />
-                </Link>
-              </Button>
-              <Separator />
-              <strong className="text-xl text-center">
-                <Text text={t.inviteFfn} />
+                <Text text={t.invite} />
               </strong>
               <Button>
                 <Link to="/family/$childId/providers/invite">
-                  <Text text={t.inviteFfnButton} />
+                  <Text text={t.inviteButton} />
                 </Link>
               </Button>
             </div>
