@@ -8,12 +8,14 @@ import { Badge } from '@/components/ui/badge'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { toast } from 'sonner'
-import { CreditCard, Building2, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { CreditCard, Building2 } from 'lucide-react'
 import { 
   getPaymentSettings, 
-  updatePaymentMethod, 
+  updatePaymentMethod,
+  initializePaymentMethod,
   type PaymentSettingsResponse,
-  type PaymentMethodUpdateRequest 
+  type PaymentMethodUpdateRequest,
+  type PaymentMethodInitializeRequest
 } from '@/lib/api/paymentSettings'
 
 export function PaymentSettingsPage() {
@@ -46,12 +48,35 @@ export function PaymentSettingsPage() {
 
     try {
       setUpdating(true)
-      const request: PaymentMethodUpdateRequest = {
-        payment_method: selectedMethod
+      
+      // Determine if this is an initialization (first-time setup) or an update (switching)
+      const isInitializing = selectedMethod === 'card' 
+        ? !paymentSettings.card.available 
+        : !paymentSettings.ach.available
+
+      if (isInitializing) {
+        // Use initialize endpoint for first-time setup
+        const initRequest: PaymentMethodInitializeRequest = {
+          payment_method: selectedMethod
+        }
+        
+        const result = await initializePaymentMethod(context, initRequest)
+        toast.success(result.message)
+        
+        // Show additional info if invite was sent for ACH
+        if (result.invite_sent_to) {
+          toast.success(`Invitation sent to ${result.invite_sent_to}`)
+        }
+      } else {
+        // Use update endpoint for switching between configured methods
+        const updateRequest: PaymentMethodUpdateRequest = {
+          payment_method: selectedMethod
+        }
+        
+        await updatePaymentMethod(context, updateRequest)
+        toast.success(translations.provider.paymentSettings.paymentMethod.updateSuccess.en)
       }
       
-      await updatePaymentMethod(context, request)
-      toast.success(translations.provider.paymentSettings.paymentMethod.updateSuccess.en)
       await loadPaymentSettings()
     } catch (error) {
       console.error('Failed to update payment method:', error)
@@ -62,34 +87,25 @@ export function PaymentSettingsPage() {
   }
 
   const getStatusBadge = (status: string | null, available: boolean) => {
+    // If no ID available, not configured yet
     if (!available) {
-      return <Badge variant="outline"><Text text={translations.provider.paymentSettings.status.notAvailable} /></Badge>
+      return <Badge variant="outline"><Text text={translations.provider.paymentSettings.status.notConfigured} /></Badge>
     }
+    
+    // If status is null, it means configured but status unknown
+    if (status === null) {
+      return <Badge variant="outline"><Text text={translations.provider.paymentSettings.status.notConfigured} /></Badge>
+    }
+    
+    // If status is Active
     if (status === 'Active') {
       return <Badge className="bg-green-100 text-green-800 border-green-300"><Text text={translations.provider.paymentSettings.status.active} /></Badge>
     }
-    return <Badge variant="destructive"><Text text={translations.provider.paymentSettings.status.notActive} /></Badge>
+    
+    // Any other status means not available
+    return <Badge variant="destructive"><Text text={translations.provider.paymentSettings.status.notAvailable} /></Badge>
   }
 
-  const getValidationMessage = () => {
-    if (!paymentSettings?.validation) return null
-    
-    if (paymentSettings.validation.is_valid) {
-      return (
-        <div className="flex items-center gap-2 text-green-700 bg-green-50 p-3 rounded-md">
-          <CheckCircle2 className="size-5" />
-          <span>{paymentSettings.validation.message}</span>
-        </div>
-      )
-    } else {
-      return (
-        <div className="flex items-center gap-2 text-red-700 bg-red-50 p-3 rounded-md">
-          <AlertCircle className="size-5" />
-          <span>{paymentSettings.validation.message}</span>
-        </div>
-      )
-    }
-  }
 
   if (loading) {
     return (
@@ -118,9 +134,11 @@ export function PaymentSettingsPage() {
   }
 
   const hasChanges = selectedMethod !== paymentSettings.payment_method
-  const canUpdate = hasChanges && selectedMethod && 
-    ((selectedMethod === 'card' && paymentSettings.card.available) ||
-     (selectedMethod === 'ach' && paymentSettings.ach.available))
+  const canUpdate = hasChanges && selectedMethod && paymentSettings.chek_user_id
+  
+  const isInitializing = selectedMethod && (selectedMethod === 'card' 
+    ? !paymentSettings.card.available 
+    : !paymentSettings.ach.available)
 
   return (
     <div className="p-5 space-y-6">
@@ -130,11 +148,16 @@ export function PaymentSettingsPage() {
       <WhiteCard>
         <div className="space-y-4">
           <h3 className="text-lg font-semibold"><Text text={translations.provider.paymentSettings.paymentStatus.title} /></h3>
-          {getValidationMessage()}
-          {paymentSettings.payable ? (
-            <div className="text-green-700"><Text text={translations.provider.paymentSettings.paymentStatus.readyToReceive} /></div>
+          {paymentSettings.is_payable ? (
+            <div className="flex items-center gap-2">
+              <div className="size-2 bg-green-500 rounded-full"></div>
+              <span className="text-green-700 font-medium"><Text text={translations.provider.paymentSettings.paymentStatus.available} /></span>
+            </div>
           ) : (
-            <div className="text-red-700"><Text text={translations.provider.paymentSettings.paymentStatus.notReady} /></div>
+            <div className="flex items-center gap-2">
+              <div className="size-2 bg-amber-500 rounded-full"></div>
+              <span className="text-amber-700 font-medium"><Text text={translations.provider.paymentSettings.paymentStatus.notAvailable} /></span>
+            </div>
           )}
         </div>
       </WhiteCard>
@@ -143,6 +166,12 @@ export function PaymentSettingsPage() {
       <WhiteCard>
         <div className="space-y-6">
           <h3 className="text-lg font-semibold"><Text text={translations.provider.paymentSettings.paymentMethod.title} /></h3>
+          
+          {!paymentSettings.chek_user_id && (
+            <div className="text-amber-600 bg-amber-50 p-3 rounded-md">
+              <Text text={translations.provider.paymentSettings.paymentMethod.setupRequired} />
+            </div>
+          )}
           
           <RadioGroup 
             value={selectedMethod || ''} 
@@ -154,7 +183,7 @@ export function PaymentSettingsPage() {
               <RadioGroupItem 
                 value="card" 
                 id="card"
-                disabled={!paymentSettings.card.available}
+                disabled={!paymentSettings.chek_user_id}
               />
               <div className="flex-1">
                 <label htmlFor="card" className="flex items-center gap-3 cursor-pointer">
@@ -180,7 +209,7 @@ export function PaymentSettingsPage() {
               <RadioGroupItem 
                 value="ach" 
                 id="ach"
-                disabled={!paymentSettings.ach.available}
+                disabled={!paymentSettings.chek_user_id}
               />
               <div className="flex-1">
                 <label htmlFor="ach" className="flex items-center gap-3 cursor-pointer">
@@ -209,9 +238,24 @@ export function PaymentSettingsPage() {
               disabled={!canUpdate}
               loading={updating}
             >
-              <Text text={translations.provider.paymentSettings.paymentMethod.updateButton} />
+              <Text text={isInitializing 
+                ? translations.provider.paymentSettings.paymentMethod.initializeButton
+                : translations.provider.paymentSettings.paymentMethod.updateButton
+              } />
             </Button>
           </div>
+
+          {/* Show Chek setup message when selecting unconfigured option */}
+          {selectedMethod && paymentSettings.chek_user_id && (
+            (selectedMethod === 'card' && !paymentSettings.card.available) ||
+            (selectedMethod === 'ach' && !paymentSettings.ach.available)
+          ) && (
+            <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
+              <p className="text-sm text-blue-800">
+                <Text text={translations.provider.paymentSettings.paymentMethod.chekSetupMessage} />
+              </p>
+            </div>
+          )}
         </div>
       </WhiteCard>
 

@@ -1,10 +1,13 @@
 import { CardList } from '@/components/card-list'
 import { WhiteCard } from '@/components/white-card'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { useMemo } from 'react'
 import { useFormatDate } from '@/lib/dates'
+import { Link } from '@tanstack/react-router'
+import { Settings } from 'lucide-react'
 import type { FamilyPaymentHistoryItem, ProviderPaymentHistoryItem } from '@/lib/api/paymentHistory'
 
 type PaymentAmountProps = {
@@ -51,6 +54,7 @@ export type FamilyPaymentsListProps = {
 
 export type ProviderPaymentsListProps = {
   payments: ProviderPaymentHistoryItem[]
+  isPayable: boolean
 }
 
 export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
@@ -95,19 +99,29 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
   )
 }
 
-export function ProviderPaymentsList({ payments }: ProviderPaymentsListProps) {
+export function ProviderPaymentsList({ payments, isPayable }: ProviderPaymentsListProps) {
   const formatDate = useFormatDate()
 
   if (payments.length < 1) {
     return (
       <WhiteCard Tag="ul" className="py-8">
-        <div className="flex flex-col items-center justify-center text-muted-foreground text-center">
-          <p className="text-lg font-semibold mb-2">
-            <Text text={translations.general.emptyState.noPaymentsTitle} />
-          </p>
-          <p className="text-sm">
-            <Text text={translations.general.emptyState.noProviderPaymentsDescription} />
-          </p>
+        <div className="flex flex-col items-center justify-center text-muted-foreground text-center space-y-4">
+          <div>
+            <p className="text-lg font-semibold mb-2">
+              <Text text={translations.general.emptyState.noPaymentsTitle} />
+            </p>
+            <p className="text-sm">
+              <Text text={translations.general.emptyState.noProviderPaymentsDescription} />
+            </p>
+          </div>
+          {!isPayable && (
+            <Button variant="outline" asChild>
+              <Link to="/provider/payment-settings">
+                <Settings className="size-4" />
+                <Text text={translations.provider.paymentSettings.setupPaymentButton} />
+              </Link>
+            </Button>
+          )}
         </div>
       </WhiteCard>
     )

@@ -519,6 +519,10 @@ export const translations = {
           en: 'Attendance',
           es: 'Asistencia',
         },
+        paymentSettings: {
+          en: 'Payment Settings',
+          es: 'Configuración de Pagos',
+        },
       },
       notificationBanner: {
         ...notificationBanner,
@@ -568,13 +572,13 @@ export const translations = {
           en: 'Payment Status',
           es: 'Estado de Pago',
         },
-        readyToReceive: {
-          en: '✅ Ready to receive payments',
-          es: '✅ Listo para recibir pagos',
+        available: {
+          en: 'Available',
+          es: 'Disponible',
         },
-        notReady: {
-          en: '❌ Not ready to receive payments',
-          es: '❌ No listo para recibir pagos',
+        notAvailable: {
+          en: 'Not Available',
+          es: 'No Disponible',
         },
       },
       paymentMethod: {
@@ -606,6 +610,10 @@ export const translations = {
           en: 'Update Payment Method',
           es: 'Actualizar Método de Pago',
         },
+        initializeButton: {
+          en: 'Initialize Payment Method',
+          es: 'Inicializar Método de Pago',
+        },
         updateSuccess: {
           en: 'Payment method updated successfully',
           es: 'Método de pago actualizado exitosamente',
@@ -613,6 +621,14 @@ export const translations = {
         updateError: {
           en: 'Failed to update payment method',
           es: 'Error al actualizar el método de pago',
+        },
+        setupRequired: {
+          en: 'Payment account setup is required before you can select a payment method. Please contact support.',
+          es: 'Se requiere configurar la cuenta de pago antes de poder seleccionar un método de pago. Por favor contacte a soporte.',
+        },
+        chekSetupMessage: {
+          en: 'After submitting, you will receive an email from our payment provider Chek to set up your account and configure your payment method.',
+          es: 'Después de enviar, recibirá un correo electrónico de nuestro proveedor de pagos Chek para configurar su cuenta y configurar su método de pago.',
         },
       },
       additionalInfo: {
@@ -646,14 +662,18 @@ export const translations = {
           en: 'Active',
           es: 'Activo',
         },
-        notActive: {
-          en: 'Not Active',
-          es: 'No Activo',
-        },
         notAvailable: {
           en: 'Not Available',
           es: 'No Disponible',
         },
+        notConfigured: {
+          en: 'Not Yet Configured',
+          es: 'Aún No Configurado',
+        },
+      },
+      setupPaymentButton: {
+        en: 'Setup Payment Settings',
+        es: 'Configurar Ajustes de Pago',
       },
     },
     resources: {

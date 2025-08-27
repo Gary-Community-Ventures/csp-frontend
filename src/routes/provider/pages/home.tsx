@@ -11,7 +11,7 @@ import { Plus } from 'lucide-react'
 
 export function ProviderHomePage() {
   const t = translations.provider.home
-  const { children, curriculum, maxChildCount, paymentHistory } =
+  const { children, curriculum, maxChildCount, paymentHistory, providerInfo } =
     useProviderContext()
 
   return (
@@ -44,7 +44,7 @@ export function ProviderHomePage() {
         <Header>
           <Text text={t.payments} />
         </Header>
-        <ProviderPaymentsList payments={paymentHistory.payments} />
+        <ProviderPaymentsList payments={paymentHistory.payments} isPayable={providerInfo.is_payable} />
       </section>
     </div>
   )
