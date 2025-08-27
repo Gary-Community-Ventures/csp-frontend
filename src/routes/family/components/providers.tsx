@@ -30,6 +30,14 @@ function PayButton({ provider }: PayButtonProps) {
     )
   }
 
+  if (!provider.is_payable) {
+    return (
+      <Button disabled>
+        <Text text={t.payProvider} />
+      </Button>
+    )
+  }
+
   return (
     <Button asChild>
       <Link

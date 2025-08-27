@@ -213,6 +213,14 @@ export const translations = {
         en: 'Loading...',
         es: 'Cargando...',
       },
+      allocationNotFound: {
+        en: 'Allocation Not Found',
+        es: 'Asignación no encontrada',
+      },
+      allocationNotFoundDescription: {
+        en: 'The monthly allocation could not be loaded. Please try again or contact support if the problem persists.',
+        es: 'No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.',
+      },
       setPaymentRates: {
         en: 'Set Payment Rates',
         es: 'Establecer tarifas de pago',
@@ -283,6 +291,14 @@ export const translations = {
       },
     },
     lumpPaymentPage: {
+      allocationNotFound: {
+        en: 'Allocation Not Found',
+        es: 'Asignación no encontrada',
+      },
+      allocationNotFoundDescription: {
+        en: 'The monthly allocation could not be loaded. Please try again or contact support if the problem persists.',
+        es: 'No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.',
+      },
       amountRequired: {
         en: 'Amount must be a positive number',
         es: 'El monto debe ser un número positivo',

@@ -21,6 +21,7 @@ export type Provider = {
   name: string
   status: 'approved' | 'pending' | 'denied'
   type: 'ffn' | 'lhb' | 'center'
+  is_payable: boolean
 }
 
 

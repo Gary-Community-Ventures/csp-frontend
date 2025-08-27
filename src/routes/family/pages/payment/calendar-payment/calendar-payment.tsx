@@ -67,6 +67,21 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
     return <LoadingPage />
   }
 
+  if (allocationQuery.isError || !allocationQuery.data) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[400px] p-4">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold mb-2">
+            <Text text={t.allocationNotFound} />
+          </h2>
+          <p className="text-gray-600">
+            <Text text={t.allocationNotFoundDescription} />
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   if (paymentRateQuery.isError || !paymentRateQuery.data) {
     return (
       <SetPaymentRateForm
