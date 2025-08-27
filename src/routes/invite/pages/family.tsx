@@ -19,7 +19,7 @@ import { ExternalLink } from '@/components/external-link'
 import z from 'zod'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useState } from 'react'
-import { useValidateForm } from '@/lib/schemas'
+import { useValidateForm, useZodSchema } from '@/lib/schemas'
 import { Label } from '@/components/ui/label'
 import { FormErrorMessage } from '@/components/form-error'
 
@@ -230,14 +230,16 @@ function AcceptForm({
   const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
 
-  const schema = z.object({
-    children: z
-      .array(z.string())
-      .min(1, { message: text(t.selectChildrenError) })
-      .max(remainingSlots, {
-        message: `${text(t.maxSlotsReached.part1)}${remainingSlots}${text(t.maxSlotsReached.part2)}`,
-      }),
-  })
+  const schema = useZodSchema(
+    z.object({
+      children: z
+        .array(z.string())
+        .min(1, { message: text(t.selectChildrenError) })
+        .max(remainingSlots, {
+          message: `${text(t.maxSlotsReached.part1)}${remainingSlots}${text(t.maxSlotsReached.part2)}`,
+        }),
+    })
+  )
   const [formData, setFormData] = useState<z.infer<typeof schema>>({
     children: [],
   })
@@ -327,7 +329,7 @@ function AcceptForm({
       })}
       <FormErrorMessage error={getError('children')} />
       <div className="flex justify-center">
-        <Button type="submit" disabled={submitting} className="mt-5">
+        <Button type="submit" loading={submitting} className="mt-5">
           <Text text={t.acceptButton} />
         </Button>
       </div>

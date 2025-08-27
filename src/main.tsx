@@ -20,6 +20,7 @@ import { OfflinePage } from './components/pages/offline-page'
 initializeSentry()
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+const BACKEND_DOMAIN = import.meta.env.VITE_BACKEND_DOMAIN
 
 if (!PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key')
@@ -83,6 +84,7 @@ function ClerkWrapper({ children }: PropsWithChildren) {
       appearance={{
         variables: { colorPrimary: 'var(--primary)' },
       }}
+      allowedRedirectOrigins={BACKEND_DOMAIN ? [BACKEND_DOMAIN] : undefined}
       localization={locale}
     >
       {children}
