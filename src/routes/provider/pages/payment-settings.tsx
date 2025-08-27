@@ -102,6 +102,11 @@ export function PaymentSettingsPage() {
       return <Badge className="bg-green-100 text-green-800 border-green-300"><Text text={translations.provider.paymentSettings.status.active} /></Badge>
     }
     
+    // If status is Invited
+    if (status === 'Invited') {
+      return <Badge className="bg-yellow-100 text-yellow-800 border-yellow-300"><Text text={translations.provider.paymentSettings.status.invited} /></Badge>
+    }
+    
     // Any other status means not available
     return <Badge variant="destructive"><Text text={translations.provider.paymentSettings.status.notAvailable} /></Badge>
   }

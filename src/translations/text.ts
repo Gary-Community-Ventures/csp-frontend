@@ -662,6 +662,10 @@ export const translations = {
           en: 'Active',
           es: 'Activo',
         },
+        invited: {
+          en: 'Invited',
+          es: 'Invitado',
+        },
         notAvailable: {
           en: 'Not Available',
           es: 'No Disponible',
