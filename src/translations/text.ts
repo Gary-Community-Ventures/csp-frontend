@@ -389,7 +389,7 @@ export const translations = {
       },
       paymentsDisabled: {
         en: 'Payments Not Yet Enabled',
-        es: 'Pagos No Habilitados',
+        es: 'Pagos Aún No Habilitados',
       },
     },
     providerPage: {
