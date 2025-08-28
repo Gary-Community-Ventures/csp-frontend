@@ -30,6 +30,14 @@ function PayButton({ provider }: PayButtonProps) {
     )
   }
 
+  if (!provider.isPaymentEnabled) {
+    return (
+      <Badge variant="secondary">
+        <Text text={t.paymentsDisabled} />
+      </Badge>
+    )
+  }
+
   return (
     <Button asChild>
       <Link

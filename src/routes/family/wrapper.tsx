@@ -20,6 +20,7 @@ export type Provider = {
   name: string
   status: 'approved' | 'pending' | 'denied'
   type: 'ffn' | 'lhb' | 'center'
+  isPaymentEnabled: boolean
 }
 
 export type Transaction = {
@@ -52,6 +53,7 @@ export type FamilyContext = {
   navBar: NavBarContext
   children: Child[]
   isAlsoProvider: boolean
+  isPaymentEnabled: boolean
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
@@ -67,7 +69,15 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       lastName: familyData.selected_child_info.last_name,
       balance: familyData.selected_child_info.balance,
     },
-    providers: familyData.providers,
+    providers: familyData.providers.map((provider) => {
+      return {
+        id: provider.id,
+        name: provider.name,
+        status: provider.status,
+        type: provider.type,
+        isPaymentEnabled: provider.is_payment_enabled,
+      }
+    }),
     transactions: familyData.transactions,
     children: familyData.children.map((child) => {
       return {
@@ -77,6 +87,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       }
     }),
     isAlsoProvider: familyData.is_also_provider,
+    isPaymentEnabled: familyData.is_payment_enabled,
     navBar: {
       notifications: familyData.notifications,
       setHidden,

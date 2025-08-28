@@ -81,6 +81,7 @@ export type Provider = {
   name: string
   status: 'approved' | 'pending' | 'denied'
   type: 'ffn' | 'lhb' | 'center'
+  is_payment_enabled: boolean
 }
 
 export type Transaction = {
@@ -107,4 +108,5 @@ export type Family = {
   children: Child[]
   notifications: Notification[]
   is_also_provider: boolean
+  is_payment_enabled: boolean
 }
