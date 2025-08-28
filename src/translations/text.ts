@@ -418,6 +418,10 @@ export const translations = {
         en: 'Pay Provider',
         es: 'Pagar Proveedor',
       },
+      paymentsDisabled: {
+        en: 'Payments Not Enabled',
+        es: 'Pagos No Habilitados',
+      },
     },
     providerPage: {
       header: {

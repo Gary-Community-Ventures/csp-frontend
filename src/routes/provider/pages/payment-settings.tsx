@@ -153,7 +153,7 @@ export function PaymentSettingsPage() {
       <WhiteCard>
         <div className="space-y-4">
           <h3 className="text-lg font-semibold"><Text text={translations.provider.paymentSettings.paymentStatus.title} /></h3>
-          {paymentSettings.is_payable ? (
+          {paymentSettings.isPayable ? (
             <div className="flex items-center gap-2">
               <div className="size-2 bg-green-500 rounded-full"></div>
               <span className="text-green-700 font-medium"><Text text={translations.provider.paymentSettings.paymentStatus.available} /></span>
