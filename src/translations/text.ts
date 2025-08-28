@@ -198,37 +198,15 @@ export const translations = {
         en: 'Loading...',
         es: 'Cargando...',
       },
-      setPaymentRates: {
-        en: 'Set Payment Rates',
-        es: 'Establecer tarifas de pago',
-      },
-      setPaymentRatesDescription: {
-        en: 'Before you can manage care days, please set the payment rates for this child and provider.',
-        es: 'Antes de que pueda administrar los días de cuidado, establezca las tarifas de pago para este niño y proveedor.',
-      },
-      halfDayRate: {
-        en: 'Half Day Rate (USD)',
-        es: 'Tarifa de Medio Día (USD)',
-      },
-      fullDayRate: {
-        en: 'Full Day Rate (USD)',
-        es: 'Tarifa de Día Completo (USD)',
-      },
-      setRatesButton: {
-        en: 'Set Rates',
-        es: 'Establecer Tarifas',
-      },
-      paymentRateSuccess: {
-        en: 'Payment rate set successfully!',
-        es: '¡Tarifa de pago establecida con éxito!',
-      },
-      paymentRateError: {
-        en: 'Failed to set payment rate:',
-        es: 'Error al establecer la tarifa de pago:',
-      },
-      invalidRatesError: {
-        en: 'Please enter valid positive numbers for both rates.',
-        es: 'Por favor, introduce números positivos válidos para ambas tarifas.',
+      noPaymentRate: {
+        part1: {
+          en: 'Your provider has not set their care rates yet. Please have them  log into the portal and set their rates for ',
+          es: 'Su proveedor aún no ha establecido sus tasas de atención. Por favor, haga que se registre en el portal y configure sus tasas para ',
+        },
+        part2: {
+          en: ". Once rates are set, you'll be able to schedule half-day and full-day payments for this provider.",
+          es: '. Una vez que se establezcan las tasas, podrás programar pagos de media hora y día completo para este proveedor.',
+        },
       },
       unsavedChangesBlocker: {
         en: 'Are you sure you want to leave?',
@@ -488,6 +466,54 @@ export const translations = {
       payments: {
         en: 'Recent Payments',
         es: 'Pagos Recientes',
+      },
+      childrenList: {
+        setRate: {
+          en: 'Set Rate',
+          es: 'Establecer Tarifa',
+        },
+        halfDayRate: {
+          en: 'Half Day: ',
+          es: 'Media Hora: ',
+        },
+        fullDayRate: {
+          en: 'Full Day: ',
+          es: 'Día Completo: ',
+        },
+      },
+    },
+    setRate: {
+      setPaymentRates: {
+        en: 'Set Payment Rates for ',
+        es: 'Establecer tarifas de pago para ',
+      },
+      setPaymentRatesDescription: {
+        en: 'Before the family can schedule care days, you must set your rates for ',
+        es: 'Antes de que la familia pueda programar los días de cuidado, debes establecer tus tarifas para ',
+      },
+      halfDayRate: {
+        en: 'Half Day Rate (USD)',
+        es: 'Tarifa de Medio Día (USD)',
+      },
+      fullDayRate: {
+        en: 'Full Day Rate (USD)',
+        es: 'Tarifa de Día Completo (USD)',
+      },
+      setRatesButton: {
+        en: 'Set Rates',
+        es: 'Establecer Tarifas',
+      },
+      paymentRateSuccess: {
+        en: 'Payment rate set successfully!',
+        es: '¡Tarifa de pago establecida con éxito!',
+      },
+      paymentRateError: {
+        en: 'Failed to set payment rate:',
+        es: 'Error al establecer la tarifa de pago:',
+      },
+      invalidRatesError: {
+        en: 'Please enter valid positive numbers for both rates.',
+        es: 'Por favor, introduce números positivos válidos para ambas tarifas.',
       },
     },
     resources: {

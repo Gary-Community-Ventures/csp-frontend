@@ -29,6 +29,8 @@ export type Child = {
   id: string
   firstName: string
   lastName: string
+  fullDayRateCents: number
+  halfDayRateCents: number
 }
 
 export type Notification = {
@@ -70,6 +72,8 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
         id: child.id,
         firstName: child.first_name,
         lastName: child.last_name,
+        fullDayRateCents: child.full_day_rate_cents,
+        halfDayRateCents: child.half_day_rate_cents,
       }
     }),
     transactions: providerData.transactions,

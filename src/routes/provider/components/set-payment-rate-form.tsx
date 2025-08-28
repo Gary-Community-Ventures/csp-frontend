@@ -9,6 +9,7 @@ import { dollarToCents } from '@/lib/currency'
 import { useValidateForm } from '@/lib/schemas'
 import { z } from 'zod'
 import { FormErrorMessage } from '@/components/form-error'
+import type { Child } from '../wrapper'
 
 const paymentRateFormSchema = z.object({
   halfDayRate: z.string().refine(
@@ -33,19 +34,19 @@ const paymentRateFormSchema = z.object({
 
 export type PaymentRateForm = z.infer<typeof paymentRateFormSchema>
 
-interface SetPaymentRateFormProps {
-  createPaymentRateMutation: {
-    mutate: (variables: {
-      halfDayRateCents: number
-      fullDayRateCents: number
-    }) => void
-  }
+type SetPaymentRateFormProps = {
+  createPaymentRate: (
+    halfDayRateCents: number,
+    fullDayRateCents: number
+  ) => void
+  child: Child
 }
 
 export function SetPaymentRateForm({
-  createPaymentRateMutation,
+  createPaymentRate,
+  child,
 }: SetPaymentRateFormProps) {
-  const t = translations.family.calendarPaymentPage
+  const t = translations.provider.setRate
   const [formData, setFormData] = useState<PaymentRateForm>({
     halfDayRate: '',
     fullDayRate: '',
@@ -54,10 +55,10 @@ export function SetPaymentRateForm({
 
   const handleSetPaymentRate = () => {
     submit((data) => {
-      createPaymentRateMutation.mutate({
-        halfDayRateCents: dollarToCents(data.halfDayRate),
-        fullDayRateCents: dollarToCents(data.fullDayRate),
-      })
+      createPaymentRate(
+        dollarToCents(data.halfDayRate),
+        dollarToCents(data.fullDayRate)
+      )
     })
   }
 
@@ -96,9 +97,11 @@ export function SetPaymentRateForm({
       <CardContent>
         <div className="text-center font-bold text-lg mb-2 text-secondary">
           <Text text={t.setPaymentRates} />
+          {child.firstName} {child.lastName}
         </div>
         <div className="text-center mb-6">
           <Text text={t.setPaymentRatesDescription} />
+          {child.firstName} {child.lastName}
         </div>
         <div className="space-y-4">
           <div className="space-y-2">
