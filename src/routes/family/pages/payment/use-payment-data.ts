@@ -1,21 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getMonthAllocation, submitCareDays } from '@/lib/api/children'
 import { createCareDay, deleteCareDay, updateCareDay } from '@/lib/api/careDays'
-import { getPaymentRate, createPaymentRate } from '@/lib/api/paymentRates'
+import { getPaymentRate } from '@/lib/api/paymentRates'
 import { useFamilyContext } from '@/routes/family/wrapper'
 import { paymentRoute } from '@/routes/family/routes'
 import React, { useEffect } from 'react'
-import { toast } from 'sonner'
-import { useText } from '@/translations/wrapper'
-import { translations } from '@/translations/text'
 
 interface CustomError extends Error {
   response?: Response
 }
 
 export function usePaymentData() {
-  const t = translations.family.calendarPaymentPage
-  const text = useText()
   const { providerId } = paymentRoute.useParams()
   const { selectedChildInfo } = useFamilyContext()
   const { context } = paymentRoute.useRouteContext()
@@ -174,27 +169,6 @@ export function usePaymentData() {
     },
   })
 
-  const createPaymentRateMutation = useMutation({
-    mutationFn: (variables: {
-      halfDayRateCents: number
-      fullDayRateCents: number
-    }) =>
-      createPaymentRate(
-        context,
-        providerId,
-        selectedChildInfo.id,
-        variables.halfDayRateCents,
-        variables.fullDayRateCents
-      ),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['paymentRate'] })
-      toast.success(text(t.paymentRateSuccess))
-    },
-    onError: (error) => {
-      toast.error(`${text(t.paymentRateError)} ${error.message}`)
-    },
-  })
-
   return {
     date,
     setDate,
@@ -204,7 +178,6 @@ export function usePaymentData() {
     updateCareDayMutation,
     deleteCareDayMutation,
     submitCareDaysMutation,
-    createPaymentRateMutation,
     prevMonthAllocation: prevMonthAllocationQuery.data,
     nextMonthAllocation: nextMonthAllocationQuery.data,
     prevMonthAllocationFailed,

@@ -6,7 +6,6 @@ import type { Child } from '@/routes/provider/wrapper'
 import { Button } from './ui/button'
 import { Link } from '@tanstack/react-router'
 import { formatAmount } from '@/lib/currency'
-import { Separator } from './ui/separator'
 
 export type ChildrenListProps = {
   children: Child[]

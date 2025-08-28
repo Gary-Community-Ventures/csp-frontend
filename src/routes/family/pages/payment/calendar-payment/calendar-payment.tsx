@@ -69,7 +69,7 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
 
   if (paymentRateQuery.isError || !paymentRateQuery.data) {
     return (
-      <p className='text-center'>
+      <p className="text-center">
         <Text text={t.noPaymentRate.part1} />
         {child?.firstName} {child?.lastName}
         <Text text={t.noPaymentRate.part2} />
