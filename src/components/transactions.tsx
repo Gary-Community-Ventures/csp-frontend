@@ -17,7 +17,7 @@ type PaymentAmountProps = {
   amountCents: number
 }
 
-function PaymentAmount({ amountCents }: PaymentAmountProps) {
+function FamilyPaymentAmount({ amountCents }: PaymentAmountProps) {
   const amount = amountCents / 100
 
   const formattedAmount = useMemo(() => {
@@ -28,7 +28,21 @@ function PaymentAmount({ amountCents }: PaymentAmountProps) {
     })
   }, [amount])
 
-  return <span className="font-bold text-green-600">{formattedAmount}</span>
+  return <span className="font-bold text-red-600">-{formattedAmount}</span>
+}
+
+function ProviderPaymentAmount({ amountCents }: PaymentAmountProps) {
+  const amount = amountCents / 100
+
+  const formattedAmount = useMemo(() => {
+    return amount.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+    })
+  }, [amount])
+
+  return <span className="font-bold text-green-600">+{formattedAmount}</span>
 }
 
 function PaymentStatusBadge({
@@ -113,7 +127,7 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
             </div>
           </div>
           <div className="text-right">
-            <PaymentAmount amountCents={payment.amount_cents} />
+            <FamilyPaymentAmount amountCents={payment.amount_cents} />
           </div>
         </div>
       ))}
@@ -183,7 +197,7 @@ export function ProviderPaymentsList({
             </div>
           </div>
           <div className="text-right">
-            <PaymentAmount amountCents={payment.amount_cents} />
+            <ProviderPaymentAmount amountCents={payment.amount_cents} />
           </div>
         </div>
       ))}
