@@ -13,6 +13,7 @@ export type SelectedChildInfo = {
   firstName: string
   lastName: string
   balance: number
+  isPaymentEnabled: boolean
 }
 
 export type Provider = {
@@ -53,7 +54,6 @@ export type FamilyContext = {
   navBar: NavBarContext
   children: Child[]
   isAlsoProvider: boolean
-  isPaymentEnabled: boolean
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
@@ -68,6 +68,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       firstName: familyData.selected_child_info.first_name,
       lastName: familyData.selected_child_info.last_name,
       balance: familyData.selected_child_info.balance,
+      isPaymentEnabled: familyData.selected_child_info.is_payment_enabled,
     },
     providers: familyData.providers.map((provider) => {
       return {
@@ -87,7 +88,6 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       }
     }),
     isAlsoProvider: familyData.is_also_provider,
-    isPaymentEnabled: familyData.is_payment_enabled,
     navBar: {
       notifications: familyData.notifications,
       setHidden,

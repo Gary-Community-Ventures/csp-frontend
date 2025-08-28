@@ -74,6 +74,7 @@ export type SelectedChildInfo = {
   first_name: string
   last_name: string
   balance: number
+  is_payment_enabled: boolean
 }
 
 export type Provider = {
@@ -108,5 +109,4 @@ export type Family = {
   children: Child[]
   notifications: Notification[]
   is_also_provider: boolean
-  is_payment_enabled: boolean
 }

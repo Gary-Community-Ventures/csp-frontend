@@ -32,11 +32,11 @@ function Balance() {
 
 export function FamilyHomePage() {
   const t = translations.family.home
-  const { transactions, isPaymentEnabled } = useFamilyContext()
+  const { transactions, selectedChildInfo } = useFamilyContext()
 
   return (
     <>
-      {isPaymentEnabled ? <Balance /> : null}
+      {selectedChildInfo.isPaymentEnabled ? <Balance /> : null}
       <div className="px-5 pt-5">
         <section className="mb-5">
           <Header>
