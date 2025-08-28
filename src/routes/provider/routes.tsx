@@ -8,6 +8,7 @@ import { InviteFamilyPage } from './pages/invite-family'
 import { InviteFamilyConfirmationPage } from './pages/invite-family-confirmation'
 import { AttendancePage, loadAttendance } from './pages/attendance'
 import { ResourcesPage } from './pages/resources'
+import { PaymentSettingsPage } from './pages/payment-settings'
 
 export const providerRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -67,6 +68,12 @@ const resourcesRoute = createRoute({
   component: ResourcesPage,
 })
 
+const paymentSettingsRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/payment-settings',
+  component: PaymentSettingsPage,
+})
+
 /* TODO renable when other pages are implemented
 const childrenRoute = createRoute({
   getParentRoute: () => providerRoute,
@@ -95,6 +102,7 @@ export const providerRouteTree = providerRoute.addChildren([
   inviteFamilyConfirmationRoute,
   attendanceRoute,
   resourcesRoute,
+  paymentSettingsRoute,
   // childrenRoute,
   // resourcesRoute,
   // helpRoute,

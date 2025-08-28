@@ -1,15 +1,25 @@
 import { CardList } from '@/components/card-list'
 import { WhiteCard } from '@/components/white-card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { useMemo } from 'react'
 import { useFormatDate } from '@/lib/dates'
+import { Link } from '@tanstack/react-router'
+import { Settings } from 'lucide-react'
+import type {
+  FamilyPaymentHistoryItem,
+  ProviderPaymentHistoryItem,
+} from '@/lib/api/paymentHistory'
 
-type TransactionAmountProps = {
-  amount: number
+type PaymentAmountProps = {
+  amountCents: number
 }
 
-function TransactionAmount({ amount }: TransactionAmountProps) {
+function FamilyPaymentAmount({ amountCents }: PaymentAmountProps) {
+  const amount = amountCents / 100
+
   const formattedAmount = useMemo(() => {
     return amount.toLocaleString('en-US', {
       style: 'currency',
@@ -18,46 +28,71 @@ function TransactionAmount({ amount }: TransactionAmountProps) {
     })
   }, [amount])
 
-  const className = useMemo(() => {
-    let className = 'font-bold'
+  return <span className="font-bold text-red-600">-{formattedAmount}</span>
+}
 
-    if (amount < 0) {
-      className += ' text-red-500'
-    } else if (amount > 0) {
-      className += ' text-green-500'
-    }
-    return className
+function ProviderPaymentAmount({ amountCents }: PaymentAmountProps) {
+  const amount = amountCents / 100
+
+  const formattedAmount = useMemo(() => {
+    return amount.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+    })
   }, [amount])
 
+  return <span className="font-bold text-green-600">+{formattedAmount}</span>
+}
+
+function PaymentStatusBadge({
+  status,
+}: {
+  status: 'success' | 'failed' | 'pending'
+}) {
+  const statusConfig = {
+    success: {
+      variant: 'default' as const,
+      className: 'bg-green-100 text-green-800 border-green-300',
+    },
+    failed: { variant: 'destructive' as const, className: '' },
+    pending: {
+      variant: 'outline' as const,
+      className: 'bg-yellow-100 text-yellow-800 border-yellow-300',
+    },
+  }
+
+  const config = statusConfig[status]
+
   return (
-    <span className={className}>
-      {amount > 0 ? '+' : ''}
-      {formattedAmount}
-    </span>
+    <Badge variant={config.variant} className={config.className}>
+      <Text text={translations.general.paymentHistory.status[status]} />
+    </Badge>
   )
 }
 
-export type TransationsListProps = {
-  transactions: {
-    name: string
-    amount: number
-    date: Date
-  }[]
+export type FamilyPaymentsListProps = {
+  payments: FamilyPaymentHistoryItem[]
 }
 
-export function TransactionsList({ transactions }: TransationsListProps) {
+export type ProviderPaymentsListProps = {
+  payments: ProviderPaymentHistoryItem[]
+  isPayable: boolean
+}
+
+export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
   const formatDate = useFormatDate()
 
-  if (transactions.length < 1) {
+  if (payments.length < 1) {
     return (
       <WhiteCard Tag="ul" className="py-8">
         <div className="flex flex-col items-center justify-center text-muted-foreground text-center">
           <p className="text-lg font-semibold mb-2">
-            <Text text={translations.general.emptyState.noTransactionsTitle} />
+            <Text text={translations.general.emptyState.noPaymentsTitle} />
           </p>
           <p className="text-sm">
             <Text
-              text={translations.general.emptyState.noTransactionsDescription}
+              text={translations.general.emptyState.noFamilyPaymentsDescription}
             />
           </p>
         </div>
@@ -67,15 +102,103 @@ export function TransactionsList({ transactions }: TransationsListProps) {
 
   return (
     <CardList
-      items={transactions.map((transaction) => (
-        <div className="flex justify-between">
-          <div>
-            <strong className="text-lg">{transaction.name}</strong>
-            <div className="text-muted-foreground text-sm">
-              {formatDate(transaction.date)}
+      items={payments.map((payment) => (
+        <div
+          className="flex justify-between items-start gap-4"
+          key={payment.payment_id}
+        >
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <strong className="text-lg truncate">
+                {payment.provider_name}
+              </strong>
+              <PaymentStatusBadge status={payment.status} />
+            </div>
+            <div className="text-muted-foreground text-sm space-y-1">
+              <div>
+                <Text text={translations.general.paymentHistory.child} />:{' '}
+                {payment.child_name}
+              </div>
+              <div>{formatDate(new Date(payment.created_at))}</div>
+              <div>
+                <Text text={translations.general.paymentHistory.month} />:{' '}
+                {payment.month}
+              </div>
             </div>
           </div>
-          <TransactionAmount amount={transaction.amount} />
+          <div className="text-right">
+            <FamilyPaymentAmount amountCents={payment.amount_cents} />
+          </div>
+        </div>
+      ))}
+    />
+  )
+}
+
+export function ProviderPaymentsList({
+  payments,
+  isPayable,
+}: ProviderPaymentsListProps) {
+  const formatDate = useFormatDate()
+
+  if (payments.length < 1) {
+    return (
+      <WhiteCard Tag="ul" className="py-8">
+        <div className="flex flex-col items-center justify-center text-muted-foreground text-center space-y-4">
+          <div>
+            <p className="text-lg font-semibold mb-2">
+              <Text text={translations.general.emptyState.noPaymentsTitle} />
+            </p>
+            <p className="text-sm">
+              <Text
+                text={
+                  translations.general.emptyState.noProviderPaymentsDescription
+                }
+              />
+            </p>
+          </div>
+          {!isPayable && (
+            <Button variant="outline" asChild>
+              <Link to="/provider/payment-settings">
+                <Settings className="size-4" />
+                <Text
+                  text={
+                    translations.provider.paymentSettings.setupPaymentButton
+                  }
+                />
+              </Link>
+            </Button>
+          )}
+        </div>
+      </WhiteCard>
+    )
+  }
+
+  return (
+    <CardList
+      items={payments.map((payment) => (
+        <div
+          className="flex justify-between items-start gap-4"
+          key={payment.payment_id}
+        >
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <strong className="text-lg truncate">{payment.child_name}</strong>
+              <PaymentStatusBadge status={payment.status} />
+            </div>
+            <div className="text-muted-foreground text-sm space-y-1">
+              <div>{formatDate(new Date(payment.created_at))}</div>
+              <div>
+                <Text
+                  text={translations.general.paymentHistory.paymentMethod}
+                />
+                : {payment.payment_method.toUpperCase()}
+              </div>
+            </div>
+          </div>
+          <div className="text-right">
+            <ProviderPaymentAmount amountCents={payment.amount_cents} />
+          </div>
         </div>
       ))}
     />

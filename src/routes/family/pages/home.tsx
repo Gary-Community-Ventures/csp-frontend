@@ -1,6 +1,6 @@
 import { useFamilyContext } from '../wrapper'
 import { ProviderList } from '../components/providers'
-import { TransactionsList } from '@/components/transactions'
+import { FamilyPaymentsList } from '@/components/transactions'
 import { Header } from '@/components/header'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
@@ -32,7 +32,7 @@ function Balance() {
 
 export function FamilyHomePage() {
   const t = translations.family.home
-  const { transactions, selectedChildInfo } = useFamilyContext()
+  const { selectedChildInfo, paymentHistory } = useFamilyContext()
 
   return (
     <>
@@ -48,15 +48,7 @@ export function FamilyHomePage() {
           <Header>
             <Text text={t.recentTransactions} />
           </Header>
-          <TransactionsList
-            transactions={transactions.map((transaction) => {
-              return {
-                name: transaction.name,
-                amount: transaction.amount,
-                date: transaction.date,
-              }
-            })}
-          />
+          <FamilyPaymentsList payments={paymentHistory.payments} />
         </section>
       </div>
     </>

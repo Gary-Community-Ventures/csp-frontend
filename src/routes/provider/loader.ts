@@ -3,6 +3,7 @@ import {
   handleStatusCodes,
   headersWithAuth,
 } from '@/lib/api/client'
+import { getProviderPaymentHistory } from '@/lib/api/paymentHistory'
 import type { RouterContext } from '../router'
 
 export async function loadProviderData({
@@ -13,25 +14,33 @@ export async function loadProviderData({
   abortController: AbortController
 }) {
   try {
-    const res = await fetch(backendUrl('/provider'), {
-      headers: await headersWithAuth(context),
-      signal: abortController.signal,
-    })
+    // Load provider data and payment history in parallel
+    const [providerRes, paymentHistory] = await Promise.all([
+      fetch(backendUrl('/provider'), {
+        headers: await headersWithAuth(context),
+        signal: abortController.signal,
+      }),
+      getProviderPaymentHistory(context).catch((error) => {
+        console.error('Error loading payment history:', error)
+        // Return empty payment history if it fails
+        return {
+          payments: [],
+          total_count: 0,
+          total_amount_cents: 0,
+          successful_payments_cents: 0,
+        }
+      })
+    ])
 
-    handleStatusCodes(context, res)
+    handleStatusCodes(context, providerRes)
 
-    const rawJson = (await res.json()) as Provider
+    const rawJson = (await providerRes.json()) as Provider
 
-    const json: Provider = {
-      ...rawJson,
-      transactions: rawJson.transactions.map((payment) => ({
-        ...payment,
-        date: new Date(payment.date),
-      })),
-    }
+    const json: Provider = rawJson
 
     return {
       providerData: json,
+      paymentHistory,
     }
   } catch (error) {
     console.error('Error loading provider data:', error)
@@ -43,14 +52,9 @@ export type ProviderInfo = {
   id: string
   first_name: string
   last_name: string
+  is_payable: boolean
 }
 
-export type Transaction = {
-  id: string
-  name: string
-  amount: number
-  date: Date
-}
 
 export type Curriculum = {
   id: string
@@ -70,7 +74,6 @@ export type Notification = {
 export type Provider = {
   provider_info: ProviderInfo
   children: Child[]
-  transactions: Transaction[]
   curriculum: Curriculum | null
   notifications: Notification[]
   is_also_family: boolean
