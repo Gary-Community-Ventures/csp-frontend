@@ -27,7 +27,6 @@ export interface ProviderPaymentHistoryItem {
   status: 'success' | 'failed' | 'pending'
   child_name: string
   child_id: string
-  family_name: string | null
   month: string
   payment_method: string
   payment_type: 'care_days' | 'lump_sum' | 'other'
@@ -42,8 +41,8 @@ export interface ProviderPaymentHistoryResponse {
 
 export async function getFamilyPaymentHistory(context: RouterContext): Promise<FamilyPaymentHistoryResponse> {
   const headers = await headersWithAuth(context)
-  
-  const response = await fetch(backendUrl('/payments/family/history'), {
+
+  const response = await fetch(backendUrl('/family/payments'), {
     method: 'GET',
     headers,
   })
@@ -60,7 +59,7 @@ export async function getFamilyPaymentHistory(context: RouterContext): Promise<F
 export async function getProviderPaymentHistory(context: RouterContext): Promise<ProviderPaymentHistoryResponse> {
   const headers = await headersWithAuth(context)
 
-  const response = await fetch(backendUrl('/payments/provider/history'), {
+  const response = await fetch(backendUrl('/provider/payments'), {
     method: 'GET',
     headers,
   })

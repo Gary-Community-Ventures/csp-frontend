@@ -8,7 +8,10 @@ import { useMemo } from 'react'
 import { useFormatDate } from '@/lib/dates'
 import { Link } from '@tanstack/react-router'
 import { Settings } from 'lucide-react'
-import type { FamilyPaymentHistoryItem, ProviderPaymentHistoryItem } from '@/lib/api/paymentHistory'
+import type {
+  FamilyPaymentHistoryItem,
+  ProviderPaymentHistoryItem,
+} from '@/lib/api/paymentHistory'
 
 type PaymentAmountProps = {
   amountCents: number
@@ -25,18 +28,24 @@ function PaymentAmount({ amountCents }: PaymentAmountProps) {
     })
   }, [amount])
 
-  return (
-    <span className="font-bold text-green-600">
-      {formattedAmount}
-    </span>
-  )
+  return <span className="font-bold text-green-600">{formattedAmount}</span>
 }
 
-function PaymentStatusBadge({ status }: { status: 'success' | 'failed' | 'pending' }) {
+function PaymentStatusBadge({
+  status,
+}: {
+  status: 'success' | 'failed' | 'pending'
+}) {
   const statusConfig = {
-    success: { variant: 'default' as const, className: 'bg-green-100 text-green-800 border-green-300' },
+    success: {
+      variant: 'default' as const,
+      className: 'bg-green-100 text-green-800 border-green-300',
+    },
     failed: { variant: 'destructive' as const, className: '' },
-    pending: { variant: 'outline' as const, className: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
+    pending: {
+      variant: 'outline' as const,
+      className: 'bg-yellow-100 text-yellow-800 border-yellow-300',
+    },
   }
 
   const config = statusConfig[status]
@@ -68,7 +77,9 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
             <Text text={translations.general.emptyState.noPaymentsTitle} />
           </p>
           <p className="text-sm">
-            <Text text={translations.general.emptyState.noFamilyPaymentsDescription} />
+            <Text
+              text={translations.general.emptyState.noFamilyPaymentsDescription}
+            />
           </p>
         </div>
       </WhiteCard>
@@ -78,16 +89,27 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
   return (
     <CardList
       items={payments.map((payment) => (
-        <div className="flex justify-between items-start gap-4" key={payment.payment_id}>
+        <div
+          className="flex justify-between items-start gap-4"
+          key={payment.payment_id}
+        >
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <strong className="text-lg truncate">{payment.provider_name}</strong>
+              <strong className="text-lg truncate">
+                {payment.provider_name}
+              </strong>
               <PaymentStatusBadge status={payment.status} />
             </div>
             <div className="text-muted-foreground text-sm space-y-1">
-              <div><Text text={translations.general.paymentHistory.child} />: {payment.child_name}</div>
+              <div>
+                <Text text={translations.general.paymentHistory.child} />:{' '}
+                {payment.child_name}
+              </div>
               <div>{formatDate(new Date(payment.created_at))}</div>
-              <div><Text text={translations.general.paymentHistory.month} />: {payment.month}</div>
+              <div>
+                <Text text={translations.general.paymentHistory.month} />:{' '}
+                {payment.month}
+              </div>
             </div>
           </div>
           <div className="text-right">
@@ -99,7 +121,10 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
   )
 }
 
-export function ProviderPaymentsList({ payments, isPayable }: ProviderPaymentsListProps) {
+export function ProviderPaymentsList({
+  payments,
+  isPayable,
+}: ProviderPaymentsListProps) {
   const formatDate = useFormatDate()
 
   if (payments.length < 1) {
@@ -111,14 +136,22 @@ export function ProviderPaymentsList({ payments, isPayable }: ProviderPaymentsLi
               <Text text={translations.general.emptyState.noPaymentsTitle} />
             </p>
             <p className="text-sm">
-              <Text text={translations.general.emptyState.noProviderPaymentsDescription} />
+              <Text
+                text={
+                  translations.general.emptyState.noProviderPaymentsDescription
+                }
+              />
             </p>
           </div>
           {!isPayable && (
             <Button variant="outline" asChild>
               <Link to="/provider/payment-settings">
                 <Settings className="size-4" />
-                <Text text={translations.provider.paymentSettings.setupPaymentButton} />
+                <Text
+                  text={
+                    translations.provider.paymentSettings.setupPaymentButton
+                  }
+                />
               </Link>
             </Button>
           )}
@@ -130,17 +163,23 @@ export function ProviderPaymentsList({ payments, isPayable }: ProviderPaymentsLi
   return (
     <CardList
       items={payments.map((payment) => (
-        <div className="flex justify-between items-start gap-4" key={payment.payment_id}>
+        <div
+          className="flex justify-between items-start gap-4"
+          key={payment.payment_id}
+        >
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <strong className="text-lg truncate">{payment.child_name}</strong>
               <PaymentStatusBadge status={payment.status} />
             </div>
             <div className="text-muted-foreground text-sm space-y-1">
-              {payment.family_name && <div><Text text={translations.general.paymentHistory.family} />: {payment.family_name}</div>}
               <div>{formatDate(new Date(payment.created_at))}</div>
-              <div><Text text={translations.general.paymentHistory.month} />: {payment.month}</div>
-              <div><Text text={translations.general.paymentHistory.paymentMethod} />: {payment.payment_method}</div>
+              <div>
+                <Text
+                  text={translations.general.paymentHistory.paymentMethod}
+                />
+                : {payment.payment_method.toUpperCase()}
+              </div>
             </div>
           </div>
           <div className="text-right">
@@ -151,4 +190,3 @@ export function ProviderPaymentsList({ payments, isPayable }: ProviderPaymentsLi
     />
   )
 }
-
