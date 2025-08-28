@@ -388,8 +388,8 @@ export const translations = {
         es: 'Pagar Proveedor',
       },
       paymentsDisabled: {
-        en: 'Payments Not Yet Enabled',
-        es: 'Pagos Aún No Habilitados',
+        en: 'Payments Not Enabled',
+        es: 'Pagos No Habilitados',
       },
     },
     providerPage: {
