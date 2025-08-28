@@ -13,6 +13,7 @@ export type SelectedChildInfo = {
   firstName: string
   lastName: string
   balance: number
+  isPaymentEnabled: boolean
 }
 
 export type Provider = {
@@ -20,6 +21,7 @@ export type Provider = {
   name: string
   status: 'approved' | 'pending' | 'denied'
   type: 'ffn' | 'lhb' | 'center'
+  isPaymentEnabled: boolean
 }
 
 export type Transaction = {
@@ -66,8 +68,17 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       firstName: familyData.selected_child_info.first_name,
       lastName: familyData.selected_child_info.last_name,
       balance: familyData.selected_child_info.balance,
+      isPaymentEnabled: familyData.selected_child_info.is_payment_enabled,
     },
-    providers: familyData.providers,
+    providers: familyData.providers.map((provider) => {
+      return {
+        id: provider.id,
+        name: provider.name,
+        status: provider.status,
+        type: provider.type,
+        isPaymentEnabled: provider.is_payment_enabled,
+      }
+    }),
     transactions: familyData.transactions,
     children: familyData.children.map((child) => {
       return {
