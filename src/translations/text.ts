@@ -512,7 +512,7 @@ export const translations = {
           en: ' and $',
           es: ' y $',
         },
-      }
+      },
     },
     resources: {
       title: {
