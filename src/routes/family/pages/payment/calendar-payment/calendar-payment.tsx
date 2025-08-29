@@ -8,7 +8,6 @@ import { Spinner } from '@/components/ui/spinner'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
 import { usePaymentData } from '../use-payment-data'
-import { SetPaymentRateForm } from './set-payment-rate-form'
 import { CareCalendar } from './care-calendar'
 import { ConfirmUnsavedChangesDialog } from './confirm-unsaved-changes-dialog'
 import { allocatedCareDaySchema } from '@/lib/schemas'
@@ -27,7 +26,6 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
     updateCareDayMutation,
     deleteCareDayMutation,
     submitCareDaysMutation,
-    createPaymentRateMutation,
     prevMonthAllocationFailed,
     nextMonthAllocationFailed,
   } = usePaymentData()
@@ -67,15 +65,17 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
     return <LoadingPage />
   }
 
+  const child = findChildById(children, selectedChildInfo.id)
+
   if (paymentRateQuery.isError || !paymentRateQuery.data) {
     return (
-      <SetPaymentRateForm
-        createPaymentRateMutation={createPaymentRateMutation}
-      />
+      <p className="text-center">
+        <Text text={t.noPaymentRate.part1} />
+        {child?.firstName} {child?.lastName}
+        <Text text={t.noPaymentRate.part2} />
+      </p>
     )
   }
-
-  const child = findChildById(children, selectedChildInfo.id)
 
   return (
     <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">

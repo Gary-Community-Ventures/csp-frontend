@@ -74,6 +74,7 @@ export type SelectedChildInfo = {
   first_name: string
   last_name: string
   balance: number
+  is_payment_enabled: boolean
 }
 
 export type Provider = {
@@ -81,6 +82,7 @@ export type Provider = {
   name: string
   status: 'approved' | 'pending' | 'denied'
   type: 'ffn' | 'lhb' | 'center'
+  is_payment_enabled: boolean
 }
 
 export type Transaction = {

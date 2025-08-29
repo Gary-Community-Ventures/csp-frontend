@@ -127,8 +127,6 @@ export const paymentRequestSchema = z.object({
 
 export const paymentRateSchema = z.object({
   id: z.number(),
-  google_sheets_provider_id: z.string(),
-  google_sheets_child_id: z.string(),
   half_day_rate_cents: z.number(),
   full_day_rate_cents: z.number(),
 })
