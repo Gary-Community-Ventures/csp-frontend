@@ -503,18 +503,16 @@ export const translations = {
         en: 'Set Rates',
         es: 'Establecer Tarifas',
       },
-      paymentRateSuccess: {
-        en: 'Payment rate set successfully!',
-        es: '¡Tarifa de pago establecida con éxito!',
-      },
-      paymentRateError: {
-        en: 'Failed to set payment rate:',
-        es: 'Error al establecer la tarifa de pago:',
-      },
-      invalidRatesError: {
-        en: 'Please enter valid positive numbers for both rates.',
-        es: 'Por favor, introduce números positivos válidos para ambas tarifas.',
-      },
+      rateError: {
+        part1: {
+          en: 'Rate must be a number between $',
+          es: 'La tarifa debe ser un número entre $',
+        },
+        part2: {
+          en: ' and $',
+          es: ' y $',
+        },
+      }
     },
     resources: {
       title: {

@@ -1,5 +1,5 @@
 import { SetPaymentRateForm } from '@/routes/provider/components/set-payment-rate-form'
-import { useMatch, useNavigate, useRouter } from '@tanstack/react-router'
+import { useMatch, useNavigate } from '@tanstack/react-router'
 import { useProviderContext } from '../wrapper'
 import { setRateRoute } from '../routes'
 import {
@@ -13,7 +13,6 @@ export function SetRatePage() {
   const navigate = useNavigate()
   const { children } = useProviderContext()
   const { context } = useMatch({ from: '__root__' })
-  const router = useRouter()
 
   const child = children.find((child) => child.id === childId)
 
@@ -36,9 +35,9 @@ export function SetRatePage() {
     })
 
     handleStatusCodes(context, res)
-
-    router.invalidate()
-    navigate({ to: '/provider/home' })
+    if (!res.ok) {
+      throw new Error(`Failed to set payment rate: ${res.statusText}`)
+    }
   }
 
   return (

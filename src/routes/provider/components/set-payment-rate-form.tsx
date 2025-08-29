@@ -3,62 +3,88 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { translations } from '@/translations/text'
-import { Text } from '@/translations/wrapper'
+import { Text, useText } from '@/translations/wrapper'
 import { useState } from 'react'
 import { dollarToCents } from '@/lib/currency'
-import { useValidateForm } from '@/lib/schemas'
+import { useValidateForm, useZodSchema } from '@/lib/schemas'
 import { z } from 'zod'
 import { FormErrorMessage } from '@/components/form-error'
 import type { Child } from '../wrapper'
-
-const paymentRateFormSchema = z.object({
-  halfDayRate: z.string().refine(
-    (val) => {
-      const num = parseFloat(val)
-      return !isNaN(num) && num > 0
-    },
-    {
-      message: 'Rate must be a positive number',
-    }
-  ),
-  fullDayRate: z.string().refine(
-    (val) => {
-      const num = parseFloat(val)
-      return !isNaN(num) && num > 0
-    },
-    {
-      message: 'Rate must be a positive number',
-    }
-  ),
-})
-
-export type PaymentRateForm = z.infer<typeof paymentRateFormSchema>
+import { useNavigate, useRouter } from '@tanstack/react-router'
 
 type SetPaymentRateFormProps = {
   createPaymentRate: (
     halfDayRateCents: number,
     fullDayRateCents: number
-  ) => void
+  ) => Promise<void>
   child: Child
 }
+
+const MAX_RATE = 160
+const MIN_RATE = 1
 
 export function SetPaymentRateForm({
   createPaymentRate,
   child,
 }: SetPaymentRateFormProps) {
   const t = translations.provider.setRate
-  const [formData, setFormData] = useState<PaymentRateForm>({
+  const text = useText()
+  const navigate = useNavigate()
+  const router = useRouter()
+  const [submitting, setSubmitting] = useState(false)
+
+  const errorMessage = `${text(t.rateError.part1)}${MIN_RATE}${text(t.rateError.part2)}${MAX_RATE}`
+
+  const paymentRateFormSchema = useZodSchema(
+    z.object({
+      halfDayRate: z
+        .number({
+          coerce: true,
+          errorMap: () => {
+            return { message: errorMessage }
+          },
+        })
+        .min(MIN_RATE)
+        .max(MAX_RATE),
+      fullDayRate: z
+        .number({
+          coerce: true,
+          errorMap: () => {
+            return { message: errorMessage }
+          },
+        })
+        .min(MIN_RATE)
+        .max(MAX_RATE),
+    })
+  )
+
+  type PaymentRateForm = z.infer<typeof paymentRateFormSchema>
+
+  const [formData, setFormData] = useState<{
+    halfDayRate: string
+    fullDayRate: string
+  }>({
     halfDayRate: '',
     fullDayRate: '',
   })
+
   const { getError, submit } = useValidateForm(paymentRateFormSchema, formData)
 
   const handleSetPaymentRate = () => {
     submit((data) => {
+      setSubmitting(true)
+
       createPaymentRate(
         dollarToCents(data.halfDayRate),
         dollarToCents(data.fullDayRate)
       )
+        .then(() => {
+          router.invalidate()
+          navigate({ to: '/provider/home' })
+        })
+        .finally(() => {
+          setSubmitting(false)
+        })
     })
   }
 
@@ -151,7 +177,11 @@ export function SetPaymentRateForm({
             <FormErrorMessage error={getError('fullDayRate')} />
           </div>
         </div>
-        <Button onClick={handleSetPaymentRate} className="w-full mt-4">
+        <Button
+          onClick={handleSetPaymentRate}
+          className="w-full mt-4"
+          loading={submitting}
+        >
           <Text text={t.setRatesButton} />
         </Button>
       </CardContent>
