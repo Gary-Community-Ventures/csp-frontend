@@ -61,6 +61,8 @@ export type Child = {
   id: string
   first_name: string
   last_name: string
+  full_day_rate_cents: number
+  half_day_rate_cents: number
 }
 
 export type Notification = {
