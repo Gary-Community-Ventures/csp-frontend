@@ -547,13 +547,13 @@ export const translations = {
           en: 'Payment Status',
           es: 'Estado de Pago',
         },
-        available: {
-          en: 'Available',
-          es: 'Disponible',
+        configured: {
+          en: 'Configured',
+          es: 'Configurado',
         },
-        notAvailable: {
-          en: 'Not Available',
-          es: 'No Disponible',
+        notConfigured: {
+          en: 'Not Configured',
+          es: 'No Configurado',
         },
       },
       paymentMethod: {
