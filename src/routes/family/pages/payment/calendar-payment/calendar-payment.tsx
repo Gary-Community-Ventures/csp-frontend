@@ -109,7 +109,7 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
           <Text text={t.monthBalance} />
         </div>
         <div className="text-3xl text-center">
-          {formatAmount(allocationQuery.data?.remaining_cents || 0)}
+          {formatAmount(allocationQuery.data?.remaining_unselected_cents || 0)}
         </div>
       </div>
       <CareCalendar

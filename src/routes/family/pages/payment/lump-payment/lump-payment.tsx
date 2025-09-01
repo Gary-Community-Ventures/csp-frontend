@@ -229,7 +229,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
             <Text text={t.monthBalance} />
           </div>
           <div className="text-3xl text-center">
-            {formatAmount(selectedAllocation?.remaining_cents || 0)}
+            {formatAmount(selectedAllocation?.remaining_unpaid_cents || 0)}
           </div>
         </div>
       </div>

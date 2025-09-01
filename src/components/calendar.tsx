@@ -78,16 +78,24 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   const currentDayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate())
 
   let lockedUntilDateStart: Date | null = null
+  let lockedPastDateStart: Date | null = null
   if (allocation.locked_until_date) {
     const [year, month, day] = allocation.locked_until_date
       .split('-')
       .map(Number)
     lockedUntilDateStart = new Date(year, month - 1, day) // month is 0-indexed
   }
+  if (allocation.locked_past_date) {
+    const [year, month, day] = allocation.locked_past_date
+      .split('-')
+      .map(Number)
+    lockedPastDateStart = new Date(year, month - 1, day) // month is 0-indexed
+  }
 
   const isDayLocked =
     careDay?.is_locked ||
-    (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart)
+    (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart) ||
+    (lockedPastDateStart && currentDayStart >= lockedPastDateStart)
 
   let cellClasses = 'flex justify-center items-center py-1'
 
@@ -348,10 +356,6 @@ export const Calendar: React.FC<CalendarProps> = ({
           {
             colorClass: 'bg-[#778C7F]',
             textKey: t.submitted,
-          },
-          {
-            colorClass: 'bg-[#B53333]',
-            textKey: t.cancel,
           },
         ].map((item, index) => (
           <div key={index} className="flex items-center gap-x-2">
