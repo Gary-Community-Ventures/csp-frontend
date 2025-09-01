@@ -562,6 +562,10 @@ export const translations = {
         en: 'Loading payment settings...',
         es: 'Cargando configuración de pagos...',
       },
+      disabled: {
+        en: 'Payment is not enabled on your account.',
+        es: 'El pago no está habilitado en tu cuenta.',
+      },
       failedToLoad: {
         en: 'Failed to load payment settings. Please try again.',
         es: 'Error al cargar la configuración de pagos. Inténtalo de nuevo.',

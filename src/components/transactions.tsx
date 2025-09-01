@@ -50,6 +50,7 @@ export type FamilyPaymentsListProps = {
 export type ProviderPaymentsListProps = {
   payments: ProviderPaymentHistoryItem[]
   isPayable: boolean
+  isPaymentEnabled: boolean
 }
 
 export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
@@ -111,6 +112,7 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
 export function ProviderPaymentsList({
   payments,
   isPayable,
+  isPaymentEnabled,
 }: ProviderPaymentsListProps) {
   const formatDate = useFormatDate()
 
@@ -130,7 +132,7 @@ export function ProviderPaymentsList({
               />
             </p>
           </div>
-          {!isPayable && (
+          {!isPayable && isPaymentEnabled && (
             <Button variant="outline" asChild>
               <Link to="/provider/payment-settings">
                 <Settings className="size-4" />

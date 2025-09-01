@@ -53,6 +53,7 @@ export type ProviderInfo = {
   first_name: string
   last_name: string
   is_payable: boolean
+  is_payment_enabled: boolean
 }
 
 export type Curriculum = {

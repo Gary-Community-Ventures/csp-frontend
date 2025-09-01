@@ -47,6 +47,7 @@ export function ProviderHomePage() {
         <ProviderPaymentsList
           payments={paymentHistory.payments}
           isPayable={providerInfo.isPayable}
+          isPaymentEnabled={providerInfo.isPaymentEnabled}
         />
       </section>
     </div>

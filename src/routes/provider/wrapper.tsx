@@ -13,6 +13,7 @@ export type ProviderInfo = {
   firstName: string
   lastName: string
   isPayable: boolean
+  isPaymentEnabled: boolean
 }
 
 export type Curriculum = {
@@ -62,6 +63,7 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
       firstName: providerData.provider_info.first_name,
       lastName: providerData.provider_info.last_name,
       isPayable: providerData.provider_info.is_payable,
+      isPaymentEnabled: providerData.provider_info.is_payment_enabled,
     },
     children: providerData.children.map((child) => {
       return {

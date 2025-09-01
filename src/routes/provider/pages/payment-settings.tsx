@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Badge } from '@/components/ui/badge'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { useProviderContext } from '../wrapper'
 import { toast } from 'sonner'
 import { CreditCard, Building2 } from 'lucide-react'
 import {
@@ -27,8 +28,13 @@ export function PaymentSettingsPage() {
   const [selectedMethod, setSelectedMethod] = useState<'card' | 'ach' | null>(
     null
   )
+  const { providerInfo } = useProviderContext()
 
   const loadPaymentSettings = useCallback(async () => {
+    if (!providerInfo.isPaymentEnabled) {
+      setLoading(false)
+      return
+    }
     try {
       setLoading(true)
       const settings = await getPaymentSettings(context)
@@ -154,6 +160,21 @@ export function PaymentSettingsPage() {
         <WhiteCard>
           <div className="flex items-center justify-center py-8">
             <Text text={translations.provider.paymentSettings.loading} />
+          </div>
+        </WhiteCard>
+      </div>
+    )
+  }
+
+  if (!providerInfo.isPaymentEnabled) {
+    return (
+      <div className="p-5">
+        <Header>
+          <Text text={translations.provider.paymentSettings.title} />
+        </Header>
+        <WhiteCard>
+          <div className="text-center py-8 text-amber-600">
+            <Text text={translations.provider.paymentSettings.disabled} />
           </div>
         </WhiteCard>
       </div>
