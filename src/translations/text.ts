@@ -846,9 +846,9 @@ export const translations = {
         en: 'Family',
         es: 'Familia',
       },
-      month: {
-        en: 'Month',
-        es: 'Mes',
+      fromAllocationMonth: {
+        en: 'From Allocation Month',
+        es: 'Desde el Mes de Asignación',
       },
       paymentMethod: {
         en: 'Payment Method',

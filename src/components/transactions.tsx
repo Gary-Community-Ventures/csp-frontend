@@ -44,33 +44,6 @@ function ProviderPaymentAmount({ amountCents }: PaymentAmountProps) {
 
   return <span className="font-bold text-green-600">+{formattedAmount}</span>
 }
-
-function PaymentStatusBadge({
-  status,
-}: {
-  status: 'success' | 'failed' | 'pending'
-}) {
-  const statusConfig = {
-    success: {
-      variant: 'default' as const,
-      className: 'bg-green-100 text-green-800 border-green-300',
-    },
-    failed: { variant: 'destructive' as const, className: '' },
-    pending: {
-      variant: 'outline' as const,
-      className: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-    },
-  }
-
-  const config = statusConfig[status]
-
-  return (
-    <Badge variant={config.variant} className={config.className}>
-      <Text text={translations.general.paymentHistory.status[status]} />
-    </Badge>
-  )
-}
-
 export type FamilyPaymentsListProps = {
   payments: FamilyPaymentHistoryItem[]
 }
@@ -112,7 +85,6 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
               <strong className="text-lg truncate">
                 {payment.provider_name}
               </strong>
-              <PaymentStatusBadge status={payment.status} />
             </div>
             <div className="text-muted-foreground text-sm space-y-1">
               <div>
@@ -121,7 +93,7 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
               </div>
               <div>{formatDate(new Date(payment.created_at))}</div>
               <div>
-                <Text text={translations.general.paymentHistory.month} />:{' '}
+                <Text text={translations.general.paymentHistory.fromAllocationMonth} />:{' '}
                 {payment.month}
               </div>
             </div>
@@ -184,7 +156,6 @@ export function ProviderPaymentsList({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <strong className="text-lg truncate">{payment.child_name}</strong>
-              <PaymentStatusBadge status={payment.status} />
             </div>
             <div className="text-muted-foreground text-sm space-y-1">
               <div>{formatDate(new Date(payment.created_at))}</div>
