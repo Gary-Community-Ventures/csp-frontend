@@ -46,7 +46,7 @@ export function PaymentSettingsPage() {
     } finally {
       setLoading(false)
     }
-  }, [context])
+  }, [context, providerInfo.isPaymentEnabled])
 
   useEffect(() => {
     loadPaymentSettings()
