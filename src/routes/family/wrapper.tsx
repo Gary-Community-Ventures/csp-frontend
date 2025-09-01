@@ -26,7 +26,6 @@ export type Provider = {
   isPaymentEnabled: boolean
 }
 
-
 export type Child = {
   id: string
   firstName: string

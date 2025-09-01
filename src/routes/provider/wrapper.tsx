@@ -15,7 +15,6 @@ export type ProviderInfo = {
   isPayable: boolean
 }
 
-
 export type Curriculum = {
   id: string
   description: string

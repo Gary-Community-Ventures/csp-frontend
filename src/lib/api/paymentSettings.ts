@@ -52,9 +52,11 @@ export interface PaymentInitializationResponse {
   already_exists: boolean
 }
 
-export async function getPaymentSettings(context: RouterContext): Promise<PaymentSettingsResponse> {
+export async function getPaymentSettings(
+  context: RouterContext
+): Promise<PaymentSettingsResponse> {
   const headers = await headersWithAuth(context)
-  
+
   const response = await fetch(backendUrl('/provider/payment-settings'), {
     method: 'GET',
     headers,

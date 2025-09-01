@@ -39,7 +39,9 @@ export interface ProviderPaymentHistoryResponse {
   successful_payments_cents: number
 }
 
-export async function getFamilyPaymentHistory(context: RouterContext): Promise<FamilyPaymentHistoryResponse> {
+export async function getFamilyPaymentHistory(
+  context: RouterContext
+): Promise<FamilyPaymentHistoryResponse> {
   const headers = await headersWithAuth(context)
 
   const response = await fetch(backendUrl('/family/payments'), {
@@ -50,13 +52,17 @@ export async function getFamilyPaymentHistory(context: RouterContext): Promise<F
   handleStatusCodes(context, response)
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch family payment history: ${response.status}`)
+    throw new Error(
+      `Failed to fetch family payment history: ${response.status}`
+    )
   }
 
   return response.json()
 }
 
-export async function getProviderPaymentHistory(context: RouterContext): Promise<ProviderPaymentHistoryResponse> {
+export async function getProviderPaymentHistory(
+  context: RouterContext
+): Promise<ProviderPaymentHistoryResponse> {
   const headers = await headersWithAuth(context)
 
   const response = await fetch(backendUrl('/provider/payments'), {
@@ -67,7 +73,9 @@ export async function getProviderPaymentHistory(context: RouterContext): Promise
   handleStatusCodes(context, response)
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch provider payment history: ${response.status}`)
+    throw new Error(
+      `Failed to fetch provider payment history: ${response.status}`
+    )
   }
 
   return response.json()

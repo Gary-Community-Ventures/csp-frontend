@@ -44,7 +44,10 @@ export function ProviderHomePage() {
         <Header>
           <Text text={t.payments} />
         </Header>
-        <ProviderPaymentsList payments={paymentHistory.payments} isPayable={providerInfo.isPayable} />
+        <ProviderPaymentsList
+          payments={paymentHistory.payments}
+          isPayable={providerInfo.isPayable}
+        />
       </section>
     </div>
   )

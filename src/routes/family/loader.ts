@@ -36,7 +36,7 @@ export async function loadFamilyData({
           total_count: 0,
           total_amount_cents: 0,
         }
-      })
+      }),
     ])
 
     handleStatusCodes(context, familyRes)
@@ -93,7 +93,6 @@ export type Provider = {
   is_payable: boolean
   is_payment_enabled: boolean
 }
-
 
 export type Child = {
   id: string

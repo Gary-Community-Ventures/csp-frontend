@@ -99,7 +99,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
 
   let cellClasses = 'flex justify-center items-center py-1'
 
-  let isDisabled = !isCurrentMonth || isDayLocked || careDay?.last_submitted_at
+  const isDisabled = !isCurrentMonth || isDayLocked || careDay?.last_submitted_at
 
   let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
     !isDisabled ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'

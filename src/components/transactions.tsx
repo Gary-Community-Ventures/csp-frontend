@@ -1,6 +1,5 @@
 import { CardList } from '@/components/card-list'
 import { WhiteCard } from '@/components/white-card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'

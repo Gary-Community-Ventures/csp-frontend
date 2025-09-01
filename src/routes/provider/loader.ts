@@ -29,7 +29,7 @@ export async function loadProviderData({
           total_amount_cents: 0,
           successful_payments_cents: 0,
         }
-      })
+      }),
     ])
 
     handleStatusCodes(context, providerRes)
@@ -54,7 +54,6 @@ export type ProviderInfo = {
   last_name: string
   is_payable: boolean
 }
-
 
 export type Curriculum = {
   id: string
