@@ -93,8 +93,10 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
               </div>
               <div>{formatDate(new Date(payment.created_at))}</div>
               <div>
-                <Text text={translations.general.paymentHistory.fromAllocationMonth} />:{' '}
-                {payment.month}
+                <Text
+                  text={translations.general.paymentHistory.fromAllocationMonth}
+                />
+                : {payment.month}
               </div>
             </div>
           </div>

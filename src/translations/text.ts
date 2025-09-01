@@ -270,8 +270,8 @@ export const translations = {
         es: 'Salir',
       },
       paymentDescription: {
-        en: 'Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. You can modify days up until the Monday of the week care is taking place. At that point, the week will be locked.',
-        es: 'Seleccione los días que necesita atención con {providerName} para {childFirstName}. Haga clic en Enviar para enviar estos días a su proveedor. Puede modificar los días hasta el lunes de la semana en que se brinde la atención. A partir de ese momento, la semana se bloqueará.',
+        en: "Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. When you click submit, the days you've selected will be locked in and payment will be processed. **This action cannot be undone**.",
+        es: 'Seleccione los días que necesita atención con {providerName} para {childFirstName}. Haga clic en Enviar para enviar estos días a su proveedor. Cuando haga clic en Enviar, los días que ha seleccionado se bloquearán y se procesará el pago. **Esta acción no se puede deshacer**.',
       },
       monthBalance: {
         en: 'Month Balance',
@@ -764,11 +764,11 @@ export const translations = {
         es: 'Sin Pagos',
       },
       noFamilyPaymentsDescription: {
-        en: 'You haven\'t made any payments yet.',
+        en: "You haven't made any payments yet.",
         es: 'Aún no has realizado ningún pago.',
       },
       noProviderPaymentsDescription: {
-        en: 'You haven\'t received any payments yet.',
+        en: "You haven't received any payments yet.",
         es: 'Aún no has recibido ningún pago.',
       },
       noChildrenTitle: {

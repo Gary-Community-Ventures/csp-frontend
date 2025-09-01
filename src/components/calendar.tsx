@@ -99,10 +99,10 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
 
   let cellClasses = 'flex justify-center items-center py-1'
 
+  let isDisabled = !isCurrentMonth || isDayLocked || careDay?.last_submitted_at
+
   let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
-    isCurrentMonth && !isDayLocked
-      ? 'cursor-pointer hover:opacity-80'
-      : 'cursor-not-allowed'
+    !isDisabled ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
   }`
   let colorClass = ''
   let textColorClass = 'text-gray-800' // Default text color
@@ -162,7 +162,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       <div
         key={d.toString()}
         className={dayClasses}
-        onClick={!isDayLocked ? () => handleDayClick(careDay, d) : undefined}
+        onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
       >
         {dayContent}
       </div>
