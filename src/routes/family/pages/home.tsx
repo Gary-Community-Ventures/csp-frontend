@@ -1,6 +1,6 @@
 import { useFamilyContext } from '../wrapper'
 import { ProviderList } from '../components/providers'
-import { FamilyPaymentsList } from '@/components/transactions'
+import { FamilyPaymentsList } from '@/routes/family/components/payments-list'
 import { Header } from '@/components/header'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
