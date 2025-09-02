@@ -3,7 +3,6 @@ import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { useMemo } from 'react'
 import { useFormatDate } from '@/lib/dates'
 import { Link } from '@tanstack/react-router'
 import { Settings } from 'lucide-react'
@@ -12,36 +11,24 @@ import type {
   ProviderPaymentHistoryItem,
 } from '@/lib/api/paymentHistory'
 
+import { formatAmount } from '@/lib/currency'
+
 type PaymentAmountProps = {
   amountCents: number
 }
 
 function FamilyPaymentAmount({ amountCents }: PaymentAmountProps) {
-  const amount = amountCents / 100
-
-  const formattedAmount = useMemo(() => {
-    return amount.toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    })
-  }, [amount])
-
-  return <span className="font-bold text-red-600">-{formattedAmount}</span>
+  return (
+    <span className="font-bold text-red-600">-{formatAmount(amountCents)}</span>
+  )
 }
 
 function ProviderPaymentAmount({ amountCents }: PaymentAmountProps) {
-  const amount = amountCents / 100
-
-  const formattedAmount = useMemo(() => {
-    return amount.toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    })
-  }, [amount])
-
-  return <span className="font-bold text-green-600">+{formattedAmount}</span>
+  return (
+    <span className="font-bold text-green-600">
+      +{formatAmount(amountCents)}
+    </span>
+  )
 }
 export type FamilyPaymentsListProps = {
   payments: FamilyPaymentHistoryItem[]
