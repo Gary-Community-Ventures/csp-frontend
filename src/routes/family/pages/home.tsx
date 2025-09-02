@@ -7,6 +7,7 @@ import { Text } from '@/translations/wrapper'
 import { formatAmount } from '@/lib/currency'
 import { useCurrentMonthBalance } from '@/lib/hooks'
 import { familyRoute } from '../routes'
+import { useMemo } from 'react'
 
 function Balance() {
   const t = translations.family.home
@@ -33,6 +34,13 @@ function Balance() {
 export function FamilyHomePage() {
   const t = translations.family.home
   const { selectedChildInfo, paymentHistory } = useFamilyContext()
+  const filteredPayments = useMemo(
+    () =>
+      paymentHistory.payments.filter(
+        (payment) => payment.child_id === selectedChildInfo.id
+      ),
+    [paymentHistory.payments, selectedChildInfo.id]
+  )
 
   return (
     <>
@@ -48,7 +56,7 @@ export function FamilyHomePage() {
           <Header>
             <Text text={t.recentTransactions} />
           </Header>
-          <FamilyPaymentsList payments={paymentHistory.payments} />
+          <FamilyPaymentsList payments={filteredPayments} />
         </section>
       </div>
     </>

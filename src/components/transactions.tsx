@@ -87,10 +87,6 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
               </strong>
             </div>
             <div className="text-muted-foreground text-sm space-y-1">
-              <div>
-                <Text text={translations.general.paymentHistory.child} />:{' '}
-                {payment.child_name}
-              </div>
               <div>{formatDate(new Date(payment.created_at))}</div>
               <div>
                 <Text
