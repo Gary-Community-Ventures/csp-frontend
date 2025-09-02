@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useMatch } from '@tanstack/react-router'
+import { useState, useEffect } from 'react'
+import { useMatch, useRouter } from '@tanstack/react-router'
+import { paymentSettingsRoute } from '../routes'
 import { Header } from '@/components/header'
 import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
@@ -11,46 +12,28 @@ import { useProviderContext } from '../wrapper'
 import { toast } from 'sonner'
 import { CreditCard, Building2 } from 'lucide-react'
 import {
-  getPaymentSettings,
   updatePaymentMethod,
   initializePaymentMethod,
-  type PaymentSettingsResponse,
   type PaymentMethodUpdateRequest,
   type PaymentMethodInitializeRequest,
 } from '@/lib/api/paymentSettings'
 
 export function PaymentSettingsPage() {
   const { context } = useMatch({ from: '__root__' })
-  const [paymentSettings, setPaymentSettings] =
-    useState<PaymentSettingsResponse | null>(null)
-  const [loading, setLoading] = useState(true)
+  const router = useRouter()
+  const { paymentSettings } = paymentSettingsRoute.useLoaderData()
   const [updating, setUpdating] = useState(false)
   const [selectedMethod, setSelectedMethod] = useState<'card' | 'ach' | null>(
-    null
+    (paymentSettings?.payment_method as 'card' | 'ach' | null) || null
   )
   const { providerInfo } = useProviderContext()
 
-  const loadPaymentSettings = useCallback(async () => {
-    if (!providerInfo.isPaymentEnabled) {
-      setLoading(false)
-      return
-    }
-    try {
-      setLoading(true)
-      const settings = await getPaymentSettings(context)
-      setPaymentSettings(settings)
-      setSelectedMethod(settings.payment_method as 'card' | 'ach' | null)
-    } catch (error) {
-      console.error('Failed to load payment settings:', error)
-      toast.error(translations.provider.paymentSettings.failedToLoad.en)
-    } finally {
-      setLoading(false)
-    }
-  }, [context, providerInfo.isPaymentEnabled])
-
+  // Sync selectedMethod state when paymentSettings changes (e.g., after router.invalidate())
   useEffect(() => {
-    loadPaymentSettings()
-  }, [loadPaymentSettings])
+    setSelectedMethod(
+      (paymentSettings?.payment_method as 'card' | 'ach' | null) || null
+    )
+  }, [paymentSettings])
 
   const handleUpdatePaymentMethod = async () => {
     if (!selectedMethod || !paymentSettings) return
@@ -89,7 +72,8 @@ export function PaymentSettingsPage() {
         )
       }
 
-      await loadPaymentSettings()
+      // Invalidate and reload the route data - this will cause the component to re-render with fresh data
+      await router.invalidate()
     } catch (error) {
       console.error('Failed to update payment method:', error)
       toast.error(
@@ -148,21 +132,6 @@ export function PaymentSettingsPage() {
           text={translations.provider.paymentSettings.status.notAvailable}
         />
       </Badge>
-    )
-  }
-
-  if (loading) {
-    return (
-      <div className="p-5">
-        <Header>
-          <Text text={translations.provider.paymentSettings.title} />
-        </Header>
-        <WhiteCard>
-          <div className="flex items-center justify-center py-8">
-            <Text text={translations.provider.paymentSettings.loading} />
-          </div>
-        </WhiteCard>
-      </div>
     )
   }
 

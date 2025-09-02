@@ -4,6 +4,10 @@ import {
   headersWithAuth,
 } from '@/lib/api/client'
 import { getProviderPaymentHistory } from '@/lib/api/paymentHistory'
+import {
+  getPaymentSettings,
+  type PaymentSettingsResponse,
+} from '@/lib/api/paymentSettings'
 import type { RouterContext } from '../router'
 
 export async function loadProviderData({
@@ -80,4 +84,35 @@ export type Provider = {
   notifications: Notification[]
   is_also_family: boolean
   max_child_count: number
+}
+
+export async function loadPaymentSettings({
+  context,
+  abortController,
+}: {
+  context: RouterContext
+  abortController: AbortController
+}): Promise<{ paymentSettings: PaymentSettingsResponse | null }> {
+  try {
+    // First, load provider data to check if payment is enabled
+    const providerRes = await fetch(backendUrl('/provider'), {
+      headers: await headersWithAuth(context),
+      signal: abortController.signal,
+    })
+
+    handleStatusCodes(context, providerRes)
+    const providerData = (await providerRes.json()) as Provider
+
+    // If payment is not enabled, return null for payment settings
+    if (!providerData.provider_info.is_payment_enabled) {
+      return { paymentSettings: null }
+    }
+
+    // If payment is enabled, fetch payment settings
+    const paymentSettings = await getPaymentSettings(context)
+    return { paymentSettings }
+  } catch (error) {
+    console.error('Error loading payment settings:', error)
+    throw error
+  }
 }
