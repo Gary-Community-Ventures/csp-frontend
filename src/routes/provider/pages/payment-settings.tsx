@@ -327,11 +327,13 @@ export function PaymentSettingsPage() {
           )}
 
           {/* Update Button */}
-          <div className="flex justify-end">
+          <div className="flex justify-center pt-4">
             <Button
               onClick={handleUpdatePaymentMethod}
               disabled={!canUpdate}
               loading={updating}
+              size="lg"
+              className="min-w-[200px] shadow-sm hover:shadow-md transition-shadow"
             >
               <Text
                 text={

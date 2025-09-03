@@ -4,6 +4,7 @@ import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { useFormatDate } from '@/lib/dates'
 import type { FamilyPaymentHistoryItem } from '@/lib/api/paymentHistory'
+import { useLanguageContext } from '@/translations/wrapper'
 
 import { formatAmount } from '@/lib/currency'
 
@@ -21,6 +22,7 @@ export type FamilyPaymentsListProps = {
 
 export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
   const formatDate = useFormatDate()
+  const { lang } = useLanguageContext()
 
   if (payments.length < 1) {
     return (
@@ -58,7 +60,11 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
                 <Text
                   text={translations.general.paymentHistory.fromAllocationMonth}
                 />
-                : {payment.month}
+                :{' '}
+                {new Date(payment.month).toLocaleDateString(lang, {
+                  year: 'numeric',
+                  month: 'short',
+                })}
               </div>
             </div>
           </div>
