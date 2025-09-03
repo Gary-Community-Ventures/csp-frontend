@@ -23,6 +23,7 @@ export function PaymentSettingsPage() {
   const router = useRouter()
   const { paymentSettings } = paymentSettingsRoute.useLoaderData()
   const [updating, setUpdating] = useState(false)
+  const [inviteEmail, setInviteEmail] = useState<string | null>(null)
   const [selectedMethod, setSelectedMethod] = useState<'card' | 'ach' | null>(
     (paymentSettings?.payment_method as 'card' | 'ach' | null) || null
   )
@@ -60,6 +61,7 @@ export function PaymentSettingsPage() {
         if (result.invite_sent_to) {
           toast.success(`Invitation sent to ${result.invite_sent_to}`)
         }
+        setInviteEmail(result.invite_sent_to)
       } else {
         // Use update endpoint for switching between configured methods
         const updateRequest: PaymentMethodUpdateRequest = {
@@ -180,42 +182,6 @@ export function PaymentSettingsPage() {
         <Text text={translations.provider.paymentSettings.title} />
       </Header>
 
-      {/* Current Status */}
-      <WhiteCard>
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold">
-            <Text
-              text={translations.provider.paymentSettings.paymentStatus.title}
-            />
-          </h3>
-          {paymentSettings.is_payable ? (
-            <div className="flex items-center gap-2">
-              <div className="size-2 bg-green-500 rounded-full"></div>
-              <span className="text-green-700 font-medium">
-                <Text
-                  text={
-                    translations.provider.paymentSettings.paymentStatus
-                      .configured
-                  }
-                />
-              </span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <div className="size-2 bg-amber-500 rounded-full"></div>
-              <span className="text-amber-700 font-medium">
-                <Text
-                  text={
-                    translations.provider.paymentSettings.paymentStatus
-                      .notConfigured
-                  }
-                />
-              </span>
-            </div>
-          )}
-        </div>
-      </WhiteCard>
-
       {/* Payment Method Selection */}
       <WhiteCard>
         <div className="space-y-6">
@@ -326,25 +292,6 @@ export function PaymentSettingsPage() {
             </div>
           </RadioGroup>
 
-          {/* Update Button */}
-          <div className="flex justify-end">
-            <Button
-              onClick={handleUpdatePaymentMethod}
-              disabled={!canUpdate}
-              loading={updating}
-            >
-              <Text
-                text={
-                  isInitializing
-                    ? translations.provider.paymentSettings.paymentMethod
-                        .initializeButton
-                    : translations.provider.paymentSettings.paymentMethod
-                        .updateButton
-                }
-              />
-            </Button>
-          </div>
-
           {/* Show Chek setup message when selecting unconfigured option */}
           {selectedMethod &&
             paymentSettings.chek_user_id &&
@@ -361,6 +308,44 @@ export function PaymentSettingsPage() {
                 </p>
               </div>
             )}
+
+          {/* Show email banner when invite has been sent */}
+          {inviteEmail && paymentSettings.chek_user_id && (
+            <div className="bg-green-50 border border-primary rounded-md p-4">
+              <p className="text-sm text-primary">
+                <Text
+                  text={
+                    translations.provider.paymentSettings.paymentMethod
+                      .inviteSentMessage
+                  }
+                  data={{
+                    email: inviteEmail,
+                  }}
+                />
+              </p>
+            </div>
+          )}
+
+          {/* Update Button */}
+          <div className="flex justify-center pt-4">
+            <Button
+              onClick={handleUpdatePaymentMethod}
+              disabled={!canUpdate}
+              loading={updating}
+              size="lg"
+              className="min-w-[200px] shadow-sm hover:shadow-md transition-shadow"
+            >
+              <Text
+                text={
+                  isInitializing
+                    ? translations.provider.paymentSettings.paymentMethod
+                        .initializeButton
+                    : translations.provider.paymentSettings.paymentMethod
+                        .updateButton
+                }
+              />
+            </Button>
+          </div>
         </div>
       </WhiteCard>
     </div>
