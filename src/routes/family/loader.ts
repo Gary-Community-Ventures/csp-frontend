@@ -3,6 +3,7 @@ import {
   handleStatusCodes,
   headersWithAuth,
 } from '@/lib/api/client'
+import { getFamilyPaymentHistory } from '@/lib/api/paymentHistory'
 import type { RouterContext } from '../router'
 import { redirect } from '@tanstack/react-router'
 
@@ -21,25 +22,32 @@ export async function loadFamilyData({
   }
 
   try {
-    const res = await fetch(backendUrl(urlPath), {
-      headers: await headersWithAuth(context),
-      signal: abortController.signal,
-    })
+    // Load family data and payment history in parallel
+    const [familyRes, paymentHistory] = await Promise.all([
+      fetch(backendUrl(urlPath), {
+        headers: await headersWithAuth(context),
+        signal: abortController.signal,
+      }),
+      getFamilyPaymentHistory(context).catch((error) => {
+        console.error('Error loading payment history:', error)
+        // Return empty payment history if it fails
+        return {
+          payments: [],
+          total_count: 0,
+          total_amount_cents: 0,
+        }
+      }),
+    ])
 
-    handleStatusCodes(context, res)
+    handleStatusCodes(context, familyRes)
 
-    const rawJson = (await res.json()) as Family
+    const rawJson = (await familyRes.json()) as Family
 
-    const json: Family = {
-      ...rawJson,
-      transactions: rawJson.transactions.map((cg) => ({
-        ...cg,
-        date: new Date(cg.date),
-      })),
-    }
+    const json: Family = rawJson
 
     return {
       familyData: json,
+      paymentHistory,
     }
   } catch (error) {
     console.error('Error loading family data:', error)
@@ -82,14 +90,8 @@ export type Provider = {
   name: string
   status: 'approved' | 'pending' | 'denied'
   type: 'ffn' | 'lhb' | 'center'
+  is_payable: boolean
   is_payment_enabled: boolean
-}
-
-export type Transaction = {
-  id: string
-  name: string
-  amount: number
-  date: Date
 }
 
 export type Child = {
@@ -105,7 +107,6 @@ export type Notification = {
 export type Family = {
   selected_child_info: SelectedChildInfo
   providers: Provider[]
-  transactions: Transaction[]
   children: Child[]
   notifications: Notification[]
   is_also_provider: boolean

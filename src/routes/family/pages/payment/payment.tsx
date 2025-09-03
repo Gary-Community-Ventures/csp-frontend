@@ -26,7 +26,7 @@ export function PaymentPage() {
   }
   let pageContent = <LumpPaymentPage provider={provider} />
 
-  if (provider.type === 'ffn') {
+  if (provider.type === 'ffn' || provider.type === 'lhb') {
     pageContent = <CalendarPaymentPage provider={provider} />
   }
 

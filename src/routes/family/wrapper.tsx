@@ -7,6 +7,7 @@ import {
   type SetStateAction,
 } from 'react'
 import { familyWithIdRoute } from './routes'
+import type { FamilyPaymentHistoryResponse } from '@/lib/api/paymentHistory'
 
 export type SelectedChildInfo = {
   id: string
@@ -21,14 +22,8 @@ export type Provider = {
   name: string
   status: 'approved' | 'pending' | 'denied'
   type: 'ffn' | 'lhb' | 'center'
+  isPayable: boolean
   isPaymentEnabled: boolean
-}
-
-export type Transaction = {
-  id: string
-  name: string
-  amount: number
-  date: Date
 }
 
 export type Child = {
@@ -50,16 +45,16 @@ export type NavBarContext = {
 export type FamilyContext = {
   selectedChildInfo: SelectedChildInfo
   providers: Provider[]
-  transactions: Transaction[]
   navBar: NavBarContext
   children: Child[]
   isAlsoProvider: boolean
+  paymentHistory: FamilyPaymentHistoryResponse
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
 
 export function FamilyWrapper({ children }: PropsWithChildren) {
-  const { familyData } = familyWithIdRoute.useLoaderData()
+  const { familyData, paymentHistory } = familyWithIdRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 
   const familyContext: FamilyContext = {
@@ -77,9 +72,9 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
         status: provider.status,
         type: provider.type,
         isPaymentEnabled: provider.is_payment_enabled,
+        isPayable: provider.is_payable,
       }
     }),
-    transactions: familyData.transactions,
     children: familyData.children.map((child) => {
       return {
         id: child.id,
@@ -88,6 +83,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       }
     }),
     isAlsoProvider: familyData.is_also_provider,
+    paymentHistory,
     navBar: {
       notifications: familyData.notifications,
       setHidden,

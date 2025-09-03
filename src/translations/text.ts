@@ -48,6 +48,21 @@ const statuses = {
   },
 } as const
 
+const paymentStatuses = {
+  success: {
+    en: 'Success',
+    es: 'Exitoso',
+  },
+  failed: {
+    en: 'Failed',
+    es: 'Fallido',
+  },
+  pending: {
+    en: 'Pending',
+    es: 'Pendiente',
+  },
+} as const
+
 const submitButton = {
   en: 'Submit',
   es: 'Enviar',
@@ -198,6 +213,14 @@ export const translations = {
         en: 'Loading...',
         es: 'Cargando...',
       },
+      allocationNotFound: {
+        en: 'Allocation Not Found',
+        es: 'Asignación no encontrada',
+      },
+      allocationNotFoundDescription: {
+        en: 'The monthly allocation could not be loaded. Please try again or contact support if the problem persists.',
+        es: 'No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.',
+      },
       noPaymentRate: {
         part1: {
           en: 'Your provider has not set their care rates yet. Please have them  log into the portal and set their rates for ',
@@ -225,8 +248,8 @@ export const translations = {
         es: 'Salir',
       },
       paymentDescription: {
-        en: 'Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. You can modify days up until the Monday of the week care is taking place. At that point, the week will be locked.',
-        es: 'Seleccione los días que necesita atención con {providerName} para {childFirstName}. Haga clic en Enviar para enviar estos días a su proveedor. Puede modificar los días hasta el lunes de la semana en que se brinde la atención. A partir de ese momento, la semana se bloqueará.',
+        en: "Select the days you need care with {providerName} for {childFirstName}. Click submit to send these days to your provider. When you click submit, the days you've selected will be locked in and payment will be processed. **This action cannot be undone**.",
+        es: 'Seleccione los días que necesita atención con {providerName} para {childFirstName}. Haga clic en Enviar para enviar estos días a su proveedor. Cuando haga clic en Enviar, los días que ha seleccionado se bloquearán y se procesará el pago. **Esta acción no se puede deshacer**.',
       },
       monthBalance: {
         en: 'Month Balance',
@@ -246,6 +269,14 @@ export const translations = {
       },
     },
     lumpPaymentPage: {
+      allocationNotFound: {
+        en: 'Allocation Not Found',
+        es: 'Asignación no encontrada',
+      },
+      allocationNotFoundDescription: {
+        en: 'The monthly allocation could not be loaded. Please try again or contact support if the problem persists.',
+        es: 'No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.',
+      },
       amountRequired: {
         en: 'Amount must be a positive number',
         es: 'El monto debe ser un número positivo',
@@ -441,6 +472,10 @@ export const translations = {
           en: 'Attendance',
           es: 'Asistencia',
         },
+        paymentSettings: {
+          en: 'Payment Settings',
+          es: 'Configuración de Pagos',
+        },
       },
       notificationBanner: {
         ...notificationBanner,
@@ -516,6 +551,136 @@ export const translations = {
           en: ' and $',
           es: ' y $',
         },
+      },
+    },
+    paymentSettings: {
+      title: {
+        en: 'Payment Settings',
+        es: 'Configuración de Pagos',
+      },
+      loading: {
+        en: 'Loading payment settings...',
+        es: 'Cargando configuración de pagos...',
+      },
+      disabled: {
+        en: 'Payment is not enabled on your account.',
+        es: 'El pago no está habilitado en tu cuenta.',
+      },
+      failedToLoad: {
+        en: 'Failed to load payment settings. Please try again.',
+        es: 'Error al cargar la configuración de pagos. Inténtalo de nuevo.',
+      },
+      paymentStatus: {
+        title: {
+          en: 'Payment Status',
+          es: 'Estado de Pago',
+        },
+        configured: {
+          en: 'Configured',
+          es: 'Configurado',
+        },
+        notConfigured: {
+          en: 'Not Configured',
+          es: 'No Configurado',
+        },
+      },
+      paymentMethod: {
+        title: {
+          en: 'Payment Method',
+          es: 'Método de Pago',
+        },
+        virtualCard: {
+          title: {
+            en: 'Virtual Card',
+            es: 'Tarjeta Virtual',
+          },
+          description: {
+            en: 'Receive payments via virtual card',
+            es: 'Recibir pagos mediante tarjeta virtual',
+          },
+        },
+        ach: {
+          title: {
+            en: 'ACH/Direct Pay',
+            es: 'ACH/Pago Directo',
+          },
+          description: {
+            en: 'Receive payments via ACH bank transfer',
+            es: 'Recibir pagos mediante transferencia bancaria ACH',
+          },
+        },
+        updateButton: {
+          en: 'Update Payment Method',
+          es: 'Actualizar Método de Pago',
+        },
+        initializeButton: {
+          en: 'Initialize Payment Method',
+          es: 'Inicializar Método de Pago',
+        },
+        updateSuccess: {
+          en: 'Payment method updated successfully',
+          es: 'Método de pago actualizado exitosamente',
+        },
+        updateError: {
+          en: 'Failed to update payment method',
+          es: 'Error al actualizar el método de pago',
+        },
+        setupRequired: {
+          en: 'Payment account setup is required before you can select a payment method. Please contact support.',
+          es: 'Se requiere configurar la cuenta de pago antes de poder seleccionar un método de pago. Por favor contacte a soporte.',
+        },
+        chekSetupMessage: {
+          en: 'After submitting, you will receive an email from our payment provider Chek to set up your account and configure your payment method.',
+          es: 'Después de enviar, recibirá un correo electrónico de nuestro proveedor de pagos Chek para configurar su cuenta y configurar su método de pago.',
+        },
+      },
+      additionalInfo: {
+        title: {
+          en: 'Additional Information',
+          es: 'Información Adicional',
+        },
+        providerId: {
+          en: 'Provider ID',
+          es: 'ID del Proveedor',
+        },
+        chekUserId: {
+          en: 'Chek User ID',
+          es: 'ID de Usuario Chek',
+        },
+        lastUpdated: {
+          en: 'Last Updated',
+          es: 'Última Actualización',
+        },
+        lastSync: {
+          en: 'Last Sync',
+          es: 'Última Sincronización',
+        },
+        needsRefresh: {
+          en: '⚠️ Payment status needs refresh',
+          es: '⚠️ El estado de pago necesita actualización',
+        },
+      },
+      status: {
+        active: {
+          en: 'Active',
+          es: 'Activo',
+        },
+        invited: {
+          en: 'Invited',
+          es: 'Invitado',
+        },
+        notAvailable: {
+          en: 'Not Available',
+          es: 'No Disponible',
+        },
+        notConfigured: {
+          en: 'Not Yet Configured',
+          es: 'Aún No Configurado',
+        },
+      },
+      setupPaymentButton: {
+        en: 'Setup Payment Settings',
+        es: 'Configurar Ajustes de Pago',
       },
     },
     resources: {
@@ -622,6 +787,18 @@ export const translations = {
         en: 'Once you have transactions, they will appear here.',
         es: 'Una vez que tengas transacciones, aparecerán aquí.',
       },
+      noPaymentsTitle: {
+        en: 'No Payments',
+        es: 'Sin Pagos',
+      },
+      noFamilyPaymentsDescription: {
+        en: "You haven't made any payments yet.",
+        es: 'Aún no has realizado ningún pago.',
+      },
+      noProviderPaymentsDescription: {
+        en: "You haven't received any payments yet.",
+        es: 'Aún no has recibido ningún pago.',
+      },
       noChildrenTitle: {
         en: 'No Children Yet',
         es: 'Aún no hay niños',
@@ -687,6 +864,25 @@ export const translations = {
         en: 'Back to Providers',
         es: 'Volver a Proveedores',
       },
+    },
+    paymentHistory: {
+      child: {
+        en: 'Child',
+        es: 'Niño',
+      },
+      family: {
+        en: 'Family',
+        es: 'Familia',
+      },
+      fromAllocationMonth: {
+        en: 'From Allocation Month',
+        es: 'Desde el Mes de Asignación',
+      },
+      paymentMethod: {
+        en: 'Payment Method',
+        es: 'Método de Pago',
+      },
+      status: paymentStatuses,
     },
     offlinePage: {
       title: {

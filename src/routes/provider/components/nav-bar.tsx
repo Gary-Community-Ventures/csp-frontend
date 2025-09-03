@@ -8,6 +8,7 @@ import {
   LogOut,
   UserRound,
   ArrowRightLeft,
+  CreditCard,
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
@@ -108,6 +109,11 @@ export function ProviderNavBar() {
             to: '/provider/resources',
             text: text(t.links.resources),
             Icon: BookOpen,
+          },
+          {
+            to: '/provider/payment-settings',
+            text: text(t.links.paymentSettings),
+            Icon: CreditCard,
           },
           // {
           //   to: '/provider/messages',

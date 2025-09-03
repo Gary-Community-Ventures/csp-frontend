@@ -2,7 +2,7 @@ import { ChildrenList } from '@/components/children-list'
 import { Header } from '@/components/header'
 import { WhiteCard } from '@/components/white-card'
 import { useProviderContext } from '../wrapper'
-import { TransactionsList } from '@/components/transactions'
+import { ProviderPaymentsList } from '@/routes/provider/components/payments-list'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,7 @@ import { Plus } from 'lucide-react'
 
 export function ProviderHomePage() {
   const t = translations.provider.home
-  const { children, transactions, curriculum, maxChildCount } =
+  const { children, curriculum, maxChildCount, paymentHistory, providerInfo } =
     useProviderContext()
 
   return (
@@ -44,14 +44,10 @@ export function ProviderHomePage() {
         <Header>
           <Text text={t.payments} />
         </Header>
-        <TransactionsList
-          transactions={transactions.map((transaction) => {
-            return {
-              name: transaction.name,
-              amount: transaction.amount,
-              date: transaction.date,
-            }
-          })}
+        <ProviderPaymentsList
+          payments={paymentHistory.payments}
+          isPayable={providerInfo.isPayable}
+          isPaymentEnabled={providerInfo.isPaymentEnabled}
         />
       </section>
     </div>

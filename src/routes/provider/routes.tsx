@@ -2,12 +2,13 @@ import { Outlet, createRoute, redirect } from '@tanstack/react-router'
 import { rootRoute } from '@/routes/router'
 import { ProviderHomePage } from './pages/home'
 import { ProviderNavBar } from './components/nav-bar'
-import { loadProviderData } from './loader'
+import { loadProviderData, loadPaymentSettings } from './loader'
 import { ProviderWrapper } from './wrapper'
 import { InviteFamilyPage } from './pages/invite-family'
 import { InviteFamilyConfirmationPage } from './pages/invite-family-confirmation'
 import { AttendancePage, loadAttendance } from './pages/attendance'
 import { ResourcesPage } from './pages/resources'
+import { PaymentSettingsPage } from './pages/payment-settings'
 import { SetRatePage } from './pages/set-rate'
 
 export const providerRoute = createRoute({
@@ -68,6 +69,13 @@ const resourcesRoute = createRoute({
   component: ResourcesPage,
 })
 
+export const paymentSettingsRoute = createRoute({
+  getParentRoute: () => providerRoute,
+  path: '/payment-settings',
+  component: PaymentSettingsPage,
+  loader: loadPaymentSettings,
+})
+
 export const setRateRoute = createRoute({
   getParentRoute: () => providerRoute,
   path: '/set-rate/$childId',
@@ -105,6 +113,7 @@ export const providerRouteTree = providerRoute.addChildren([
   inviteFamilyConfirmationRoute,
   attendanceRoute,
   resourcesRoute,
+  paymentSettingsRoute,
   setRateRoute,
   // childrenRoute,
   // resourcesRoute,

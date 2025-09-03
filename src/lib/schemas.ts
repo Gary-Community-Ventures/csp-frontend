@@ -101,11 +101,12 @@ export const monthAllocationSchema = z.object({
     .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   allocation_cents: z.number(),
   google_sheets_child_id: z.string(),
-  used_days: z.number(),
-  used_cents: z.number(),
-  remaining_cents: z.number(),
-  over_allocation: z.boolean(),
+  remaining_unselected_cents: z.number(),
+  remaining_unpaid_cents: z.number(),
   locked_until_date: z
+    .string()
+    .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
+  locked_past_date: z
     .string()
     .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   created_at: z.string().datetime(),

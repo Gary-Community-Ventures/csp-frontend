@@ -1,12 +1,13 @@
 import { useFamilyContext } from '../wrapper'
 import { ProviderList } from '../components/providers'
-import { TransactionsList } from '@/components/transactions'
+import { FamilyPaymentsList } from '@/routes/family/components/payments-list'
 import { Header } from '@/components/header'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
 import { formatAmount } from '@/lib/currency'
 import { useCurrentMonthBalance } from '@/lib/hooks'
 import { familyRoute } from '../routes'
+import { useMemo } from 'react'
 
 function Balance() {
   const t = translations.family.home
@@ -32,7 +33,14 @@ function Balance() {
 
 export function FamilyHomePage() {
   const t = translations.family.home
-  const { transactions, selectedChildInfo } = useFamilyContext()
+  const { selectedChildInfo, paymentHistory } = useFamilyContext()
+  const filteredPayments = useMemo(
+    () =>
+      paymentHistory.payments.filter(
+        (payment) => payment.child_id === selectedChildInfo.id
+      ),
+    [paymentHistory.payments, selectedChildInfo.id]
+  )
 
   return (
     <>
@@ -48,15 +56,7 @@ export function FamilyHomePage() {
           <Header>
             <Text text={t.recentTransactions} />
           </Header>
-          <TransactionsList
-            transactions={transactions.map((transaction) => {
-              return {
-                name: transaction.name,
-                amount: transaction.amount,
-                date: transaction.date,
-              }
-            })}
-          />
+          <FamilyPaymentsList payments={filteredPayments} />
         </section>
       </div>
     </>
