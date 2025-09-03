@@ -110,4 +110,5 @@ export type Family = {
   children: Child[]
   notifications: Notification[]
   is_also_provider: boolean
+  can_make_payments: boolean
 }
