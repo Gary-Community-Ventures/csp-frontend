@@ -570,20 +570,6 @@ export const translations = {
         en: 'Failed to load payment settings. Please try again.',
         es: 'Error al cargar la configuración de pagos. Inténtalo de nuevo.',
       },
-      paymentStatus: {
-        title: {
-          en: 'Payment Status',
-          es: 'Estado de Pago',
-        },
-        configured: {
-          en: 'Configured',
-          es: 'Configurado',
-        },
-        notConfigured: {
-          en: 'Not Configured',
-          es: 'No Configurado',
-        },
-      },
       paymentMethod: {
         title: {
           en: 'Payment Method',
@@ -632,6 +618,10 @@ export const translations = {
         chekSetupMessage: {
           en: 'After submitting, you will receive an email from our payment provider Chek to set up your account and configure your payment method.',
           es: 'Después de enviar, recibirá un correo electrónico de nuestro proveedor de pagos Chek para configurar su cuenta y configurar su método de pago.',
+        },
+        inviteSentMessage: {
+          en: 'An invitation email has been sent to {email} to set up your payment account. Please check your email.',
+          es: 'Se ha enviado un correo electrónico de invitación a {email} para configurar su cuenta de pago. Por favor, revise su correo electrónico.',
         },
       },
       additionalInfo: {

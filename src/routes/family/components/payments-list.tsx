@@ -12,9 +12,7 @@ type PaymentAmountProps = {
 }
 
 function FamilyPaymentAmount({ amountCents }: PaymentAmountProps) {
-  return (
-    <span className="font-bold text-red-600">-{formatAmount(amountCents)}</span>
-  )
+  return <span>-{formatAmount(amountCents)}</span>
 }
 
 export type FamilyPaymentsListProps = {
