@@ -14,7 +14,7 @@ type PayButtonProps = {
 function PayButton({ provider }: PayButtonProps) {
   const t = translations.family.providerList
 
-  const { selectedChildInfo } = useFamilyContext()
+  const { selectedChildInfo, canMakePayments } = useFamilyContext()
 
   if (provider.status === 'pending') {
     return (
@@ -38,7 +38,7 @@ function PayButton({ provider }: PayButtonProps) {
     )
   }
 
-  if (!provider.isPayable) {
+  if (!provider.isPayable || !canMakePayments) {
     return (
       <Button disabled>
         <Text text={t.payProvider} />

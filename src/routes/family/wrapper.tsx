@@ -48,6 +48,7 @@ export type FamilyContext = {
   navBar: NavBarContext
   children: Child[]
   isAlsoProvider: boolean
+  canMakePayments: boolean
   paymentHistory: FamilyPaymentHistoryResponse
 }
 
@@ -83,6 +84,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
       }
     }),
     isAlsoProvider: familyData.is_also_provider,
+    canMakePayments: familyData.can_make_payments,
     paymentHistory,
     navBar: {
       notifications: familyData.notifications,
