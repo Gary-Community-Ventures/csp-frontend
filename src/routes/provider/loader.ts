@@ -58,6 +58,7 @@ export type ProviderInfo = {
   last_name: string
   is_payable: boolean
   is_payment_enabled: boolean
+  type: 'ffn' | 'lhb' | 'center'
 }
 
 export type Curriculum = {
