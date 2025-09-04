@@ -14,7 +14,7 @@ type PayButtonProps = {
 function PayButton({ provider }: PayButtonProps) {
   const t = translations.family.providerList
 
-  const { selectedChildInfo } = useFamilyContext()
+  const { selectedChildInfo, canMakePayments } = useFamilyContext()
 
   if (provider.status === 'pending') {
     return (
@@ -35,6 +35,14 @@ function PayButton({ provider }: PayButtonProps) {
       <Badge variant="secondary">
         <Text text={t.paymentsDisabled} />
       </Badge>
+    )
+  }
+
+  if (!provider.isPayable || !canMakePayments) {
+    return (
+      <Button disabled>
+        <Text text={t.payProvider} />
+      </Button>
     )
   }
 

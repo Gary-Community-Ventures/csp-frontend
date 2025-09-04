@@ -6,18 +6,15 @@ import {
   type SetStateAction,
 } from 'react'
 import { providerRoute } from './routes'
+import type { ProviderPaymentHistoryResponse } from '@/lib/api/paymentHistory'
 
 export type ProviderInfo = {
   id: string
   firstName: string
   lastName: string
-}
-
-export type Transaction = {
-  id: string
-  name: string
-  amount: number
-  date: Date
+  isPayable: boolean
+  isPaymentEnabled: boolean
+  type: 'ffn' | 'lhb' | 'center'
 }
 
 export type Curriculum = {
@@ -46,11 +43,11 @@ export type NavBarContext = {
 export type ProviderContextType = {
   providerInfo: ProviderInfo
   children: Child[]
-  transactions: Transaction[]
   curriculum: Curriculum | null
   navBar: NavBarContext
   maxChildCount: number
   isAlsoFamily: boolean
+  paymentHistory: ProviderPaymentHistoryResponse
 }
 
 const ProviderContext = createContext<ProviderContextType | undefined>(
@@ -58,7 +55,7 @@ const ProviderContext = createContext<ProviderContextType | undefined>(
 )
 
 export function ProviderWrapper({ children }: { children: React.ReactNode }) {
-  const { providerData } = providerRoute.useLoaderData()
+  const { providerData, paymentHistory } = providerRoute.useLoaderData()
   const [hidden, setHidden] = useState<boolean>(false)
 
   const providerContext: ProviderContextType = {
@@ -66,6 +63,9 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
       id: providerData.provider_info.id,
       firstName: providerData.provider_info.first_name,
       lastName: providerData.provider_info.last_name,
+      isPayable: providerData.provider_info.is_payable,
+      isPaymentEnabled: providerData.provider_info.is_payment_enabled,
+      type: providerData.provider_info.type,
     },
     children: providerData.children.map((child) => {
       return {
@@ -76,10 +76,10 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
         halfDayRateCents: child.half_day_rate_cents,
       }
     }),
-    transactions: providerData.transactions,
     curriculum: providerData.curriculum,
     maxChildCount: providerData.max_child_count,
     isAlsoFamily: providerData.is_also_family,
+    paymentHistory,
     navBar: {
       notifications: providerData.notifications,
       setHidden,

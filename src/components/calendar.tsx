@@ -78,23 +78,32 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   const currentDayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate())
 
   let lockedUntilDateStart: Date | null = null
+  let lockedPastDateStart: Date | null = null
   if (allocation.locked_until_date) {
     const [year, month, day] = allocation.locked_until_date
       .split('-')
       .map(Number)
     lockedUntilDateStart = new Date(year, month - 1, day) // month is 0-indexed
   }
+  if (allocation.locked_past_date) {
+    const [year, month, day] = allocation.locked_past_date
+      .split('-')
+      .map(Number)
+    lockedPastDateStart = new Date(year, month - 1, day) // month is 0-indexed
+  }
 
   const isDayLocked =
     careDay?.is_locked ||
-    (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart)
+    (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart) ||
+    (lockedPastDateStart && currentDayStart >= lockedPastDateStart)
 
   let cellClasses = 'flex justify-center items-center py-1'
 
+  const isDisabled =
+    !isCurrentMonth || isDayLocked || careDay?.last_submitted_at
+
   let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
-    isCurrentMonth && !isDayLocked
-      ? 'cursor-pointer hover:opacity-80'
-      : 'cursor-not-allowed'
+    !isDisabled ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
   }`
   let colorClass = ''
   let textColorClass = 'text-gray-800' // Default text color
@@ -154,7 +163,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       <div
         key={d.toString()}
         className={dayClasses}
-        onClick={!isDayLocked ? () => handleDayClick(careDay, d) : undefined}
+        onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
       >
         {dayContent}
       </div>
@@ -348,10 +357,6 @@ export const Calendar: React.FC<CalendarProps> = ({
           {
             colorClass: 'bg-[#778C7F]',
             textKey: t.submitted,
-          },
-          {
-            colorClass: 'bg-[#B53333]',
-            textKey: t.cancel,
           },
         ].map((item, index) => (
           <div key={index} className="flex items-center gap-x-2">

@@ -95,5 +95,5 @@ export function useCurrentMonthBalance(
     throwOnError: false, // Do not throw error, handle it gracefully
   })
 
-  return allocation?.remaining_cents
+  return allocation?.remaining_unpaid_cents
 }
