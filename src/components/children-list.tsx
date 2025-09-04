@@ -40,30 +40,34 @@ export function ChildrenList({ children }: ChildrenListProps) {
           <strong className="text-lg flex items-center">
             {child.firstName} {child.lastName}
           </strong>
-          {child.fullDayRateCents === null && providerInfo.type !== 'center' ? (
-            <Button asChild>
-              <Link
-                to="/provider/set-rate/$childId"
-                params={{ childId: child.id }}
-              >
-                <Text text={t.setRate} />
-              </Link>
-            </Button>
-          ) : (
-            <span>
-              <div>
-                <span className="font-bold text-primary">
-                  <Text text={t.halfDayRate} />
+          {providerInfo.type !== 'center' && (
+            <>
+              {child.fullDayRateCents === null ? (
+                <Button asChild>
+                  <Link
+                    to="/provider/set-rate/$childId"
+                    params={{ childId: child.id }}
+                  >
+                    <Text text={t.setRate} />
+                  </Link>
+                </Button>
+              ) : (
+                <span>
+                  <div>
+                    <span className="font-bold text-primary">
+                      <Text text={t.halfDayRate} />
+                    </span>
+                    {formatAmount(child.halfDayRateCents)}
+                  </div>
+                  <div>
+                    <span className="font-bold text-primary">
+                      <Text text={t.fullDayRate} />
+                    </span>
+                    {formatAmount(child.fullDayRateCents)}
+                  </div>
                 </span>
-                {formatAmount(child.halfDayRateCents)}
-              </div>
-              <div>
-                <span className="font-bold text-primary">
-                  <Text text={t.fullDayRate} />
-                </span>
-                {formatAmount(child.fullDayRateCents)}
-              </div>
-            </span>
+              )}
+            </>
           )}
           {/* TODO enable when messages are implemented */}
           {/*<Button asChild>
