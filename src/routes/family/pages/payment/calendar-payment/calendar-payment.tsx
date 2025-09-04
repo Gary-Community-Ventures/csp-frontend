@@ -31,10 +31,7 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
   } = usePaymentData()
 
   const hasPendingChanges = allocationQuery.data?.care_days.some(
-    (careDay) =>
-      careDay.status === 'new' ||
-      careDay.status === 'needs_resubmission' ||
-      careDay.status === 'delete_not_submitted'
+    (careDay) => careDay.status === 'new'
   )
 
   const blocker = useBlocker({
