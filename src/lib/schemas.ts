@@ -75,7 +75,7 @@ export const allocatedCareDaySchema = z.object({
     .string()
     .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   type: z.enum(['Full Day', 'Half Day']),
-  provider_id: z.string(),
+  provider_supabase_id: z.string(),
   id: z.number(),
   care_month_allocation_id: z.number(),
   amount_cents: z.number(),
@@ -100,7 +100,7 @@ export const monthAllocationSchema = z.object({
     .string()
     .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   allocation_cents: z.number(),
-  google_sheets_child_id: z.string(),
+  child_supabase_id: z.string(),
   remaining_unselected_cents: z.number(),
   remaining_unpaid_cents: z.number(),
   locked_until_date: z
@@ -119,8 +119,8 @@ export const paymentRequestSchema = z.object({
   care_day_ids: z.array(z.number()),
   care_days_count: z.number(),
   amount: z.string(),
-  provider_google_sheets_id: z.string(),
-  child_google_sheets_id: z.string(),
+  provider_supabase_id: z.string(),
+  child_supabase_id: z.string(),
   email_sent_successfully: z.boolean(),
   processed: z.boolean(),
   processed_date: z.string().nullable(),
@@ -135,7 +135,7 @@ export const paymentRateSchema = z.object({
 export const allocatedLumpSumResponseSchema = z.object({
   id: z.number(),
   care_month_allocation_id: z.number(),
-  provider_google_sheets_id: z.string(),
+  provider_supabase_id: z.string(),
   amount_cents: z.number(),
   hours: z.number().nullable().default(null),
 })
