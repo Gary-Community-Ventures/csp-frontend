@@ -75,7 +75,7 @@ export const allocatedCareDaySchema = z.object({
     .string()
     .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date format' }),
   type: z.enum(['Full Day', 'Half Day']),
-  provider_google_sheets_id: z.string(),
+  provider_id: z.string(),
   id: z.number(),
   care_month_allocation_id: z.number(),
   amount_cents: z.number(),

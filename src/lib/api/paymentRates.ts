@@ -48,8 +48,8 @@ export async function createPaymentRate(
     method: 'POST',
     headers: await headersWithAuth(context),
     body: JSON.stringify({
-      google_sheets_provider_id: providerId,
-      google_sheets_child_id: childId,
+      provider_id: providerId,
+      child_id: childId,
       half_day_rate_cents: halfDayRateCents,
       full_day_rate_cents: fullDayRateCents,
     }),
