@@ -74,7 +74,7 @@ export function ProviderList({ showAddProvider = false }: ProviderListProps) {
         <div className="flex flex-col items-center justify-center text-center">
           <Text text={translations.general.emptyState.noProvidersAddProvider} />
           <Button asChild className="mt-4" size="lg">
-            <Link to="/family">
+            <Link to="/family/$childId/providers/invite">
               <Text text={translations.general.emptyState.addYourProvider} />
             </Link>
           </Button>
