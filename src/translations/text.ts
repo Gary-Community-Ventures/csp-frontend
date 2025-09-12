@@ -415,8 +415,8 @@ export const translations = {
         es: 'Agregar un Proveedor',
       },
       invite: {
-        en: 'Invite your provider',
-        es: 'Invita tu proveedor',
+        en: 'Invite a provider',
+        es: 'Invitar a un proveedor',
       },
       inviteButton: {
         en: 'Invite',
@@ -425,8 +425,8 @@ export const translations = {
     },
     inviteProviderPage: {
       header: {
-        en: 'Invite your provider',
-        es: 'Invita tu proveedor',
+        en: 'Invite a provider',
+        es: 'Invitar a un proveedor',
       },
       emailError: emailError,
       phoneError: phoneError,
