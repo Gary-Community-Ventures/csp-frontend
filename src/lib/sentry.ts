@@ -10,6 +10,8 @@ export function initializeSentry() {
     Sentry.init({
       dsn: sentryDsn,
       environment: environment,
+      // Release tracking helps match errors to specific source maps
+      release: import.meta.env.VITE_SENTRY_RELEASE || undefined,
       integrations: [
         Sentry.browserTracingIntegration(),
         Sentry.replayIntegration({
@@ -20,6 +22,8 @@ export function initializeSentry() {
       tracesSampleRate: environment === 'production' ? 0.1 : 1.0,
       replaysSessionSampleRate: environment === 'production' ? 0.01 : 0.1,
       replaysOnErrorSampleRate: 1.0,
+      // Enable debug mode in development to see if source maps are working
+      debug: environment === 'development',
     })
   }
 
