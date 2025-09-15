@@ -45,15 +45,19 @@ To run the project locally, follow these steps:
 ## Sentry Configuration
 
 ### Error Monitoring
+
 Add Sentry DSN to your `.env` file:
+
 ```
 VITE_SENTRY_DSN=your_sentry_dsn_here
 ```
 
 ### Source Maps (Optional)
+
 To enable source maps for better error debugging in production:
 
 1. Create a `.env.sentry-build-plugin` file (already in .gitignore):
+
 ```
 SENTRY_AUTH_TOKEN=your_auth_token_here
 SENTRY_ORG=your_org_slug
@@ -63,7 +67,6 @@ SENTRY_PROJECT=your_project_slug
 2. Get your auth token from [Sentry Settings > Organization Tokens](https://sentry.io/settings/auth-tokens/)
 
 3. Source maps will automatically upload during `npm run build` when these variables are set
-
 
 ## TODOs
 

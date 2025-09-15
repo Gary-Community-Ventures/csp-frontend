@@ -18,7 +18,7 @@ export function initializeSentry() {
   // In production, the SENTRY_RELEASE is injected at the very top of the bundle
   // but we'll check for it just to be safe
   const releaseId = window.SENTRY_RELEASE?.id
-  
+
   if (sentryDsn) {
     Sentry.init({
       dsn: sentryDsn,
