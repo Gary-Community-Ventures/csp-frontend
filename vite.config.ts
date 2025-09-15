@@ -49,16 +49,23 @@ export default defineConfig({
         ],
       },
     }),
-    // Sentry plugin should be last
-    sentryVitePlugin({
+    // Sentry plugin should be last - only add if we have auth token
+    ...(process.env.SENTRY_AUTH_TOKEN ? [sentryVitePlugin({
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
       authToken: process.env.SENTRY_AUTH_TOKEN,
+      release: {
+        // This will inject the release version into your app
+        inject: true,
+        setCommits: {
+          auto: true,
+        },
+      },
       sourcemaps: {
         // Optional: Delete source maps after upload to keep them private
         filesToDeleteAfterUpload: ['./dist/**/*.map'],
       },
-    }),
+    })] : []),
   ],
   resolve: {
     alias: {
