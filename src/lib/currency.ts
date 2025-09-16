@@ -1,5 +1,10 @@
 export function formatAmount(cents: number): string {
-  return `$${(cents / 100).toFixed(2)}`
+  const dollars = cents / 100
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
+  return formatter.format(dollars)
 }
 
 export function dollarToCents(dollars: string | number): number {
