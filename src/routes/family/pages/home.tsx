@@ -37,7 +37,7 @@ export function FamilyHomePage() {
   const filteredPayments = useMemo(
     () =>
       paymentHistory.payments.filter(
-        (payment) => payment.child_id === selectedChildInfo.id
+        (payment) => payment.child_supabase_id === selectedChildInfo.id
       ),
     [paymentHistory.payments, selectedChildInfo.id]
   )

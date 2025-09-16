@@ -35,25 +35,3 @@ export async function getPaymentRate(
     throw error
   }
 }
-
-export async function createPaymentRate(
-  context: RouterContext,
-  providerId: string,
-  childId: string,
-  halfDayRateCents: number,
-  fullDayRateCents: number
-) {
-  const url = backendUrl('/payment-rates')
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: await headersWithAuth(context),
-    body: JSON.stringify({
-      google_sheets_provider_id: providerId,
-      google_sheets_child_id: childId,
-      half_day_rate_cents: halfDayRateCents,
-      full_day_rate_cents: fullDayRateCents,
-    }),
-  })
-  handleStatusCodes(context, res)
-  return res.json()
-}
