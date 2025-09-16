@@ -1,5 +1,5 @@
 export function formatAmount(cents: number): string {
-  const dollars = cents / 100
+  const dollars = centsToDollar(cents)
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
