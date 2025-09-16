@@ -7,9 +7,9 @@ export interface FamilyPaymentHistoryItem {
   amount_cents: number
   status: 'success' | 'failed' | 'pending'
   provider_name: string
-  provider_id: string
+  provider_supabase_id: string
   child_name: string
-  child_id: string
+  child_supabase_id: string
   month: string
   payment_type: 'care_days' | 'lump_sum' | 'other'
 }
@@ -26,7 +26,7 @@ export interface ProviderPaymentHistoryItem {
   amount_cents: number
   status: 'success' | 'failed' | 'pending'
   child_name: string
-  child_id: string
+  child_supabase_id: string
   month: string
   payment_method: string
   payment_type: 'care_days' | 'lump_sum' | 'other'
