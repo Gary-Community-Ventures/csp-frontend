@@ -1,8 +1,4 @@
-import { ExternalLink } from '@/components/external-link'
 import { Header } from '@/components/header'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
-import { WhiteCard } from '@/components/white-card'
 import {
   getProviderTrainings,
   updateProviderTrainings,
@@ -12,176 +8,16 @@ import {
   ProviderTrainingResponseSchema,
   ProviderTrainingUpdateRequestSchema,
 } from '@/lib/schemas'
+import { translations } from '@/translations/text'
+import { useText } from '@/translations/wrapper'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import type { PropsWithChildren } from 'react'
-import React, { useMemo, useState } from 'react'
-import { useProviderContext } from '../wrapper'
-import { z } from 'zod'
+import { useMemo } from 'react'
 import { toast } from 'sonner'
-import { useText } from '@/translations/wrapper'
-import { translations } from '@/translations/text'
-import * as Popover from '@radix-ui/react-popover'
-import { ChevronDown, ChevronRight } from 'lucide-react'
-
-type ResourceLinkProps = PropsWithChildren<{
-  href: string
-}>
-
-function ResourceLink({ href, children }: ResourceLinkProps) {
-  return (
-    <ExternalLink href={href} className="font-bold text-primary underline">
-      {children}
-    </ExternalLink>
-  )
-}
-
-type ResourceSectionProps = PropsWithChildren<{
-  title: string
-  sectionId: keyof z.infer<typeof ProviderTrainingResponseSchema>
-  isCompleted: boolean
-  onToggleCompletion: (
-    sectionId: keyof z.infer<typeof ProviderTrainingUpdateRequestSchema>
-  ) => void
-  isReadOnly?: boolean
-}>
-
-function ResourceSection({
-  title,
-  sectionId,
-  isCompleted,
-  onToggleCompletion,
-  isReadOnly = false,
-  children,
-}: ResourceSectionProps) {
-  const text = useText()
-  const t = translations.provider.resources
-  const [showTooltip, setShowTooltip] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(isCompleted)
-
-  // Auto-collapse/expand when completion status changes
-  React.useEffect(() => {
-    setIsCollapsed(isCompleted)
-  }, [isCompleted])
-
-  return (
-    <WhiteCard
-      className={`p-4 sm:p-6 transition-all duration-300 border-2 ${
-        isCompleted
-          ? 'border-green-500 shadow-sm shadow-green-100'
-          : 'border-transparent hover:shadow-md'
-      }`}
-    >
-      <div>
-        {/* Header row with checkbox and title */}
-        <div className="flex gap-3 sm:gap-4 items-center">
-          {/* Checkbox */}
-          <div className="flex flex-col items-center relative">
-            {isReadOnly ? (
-              <Popover.Root open={showTooltip}>
-                <Popover.Trigger asChild>
-                  <div
-                    className={`p-2 rounded-lg transition-all duration-200 ${
-                      !isCompleted ? 'hover:bg-gray-50' : ''
-                    }`}
-                    onMouseEnter={() => setShowTooltip(true)}
-                    onMouseLeave={() => setShowTooltip(false)}
-                  >
-                    <Checkbox
-                      id={sectionId}
-                      checked={isCompleted}
-                      disabled={isReadOnly}
-                      className={`transition-all duration-200 w-5 h-5 sm:w-6 sm:h-6 cursor-not-allowed opacity-50 ${
-                        isCompleted
-                          ? 'data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600'
-                          : ''
-                      }`}
-                    />
-                  </div>
-                </Popover.Trigger>
-                <Popover.Portal>
-                  <Popover.Content
-                    className="z-50 rounded-md bg-gray-900 px-3 py-2 text-xs text-white shadow-md animate-in fade-in-0 zoom-in-95"
-                    sideOffset={5}
-                  >
-                    <div className="max-w-[200px]">{text(t.cprTooltip)}</div>
-                    <Popover.Arrow className="fill-gray-900" />
-                  </Popover.Content>
-                </Popover.Portal>
-              </Popover.Root>
-            ) : (
-              <div
-                className={`p-2 rounded-lg transition-all duration-200 ${
-                  !isCompleted ? 'bg-amber-50 border-2 border-amber-200' : ''
-                }`}
-              >
-                <Checkbox
-                  id={sectionId}
-                  checked={isCompleted}
-                  onCheckedChange={() =>
-                    onToggleCompletion(
-                      sectionId as keyof z.infer<
-                        typeof ProviderTrainingUpdateRequestSchema
-                      >
-                    )
-                  }
-                  disabled={isReadOnly}
-                  className={`transition-all duration-200 w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:scale-110 ${
-                    isCompleted
-                      ? 'data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600'
-                      : ''
-                  }`}
-                />
-              </div>
-            )}
-            {/* "Check when done" hint - positioned absolutely, hidden when collapsed and on mobile */}
-            {!isCompleted && !isReadOnly && !isCollapsed && (
-              <div className="hidden sm:flex absolute top-full mt-1 flex-col items-center">
-                <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-b-[5px] border-amber-200"></div>
-                <span className="text-[10px] text-amber-700 font-medium text-center whitespace-nowrap">
-                  {text(t.checkWhenDone)}
-                </span>
-              </div>
-            )}
-          </div>
-
-          {/* Title and collapse controls */}
-          <div
-            className="flex-1 flex items-center gap-2 cursor-pointer select-none py-2"
-            onClick={() => setIsCollapsed(!isCollapsed)}
-          >
-            <button className="flex items-center justify-center p-1 hover:bg-gray-100 rounded transition-colors">
-              {isCollapsed ? (
-                <ChevronRight className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
-              ) : (
-                <ChevronDown className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
-              )}
-            </button>
-            <Header Tag="h3" className="flex-1 my-0 text-base sm:text-2xl">
-              {title}
-            </Header>
-            {isCompleted && (
-              <span className="hidden sm:inline text-green-600 text-sm font-medium">
-                ✓ {text(t.completed)}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Collapsible content */}
-        <div
-          className={`space-y-4 transition-all duration-300 ${
-            isCollapsed
-              ? 'max-h-0 overflow-hidden opacity-0'
-              : 'max-h-[2000px] opacity-100 mt-4 ml-0 sm:ml-20'
-          } ${isCompleted ? 'opacity-75' : ''}`}
-        >
-          {children}
-        </div>
-      </div>
-    </WhiteCard>
-  )
-}
+import { z } from 'zod'
+import { ResourceLink } from '../components/resource-link'
+import { ResourceSection } from '../components/resource-section'
+import { useProviderContext } from '../wrapper'
 
 export function ResourcesPage() {
   const context = useRouter().options.context
@@ -190,6 +26,7 @@ export function ResourcesPage() {
   const text = useText()
   const t = translations.provider.resources
 
+  // Fetch training data
   const { data: trainingData } = useQuery({
     queryKey: ['providerTrainings'],
     queryFn: async () => {
@@ -200,6 +37,7 @@ export function ResourcesPage() {
     },
   })
 
+  // Update training mutation
   const { mutate: updateTraining } = useMutation({
     mutationFn: async (
       variables: z.infer<typeof ProviderTrainingUpdateRequestSchema>
@@ -215,6 +53,7 @@ export function ResourcesPage() {
     },
   })
 
+  // Calculate completed sections
   const completedSections = useMemo(() => {
     if (!trainingData) return []
     return Object.entries(trainingData)
@@ -231,21 +70,21 @@ export function ResourcesPage() {
 
   return (
     <div className="mx-auto mb-5 max-w-4xl p-3 sm:p-5">
+      {/* Page Header */}
       <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-4xl">
         {text(t.pageTitle)}
       </Header>
 
+      {/* Introduction */}
       <div className="space-y-4 sm:space-y-6">
         <p className="text-sm sm:text-base">{text(t.welcome)}</p>
-
         <p className="text-sm sm:text-base">{text(t.keyStep)}</p>
-
         <p className="font-bold text-sm sm:text-base">{text(t.pleaseNote)}</p>
-
         <p className="font-bold text-sm sm:text-base">
           {text(t.readCarefully)}
         </p>
 
+        {/* Training Overview */}
         <div className="mt-6 sm:mt-8">
           <Header className="mb-4 text-xl sm:text-3xl">
             {text(t.trainingOverviewTitle)}
@@ -255,6 +94,7 @@ export function ResourcesPage() {
           </p>
         </div>
 
+        {/* Training Sections */}
         <div className="space-y-6">
           <ResourceSection
             title={text(t.section1.title)}
@@ -320,6 +160,7 @@ export function ResourcesPage() {
             </div>
           </ResourceSection>
 
+          {/* Section 2: Child Safety Module */}
           <ResourceSection
             title={text(t.section2.title)}
             sectionId="child_safety_module_training_completed_at"
@@ -367,6 +208,7 @@ export function ResourcesPage() {
             </div>
           </ResourceSection>
 
+          {/* Section 3: Safe Sleep for Infants */}
           <ResourceSection
             title={text(t.section3.title)}
             sectionId="safe_sleep_for_infants_training_completed_at"
@@ -414,6 +256,7 @@ export function ResourcesPage() {
             </ul>
           </ResourceSection>
 
+          {/* Section 4: Home Safety & Injury Prevention */}
           <ResourceSection
             title={text(t.section4.title)}
             sectionId="home_safety_and_injury_prevention_training_completed_at"
