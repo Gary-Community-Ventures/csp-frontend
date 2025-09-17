@@ -99,10 +99,11 @@ export function ResourcesPage() {
           <ResourceSection
             title={text(t.section1.title)}
             sectionId="cpr_online_training_completed_at"
-            isCompleted={completedSections.includes(
-              'cpr_online_training_completed_at'
-            )}
-            onToggleCompletion={handleToggleCompletion}
+            isCompleted={
+              completedSections.includes('cpr_online_training_completed_at') ||
+              providerInfo.cprCertified === true
+            }
+            onToggleCompletion={() => {}}
             isReadOnly
           >
             <p>
