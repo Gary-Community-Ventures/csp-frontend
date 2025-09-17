@@ -14,6 +14,7 @@ export type ProviderInfo = {
   lastName: string
   isPayable: boolean
   isPaymentEnabled: boolean
+  cprTrainingLink: string | null
   type: 'ffn' | 'lhb' | 'center'
 }
 
@@ -65,6 +66,7 @@ export function ProviderWrapper({ children }: { children: React.ReactNode }) {
       lastName: providerData.provider_info.last_name,
       isPayable: providerData.provider_info.is_payable,
       isPaymentEnabled: providerData.provider_info.is_payment_enabled,
+      cprTrainingLink: providerData.provider_info.cpr_training_link,
       type: providerData.provider_info.type,
     },
     children: providerData.children.map((child) => {
