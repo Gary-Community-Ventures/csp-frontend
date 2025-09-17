@@ -699,7 +699,7 @@ export const translations = {
         es: '¡Bienvenido al Programa Piloto Childcare Affordability Pilot (CAP)! Nos complace contar con su participación. Esta pequeña prueba solo por invitación se centra en ayudarle mientras brinda atención vital a los niños de Colorado.',
       },
       keyStep: {
-        en: 'A key step to fully participate in the CAP program and receive payments from families is to complete mandatory health and safety training. We\'ve put together a series of online videos and readings that you can access from home.',
+        en: "A key step to fully participate in the CAP program and receive payments from families is to complete mandatory health and safety training. We've put together a series of online videos and readings that you can access from home.",
         es: 'Un paso clave para participar en el programa CAP y recibir pagos de las familias es completar la capacitación esencial sobre salud y seguridad. Hemos creado una serie de videos y lecturas en línea a los que puede acceder desde casa.',
       },
       pleaseNote: {
@@ -715,7 +715,7 @@ export const translations = {
         es: 'Descripción general de su entrenamiento',
       },
       trainingOverviewDescription: {
-        en: 'We\'ve organized your training into four main sections. Please complete these in the order they are presented, as they build upon important knowledge for providing the best care.',
+        en: "We've organized your training into four main sections. Please complete these in the order they are presented, as they build upon important knowledge for providing the best care.",
         es: 'Hemos organizado su capacitación en cuatro secciones principales. Por favor, complételas en el orden en que se presentan, ya que se basan en conocimientos importantes para brindar la mejor atención.',
       },
       markAsComplete: {
@@ -764,7 +764,7 @@ export const translations = {
           es: 'Ingrese su nombre, correo electrónico y número de teléfono. No modifique el número de cupón que se completa automáticamente en la página de registro.',
         },
         passwordReset: {
-          en: 'You will receive an email to reset their password. If an email isn\'t received, navigate to',
+          en: "You will receive an email to reset their password. If an email isn't received, navigate to",
           es: 'Recibirá un correo electrónico para restablecer su contraseña. Si no lo recibe, visite',
         },
         selectLogin: {
