@@ -1,7 +1,7 @@
 import { Header } from '@/components/header'
 import { Checkbox } from '@/components/ui/checkbox'
 import { WhiteCard } from '@/components/white-card'
-import { ProviderTrainingUpdateRequestSchema } from '@/lib/schemas'
+import { ProviderTrainingResponseSchema } from '@/lib/schemas'
 import { translations } from '@/translations/text'
 import { useText } from '@/translations/wrapper'
 import * as Popover from '@radix-ui/react-popover'
@@ -10,13 +10,13 @@ import React, { useState } from 'react'
 import type { PropsWithChildren } from 'react'
 import { z } from 'zod'
 
+type TrainingSection = keyof z.infer<typeof ProviderTrainingResponseSchema>
+
 type ResourceSectionProps = PropsWithChildren<{
   title: string
-  sectionId: string
+  sectionId: TrainingSection
   isCompleted: boolean
-  onToggleCompletion: (
-    sectionId: keyof z.infer<typeof ProviderTrainingUpdateRequestSchema>
-  ) => void
+  onToggleCompletion: (sectionId: TrainingSection) => void
   isReadOnly?: boolean
 }>
 
@@ -40,9 +40,7 @@ export function ResourceSection({
 
   const handleCheckboxChange = () => {
     if (!isReadOnly) {
-      onToggleCompletion(
-        sectionId as keyof z.infer<typeof ProviderTrainingUpdateRequestSchema>
-      )
+      onToggleCompletion(sectionId)
     }
   }
 

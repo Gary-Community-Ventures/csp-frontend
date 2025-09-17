@@ -62,10 +62,13 @@ export function ResourcesPage() {
   }, [trainingData])
 
   const handleToggleCompletion = (
-    sectionId: keyof z.infer<typeof ProviderTrainingUpdateRequestSchema>
+    sectionId: keyof z.infer<typeof ProviderTrainingResponseSchema>
   ) => {
     const isCompleted = completedSections.includes(sectionId)
-    updateTraining({ [sectionId]: !isCompleted })
+    // Only update if it's a valid update field (exclude cpr_online_training_completed_at)
+    if (sectionId !== 'cpr_online_training_completed_at') {
+      updateTraining({ [sectionId]: !isCompleted })
+    }
   }
 
   return (
