@@ -764,7 +764,7 @@ export const translations = {
           es: 'Ingrese su nombre, correo electrónico y número de teléfono. No modifique el número de cupón que se completa automáticamente en la página de registro.',
         },
         passwordReset: {
-          en: "You will receive an email to reset their password. If an email isn't received, navigate to",
+          en: "You will receive an email to reset your password. If an email isn't received, navigate to",
           es: 'Recibirá un correo electrónico para restablecer su contraseña. Si no lo recibe, visite',
         },
         selectLogin: {
