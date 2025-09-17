@@ -726,6 +726,14 @@ export const translations = {
         en: 'Completed',
         es: 'Completado',
       },
+      checkWhenDone: {
+        en: 'Check when done',
+        es: 'Marcar al terminar',
+      },
+      cprTooltip: {
+        en: 'We will check this box once we have received your training documents',
+        es: 'Marcaremos esta casilla una vez que hayamos recibido sus documentos de capacitación',
+      },
       section1: {
         title: {
           en: 'Section 1: Adult, Child, and Baby First Aid/CPR/AED Online',

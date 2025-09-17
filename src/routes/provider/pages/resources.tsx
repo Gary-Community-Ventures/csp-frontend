@@ -15,12 +15,13 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import type { PropsWithChildren } from 'react'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useProviderContext } from '../wrapper'
 import { z } from 'zod'
 import { toast } from 'sonner'
 import { useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import * as Popover from '@radix-ui/react-popover'
 
 type ResourceLinkProps = PropsWithChildren<{
   href: string
@@ -54,43 +55,101 @@ function ResourceSection({
 }: ResourceSectionProps) {
   const text = useText()
   const t = translations.provider.resources
-  
+  const [showTooltip, setShowTooltip] = useState(false)
+
   return (
-    <WhiteCard>
-      <div className="flex items-center justify-between">
-        <Header Tag="h3">{title}</Header>
-        <div className="flex items-center space-x-2 group">
-          <div className="flex items-center justify-center w-5 h-5">
-            <Checkbox
-              id={sectionId}
-              checked={isCompleted}
-              onCheckedChange={() =>
-                onToggleCompletion(
-                  sectionId as keyof z.infer<
-                    typeof ProviderTrainingUpdateRequestSchema
-                  >
-                )
-              }
-              disabled={isReadOnly}
-              className={`transition-all duration-200 ${!isReadOnly ? 'cursor-pointer hover:scale-110' : ''}`}
-            />
-          </div>
-          <Label 
-            htmlFor={sectionId} 
-            className={`text-sm font-medium transition-colors duration-200 ${!isReadOnly ? 'cursor-pointer group-hover:text-primary' : 'cursor-not-allowed opacity-50'}`}
-          >
-            <div className="relative h-5 min-w-[120px]">
-              <span className={`absolute inset-0 transition-all duration-300 ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>
-                {text(t.completed)}
-              </span>
-              <span className={`absolute inset-0 transition-all duration-300 ${!isCompleted ? 'opacity-100' : 'opacity-0'}`}>
-                {text(t.markAsComplete)}
+    <WhiteCard
+      className={`p-6 transition-all duration-300 border-2 ${
+        isCompleted
+          ? 'border-green-500 shadow-sm shadow-green-100'
+          : 'border-transparent hover:shadow-md'
+      }`}
+    >
+      <div className="flex gap-4">
+        {/* Checkbox column */}
+        <div className="flex flex-col items-center pt-1">
+          {isReadOnly ? (
+            <Popover.Root open={showTooltip}>
+              <Popover.Trigger asChild>
+                <div
+                  className={`p-2 rounded-lg transition-all duration-200 ${
+                    !isCompleted ? 'hover:bg-gray-50' : ''
+                  }`}
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                >
+                  <Checkbox
+                    id={sectionId}
+                    checked={isCompleted}
+                    disabled={isReadOnly}
+                    className={`transition-all duration-200 w-6 h-6 cursor-not-allowed opacity-50 ${
+                      isCompleted
+                        ? 'data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600'
+                        : ''
+                    }`}
+                  />
+                </div>
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content
+                  className="z-50 rounded-md bg-gray-900 px-3 py-2 text-xs text-white shadow-md animate-in fade-in-0 zoom-in-95"
+                  sideOffset={5}
+                >
+                  <div className="max-w-[200px]">{text(t.cprTooltip)}</div>
+                  <Popover.Arrow className="fill-gray-900" />
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
+          ) : (
+            <div
+              className={`p-2 rounded-lg transition-all duration-200 ${
+                !isCompleted ? 'bg-amber-50 border-2 border-amber-200' : ''
+              }`}
+            >
+              <Checkbox
+                id={sectionId}
+                checked={isCompleted}
+                onCheckedChange={() =>
+                  onToggleCompletion(
+                    sectionId as keyof z.infer<
+                      typeof ProviderTrainingUpdateRequestSchema
+                    >
+                  )
+                }
+                disabled={isReadOnly}
+                className={`transition-all duration-200 w-6 h-6 cursor-pointer hover:scale-110 ${
+                  isCompleted
+                    ? 'data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600'
+                    : ''
+                }`}
+              />
+            </div>
+          )}
+          {!isCompleted && !isReadOnly && (
+            <div className="mt-2 flex flex-col items-center">
+              <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-amber-200"></div>
+              <span className="text-[10px] text-amber-700 font-medium mt-1">
+                {text(t.checkWhenDone)}
               </span>
             </div>
-          </Label>
+          )}
+        </div>
+
+        {/* Content column */}
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-4">
+            <Header Tag="h3">{title}</Header>
+            {isCompleted && (
+              <span className="text-green-600 text-sm font-medium">
+                ✓ {text(t.completed)}
+              </span>
+            )}
+          </div>
+          <div className={`space-y-4 ${isCompleted ? 'opacity-75' : ''}`}>
+            {children}
+          </div>
         </div>
       </div>
-      <div className="mt-4 space-y-4">{children}</div>
     </WhiteCard>
   )
 }
