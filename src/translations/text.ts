@@ -793,7 +793,7 @@ export const translations = {
         },
         emailCopyReason: {
           en: 'as soon as you receive it. This is essential for verifying your training for CAP approval.',
-          es: 'Esto es esencial para verificar su capacitación y obtener la aprobación de CAP.',
+          es: 'Tan pronto como lo reciba. Esto es esencial para verificar su capacitación y obtener la aprobación de CAP.',
         },
       },
       section2: {
