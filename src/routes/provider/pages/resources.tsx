@@ -106,10 +106,21 @@ export function ResourcesPage() {
             onToggleCompletion={() => {}}
             isReadOnly
           >
-            <p>
-              <strong>{text(t.section1.estimatedTime)}</strong>
-            </p>
-            <p>{text(t.section1.description)}</p>
+            {providerInfo.cprCertified ? (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                <p className="text-green-800 font-medium">
+                  ✓ You are already CPR certified - no additional training
+                  required.
+                </p>
+              </div>
+            ) : (
+              <>
+                <p>
+                  <strong>{text(t.section1.estimatedTime)}</strong>
+                </p>
+                <p>{text(t.section1.description)}</p>
+              </>
+            )}
             <div>
               <p className="font-bold mb-3">
                 {text(t.section1.cprInstructions)}
@@ -117,38 +128,32 @@ export function ResourcesPage() {
               <ul className="list-disc space-y-2 pl-6">
                 <li>
                   {providerInfo.cprTrainingLink ? (
-                    <strong>
+                    <>
                       {text(t.section1.goToLink)}{' '}
                       <ResourceLink href={providerInfo.cprTrainingLink}>
                         {providerInfo.cprTrainingLink}
                       </ResourceLink>
-                    </strong>
+                    </>
                   ) : (
-                    <strong>
+                    <>
                       {text(t.section1.noCprLink)}{' '}
                       <ResourceLink href="mailto:support@capcolorado.org">
                         support@capcolorado.org
                       </ResourceLink>
-                    </strong>
+                    </>
                   )}
                 </li>
+                <li>{text(t.section1.enterInfo)}</li>
                 <li>
-                  <strong>{text(t.section1.enterInfo)}</strong>
+                  {text(t.section1.passwordReset)}{' '}
+                  <ResourceLink href="https://www.redcrosslearningcenter.org">
+                    https://www.redcrosslearningcenter.org
+                  </ResourceLink>{' '}
+                  {text(t.section1.selectLogin)}
                 </li>
+                <li>{text(t.section1.completeCourse)}</li>
                 <li>
-                  <strong>
-                    {text(t.section1.passwordReset)}{' '}
-                    <ResourceLink href="https://www.redcrosslearningcenter.org">
-                      https://www.redcrosslearningcenter.org
-                    </ResourceLink>
-                    {text(t.section1.selectLogin)}
-                  </strong>
-                </li>
-                <li>
-                  <strong>{text(t.section1.completeCourse)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section1.shareCertificate)}</strong>{' '}
+                  {text(t.section1.shareCertificate)}{' '}
                   {text(t.section1.certificateDescription)}
                 </li>
                 <li>
