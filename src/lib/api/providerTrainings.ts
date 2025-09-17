@@ -12,7 +12,7 @@ export async function getProviderTrainings(context: RouterContext) {
 
 export async function updateProviderTrainings(
   context: RouterContext,
-  data: z.infer<typeof ProviderTrainingUpdateRequestSchema>,
+  data: z.infer<typeof ProviderTrainingUpdateRequestSchema>
 ) {
   const res = await fetch(backendUrl('/provider/trainings'), {
     method: 'PATCH',

@@ -150,14 +150,20 @@ export const createLumpSumRequestSchema = z.object({
 export const ProviderTrainingResponseSchema = z.object({
   cpr_online_training_completed_at: z.string().datetime().nullable(),
   child_safety_module_training_completed_at: z.string().datetime().nullable(),
-  safe_sleep_for_infants_training_completed_at: z.string().datetime().nullable(),
-  home_safety_and_injury_prevention_training_completed_at:
-    z.string().datetime().nullable(),
+  safe_sleep_for_infants_training_completed_at: z
+    .string()
+    .datetime()
+    .nullable(),
+  home_safety_and_injury_prevention_training_completed_at: z
+    .string()
+    .datetime()
+    .nullable(),
 })
 
 export const ProviderTrainingUpdateRequestSchema = z.object({
   child_safety_module_training_completed_at: z.boolean().optional(),
   safe_sleep_for_infants_training_completed_at: z.boolean().optional(),
-  home_safety_and_injury_prevention_training_completed_at:
-    z.boolean().optional(),
+  home_safety_and_injury_prevention_training_completed_at: z
+    .boolean()
+    .optional(),
 })

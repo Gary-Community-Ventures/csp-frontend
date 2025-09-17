@@ -37,7 +37,7 @@ type ResourceSectionProps = PropsWithChildren<{
   sectionId: keyof z.infer<typeof ProviderTrainingResponseSchema>
   isCompleted: boolean
   onToggleCompletion: (
-    sectionId: keyof z.infer<typeof ProviderTrainingUpdateRequestSchema>,
+    sectionId: keyof z.infer<typeof ProviderTrainingUpdateRequestSchema>
   ) => void
   isReadOnly?: boolean
 }>
@@ -62,7 +62,7 @@ function ResourceSection({
               onToggleCompletion(
                 sectionId as keyof z.infer<
                   typeof ProviderTrainingUpdateRequestSchema
-                >,
+                >
               )
             }
             disabled={isReadOnly}
@@ -76,8 +76,6 @@ function ResourceSection({
     </WhiteCard>
   )
 }
-
-
 
 export function ResourcesPage() {
   const context = useRouter().options.context
@@ -96,7 +94,7 @@ export function ResourcesPage() {
 
   const { mutate: updateTraining } = useMutation({
     mutationFn: async (
-      variables: z.infer<typeof ProviderTrainingUpdateRequestSchema>,
+      variables: z.infer<typeof ProviderTrainingUpdateRequestSchema>
     ) => {
       const res = await updateProviderTrainings(context, variables)
       handleStatusCodes(context, res)
@@ -117,7 +115,7 @@ export function ResourcesPage() {
   }, [trainingData])
 
   const handleToggleCompletion = (
-    sectionId: keyof z.infer<typeof ProviderTrainingUpdateRequestSchema>,
+    sectionId: keyof z.infer<typeof ProviderTrainingUpdateRequestSchema>
   ) => {
     const isCompleted = completedSections.includes(sectionId)
     updateTraining({ [sectionId]: !isCompleted })
@@ -167,7 +165,7 @@ export function ResourcesPage() {
             title="Section 1: Adult, Child, and Baby First Aid/CPR/AED Online"
             sectionId="cpr_online_training_completed_at"
             isCompleted={completedSections.includes(
-              'cpr_online_training_completed_at',
+              'cpr_online_training_completed_at'
             )}
             onToggleCompletion={handleToggleCompletion}
             isReadOnly
@@ -244,7 +242,7 @@ export function ResourcesPage() {
             title="Section 2: Child Safety Module (Videos)"
             sectionId="child_safety_module_training_completed_at"
             isCompleted={completedSections.includes(
-              'child_safety_module_training_completed_at',
+              'child_safety_module_training_completed_at'
             )}
             onToggleCompletion={handleToggleCompletion}
           >
@@ -284,8 +282,7 @@ export function ResourcesPage() {
                   <strong>Child Development (Video):</strong> ~7 minutes
                 </li>
                 <li>
-                  <strong>Medication Administration (Video):</strong> ~7
-                  minutes
+                  <strong>Medication Administration (Video):</strong> ~7 minutes
                 </li>
                 <li>
                   <strong>Food Allergies (Video):</strong> ~7 minutes
@@ -298,7 +295,7 @@ export function ResourcesPage() {
             title="Section 3: Safe Sleep for Infants (Videos & Readings)"
             sectionId="safe_sleep_for_infants_training_completed_at"
             isCompleted={completedSections.includes(
-              'safe_sleep_for_infants_training_completed_at',
+              'safe_sleep_for_infants_training_completed_at'
             )}
             onToggleCompletion={handleToggleCompletion}
           >
@@ -353,7 +350,7 @@ export function ResourcesPage() {
             title="Section 4: Home Safety & Injury Prevention (Readings)"
             sectionId="home_safety_and_injury_prevention_training_completed_at"
             isCompleted={completedSections.includes(
-              'home_safety_and_injury_prevention_training_completed_at',
+              'home_safety_and_injury_prevention_training_completed_at'
             )}
             onToggleCompletion={handleToggleCompletion}
           >
