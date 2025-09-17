@@ -19,6 +19,8 @@ import { useMemo } from 'react'
 import { useProviderContext } from '../wrapper'
 import { z } from 'zod'
 import { toast } from 'sonner'
+import { useText } from '@/translations/wrapper'
+import { translations } from '@/translations/text'
 
 type ResourceLinkProps = PropsWithChildren<{
   href: string
@@ -50,25 +52,41 @@ function ResourceSection({
   isReadOnly = false,
   children,
 }: ResourceSectionProps) {
+  const text = useText()
+  const t = translations.provider.resources
+  
   return (
     <WhiteCard>
       <div className="flex items-center justify-between">
         <Header Tag="h3">{title}</Header>
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id={sectionId}
-            checked={isCompleted}
-            onCheckedChange={() =>
-              onToggleCompletion(
-                sectionId as keyof z.infer<
-                  typeof ProviderTrainingUpdateRequestSchema
-                >
-              )
-            }
-            disabled={isReadOnly}
-          />
-          <Label htmlFor={sectionId} className="text-sm font-medium">
-            Mark as Complete
+        <div className="flex items-center space-x-2 group">
+          <div className="flex items-center justify-center w-5 h-5">
+            <Checkbox
+              id={sectionId}
+              checked={isCompleted}
+              onCheckedChange={() =>
+                onToggleCompletion(
+                  sectionId as keyof z.infer<
+                    typeof ProviderTrainingUpdateRequestSchema
+                  >
+                )
+              }
+              disabled={isReadOnly}
+              className={`transition-all duration-200 ${!isReadOnly ? 'cursor-pointer hover:scale-110' : ''}`}
+            />
+          </div>
+          <Label 
+            htmlFor={sectionId} 
+            className={`text-sm font-medium transition-colors duration-200 ${!isReadOnly ? 'cursor-pointer group-hover:text-primary' : 'cursor-not-allowed opacity-50'}`}
+          >
+            <div className="relative h-5 min-w-[120px]">
+              <span className={`absolute inset-0 transition-all duration-300 ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>
+                {text(t.completed)}
+              </span>
+              <span className={`absolute inset-0 transition-all duration-300 ${!isCompleted ? 'opacity-100' : 'opacity-0'}`}>
+                {text(t.markAsComplete)}
+              </span>
+            </div>
           </Label>
         </div>
       </div>
@@ -81,6 +99,8 @@ export function ResourcesPage() {
   const context = useRouter().options.context
   const queryClient = useQueryClient()
   const { providerInfo } = useProviderContext()
+  const text = useText()
+  const t = translations.provider.resources
 
   const { data: trainingData } = useQuery({
     queryKey: ['providerTrainings'],
@@ -103,7 +123,7 @@ export function ResourcesPage() {
     },
     onSuccess: (data) => {
       queryClient.setQueryData(['providerTrainings'], data)
-      toast.success('Training status updated')
+      toast.success(text(t.toastSuccess))
     },
   })
 
@@ -124,45 +144,26 @@ export function ResourcesPage() {
   return (
     <div className="mx-auto mb-5 max-w-4xl p-5">
       <Header Tag="h1" className="mb-6 text-center">
-        Childcare Affordability Pilot (CAP) Training Module
+        {text(t.pageTitle)}
       </Header>
 
       <div className="space-y-6">
-        <p>
-          Welcome to the Childcare Affordability Pilot (CAP)! We're thrilled to
-          have you join us. This small invite-only test is all about supporting
-          you as you provide vital care to children in Colorado.
-        </p>
+        <p>{text(t.welcome)}</p>
 
-        <p>
-          A key step to fully participate in the CAP program and{' '}
-          <strong>receive payments from families</strong> is to complete
-          mandatory health and safety training. We've put together a series of
-          online videos and readings that you can access from home.
-        </p>
+        <p>{text(t.keyStep)}</p>
 
-        <p className="font-bold">
-          Please note: All training outlined below must be completed PRIOR TO
-          FORMAL APPROVAL into the Childcare Affordability Pilot (CAP).
-        </p>
+        <p className="font-bold">{text(t.pleaseNote)}</p>
 
-        <p className="font-bold">
-          Please read these instructions carefully, especially about the CPR
-          training, as it has a unique process.
-        </p>
+        <p className="font-bold">{text(t.readCarefully)}</p>
 
         <div className="mt-8">
-          <Header className="mb-4">Your Training Overview</Header>
-          <p>
-            We've organized your training into four main sections. Please
-            complete these in the order they are presented, as they build upon
-            important knowledge for providing the best care.
-          </p>
+          <Header className="mb-4">{text(t.trainingOverviewTitle)}</Header>
+          <p>{text(t.trainingOverviewDescription)}</p>
         </div>
 
         <div className="space-y-6">
           <ResourceSection
-            title="Section 1: Adult, Child, and Baby First Aid/CPR/AED Online"
+            title={text(t.section1.title)}
             sectionId="cpr_online_training_completed_at"
             isCompleted={completedSections.includes(
               'cpr_online_training_completed_at'
@@ -171,29 +172,25 @@ export function ResourcesPage() {
             isReadOnly
           >
             <p>
-              <strong>Estimated Time:</strong> Approximately 3 hours, 50 minutes
+              <strong>{text(t.section1.estimatedTime)}</strong>
             </p>
-            <p>
-              This training is vital for knowing how to respond in a medical
-              emergency. For the CAP small invite-only test, you will complete
-              the online portion of this course to fulfill the requirement.
-            </p>
+            <p>{text(t.section1.description)}</p>
             <div>
               <p className="font-bold mb-3">
-                Instructions for CPR Training (PLEASE READ CAREFULLY):
+                {text(t.section1.cprInstructions)}
               </p>
               <ul className="list-disc space-y-2 pl-6">
                 <li>
                   {providerInfo.cprTrainingLink ? (
                     <strong>
-                      Go to this link:{' '}
+                      {text(t.section1.goToLink)}{' '}
                       <ResourceLink href={providerInfo.cprTrainingLink}>
                         {providerInfo.cprTrainingLink}
                       </ResourceLink>
                     </strong>
                   ) : (
                     <strong>
-                      No CPR training link available. Please contact{' '}
+                      {text(t.section1.noCprLink)}{' '}
                       <ResourceLink href="mailto:support@capcolorado.org">
                         support@capcolorado.org
                       </ResourceLink>
@@ -201,45 +198,36 @@ export function ResourcesPage() {
                   )}
                 </li>
                 <li>
-                  <strong>
-                    Enter name, email address and phone number.{' '}
-                    <em>
-                      Do not change the auto-populated voucher number on the
-                      registration page.
-                    </em>
-                  </strong>
+                  <strong>{text(t.section1.enterInfo)}</strong>
                 </li>
                 <li>
                   <strong>
-                    You will receive an email to reset their password. If an
-                    email isn't received, navigate to{' '}
+                    {text(t.section1.passwordReset)}{' '}
                     <ResourceLink href="https://www.redcrosslearningcenter.org">
                       https://www.redcrosslearningcenter.org
                     </ResourceLink>
-                    , select "Login" and then select "Forgot Password".
+                    {text(t.section1.selectLogin)}
                   </strong>
                 </li>
                 <li>
-                  <strong>Access and complete the online course.</strong>
+                  <strong>{text(t.section1.completeCourse)}</strong>
                 </li>
                 <li>
-                  <strong>Share Your Certificate:</strong> Once you have
-                  successfully completed the online course, you will receive a
-                  completion certificate or confirmation.
+                  <strong>{text(t.section1.shareCertificate)}</strong>{' '}
+                  {text(t.section1.certificateDescription)}
                 </li>
                 <li>
-                  <strong>IMPORTANT:</strong> Please email a copy (photo or
-                  scan) of your completed certificate to:{' '}
-                  <strong>support@capcolorado.org</strong> as soon as you
-                  receive it. This is essential for verifying your training for
-                  CAP approval.
+                  <strong>{text(t.section1.important)}</strong>{' '}
+                  {text(t.section1.emailCopy)}{' '}
+                  <strong>support@capcolorado.org</strong>{' '}
+                  {text(t.section1.emailCopyReason)}
                 </li>
               </ul>
             </div>
           </ResourceSection>
 
           <ResourceSection
-            title="Section 2: Child Safety Module (Videos)"
+            title={text(t.section2.title)}
             sectionId="child_safety_module_training_completed_at"
             isCompleted={completedSections.includes(
               'child_safety_module_training_completed_at'
@@ -247,52 +235,46 @@ export function ResourcesPage() {
             onToggleCompletion={handleToggleCompletion}
           >
             <p>
-              <strong>Estimated Time:</strong> Approximately 40 minutes (total
-              for all resources in this section)
+              <strong>{text(t.section2.estimatedTime)}</strong>
             </p>
-            <p>
-              This module provides critical information on keeping children
-              safe.
-            </p>
+            <p>{text(t.section2.description)}</p>
             <ul className="list-disc space-y-2 pl-6">
               <li>
-                <strong>Overview Link:</strong>{' '}
-                <ResourceLink href="https://headstart.gov/safety-practices/article/child-safety">
-                  https://headstart.gov/safety-practices/article/child-safety
+                <strong>{text(t.section2.overviewLink)}</strong>{' '}
+                <ResourceLink href={text(t.section2.overviewUrl)}>
+                  {text(t.section2.overviewUrl)}
                 </ResourceLink>
                 <ul className="mt-2 list-none">
                   <li className="italic">
-                    From this page, click on each topic below to view the
-                    specific video or resource.
+                    {text(t.section2.clickInstruction)}
                   </li>
                 </ul>
               </li>
             </ul>
             <div className="ml-6">
-              <p className="font-bold mb-2">Topics & Estimated Times:</p>
+              <p className="font-bold mb-2">{text(t.section2.topicsTitle)}</p>
               <ul className="list-disc space-y-1 pl-6">
                 <li>
-                  <strong>Abusive Head Trauma (Video):</strong> ~6 minutes
+                  <strong>{text(t.section2.abusiveHeadTrauma)}</strong>
                 </li>
                 <li>
-                  <strong>Child Abuse and Maltreatment (Video):</strong> ~7
-                  minutes
+                  <strong>{text(t.section2.childAbuse)}</strong>
                 </li>
                 <li>
-                  <strong>Child Development (Video):</strong> ~7 minutes
+                  <strong>{text(t.section2.childDevelopment)}</strong>
                 </li>
                 <li>
-                  <strong>Medication Administration (Video):</strong> ~7 minutes
+                  <strong>{text(t.section2.medicationAdmin)}</strong>
                 </li>
                 <li>
-                  <strong>Food Allergies (Video):</strong> ~7 minutes
+                  <strong>{text(t.section2.foodAllergies)}</strong>
                 </li>
               </ul>
             </div>
           </ResourceSection>
 
           <ResourceSection
-            title="Section 3: Safe Sleep for Infants (Videos & Readings)"
+            title={text(t.section3.title)}
             sectionId="safe_sleep_for_infants_training_completed_at"
             isCompleted={completedSections.includes(
               'safe_sleep_for_infants_training_completed_at'
@@ -300,44 +282,36 @@ export function ResourcesPage() {
             onToggleCompletion={handleToggleCompletion}
           >
             <p>
-              <strong>Estimated Time:</strong> Approximately 30 minutes
+              <strong>{text(t.section3.estimatedTime)}</strong>
             </p>
-            <p>
-              Learn vital information to ensure a safe sleep environment for
-              infants and reduce risks.
-            </p>
+            <p>{text(t.section3.description)}</p>
             <ul className="list-disc space-y-2 pl-6">
               <li>
-                <strong>
-                  NIH Safe to Sleep® Campaign Resources (Readings):
-                </strong>
+                <strong>{text(t.section3.nihResources)}</strong>
                 <ul className="mt-2 list-none space-y-1">
                   <li>
-                    <strong>Link:</strong>{' '}
-                    <ResourceLink href="https://safetosleep.nichd.nih.gov/safe-sleep">
-                      https://safetosleep.nichd.nih.gov/safe-sleep
+                    <strong>{text(t.section3.link)}</strong>{' '}
+                    <ResourceLink href={text(t.section3.nihUrl)}>
+                      {text(t.section3.nihUrl)}
                     </ResourceLink>
                   </li>
                   <li>
-                    <strong>Estimated Time:</strong> ~20-30 minutes:
+                    <strong>{text(t.section3.estimatedTimeReading)}</strong>
                     <ul className="list-disc space-y-1 pl-6 mt-2">
                       <li>
-                        <strong>Reducing Risk</strong>
+                        <strong>{text(t.section3.reducingRisk)}</strong>
                       </li>
                       <li>
-                        <strong>Back Sleeping</strong>
+                        <strong>{text(t.section3.backSleeping)}</strong>
                       </li>
                       <li>
-                        <strong>
-                          Environment (safe cribs, no loose bedding)
-                        </strong>
+                        <strong>{text(t.section3.environment)}</strong>
                       </li>
                       <li>
-                        <strong>Tummy Time</strong> (for development, while not
-                        sleep-related, often covered with SIDS)
+                        <strong>{text(t.section3.tummyTime)}</strong>
                       </li>
                       <li>
-                        <strong>FAQ</strong>
+                        <strong>{text(t.section3.faq)}</strong>
                       </li>
                     </ul>
                   </li>
@@ -347,7 +321,7 @@ export function ResourcesPage() {
           </ResourceSection>
 
           <ResourceSection
-            title="Section 4: Home Safety & Injury Prevention (Readings)"
+            title={text(t.section4.title)}
             sectionId="home_safety_and_injury_prevention_training_completed_at"
             isCompleted={completedSections.includes(
               'home_safety_and_injury_prevention_training_completed_at'
@@ -355,37 +329,35 @@ export function ResourcesPage() {
             onToggleCompletion={handleToggleCompletion}
           >
             <p>
-              <strong>Estimated Time:</strong> Approximately 45 minutes - 1 hour
+              <strong>{text(t.section4.estimatedTime)}</strong>
             </p>
-            <p>
-              Ensure the care environment is safe and free from common hazards.
-            </p>
+            <p>{text(t.section4.description)}</p>
             <div className="ml-6">
-              <p className="font-bold mb-2">Topics & Estimated Times:</p>
+              <p className="font-bold mb-2">{text(t.section4.topicsTitle)}</p>
               <ul className="list-disc space-y-2 pl-6">
                 <li>
                   <ResourceLink href="https://headstart.gov/publication/injury-prevention-starts-home">
-                    Injury Prevention Starts at Home
+                    {text(t.section4.injuryPrevention)}
                   </ResourceLink>
-                  <strong>:</strong> ~10-15 minutes
+                  <strong>{text(t.section4.timeEstimate)}</strong>
                 </li>
                 <li>
                   <ResourceLink href="https://headstart.gov/publication/poisoning-prevention-home-safety-tip-sheet">
-                    Poisoning Prevention Home Safety Tip Sheet
+                    {text(t.section4.poisoningPrevention)}
                   </ResourceLink>
-                  <strong>:</strong> ~10-15 minutes
+                  <strong>{text(t.section4.timeEstimate)}</strong>
                 </li>
                 <li>
                   <ResourceLink href="https://headstart.gov/publication/home-safety">
-                    Home Safety
+                    {text(t.section4.homeSafety)}
                   </ResourceLink>
-                  <strong>:</strong> ~10-15 minutes
+                  <strong>{text(t.section4.timeEstimate)}</strong>
                 </li>
                 <li>
                   <ResourceLink href="https://headstart.gov/physical-health/article/health-tips-families-series">
-                    Health Tips for Families Series
+                    {text(t.section4.healthTips)}
                   </ResourceLink>
-                  <strong>:</strong> ~10-15 minutes
+                  <strong>{text(t.section4.timeEstimate)}</strong>
                 </li>
               </ul>
             </div>

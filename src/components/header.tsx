@@ -23,6 +23,17 @@ type HeaderProps = {
     Omit<ComponentPropsWithoutRef<T>, keyof BaseProps>
 }[HeaderTagTypes]
 
+const sizeClasses: Record<HeaderTagTypes, string> = {
+  h1: 'text-4xl',
+  h2: 'text-3xl',
+  h3: 'text-2xl',
+  h4: 'text-xl',
+  h5: 'text-lg',
+  h6: 'text-base',
+  strong: 'text-3xl',
+  div: 'text-3xl',
+}
+
 export function Header({
   children,
   className,
@@ -31,7 +42,7 @@ export function Header({
 }: HeaderProps) {
   return (
     <Tag
-      className={cn('text-3xl font-bold text-secondary', className)}
+      className={cn(sizeClasses[Tag], 'font-bold text-secondary', className)}
       {...rest}
     >
       {children}
