@@ -403,8 +403,38 @@ export const translations = {
     },
     providerPage: {
       header: {
-        en: 'Pay your existing provider or add a new one. If you use a licensed childcare center or home, search for them below. If a friend, family member or neighbor cares for your child, invite them to be in the pilot. (They will need to apply and be approved to receive funding).',
-        es: 'Paga tu proveedor existente o agrega uno nuevo. Si usas un centro de cuidado infantil autorizado o un hogar, búscalos a continuación. Si un amigo, familiar o vecino cuida a tu niño, invitalos a participar en el piloto. (Necesitarán aplicar y ser aprobados para recibir fondos).',
+        main: {
+          en: 'Pay your existing provider or switch to a new one.',
+          es: 'Paga tu proveedor existente o cambia a uno nuevo.',
+        },
+        knownProvider: {
+          part1: {
+            en: 'If you already know which provider you want to use, invite them to join the pilot using the button below. They will need to apply and be approved to receive funding -- see application rules ',
+            es: 'Si ya sabes qué proveedor quieres usar, invítalos a unirse al piloto usando el botón de abajo. Necesitarán aplicar y ser aprobados para recibir fondos -- ve las reglas de aplicación ',
+          },
+          linkText: {
+            en: 'here',
+            es: 'aquí',
+          },
+          part2: {
+            en: '.',
+            es: '.',
+          },
+        },
+        newProvider: {
+          part1: {
+            en: 'If you are looking for a new provider, you can find licensed childcare centers or homes on ',
+            es: 'Si estás buscando un nuevo proveedor, puedes encontrar centros de cuidado infantil autorizados u hogares en ',
+          },
+          coloradoShinesText: {
+            en: 'Colorado Shines',
+            es: 'Colorado Shines',
+          },
+          part2: {
+            en: ', or contact a family, friend or neighbor who provides care.',
+            es: ', o contactar a un familiar, amigo o vecino que proporcione cuidado.',
+          },
+        },
       },
       yourProviders: {
         en: 'Your Providers',
