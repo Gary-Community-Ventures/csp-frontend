@@ -18,7 +18,7 @@ export function FamilyProvidersPage() {
           </p>
           <p>
             <Text text={t.header.knownProvider.part1} />
-            <ExternalLink 
+            <ExternalLink
               href="https://www.capcolorado.org/en/providers"
               className="text-primary hover:text-primary/80 underline"
             >
@@ -28,7 +28,7 @@ export function FamilyProvidersPage() {
           </p>
           <p>
             <Text text={t.header.newProvider.part1} />
-            <ExternalLink 
+            <ExternalLink
               href="https://www.coloradoshines.com/search"
               className="text-primary hover:text-primary/80 underline"
             >
