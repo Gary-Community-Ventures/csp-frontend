@@ -4,9 +4,13 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { VitePWA } from 'vite-plugin-pwa'
+import { sentryVitePlugin } from '@sentry/vite-plugin'
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    sourcemap: true, // Enable source map generation
+  },
   plugins: [
     react(),
     tailwindcss(),
@@ -68,6 +72,27 @@ export default defineConfig({
         ],
       },
     }),
+    // Sentry plugin should be last - only add if we have auth token
+    ...(process.env.SENTRY_AUTH_TOKEN
+      ? [
+          sentryVitePlugin({
+            org: process.env.SENTRY_ORG,
+            project: process.env.SENTRY_PROJECT,
+            authToken: process.env.SENTRY_AUTH_TOKEN,
+            release: {
+              // This will inject the release version into your app
+              inject: true,
+              setCommits: {
+                auto: true,
+              },
+            },
+            sourcemaps: {
+              // Optional: Delete source maps after upload to keep them private
+              filesToDeleteAfterUpload: ['./dist/**/*.map'],
+            },
+          }),
+        ]
+      : []),
   ],
   resolve: {
     alias: {
