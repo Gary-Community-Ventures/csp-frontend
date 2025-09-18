@@ -26,18 +26,18 @@ export default defineConfig({
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
-              }
-            }
-          }
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+              },
+            },
+          },
         ],
         // Add build timestamp to force cache invalidation
         additionalManifestEntries: [
           {
             url: '/',
-            revision: Date.now().toString()
-          }
-        ]
+            revision: Date.now().toString(),
+          },
+        ],
       },
       includeAssets: [
         'favicon.png',
