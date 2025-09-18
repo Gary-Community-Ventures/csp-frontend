@@ -39,11 +39,6 @@ export default defineConfig({
           }
         ]
       },
-      // Add dev options for better testing
-      devOptions: {
-        enabled: true,
-        type: 'module'
-      },
       includeAssets: [
         'favicon.png',
         'cap_circle_logo_white.png',

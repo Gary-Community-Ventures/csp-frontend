@@ -9,7 +9,7 @@ export function useServiceWorkerUpdate() {
         toast.success('App updated! Refreshing...', {
           duration: 2000,
         })
-        
+
         // Give user time to see the message, then reload
         setTimeout(() => {
           window.location.reload()
@@ -25,7 +25,9 @@ export function useServiceWorkerUpdate() {
               label: 'Refresh',
               onClick: () => {
                 // Tell the service worker to skip waiting and take control
-                navigator.serviceWorker.controller?.postMessage({ type: 'SKIP_WAITING' })
+                navigator.serviceWorker.controller?.postMessage({
+                  type: 'SKIP_WAITING',
+                })
               },
             },
           })
