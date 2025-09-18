@@ -15,6 +15,34 @@ export default defineConfig({
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
+        // Force service worker update on every build
+        cleanupOutdatedCaches: true,
+        // More aggressive caching strategy
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              }
+            }
+          }
+        ],
+        // Add build timestamp to force cache invalidation
+        additionalManifestEntries: [
+          {
+            url: '/',
+            revision: Date.now().toString()
+          }
+        ]
+      },
+      // Add dev options for better testing
+      devOptions: {
+        enabled: true,
+        type: 'module'
       },
       includeAssets: [
         'favicon.png',
