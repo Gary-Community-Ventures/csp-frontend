@@ -1,5 +1,6 @@
 import { SignIn } from '@clerk/clerk-react'
 import { useSearch } from '@tanstack/react-router'
+import { LanguageToggle } from '@/components/language-toggle'
 
 export function SignInPage() {
   const search = useSearch({ from: '/auth/sign-in' })
@@ -29,7 +30,8 @@ export function SignInPage() {
   }
 
   return (
-    <div>
+    <div className="relative">
+      <LanguageToggle />
       <SignIn fallbackRedirectUrl={finalRedirectUrl} />
     </div>
   )
