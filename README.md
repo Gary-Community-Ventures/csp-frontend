@@ -42,6 +42,32 @@ To run the project locally, follow these steps:
 - `npm run preview`: Serves the production build locally for preview.
 - `npx shadcn@latest add <component-name>`: Adds a new component from Shadcn UI. Replace `<component-name>` with the name of the component you want to add (e.g., `button`, `input`, `card`). The components will be added to `src/components/ui/`.
 
+## Sentry Configuration
+
+### Error Monitoring
+
+Add Sentry DSN to your `.env` file:
+
+```
+VITE_SENTRY_DSN=your_sentry_dsn_here
+```
+
+### Source Maps (Optional)
+
+To enable source maps for better error debugging in production:
+
+1. Create a `.env.sentry-build-plugin` file (already in .gitignore):
+
+```
+SENTRY_AUTH_TOKEN=your_auth_token_here
+SENTRY_ORG=your_org_slug
+SENTRY_PROJECT=your_project_slug
+```
+
+2. Get your auth token from [Sentry Settings > Organization Tokens](https://sentry.io/settings/auth-tokens/)
+
+3. Source maps will automatically upload during `npm run build` when these variables are set
+
 ## TODOs
 
 - Remember to replace `GTM_CONTAINER_ID` in `index.html` with your actual Google Tag Manager ID.
