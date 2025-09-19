@@ -18,10 +18,14 @@ export default defineConfig({
         manualChunks: {
           // Split large vendor chunks
           'react-vendor': ['react', 'react-dom'],
-          'clerk-vendor': ['@clerk/clerk-react', '@clerk/localizations', '@clerk/types'],
+          'clerk-vendor': [
+            '@clerk/clerk-react',
+            '@clerk/localizations',
+            '@clerk/types',
+          ],
           'radix-vendor': [
             '@radix-ui/react-avatar',
-            '@radix-ui/react-checkbox', 
+            '@radix-ui/react-checkbox',
             '@radix-ui/react-dialog',
             '@radix-ui/react-dropdown-menu',
             '@radix-ui/react-label',
@@ -30,13 +34,17 @@ export default defineConfig({
             '@radix-ui/react-radio-group',
             '@radix-ui/react-select',
             '@radix-ui/react-separator',
-            '@radix-ui/react-slot'
+            '@radix-ui/react-slot',
           ],
-          'tanstack-vendor': ['@tanstack/react-query', '@tanstack/react-router', '@tanstack/router-devtools'],
-          'sentry-vendor': ['@sentry/react', '@sentry/tracing']
-        }
-      }
-    }
+          'tanstack-vendor': [
+            '@tanstack/react-query',
+            '@tanstack/react-router',
+            '@tanstack/router-devtools',
+          ],
+          'sentry-vendor': ['@sentry/react', '@sentry/tracing'],
+        },
+      },
+    },
   },
   plugins: [
     react(),
