@@ -15,9 +15,22 @@ import { useRouter } from '@tanstack/react-router'
 import { useMemo } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { ResourceLink } from '../components/resource-link'
 import { ResourceSection } from '../components/resource-section'
 import { useProviderContext } from '../wrapper'
+import { ExternalLink } from '@/components/external-link'
+import type { PropsWithChildren } from 'react'
+
+type ResourceLinkProps = PropsWithChildren<{
+  href: string
+}>
+
+export function ResourceLink({ href, children }: ResourceLinkProps) {
+  return (
+    <ExternalLink href={href} className="font-bold text-primary underline">
+      {children}
+    </ExternalLink>
+  )
+}
 
 export function ResourcesPage() {
   const context = useRouter().options.context
@@ -30,9 +43,7 @@ export function ResourcesPage() {
   const { data: trainingData } = useQuery({
     queryKey: ['providerTrainings'],
     queryFn: async () => {
-      const res = await getProviderTrainings(context)
-      handleStatusCodes(context, res)
-      const data = await res.json()
+      const data = await getProviderTrainings(context)
       return ProviderTrainingResponseSchema.parse(data)
     },
   })
