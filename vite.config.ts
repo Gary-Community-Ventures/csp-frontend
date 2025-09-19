@@ -54,6 +54,29 @@ export default defineConfig({
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
+        // Force service worker update on every build
+        cleanupOutdatedCaches: true,
+        // More aggressive caching strategy
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+              },
+            },
+          },
+        ],
+        // Add build timestamp to force cache invalidation
+        additionalManifestEntries: [
+          {
+            url: '/',
+            revision: Date.now().toString(),
+          },
+        ],
       },
       includeAssets: [
         'favicon.png',
@@ -100,8 +123,8 @@ export default defineConfig({
             },
             sourcemaps: {
               // Keep source maps but upload them to Sentry
-              assets: ['./dist/**/*.map'],
-              filesToDeleteAfterUpload: ['./dist/**/*.map'],
+              assets: ['./dist/**/*.js.map'],
+              filesToDeleteAfterUpload: ['./dist/**/*.js.map'],
             },
           }),
         ]
