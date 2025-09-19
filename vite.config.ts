@@ -15,6 +15,10 @@ export default defineConfig({
     minify: 'esbuild', // esbuild is faster and uses less memory than terser
     rollupOptions: {
       output: {
+        // Add proper cache-busting filename patterns
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]',
         manualChunks: {
           // Split large vendor chunks
           'react-vendor': ['react', 'react-dom'],
@@ -55,7 +59,8 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
-        // Use NetworkFirst for HTML to always get fresh content
+        // Use StaleWhileRevalidate for most resources - always serve from cache but update in background
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -69,11 +74,12 @@ export default defineConfig({
             },
           },
           {
+            // For navigation requests (page loads), always try network first
             urlPattern: ({ request }) => request.mode === 'navigate',
             handler: 'NetworkFirst',
             options: {
               cacheName: 'pages-cache',
-              networkTimeoutSeconds: 3,
+              networkTimeoutSeconds: 2, // Fast timeout
             },
           },
         ],
