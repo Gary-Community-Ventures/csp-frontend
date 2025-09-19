@@ -720,6 +720,258 @@ export const translations = {
         en: 'https://docs.google.com/document/d/1SBK4GkX5kzHG5JByqhRKw_w2I0d1t4eCEcPMrp-KpgU/edit?tab=t.0',
         es: 'https://docs.google.com/document/d/1RVW3gSiCPRFQeekaKGGpEh1TXJzCvZi3R82Nu3y-bgk/edit?tab=t.0',
       },
+      pageTitle: {
+        en: 'Childcare Affordability Pilot (CAP) Training Module',
+        es: 'Módulo de Capacitación del Programa Piloto de Asequibilidad de Cuidado Infantil (CAP)',
+      },
+      welcome: {
+        en: "Welcome to the Childcare Affordability Pilot (CAP)! We're thrilled to have you join us. This small invite-only test is all about supporting you as you provide vital care to children in Colorado.",
+        es: '¡Bienvenido al Programa Piloto Childcare Affordability Pilot (CAP)! Nos complace contar con su participación. Esta pequeña prueba solo por invitación se centra en ayudarle mientras brinda atención vital a los niños de Colorado.',
+      },
+      keyStep: {
+        en: "A key step to fully participate in the CAP program and receive payments from families is to complete mandatory health and safety training. We've put together a series of online videos and readings that you can access from home.",
+        es: 'Un paso clave para participar en el programa CAP y recibir pagos de las familias es completar la capacitación esencial sobre salud y seguridad. Hemos creado una serie de videos y lecturas en línea a los que puede acceder desde casa.',
+      },
+      pleaseNote: {
+        en: 'Please note: All training outlined below must be completed PRIOR TO FORMAL APPROVAL into the Childcare Affordability Pilot (CAP).',
+        es: 'Tenga en cuenta: toda la capacitación descrita a continuación debe completarse ANTES DE LA APROBACIÓN FORMAL en el Programa Piloto Childcare Affordability Pilot (CAP).',
+      },
+      readCarefully: {
+        en: 'Please read these instructions carefully, especially about the CPR training, as it has a unique process.',
+        es: 'Lea atentamente estas instrucciones, especialmente sobre el entrenamiento en RCP (reanimación cardiopulmonar), ya que es un proceso único.',
+      },
+      trainingOverviewTitle: {
+        en: 'Your Training Overview',
+        es: 'Descripción general de su entrenamiento',
+      },
+      trainingOverviewDescription: {
+        en: "We've organized your training into four main sections. Please complete these in the order they are presented, as they build upon important knowledge for providing the best care.",
+        es: 'Hemos organizado su capacitación en cuatro secciones principales. Por favor, complételas en el orden en que se presentan, ya que se basan en conocimientos importantes para brindar la mejor atención.',
+      },
+      markAsComplete: {
+        en: 'Mark as Complete',
+        es: 'Marcar como Completado',
+      },
+      completed: {
+        en: 'Completed',
+        es: 'Completado',
+      },
+      checkWhenDone: {
+        en: 'Check when done',
+        es: 'Marcar al terminar',
+      },
+      cprTooltip: {
+        en: 'We will check this box once we have received your training documents',
+        es: 'Marcaremos esta casilla una vez que hayamos recibido sus documentos de capacitación',
+      },
+      section1: {
+        title: {
+          en: 'Section 1: Adult, Child, and Baby First Aid/CPR/AED Online',
+          es: 'Sección 1: Primeros auxilios/RCP (reanimación cardiopulmonar) /DEA (Desfibrilador externo automático) en línea para adultos, niños y bebés',
+        },
+        estimatedTime: {
+          en: 'Estimated Time: Approximately 3 hours, 50 minutes',
+          es: 'Tiempo estimado: Aproximadamente 3 horas, 50 minutos',
+        },
+        description: {
+          en: 'This training is vital for knowing how to respond in a medical emergency. For the CAP small invite-only test, you will complete the online portion of this course to fulfill the requirement.',
+          es: 'Esta capacitación es vital para saber cómo responder en una emergencia médica. Para CAP, la pequeña prueba solo por invitación, deberá completar la parte en línea de este curso para cumplir con el requisito.',
+        },
+        cprInstructions: {
+          en: 'Instructions for CPR Training (PLEASE READ CAREFULLY):',
+          es: 'Instrucciones para la capacitación en RCP (POR FAVOR LEA ATENTAMENTE):',
+        },
+        goToLink: {
+          en: 'Go to this link:',
+          es: 'Vaya a este enlace:',
+        },
+        noCprLink: {
+          en: 'No CPR training link available. Please contact',
+          es: 'No hay enlace de capacitación en RCP disponible. Por favor contacte',
+        },
+        enterInfo: {
+          en: 'Enter name, email address and phone number. Do not change the auto-populated voucher number on the registration page.',
+          es: 'Ingrese su nombre, correo electrónico y número de teléfono. No modifique el número de cupón que se completa automáticamente en la página de registro.',
+        },
+        passwordReset: {
+          en: "You will receive an email to reset your password. If an email isn't received, navigate to",
+          es: 'Recibirá un correo electrónico para restablecer su contraseña. Si no lo recibe, visite',
+        },
+        selectLogin: {
+          en: ', select "Login" and then select "Forgot Password".',
+          es: ', seleccione "Iniciar sesión" y luego "Olvidé mi contraseña".',
+        },
+        completeCourse: {
+          en: 'Access and complete the online course.',
+          es: 'Accede y completa el curso online.',
+        },
+        shareCertificate: {
+          en: 'Share Your Certificate:',
+          es: 'Comparta su certificado:',
+        },
+        certificateDescription: {
+          en: 'Once you have successfully completed the online course, you will receive a completion certificate or confirmation.',
+          es: 'Una vez que haya completado el curso en línea, recibirá un certificado de finalización o una confirmación.',
+        },
+        important: {
+          en: 'IMPORTANT:',
+          es: 'IMPORTANTE:',
+        },
+        emailCopy: {
+          en: 'Please email a copy (photo or scan) of your completed certificate to:',
+          es: 'Envíe una copia (foto o escaneo) de su certificado completo a:',
+        },
+        emailCopyReason: {
+          en: 'as soon as you receive it. This is essential for verifying your training for CAP approval.',
+          es: 'Tan pronto como lo reciba. Esto es esencial para verificar su capacitación y obtener la aprobación de CAP.',
+        },
+      },
+      section2: {
+        title: {
+          en: 'Section 2: Child Safety Module (Videos)',
+          es: 'Sección 2: Módulo de seguridad infantil (Videos)',
+        },
+        estimatedTime: {
+          en: 'Estimated Time: Approximately 40 minutes (total for all resources in this section)',
+          es: 'Tiempo estimado: Aproximadamente 40 minutos (total para todos los recursos de esta sección)',
+        },
+        description: {
+          en: 'This module provides critical information on keeping children safe.',
+          es: 'Este módulo proporciona información importante sobre cómo mantener a los niños seguros.',
+        },
+        overviewLink: {
+          en: 'Overview Link:',
+          es: 'Enlace de descripción general:',
+        },
+        overviewUrl: {
+          en: 'https://headstart.gov/safety-practices/article/child-safety',
+          es: 'https://headstart.gov/es/safety-practices/article/seguridad-infantil',
+        },
+        clickInstruction: {
+          en: 'From this page, click on each topic below to view the specific video or resource.',
+          es: 'Desde esta página, haga clic en cada tema a continuación para ver el video o recurso específico.',
+        },
+        topicsTitle: {
+          en: 'Topics & Estimated Times:',
+          es: 'Temas y tiempos estimados:',
+        },
+        abusiveHeadTrauma: {
+          en: 'Abusive Head Trauma (Video): ~6 minutes',
+          es: 'Traumatismo craneoencefálico por maltrato (vídeo): ~6 minutos',
+        },
+        childAbuse: {
+          en: 'Child Abuse and Maltreatment (Video): ~7 minutes',
+          es: 'Abuso y maltrato infantil (Video): ~7 minutos',
+        },
+        childDevelopment: {
+          en: 'Child Development (Video): ~7 minutes',
+          es: 'Desarrollo infantil (vídeo): ~7 minutos',
+        },
+        medicationAdmin: {
+          en: 'Medication Administration (Video): ~7 minutes',
+          es: 'Administración de medicamentos (video): ~7 minutos',
+        },
+        foodAllergies: {
+          en: 'Food Allergies (Video): ~7 minutes',
+          es: 'Alergias alimentarias (vídeo): ~7 minutos',
+        },
+      },
+      section3: {
+        title: {
+          en: 'Section 3: Safe Sleep for Infants (Videos & Readings)',
+          es: 'Sección 3: Sueño seguro para bebés (Videos y lecturas)',
+        },
+        estimatedTime: {
+          en: 'Estimated Time: Approximately 30 minutes',
+          es: 'Tiempo estimado: Aproximadamente 30 minutos',
+        },
+        description: {
+          en: 'Learn vital information to ensure a safe sleep environment for infants and reduce risks.',
+          es: 'Conozca información vital para garantizar un ambiente de sueño seguro para los bebés y reducir los riesgos.',
+        },
+        nihResources: {
+          en: 'NIH Safe to Sleep® Campaign Resources (Readings):',
+          es: 'Recursos de la campaña "Seguro para dormir®" de NIH (lecturas):',
+        },
+        link: {
+          en: 'Link:',
+          es: 'Enlace:',
+        },
+        nihUrl: {
+          en: 'https://safetosleep.nichd.nih.gov/safe-sleep',
+          es: 'https://espanol.nichd.nih.gov/actividades-proyectos/sts',
+        },
+        estimatedTimeReading: {
+          en: 'Estimated Time: ~20-30 minutes:',
+          es: 'Tiempo estimado: 20-30 minutos:',
+        },
+        reducingRisk: {
+          en: 'Reducing Risk',
+          es: 'Reducción de riesgo',
+        },
+        backSleeping: {
+          en: 'Back Sleeping',
+          es: 'Dormir boca arriba',
+        },
+        environment: {
+          en: 'Environment (safe cribs, no loose bedding)',
+          es: 'Ambiente (cunas seguras, sin ropa de cama suelta)',
+        },
+        tummyTime: {
+          en: 'Tummy Time (for development, while not sleep-related, often covered with SIDS)',
+          es: 'Tiempo boca abajo (para el desarrollo, aunque no esté relacionado con el sueño, a menudo se cubre con SMSL (Síndrome de Muerte Súbita del Lactante)',
+        },
+        faq: {
+          en: 'FAQ',
+          es: 'Preguntas frecuentes',
+        },
+      },
+      section4: {
+        title: {
+          en: 'Section 4: Home Safety & Injury Prevention (Readings)',
+          es: 'Sección 4: Seguridad en el hogar y prevención de lesiones (Lecturas)',
+        },
+        estimatedTime: {
+          en: 'Estimated Time: Approximately 45 minutes - 1 hour',
+          es: 'Tiempo estimado: Aproximadamente 45 minutos - 1 hora',
+        },
+        description: {
+          en: 'Ensure the care environment is safe and free from common hazards.',
+          es: 'Asegúrese de que el ambiente de atención sea seguro y libre de riesgos comunes.',
+        },
+        topicsTitle: {
+          en: 'Topics & Estimated Times:',
+          es: 'Temas y tiempos estimados:',
+        },
+        injuryPrevention: {
+          en: 'Injury Prevention Starts at Home',
+          es: 'La prevención de lesiones comienza en casa',
+        },
+        poisoningPrevention: {
+          en: 'Poisoning Prevention Home Safety Tip Sheet',
+          es: 'Hoja de consejos de seguridad para el hogar para prevenir intoxicaciones',
+        },
+        homeSafety: {
+          en: 'Home Safety',
+          es: 'Seguridad en el hogar',
+        },
+        healthTips: {
+          en: 'Health Tips for Families Series',
+          es: 'Serie de consejos de salud para familias',
+        },
+        timeEstimate: {
+          en: ': ~10-15 minutes',
+          es: ': ~10-15 minutos',
+        },
+      },
+      toastSuccess: {
+        en: 'Training status updated',
+        es: 'Estado de capacitación actualizado',
+      },
+      centerNotRequired: {
+        en: 'Training resources are not required for licensed childcare centers.',
+        es: 'Los recursos de capacitación no son requeridos para los centros de cuidado infantil con licencia.',
+      },
     },
     inviteFamilyPage: {
       header: {
