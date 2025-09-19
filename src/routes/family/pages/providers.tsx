@@ -5,15 +5,38 @@ import { Button } from '@/components/ui/button'
 import { Link } from '@tanstack/react-router'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { ExternalLink } from '@/components/external-link'
 
 export function FamilyProvidersPage() {
   const t = translations.family.providerPage
   return (
     <div>
       <section className="p-5">
-        <p className="text-lg">
-          <Text text={t.header} />
-        </p>
+        <div className="text-lg space-y-4 text-center">
+          <p>
+            <Text text={t.header.main} />
+          </p>
+          <p>
+            <Text text={t.header.knownProvider.part1} />
+            <ExternalLink
+              href="https://www.capcolorado.org/en/providers"
+              className="text-primary hover:text-primary/80 underline"
+            >
+              <Text text={t.header.knownProvider.linkText} />
+            </ExternalLink>
+            <Text text={t.header.knownProvider.part2} />
+          </p>
+          <p>
+            <Text text={t.header.newProvider.part1} />
+            <ExternalLink
+              href="https://www.coloradoshines.com/search"
+              className="text-primary hover:text-primary/80 underline"
+            >
+              <Text text={t.header.newProvider.coloradoShinesText} />
+            </ExternalLink>
+            <Text text={t.header.newProvider.part2} />
+          </p>
+        </div>
       </section>
       <div className="flex flex-col lg:flex-row">
         <section className="p-5 flex-1">
