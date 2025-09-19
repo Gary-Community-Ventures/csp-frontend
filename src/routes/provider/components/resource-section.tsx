@@ -52,12 +52,12 @@ export function ResourceSection({
   const checkboxClassName = `
     transition-all duration-200 w-5 h-5 sm:w-6 sm:h-6
     ${isReadOnly ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:scale-110'}
-    ${isCompleted ? 'data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600' : ''}
+    ${isCompleted ? 'data-[state=checked]:bg-quaternary data-[state=checked]:border-quaternary' : ''}
   `.trim()
 
   const checkboxWrapperClassName = `
     p-2 rounded-lg transition-all duration-200
-    ${!isReadOnly && !isCompleted ? 'bg-amber-50 border-2 border-amber-200' : ''}
+    ${!isReadOnly && !isCompleted ? 'bg-tertiary-background/50 border-2 border-tertiary-background' : ''}
     ${isReadOnly && !isCompleted ? 'hover:bg-gray-50' : ''}
   `.trim()
 
@@ -65,7 +65,7 @@ export function ResourceSection({
     <WhiteCard
       className={`p-4 sm:p-6 transition-all duration-300 border-2 ${
         isCompleted
-          ? 'border-green-500 shadow-sm shadow-green-100'
+          ? 'border-quaternary shadow-sm shadow-quaternary'
           : 'border-transparent hover:shadow-md'
       }`}
     >
@@ -117,8 +117,8 @@ export function ResourceSection({
             {/* "Check when done" hint - only show when expanded and not completed */}
             {!isCompleted && !isReadOnly && !isCollapsed && (
               <div className="hidden sm:flex absolute top-full mt-1 flex-col items-center">
-                <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-b-[5px] border-amber-200" />
-                <span className="text-[10px] text-amber-700 font-medium text-center whitespace-nowrap">
+                <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-b-[5px] border-tertiary-background" />
+                <span className="text-[10px] text-tertiary font-medium text-center whitespace-nowrap">
                   {text(t.checkWhenDone)}
                 </span>
               </div>
@@ -144,7 +144,7 @@ export function ResourceSection({
               {title}
             </Header>
             {isCompleted && (
-              <span className="hidden sm:inline text-green-600 text-sm font-medium">
+              <span className="hidden sm:inline text-quaternary text-sm font-medium">
                 ✓ {text(t.completed)}
               </span>
             )}
