@@ -54,9 +54,8 @@ export default defineConfig({
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
-        // Force service worker update on every build
         cleanupOutdatedCaches: true,
-        // More aggressive caching strategy
+        // Use NetworkFirst for HTML to always get fresh content
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -69,12 +68,13 @@ export default defineConfig({
               },
             },
           },
-        ],
-        // Add build timestamp to force cache invalidation
-        additionalManifestEntries: [
           {
-            url: '/',
-            revision: Date.now().toString(),
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'pages-cache',
+              networkTimeoutSeconds: 3,
+            },
           },
         ],
       },
