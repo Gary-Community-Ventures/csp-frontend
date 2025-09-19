@@ -115,15 +115,15 @@ export default defineConfig({
             project: process.env.SENTRY_PROJECT,
             authToken: process.env.SENTRY_AUTH_TOKEN,
             release: {
+              // Use SOURCE_VERSION as release name for proper versioning on Heroku
+              name: process.env.SOURCE_VERSION || undefined,
               // This will inject the release version into your app
               inject: true,
-              // Use Heroku's SOURCE_VERSION for commit info, fallback to auto for local dev
-              setCommits: process.env.SOURCE_VERSION
-                ? {
-                    repo: process.env.HEROKU_APP_NAME || 'csp-frontend',
-                    commit: process.env.SOURCE_VERSION,
-                  }
-                : { auto: true },
+              // Always try to set commits but ignore missing git repository
+              setCommits: {
+                auto: true,
+                ignoreMissing: true,
+              },
             },
             sourcemaps: {
               // Upload all JS source maps
