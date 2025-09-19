@@ -121,9 +121,8 @@ export default defineConfig({
               inject: true,
             },
             sourcemaps: {
-              // Upload all JS source maps
-              assets: ['./dist/assets/**/*.js.map'],
-              filesToDeleteAfterUpload: ['./dist/assets/**/*.js.map'],
+              // Auto-detect and upload source maps
+              filesToDeleteAfterUpload: ['./dist/**/*.map'],
             },
           }),
         ]
