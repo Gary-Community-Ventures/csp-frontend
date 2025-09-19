@@ -2,14 +2,8 @@ import { Text, useText } from '@/translations/wrapper'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { FormErrorMessage } from './form-error'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './ui/select'
-import { LANGUAGES, type Language } from '@/translations/wrapper'
+import { LanguageSelect } from './language-select'
+import { type Language } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 
 type FormData = {
@@ -69,27 +63,13 @@ export function InviteInputs({
           <Label htmlFor="invite-provider-lang-select">
             <Text text={t.langLabel} />
           </Label>
-          <Select
+          <LanguageSelect
             value={formData.lang}
-            onValueChange={(value) => {
-              if (!LANGUAGES.includes(value as Language)) {
-                return
-              }
-
-              setLang(value as Language)
-            }}
-          >
-            <SelectTrigger id="invite-provider-lang-select" className="w-full">
-              <SelectValue placeholder={text(t.langPlaceholder)} />
-            </SelectTrigger>
-            <SelectContent>
-              {LANGUAGES.map((lang) => (
-                <SelectItem key={lang} value={lang}>
-                  {text(t.languageOptions[lang])}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            onValueChange={setLang}
+            placeholder={text(t.langPlaceholder)}
+            className="w-full"
+            id="invite-provider-lang-select"
+          />
         </div>
       </div>
     </>
