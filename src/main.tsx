@@ -16,7 +16,6 @@ import { useSentryUserContext } from '@/lib/hooks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { recordPageView, useRecordUserSession } from '@/lib/analytics'
 import { OfflinePage } from './components/pages/offline-page'
-import { useServiceWorkerUpdate } from '@/lib/hooks/use-service-worker-update'
 
 initializeSentry()
 
@@ -101,8 +100,6 @@ function App() {
   useSentryUserContext()
 
   useRecordUserSession()
-
-  useServiceWorkerUpdate()
 
   useEffect(recordPageView, [])
 

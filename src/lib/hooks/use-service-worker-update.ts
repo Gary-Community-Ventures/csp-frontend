@@ -1,6 +1,18 @@
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
+/*
+
+  Hook to manage service worker updates and notify users
+  
+  Listens for service worker update events and prompts the user to refresh the page
+  when a new version is available. Automatically reloads the page after the user
+  confirms the update.
+
+  We do not currently use this but leaving it around in case we ever do.
+
+*/
+
 export function useServiceWorkerUpdate() {
   useEffect(() => {
     if ('serviceWorker' in navigator) {

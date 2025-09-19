@@ -123,8 +123,8 @@ export default defineConfig({
             },
             sourcemaps: {
               // Keep source maps but upload them to Sentry
-              assets: ['./dist/**/*.map'],
-              filesToDeleteAfterUpload: ['./dist/**/*.map'],
+              assets: ['./dist/**/*.js.map'],
+              filesToDeleteAfterUpload: ['./dist/**/*.js.map'],
             },
           }),
         ]
