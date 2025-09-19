@@ -39,29 +39,14 @@ export function ResourcesPage() {
   const text = useText()
   const t = translations.provider.resources
 
-  // Only show resources page for FFN (Family, Friend, Neighbor) and LHB (Licensed Home-Based) providers
-  if (providerInfo.type === 'center') {
-    return (
-      <div className="mx-auto mb-5 max-w-4xl p-3 sm:p-5">
-        <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-4xl">
-          <Text text={t.title} />
-        </Header>
-        <div className="text-center">
-          <p className="text-lg">
-            <Text text={t.centerNotRequired} />
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  // Fetch training data
+  // Fetch training data (must be called before conditional logic)
   const { data: trainingData } = useQuery({
     queryKey: ['providerTrainings'],
     queryFn: async () => {
       const data = await getProviderTrainings(context)
       return ProviderTrainingResponseSchema.parse(data)
     },
+    enabled: providerInfo.type !== 'center', // Only fetch if not a center
   })
 
   // Update training mutation
@@ -96,6 +81,22 @@ export function ResourcesPage() {
     if (sectionId !== 'cpr_online_training_completed_at') {
       updateTraining({ [sectionId]: !isCompleted })
     }
+  }
+
+  // Only show resources page for FFN (Family, Friend, Neighbor) and LHB (Licensed Home-Based) providers
+  if (providerInfo.type === 'center') {
+    return (
+      <div className="mx-auto mb-5 max-w-4xl p-3 sm:p-5">
+        <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-4xl">
+          <Text text={t.title} />
+        </Header>
+        <div className="text-center">
+          <p className="text-lg">
+            <Text text={t.centerNotRequired} />
+          </p>
+        </div>
+      </div>
+    )
   }
 
   return (
