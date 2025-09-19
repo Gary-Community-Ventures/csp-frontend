@@ -938,6 +938,10 @@ export const translations = {
         en: 'Training status updated',
         es: 'Estado de capacitación actualizado',
       },
+      centerNotRequired: {
+        en: 'Training resources are not required for licensed childcare centers.',
+        es: 'Los recursos de capacitación no son requeridos para los centros de cuidado infantil con licencia.',
+      },
     },
     inviteFamilyPage: {
       header: {

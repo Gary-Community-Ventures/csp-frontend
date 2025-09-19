@@ -52,7 +52,7 @@ export function ResourceSection({
   const checkboxClassName = `
     transition-all duration-200 w-5 h-5 sm:w-6 sm:h-6
     ${isReadOnly ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:scale-110'}
-    ${isCompleted ? 'data-[state=checked]:bg-quaternary data-[state=checked]:border-quaternary' : ''}
+    ${isCompleted ? 'data-[state=checked]:bg-primary data-[state=checked]:border-primary' : ''}
   `.trim()
 
   const checkboxWrapperClassName = `
@@ -65,7 +65,7 @@ export function ResourceSection({
     <WhiteCard
       className={`p-4 sm:p-6 transition-all duration-300 border-2 ${
         isCompleted
-          ? 'border-quaternary shadow-sm shadow-quaternary'
+          ? 'border-primary shadow-sm shadow-quaternary'
           : 'border-transparent hover:shadow-md'
       }`}
     >
@@ -144,7 +144,7 @@ export function ResourceSection({
               {title}
             </Header>
             {isCompleted && (
-              <span className="hidden sm:inline text-quaternary text-sm font-medium">
+              <span className="hidden sm:inline text-primary text-sm font-medium">
                 ✓ {text(t.completed)}
               </span>
             )}

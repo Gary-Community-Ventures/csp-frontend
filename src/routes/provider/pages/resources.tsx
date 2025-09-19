@@ -9,7 +9,7 @@ import {
   ProviderTrainingUpdateRequestSchema,
 } from '@/lib/schemas'
 import { translations } from '@/translations/text'
-import { useText } from '@/translations/wrapper'
+import { useText, Text } from '@/translations/wrapper'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { useMemo } from 'react'
@@ -38,6 +38,22 @@ export function ResourcesPage() {
   const { providerInfo } = useProviderContext()
   const text = useText()
   const t = translations.provider.resources
+
+  // Only show resources page for FFN (Family, Friend, Neighbor) and LHB (Licensed Home-Based) providers
+  if (providerInfo.type === 'center') {
+    return (
+      <div className="mx-auto mb-5 max-w-4xl p-3 sm:p-5">
+        <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-4xl">
+          <Text text={t.title} />
+        </Header>
+        <div className="text-center">
+          <p className="text-lg">
+            <Text text={t.centerNotRequired} />
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   // Fetch training data
   const { data: trainingData } = useQuery({
