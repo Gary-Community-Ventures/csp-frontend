@@ -58,6 +58,8 @@ export type ProviderInfo = {
   last_name: string
   is_payable: boolean
   is_payment_enabled: boolean
+  cpr_certified: boolean | null
+  cpr_training_link: string | null
   type: 'ffn' | 'lhb' | 'center'
 }
 

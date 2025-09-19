@@ -10,6 +10,41 @@ import { sentryVitePlugin } from '@sentry/vite-plugin'
 export default defineConfig({
   build: {
     sourcemap: true, // Enable source map generation
+    chunkSizeWarningLimit: 1000,
+    target: 'esnext',
+    minify: 'esbuild', // esbuild is faster and uses less memory than terser
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split large vendor chunks
+          'react-vendor': ['react', 'react-dom'],
+          'clerk-vendor': [
+            '@clerk/clerk-react',
+            '@clerk/localizations',
+            '@clerk/types',
+          ],
+          'radix-vendor': [
+            '@radix-ui/react-avatar',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-label',
+            '@radix-ui/react-navigation-menu',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-radio-group',
+            '@radix-ui/react-select',
+            '@radix-ui/react-separator',
+            '@radix-ui/react-slot',
+          ],
+          'tanstack-vendor': [
+            '@tanstack/react-query',
+            '@tanstack/react-router',
+            '@tanstack/router-devtools',
+          ],
+          'sentry-vendor': ['@sentry/react', '@sentry/tracing'],
+        },
+      },
+    },
   },
   plugins: [
     react(),
@@ -87,7 +122,8 @@ export default defineConfig({
               },
             },
             sourcemaps: {
-              // Optional: Delete source maps after upload to keep them private
+              // Keep source maps but upload them to Sentry
+              assets: ['./dist/**/*.map'],
               filesToDeleteAfterUpload: ['./dist/**/*.map'],
             },
           }),
