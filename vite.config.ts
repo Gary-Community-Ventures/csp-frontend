@@ -119,11 +119,6 @@ export default defineConfig({
               name: process.env.SOURCE_VERSION || undefined,
               // This will inject the release version into your app
               inject: true,
-              // Always try to set commits but ignore missing git repository
-              setCommits: {
-                auto: true,
-                ignoreMissing: true,
-              },
             },
             sourcemaps: {
               // Upload all JS source maps
