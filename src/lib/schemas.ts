@@ -148,6 +148,8 @@ export const createLumpSumRequestSchema = z.object({
 })
 
 export const ProviderTrainingResponseSchema = z.object({
+  cpr_certified: z.boolean().nullable(),
+  cpr_training_link: z.string().nullable(),
   cpr_online_training_completed_at: z.string().datetime().nullable(),
   child_safety_module_training_completed_at: z.string().datetime().nullable(),
   safe_sleep_for_infants_training_completed_at: z
