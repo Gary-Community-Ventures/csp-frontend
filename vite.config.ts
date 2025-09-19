@@ -117,14 +117,18 @@ export default defineConfig({
             release: {
               // This will inject the release version into your app
               inject: true,
-              setCommits: {
-                auto: true,
-              },
+              // Use Heroku's SOURCE_VERSION for commit info, fallback to auto for local dev
+              setCommits: process.env.SOURCE_VERSION
+                ? {
+                    repo: process.env.HEROKU_APP_NAME || 'csp-frontend',
+                    commit: process.env.SOURCE_VERSION,
+                  }
+                : { auto: true },
             },
             sourcemaps: {
-              // Keep source maps but upload them to Sentry
-              assets: ['./dist/**/*.js.map'],
-              filesToDeleteAfterUpload: ['./dist/**/*.js.map'],
+              // Upload all JS source maps
+              assets: ['./dist/assets/**/*.js.map'],
+              filesToDeleteAfterUpload: ['./dist/assets/**/*.js.map'],
             },
           }),
         ]
