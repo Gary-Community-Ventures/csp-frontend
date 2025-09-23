@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import {
   allocatedCareDaySchema,
@@ -117,6 +117,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   currentDate,
   handleDayClick,
 }) => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const dayStr = d.toISOString().split('T')[0]
   const careDay = allocation.care_days.find((cd) => cd.date === dayStr)
   const isCurrentMonth = d.getMonth() === currentDate.getMonth()
@@ -177,8 +178,12 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
 
   // Apply locked styling *after* status styling
   if (isDayLocked) {
-    dayClasses += ' bg-gray-200 bg-opacity-70' // Add grey background and slight opacity to show original color underneath
+    // Use relative positioning for overlay effects
+    dayClasses += ' relative opacity-50'
     cellClasses += ' cursor-not-allowed bg-gray-50'
+    if (!careDay) {
+      dayClasses += ' bg-gray-200' // Ensure locked empty days have a background
+    }
   }
 
   if (isToday) {
@@ -215,6 +220,17 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
     lockedPastDateStart
   )
 
+  // Auto-dismiss popover after timeout
+  useEffect(() => {
+    if (isPopoverOpen && disabledReason) {
+      const timer = setTimeout(() => {
+        setIsPopoverOpen(false)
+      }, 5000) // 5 seconds
+
+      return () => clearTimeout(timer)
+    }
+  }, [isPopoverOpen, disabledReason])
+
   const dayElement = (
     <div
       key={d.toString()}
@@ -228,7 +244,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   return (
     <div className={cellClasses}>
       {isDisabled && disabledReason ? (
-        <Popover>
+        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
           <PopoverTrigger asChild>{dayElement}</PopoverTrigger>
           <PopoverContent
             className="max-w-xs w-auto p-3 text-sm text-center break-words whitespace-normal shadow-lg border border-gray-200"
