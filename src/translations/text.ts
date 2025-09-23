@@ -212,7 +212,7 @@ export const translations = {
           en: 'This day has been locked and can no longer be modified.',
           es: 'Este día ha sido bloqueado y no se puede modificar.',
         },
-        dayLockedPast: {
+        dayLockedNotYetAvailable: {
           en: 'This day is not yet available for making payments.',
           es: 'Este día aún no está disponible para realizar pagos.',
         },

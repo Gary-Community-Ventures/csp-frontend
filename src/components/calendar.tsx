@@ -86,7 +86,7 @@ const getDisabledReason = (
 
     // Check if it's locked past a specific date (greater than or equal to locked past date)
     if (lockedPastDateStart && currentDayStart >= lockedPastDateStart) {
-      return t.dayLockedPast
+      return t.dayLockedNotYetAvailable
     }
 
     // Fallback to generic locked message
