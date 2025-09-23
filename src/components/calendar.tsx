@@ -62,9 +62,7 @@ const getDisabledReason = (
   isCurrentMonth: boolean,
   isDayLocked: boolean,
   isAlreadySubmitted: boolean,
-  careDay: z.infer<typeof allocatedCareDaySchema> | null | undefined,
   currentDayStart: Date,
-  lockedUntilDateStart: Date | null,
   lockedPastDateStart: Date | null
 ): { en: string; es: string } | null => {
   const t = translations.family.calendar.disabledDay
@@ -74,23 +72,13 @@ const getDisabledReason = (
   }
 
   if (isDayLocked) {
-    // Check if it's specifically locked by careDay.is_locked
-    if (careDay?.is_locked) {
-      return t.dayLocked
-    }
-
-    // Check if it's locked until a specific date (less than or equal to locked until date)
-    if (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart) {
-      return t.dayLocked
-    }
-
     // Check if it's locked past a specific date (greater than or equal to locked past date)
     if (lockedPastDateStart && currentDayStart >= lockedPastDateStart) {
       return t.dayLockedNotYetAvailable
     }
 
     // Fallback to generic locked message
-    return t.dayLocked
+    return t.dayLockedGeneral
   }
 
   if (isAlreadySubmitted) {
@@ -214,9 +202,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
     isCurrentMonth,
     isDayLocked,
     isAlreadySubmitted,
-    careDay,
     currentDayStart,
-    lockedUntilDateStart,
     lockedPastDateStart
   )
 

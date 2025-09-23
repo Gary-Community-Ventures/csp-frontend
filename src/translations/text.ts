@@ -208,7 +208,7 @@ export const translations = {
           en: 'This day is not in the current month. Please navigate to the correct month to make change to this day.',
           es: 'Este día no está en el mes actual. Por favor, navega al mes correcto para realizar cambios en este día.',
         },
-        dayLocked: {
+        dayLockedGeneral: {
           en: 'This day has been locked and can no longer be modified.',
           es: 'Este día ha sido bloqueado y no se puede modificar.',
         },
