@@ -9,6 +9,11 @@ import { formatAmount } from '@/lib/currency'
 import { z } from 'zod'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 interface CalendarProps {
   allocation: z.infer<typeof monthAllocationSchema>
@@ -53,6 +58,48 @@ const getDayStyles = (status: string) => {
   return { ...baseStyles, ...(statusStyles[status] || statusStyles.default) }
 }
 
+const getDisabledReason = (
+  isCurrentMonth: boolean,
+  isDayLocked: boolean,
+  isAlreadySubmitted: boolean,
+  careDay: z.infer<typeof allocatedCareDaySchema> | null | undefined,
+  currentDayStart: Date,
+  lockedUntilDateStart: Date | null,
+  lockedPastDateStart: Date | null
+): { en: string; es: string } | null => {
+  const t = translations.family.calendar.disabledDay
+
+  if (!isCurrentMonth) {
+    return t.notCurrentMonth
+  }
+
+  if (isDayLocked) {
+    // Check if it's specifically locked by careDay.is_locked
+    if (careDay?.is_locked) {
+      return t.dayLocked
+    }
+
+    // Check if it's locked until a specific date (less than or equal to locked until date)
+    if (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart) {
+      return t.dayLocked
+    }
+
+    // Check if it's locked past a specific date (greater than or equal to locked past date)
+    if (lockedPastDateStart && currentDayStart >= lockedPastDateStart) {
+      return t.dayLockedPast
+    }
+
+    // Fallback to generic locked message
+    return t.dayLocked
+  }
+
+  if (isAlreadySubmitted) {
+    return t.alreadySubmitted
+  }
+
+  return null
+}
+
 interface CalendarDayProps {
   d: Date
   allocation: z.infer<typeof monthAllocationSchema>
@@ -93,14 +140,14 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   }
 
   const isDayLocked =
-    careDay?.is_locked ||
-    (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart) ||
-    (lockedPastDateStart && currentDayStart >= lockedPastDateStart)
+    !!careDay?.is_locked ||
+    !!(lockedUntilDateStart && currentDayStart <= lockedUntilDateStart) ||
+    !!(lockedPastDateStart && currentDayStart >= lockedPastDateStart)
 
   let cellClasses = 'flex justify-center items-center py-1'
 
-  const isDisabled =
-    !isCurrentMonth || isDayLocked || careDay?.last_submitted_at
+  const isAlreadySubmitted = !!careDay?.last_submitted_at
+  const isDisabled = !isCurrentMonth || isDayLocked || isAlreadySubmitted
 
   let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
     !isDisabled ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
@@ -158,15 +205,42 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
     </>
   )
 
+  const disabledReason = getDisabledReason(
+    isCurrentMonth,
+    isDayLocked,
+    isAlreadySubmitted,
+    careDay,
+    currentDayStart,
+    lockedUntilDateStart,
+    lockedPastDateStart
+  )
+
+  const dayElement = (
+    <div
+      key={d.toString()}
+      className={dayClasses}
+      onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
+    >
+      {dayContent}
+    </div>
+  )
+
   return (
     <div className={cellClasses}>
-      <div
-        key={d.toString()}
-        className={dayClasses}
-        onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
-      >
-        {dayContent}
-      </div>
+      {isDisabled && disabledReason ? (
+        <Popover>
+          <PopoverTrigger asChild>{dayElement}</PopoverTrigger>
+          <PopoverContent
+            className="max-w-xs w-auto p-3 text-sm text-center break-words whitespace-normal shadow-lg border border-gray-200"
+            sideOffset={8}
+            align="center"
+          >
+            <Text text={disabledReason} />
+          </PopoverContent>
+        </Popover>
+      ) : (
+        dayElement
+      )}
     </div>
   )
 }

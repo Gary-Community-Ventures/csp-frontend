@@ -203,6 +203,24 @@ export const translations = {
         en: 'Needs Resubmission',
         es: 'Necesita Reenvío',
       },
+      disabledDay: {
+        notCurrentMonth: {
+          en: 'This day is not in the current month. Please navigate to the correct month to make change to this day.',
+          es: 'Este día no está en el mes actual. Por favor, navega al mes correcto para realizar cambios en este día.',
+        },
+        dayLocked: {
+          en: 'This day has been locked and can no longer be modified.',
+          es: 'Este día ha sido bloqueado y no se puede modificar.',
+        },
+        dayLockedPast: {
+          en: 'This day is not yet available for making payments.',
+          es: 'Este día aún no está disponible para realizar pagos.',
+        },
+        alreadySubmitted: {
+          en: 'This day has already been submitted and cannot be modified.',
+          es: 'Este día ya ha sido enviado y no se puede modificar.',
+        },
+      },
       cancel: {
         en: 'Cancel',
         es: 'Cancelar',
