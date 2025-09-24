@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import {
   allocatedCareDaySchema,
@@ -9,6 +9,11 @@ import { formatAmount } from '@/lib/currency'
 import { z } from 'zod'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 interface CalendarProps {
   allocation: z.infer<typeof monthAllocationSchema>
@@ -53,6 +58,36 @@ const getDayStyles = (status: string) => {
   return { ...baseStyles, ...(statusStyles[status] || statusStyles.default) }
 }
 
+const getDisabledReason = (
+  isCurrentMonth: boolean,
+  isDayLocked: boolean,
+  isAlreadySubmitted: boolean,
+  currentDayStart: Date,
+  lockedPastDateStart: Date | null
+): { en: string; es: string } | null => {
+  const t = translations.family.calendar.disabledDay
+
+  if (!isCurrentMonth) {
+    return t.notCurrentMonth
+  }
+
+  if (isDayLocked) {
+    // Check if it's locked past a specific date (greater than or equal to locked past date)
+    if (lockedPastDateStart && currentDayStart >= lockedPastDateStart) {
+      return t.dayLockedNotYetAvailable
+    }
+
+    // Fallback to generic locked message
+    return t.dayLockedGeneral
+  }
+
+  if (isAlreadySubmitted) {
+    return t.alreadySubmitted
+  }
+
+  return null
+}
+
 interface CalendarDayProps {
   d: Date
   allocation: z.infer<typeof monthAllocationSchema>
@@ -70,6 +105,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   currentDate,
   handleDayClick,
 }) => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const dayStr = d.toISOString().split('T')[0]
   const careDay = allocation.care_days.find((cd) => cd.date === dayStr)
   const isCurrentMonth = d.getMonth() === currentDate.getMonth()
@@ -93,14 +129,14 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   }
 
   const isDayLocked =
-    careDay?.is_locked ||
-    (lockedUntilDateStart && currentDayStart <= lockedUntilDateStart) ||
-    (lockedPastDateStart && currentDayStart >= lockedPastDateStart)
+    !!careDay?.is_locked ||
+    !!(lockedUntilDateStart && currentDayStart <= lockedUntilDateStart) ||
+    !!(lockedPastDateStart && currentDayStart >= lockedPastDateStart)
 
   let cellClasses = 'flex justify-center items-center py-1'
 
-  const isDisabled =
-    !isCurrentMonth || isDayLocked || careDay?.last_submitted_at
+  const isAlreadySubmitted = !!careDay?.last_submitted_at
+  const isDisabled = !isCurrentMonth || isDayLocked || isAlreadySubmitted
 
   let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
     !isDisabled ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
@@ -130,8 +166,12 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
 
   // Apply locked styling *after* status styling
   if (isDayLocked) {
-    dayClasses += ' bg-gray-200 bg-opacity-70' // Add grey background and slight opacity to show original color underneath
+    // Use relative positioning for overlay effects
+    dayClasses += ' relative opacity-50'
     cellClasses += ' cursor-not-allowed bg-gray-50'
+    if (!careDay) {
+      dayClasses += ' bg-gray-200' // Ensure locked empty days have a background
+    }
   }
 
   if (isToday) {
@@ -158,15 +198,51 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
     </>
   )
 
+  const disabledReason = getDisabledReason(
+    isCurrentMonth,
+    isDayLocked,
+    isAlreadySubmitted,
+    currentDayStart,
+    lockedPastDateStart
+  )
+
+  // Auto-dismiss popover after timeout
+  useEffect(() => {
+    if (isPopoverOpen && disabledReason) {
+      const timer = setTimeout(() => {
+        setIsPopoverOpen(false)
+      }, 5000) // 5 seconds
+
+      return () => clearTimeout(timer)
+    }
+  }, [isPopoverOpen, disabledReason])
+
+  const dayElement = (
+    <div
+      key={d.toString()}
+      className={dayClasses}
+      onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
+    >
+      {dayContent}
+    </div>
+  )
+
   return (
     <div className={cellClasses}>
-      <div
-        key={d.toString()}
-        className={dayClasses}
-        onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
-      >
-        {dayContent}
-      </div>
+      {isDisabled && disabledReason ? (
+        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+          <PopoverTrigger asChild>{dayElement}</PopoverTrigger>
+          <PopoverContent
+            className="max-w-xs w-auto p-3 text-sm text-center break-words whitespace-normal shadow-lg border border-gray-200"
+            sideOffset={8}
+            align="center"
+          >
+            <Text text={disabledReason} />
+          </PopoverContent>
+        </Popover>
+      ) : (
+        dayElement
+      )}
     </div>
   )
 }
