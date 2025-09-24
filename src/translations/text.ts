@@ -378,8 +378,8 @@ export const translations = {
     },
     home: {
       balance: {
-        en: 'Childcare Subsidy Balance',
-        es: 'Balance de Subsidio de Cuidado de Niños',
+        en: '{month} Balance',
+        es: 'Balance de {month}',
       },
       providers: {
         en: 'Providers',

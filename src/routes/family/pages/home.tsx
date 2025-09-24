@@ -15,13 +15,18 @@ function Balance() {
   const context = familyRoute.useRouteContext()
   const balance = useCurrentMonthBalance(context, selectedChildInfo.id)
 
+  const currentMonth = useMemo(() => {
+    const now = new Date()
+    return now.toLocaleDateString('en', { month: 'long' })
+  }, [])
+
   return (
     <section>
       {balance !== undefined && (
         <h1 className="px-5 pt-5 w-full">
           <div className="bg-tertiary-background rounded-3xl w-full p-5">
             <div className="text-sm text-center">
-              <Text text={t.balance} />
+              <Text text={t.balance} data={{ month: currentMonth }} />
             </div>
             <div className="text-5xl text-center">{formatAmount(balance)}</div>
           </div>
