@@ -7,9 +7,10 @@ import { familyRoute } from '../routes'
 import { translations } from '@/translations/text'
 import { Text, useLanguageContext } from '@/translations/wrapper'
 import { formatAmount } from '@/lib/currency'
+import * as RouterModule from '@/routes/router'
 
 function useMonthBalance(
-  context: any,
+  context: RouterModule.RouterContext,
   childId: string,
   monthOffset: number = 0
 ) {

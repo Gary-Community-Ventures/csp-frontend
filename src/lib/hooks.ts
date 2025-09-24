@@ -3,9 +3,6 @@ import { useUser } from '@clerk/clerk-react'
 import * as Sentry from '@sentry/react'
 import { useFamilyContext } from '../routes/family/wrapper'
 import { useProviderContext } from '../routes/provider/wrapper'
-import { useQuery } from '@tanstack/react-query'
-import { getMonthAllocation } from '@/lib/api/children'
-import * as RouterModule from '@/routes/router'
 
 export function useBackgroundColor(color: string) {
   useEffect(() => {
