@@ -64,36 +64,3 @@ export function useHideProviderNavBar() {
     }
   }, [navBar])
 }
-
-export function useCurrentMonthBalance(
-  context: RouterModule.RouterContext,
-  childId: string,
-  providerId?: string
-) {
-  const now = new Date()
-  const currentMonth = now.getMonth() + 1
-  const currentYear = now.getFullYear()
-
-  const { data: allocation } = useQuery({
-    queryKey: [
-      'currentMonthAllocation',
-      childId,
-      currentMonth,
-      currentYear,
-      providerId,
-    ],
-    queryFn: () =>
-      getMonthAllocation(
-        context,
-        childId,
-        currentMonth,
-        currentYear,
-        providerId
-      ),
-    enabled: !!childId && !!context,
-    retry: false, // Do not retry on failure, as per requirement
-    throwOnError: false, // Do not throw error, handle it gracefully
-  })
-
-  return allocation?.remaining_unpaid_cents
-}

@@ -5,7 +5,7 @@ import { getMonthAllocation } from '@/lib/api/children'
 import { useFamilyContext } from '../wrapper'
 import { familyRoute } from '../routes'
 import { translations } from '@/translations/text'
-import { Text } from '@/translations/wrapper'
+import { Text, useLanguageContext } from '@/translations/wrapper'
 import { formatAmount } from '@/lib/currency'
 
 function useMonthBalance(
@@ -52,12 +52,13 @@ function BalanceCard({
   const { selectedChildInfo } = useFamilyContext()
   const context = familyRoute.useRouteContext()
   const balance = useMonthBalance(context, selectedChildInfo.id, monthOffset)
+  const { lang } = useLanguageContext()
 
   const monthName = useMemo(() => {
     const date = new Date()
     date.setMonth(date.getMonth() + monthOffset)
-    return date.toLocaleDateString('en', { month: 'long' })
-  }, [monthOffset])
+    return date.toLocaleDateString(lang, { month: 'long' })
+  }, [monthOffset, lang])
 
   return (
     <div
