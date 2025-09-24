@@ -870,8 +870,12 @@ export const translations = {
           es: 'Enlace de descripción general:',
         },
         overviewUrl: {
-          en: 'https://headstart.gov/safety-practices/article/child-safety',
-          es: 'https://headstart.gov/es/safety-practices/article/seguridad-infantil',
+          en: 'http://bit.ly/3VuKSgp',
+          es: 'http://bit.ly/4pCvtIA',
+        },
+        overviewLinkText: {
+          en: 'Child Safety Overview',
+          es: 'Resumen de Seguridad Infantil',
         },
         clickInstruction: {
           en: 'From this page, click on each topic below to view the specific video or resource.',
@@ -924,8 +928,12 @@ export const translations = {
           es: 'Enlace:',
         },
         nihUrl: {
-          en: 'https://safetosleep.nichd.nih.gov/safe-sleep',
-          es: 'https://espanol.nichd.nih.gov/actividades-proyectos/sts',
+          en: 'https://bit.ly/3Vv7Xzx',
+          es: 'https://bit.ly/4pCvBI4',
+        },
+        nihLinkText: {
+          en: 'Safe Sleep Information',
+          es: 'Información sobre Sueño Seguro',
         },
         estimatedTimeReading: {
           en: 'Estimated Time: ~20-30 minutes:',
@@ -984,6 +992,22 @@ export const translations = {
         healthTips: {
           en: 'Health Tips for Families Series',
           es: 'Serie de consejos de salud para familias',
+        },
+        injuryPreventionUrl: {
+          en: 'https://bit.ly/4gFvPdu',
+          es: 'https://bit.ly/42OF7ho',
+        },
+        poisoningPreventionUrl: {
+          en: 'https://bit.ly/4nR9mwv',
+          es: 'https://bit.ly/4nJxOzB',
+        },
+        homeSafetyUrl: {
+          en: 'https://bit.ly/4nlchOb',
+          es: 'https://bit.ly/46IqA8j',
+        },
+        healthTipsUrl: {
+          en: 'https://bit.ly/4ni9JQy',
+          es: 'https://bit.ly/3KEqPtt',
         },
         timeEstimate: {
           en: ': ~10-15 minutes',

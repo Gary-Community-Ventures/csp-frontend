@@ -212,9 +212,8 @@ export function ResourcesPage() {
             <p>{text(t.section2.description)}</p>
             <ul className="list-disc space-y-2 pl-6">
               <li>
-                <strong>{text(t.section2.overviewLink)}</strong>{' '}
                 <ResourceLink href={text(t.section2.overviewUrl)}>
-                  {text(t.section2.overviewUrl)}
+                  {text(t.section2.overviewLinkText)}
                 </ResourceLink>
                 <ul className="mt-2 list-none">
                   <li className="italic">
@@ -263,9 +262,8 @@ export function ResourcesPage() {
                 <strong>{text(t.section3.nihResources)}</strong>
                 <ul className="mt-2 list-none space-y-1">
                   <li>
-                    <strong>{text(t.section3.link)}</strong>{' '}
                     <ResourceLink href={text(t.section3.nihUrl)}>
-                      {text(t.section3.nihUrl)}
+                      {text(t.section3.nihLinkText)}
                     </ResourceLink>
                   </li>
                   <li>
@@ -310,25 +308,25 @@ export function ResourcesPage() {
               <p className="font-bold mb-2">{text(t.section4.topicsTitle)}</p>
               <ul className="list-disc space-y-2 pl-6">
                 <li>
-                  <ResourceLink href="https://headstart.gov/publication/injury-prevention-starts-home">
+                  <ResourceLink href={text(t.section4.injuryPreventionUrl)}>
                     {text(t.section4.injuryPrevention)}
                   </ResourceLink>
                   <strong>{text(t.section4.timeEstimate)}</strong>
                 </li>
                 <li>
-                  <ResourceLink href="https://headstart.gov/publication/poisoning-prevention-home-safety-tip-sheet">
+                  <ResourceLink href={text(t.section4.poisoningPreventionUrl)}>
                     {text(t.section4.poisoningPrevention)}
                   </ResourceLink>
                   <strong>{text(t.section4.timeEstimate)}</strong>
                 </li>
                 <li>
-                  <ResourceLink href="https://headstart.gov/publication/home-safety">
+                  <ResourceLink href={text(t.section4.homeSafetyUrl)}>
                     {text(t.section4.homeSafety)}
                   </ResourceLink>
                   <strong>{text(t.section4.timeEstimate)}</strong>
                 </li>
                 <li>
-                  <ResourceLink href="https://headstart.gov/physical-health/article/health-tips-families-series">
+                  <ResourceLink href={text(t.section4.healthTipsUrl)}>
                     {text(t.section4.healthTips)}
                   </ResourceLink>
                   <strong>{text(t.section4.timeEstimate)}</strong>
