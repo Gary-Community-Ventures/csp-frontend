@@ -931,6 +931,10 @@ export const translations = {
           en: 'https://bit.ly/3Vv7Xzx',
           es: 'https://bit.ly/4pCvBI4',
         },
+        nihLinkText: {
+          en: 'Safe Sleep Information',
+          es: 'Información sobre Sueño Seguro',
+        },
         estimatedTimeReading: {
           en: 'Estimated Time: ~20-30 minutes:',
           es: 'Tiempo estimado: 20-30 minutos:',
