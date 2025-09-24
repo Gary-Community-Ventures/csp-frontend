@@ -381,6 +381,14 @@ export const translations = {
         en: '{month} Balance',
         es: 'Balance de {month}',
       },
+      balanceLoading: {
+        en: 'Loading...',
+        es: 'Cargando...',
+      },
+      balanceUnavailable: {
+        en: 'Unavailable',
+        es: 'No disponible',
+      },
       providers: {
         en: 'Providers',
         es: 'Proveedores',
