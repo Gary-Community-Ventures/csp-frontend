@@ -104,7 +104,10 @@ export function ProviderList({ showAddProvider = false }: ProviderListProps) {
     <CardList
       items={providers.map((provider) => {
         return (
-          <div className="flex justify-between">
+          <div
+            className="flex justify-between items-center w-full"
+            key={provider.id}
+          >
             <strong className="text-lg">{provider.name}</strong>
             <PayButton provider={provider} />
           </div>

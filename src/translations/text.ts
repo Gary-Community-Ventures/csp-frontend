@@ -396,8 +396,16 @@ export const translations = {
     },
     home: {
       balance: {
-        en: 'Childcare Subsidy Balance',
-        es: 'Balance de Subsidio de Cuidado de Niños',
+        en: '{month} Balance',
+        es: 'Balance de {month}',
+      },
+      balanceLoading: {
+        en: 'Loading...',
+        es: 'Cargando...',
+      },
+      balanceUnavailable: {
+        en: 'Unavailable',
+        es: 'No disponible',
       },
       providers: {
         en: 'Providers',
