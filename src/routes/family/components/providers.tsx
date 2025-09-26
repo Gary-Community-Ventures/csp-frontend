@@ -6,6 +6,11 @@ import { CardList } from '@/components/card-list'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { WhiteCard } from '@/components/white-card'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 type PayButtonProps = {
   provider: Provider
@@ -16,33 +21,58 @@ function PayButton({ provider }: PayButtonProps) {
 
   const { selectedChildInfo, canMakePayments } = useFamilyContext()
 
-  if (provider.status === 'pending') {
+  if (provider.status === 'pending' || provider.status === 'denied') {
     return (
-      <Badge variant="destructive">
-        <Text text={t.pending} />
-      </Badge>
-    )
-  } else if (provider.status === 'denied') {
-    return (
-      <Badge variant="destructive">
-        <Text text={t.denied} />
-      </Badge>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Badge variant="destructive" className="cursor-help">
+            <Text text={provider.status === 'pending' ? t.pending : t.denied} />
+          </Badge>
+        </PopoverTrigger>
+        <PopoverContent className="max-w-xs w-auto p-3 text-sm text-center">
+          <Text text={t.disabledReasons.providerNotActive} />
+        </PopoverContent>
+      </Popover>
     )
   }
 
   if (!provider.isPaymentEnabled || !selectedChildInfo.isPaymentEnabled) {
+    const disabledReason = !selectedChildInfo.isPaymentEnabled
+      ? t.disabledReasons.userPaymentDisabled
+      : t.disabledReasons.providerPaymentDisabled
+
     return (
-      <Badge variant="secondary">
-        <Text text={t.paymentsDisabled} />
-      </Badge>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Badge variant="secondary" className="cursor-help">
+            <Text text={t.paymentsDisabled} />
+          </Badge>
+        </PopoverTrigger>
+        <PopoverContent className="max-w-xs w-auto p-3 text-sm text-center">
+          <Text text={disabledReason} />
+        </PopoverContent>
+      </Popover>
     )
   }
 
   if (!provider.isPayable || !canMakePayments) {
+    const disabledReason = !canMakePayments
+      ? t.disabledReasons.accountIssue
+      : t.disabledReasons.providerNotConfigured
+
     return (
-      <Button disabled>
-        <Text text={t.payProvider} />
-      </Button>
+      <Popover>
+        <PopoverTrigger asChild>
+          <div className="inline-block">
+            <Button disabled className="pointer-events-none">
+              <Text text={t.payProvider} />
+            </Button>
+          </div>
+        </PopoverTrigger>
+        <PopoverContent className="max-w-xs w-auto p-3 text-sm text-center">
+          <Text text={disabledReason} />
+        </PopoverContent>
+      </Popover>
     )
   }
 
