@@ -190,8 +190,7 @@ export function ResourcesPage() {
                 </li>
                 <li>
                   <strong>{text(t.section1.important)}</strong>{' '}
-                  {text(t.section1.emailCopy)}{' '}
-                  <strong>{SUPPORT_EMAIL}</strong>{' '}
+                  {text(t.section1.emailCopy)} <strong>{SUPPORT_EMAIL}</strong>{' '}
                   {text(t.section1.emailCopyReason)}
                 </li>
               </ul>
