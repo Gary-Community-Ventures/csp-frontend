@@ -55,26 +55,30 @@ export async function loadFamilyData({
   }
 }
 
-export async function redirectToDefaultId({
-  context,
-  abortController,
-}: {
-  context: RouterContext
-  abortController: AbortController
-}) {
-  const res = await fetch(backendUrl('/family/default_child_id'), {
-    headers: await headersWithAuth(context),
-    signal: abortController.signal,
-  })
+export function redirectToDefaultId(
+  redirectTo: string = '/family/$childId/home'
+) {
+  return async ({
+    context,
+    abortController,
+  }: {
+    context: RouterContext
+    abortController: AbortController
+  }) => {
+    const res = await fetch(backendUrl('/family/default_child_id'), {
+      headers: await headersWithAuth(context),
+      signal: abortController.signal,
+    })
 
-  handleStatusCodes(context, res)
+    handleStatusCodes(context, res)
 
-  const rawJson = await res.json()
+    const rawJson = await res.json()
 
-  throw redirect({
-    to: '/family/$childId/home',
-    params: { childId: rawJson.child_id },
-  })
+    throw redirect({
+      to: redirectTo,
+      params: { childId: rawJson.child_id },
+    })
+  }
 }
 
 export type SelectedChildInfo = {

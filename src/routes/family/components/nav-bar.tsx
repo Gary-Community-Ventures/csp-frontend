@@ -119,15 +119,7 @@ export function FamilyNavBar() {
       {!navBar.hidden && (
         <FamilyNotificationBanner notification={navBar.notifications[0]} />
       )}
-      {navBar.hidden ? (
-        <div className="w-full bg-primary p-5 pt-0 flex justify-center items-center">
-          <Link to="/family/$childId/home">
-            <strong className="text-3xl text-white">
-              {selectedChildInfo.firstName} {selectedChildInfo.lastName}
-            </strong>
-          </Link>
-        </div>
-      ) : (
+      {!navBar.hidden && (
         <div className="flex justify-center items-center p-5 bg-white">
           <Link to="/family/$childId/home">
             <strong className="text-3xl text-primary">

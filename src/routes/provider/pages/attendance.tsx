@@ -102,12 +102,22 @@ export async function loadAttendance({
   }
 }
 
-function attendanceIsValid(attendance: {
-  [key: string]: number | null
-}): attendance is {
-  [key: string]: number
+function attendanceIsValid(attendance: AttendanceValues): attendance is {
+  [key: string]: {
+    fullDays: number
+    halfDays: number
+  }
 } {
-  return !Object.values(attendance).some((value) => value === null)
+  return !Object.values(attendance).some(
+    (value) => value.fullDays === null || value.halfDays === null
+  )
+}
+
+type AttendanceValues = {
+  [key: string]: {
+    fullDays: number | null
+    halfDays: number | null
+  }
 }
 
 export function AttendancePage() {
@@ -119,14 +129,14 @@ export function AttendancePage() {
 
   const formatDate = useFormatDate()
 
-  const [values, setValues] = useState<{ [key: string]: number | null }>({})
+  const [values, setValues] = useState<AttendanceValues>({})
   const [submitted, setSubmitted] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
 
-  const handleHoursInputChange = useCallback(
-    (recordId: string, value: number | null) => {
+  const handleInputChange = useCallback(
+    (recordId: string, fullDays: number | null, halfDays: number | null) => {
       setValues((prev) => {
-        return { ...prev, [recordId]: value }
+        return { ...prev, [recordId]: { fullDays, halfDays } }
       })
     },
     [setValues]
@@ -202,8 +212,12 @@ export function AttendancePage() {
                       label={`${attendanceRecord.child.firstName} ${attendanceRecord.child.lastName}`}
                       attendanceId={attendanceRecord.id}
                       submitted={submitted}
-                      onChange={(value) =>
-                        handleHoursInputChange(attendanceRecord.id, value)
+                      onChange={(fullDays, halfDays) =>
+                        handleInputChange(
+                          attendanceRecord.id,
+                          fullDays,
+                          halfDays
+                        )
                       }
                     />
                     {i < week.attendance.length - 1 && <Separator />}
@@ -222,13 +236,14 @@ export function AttendancePage() {
 }
 
 async function submitAttendance(
-  attendance: { [key: string]: number },
+  attendance: { [key: string]: { fullDays: number; halfDays: number } },
   context: RouterContext
 ) {
   const formattedAttendance = Object.entries(attendance).map(
-    ([key, hours]) => ({
+    ([key, values]) => ({
       id: key,
-      hours: hours,
+      full_days: values.fullDays,
+      half_days: values.halfDays,
     })
   )
 
