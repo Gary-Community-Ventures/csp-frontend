@@ -18,6 +18,7 @@ import { z } from 'zod'
 import { ResourceSection } from '../components/resource-section'
 import { useProviderContext } from '../wrapper'
 import { ExternalLink } from '@/components/external-link'
+import { SUPPORT_EMAIL } from '@/lib/constants'
 import type { PropsWithChildren } from 'react'
 
 type ResourceLinkProps = PropsWithChildren<{
@@ -168,8 +169,8 @@ export function ResourcesPage() {
                   ) : (
                     <>
                       {text(t.section1.noCprLink)}{' '}
-                      <ResourceLink href="mailto:support@capcolorado.org">
-                        support@capcolorado.org
+                      <ResourceLink href={`mailto:${SUPPORT_EMAIL}`}>
+                        {SUPPORT_EMAIL}
                       </ResourceLink>
                     </>
                   )}
@@ -189,8 +190,7 @@ export function ResourcesPage() {
                 </li>
                 <li>
                   <strong>{text(t.section1.important)}</strong>{' '}
-                  {text(t.section1.emailCopy)}{' '}
-                  <strong>support@capcolorado.org</strong>{' '}
+                  {text(t.section1.emailCopy)} <strong>{SUPPORT_EMAIL}</strong>{' '}
                   {text(t.section1.emailCopyReason)}
                 </li>
               </ul>
