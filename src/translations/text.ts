@@ -504,8 +504,8 @@ export const translations = {
     attendance: {
       ...attendance,
       description: {
-        en: 'Please confirm the hours of care you received for each child for the week. If you did not receive care, please enter 0.',
-        es: 'Confirme las horas de cuidado que recibió para cada niño para la semana. Si no recibió cuidado, ingrese 0.',
+        en: 'Please confirm the number of half days and full days of care you received for each child. If you did not receive care, please enter 0.',
+        es: 'Confirme el número de media horas y días completos de cuidado que recibió para cada niño. Si no recibió cuidado, ingrese 0.',
       },
     },
   },
@@ -1040,7 +1040,7 @@ export const translations = {
     attendance: {
       ...attendance,
       description: {
-        en: 'Please confirm the hours of care you provided for each child for the week. If you did not provide care, please enter 0.',
+        en: 'Please confirm the number of half days and full days of care you provided for each child. If you did not provide care, please enter 0.',
         es: 'Confirme las horas de cuidado que proporcionó para cada niño para la semana. Si no proporcionó cuidado, ingrese 0.',
       },
     },
@@ -1217,9 +1217,13 @@ export const translations = {
       },
     },
     attendanceInput: {
-      inputPlaceholder: {
-        en: 'Total Hours of Care',
-        es: 'Horas de Cuidado Totales',
+      fullDayInputPlaceholder: {
+        en: 'Full Days',
+        es: 'Días Completos',
+      },
+      halfDayInputPlaceholder: {
+        en: 'Half Days',
+        es: 'Media Horas',
       },
       required: {
         en: 'This field is required',
