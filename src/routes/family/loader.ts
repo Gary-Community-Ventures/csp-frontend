@@ -16,12 +16,36 @@ export async function loadFamilyData({
   abortController: AbortController
   params: { childId?: string }
 }) {
-  let urlPath = '/family'
-  if (params.childId !== undefined) {
-    urlPath += `/${params.childId}`
-  }
-
   try {
+    // First, fetch family data without childId to get the list of children
+    const familyCheckRes = await fetch(backendUrl('/family'), {
+      headers: await headersWithAuth(context),
+      signal: abortController.signal,
+    })
+
+    handleStatusCodes(context, familyCheckRes)
+    const familyCheckData = (await familyCheckRes.json()) as Family
+
+    // If a childId is provided, validate it exists
+    if (params.childId !== undefined) {
+      const childExists = familyCheckData.children.some(
+        (child) => child.id === params.childId
+      )
+      if (!childExists) {
+        // Redirect to default child ID if the specified child doesn't exist
+        throw redirect({
+          to: '/family/$childId/home',
+          params: { childId: familyCheckData.selected_child_info.id },
+        })
+      }
+    }
+
+    // Now fetch the family data with the validated childId (or without if not provided)
+    let urlPath = '/family'
+    if (params.childId !== undefined) {
+      urlPath += `/${params.childId}`
+    }
+
     // Load family data and payment history in parallel
     const [familyRes, paymentHistory] = await Promise.all([
       fetch(backendUrl(urlPath), {
