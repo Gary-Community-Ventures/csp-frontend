@@ -11,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import type { ReactNode } from 'react'
 
 type PayButtonProps = {
   provider: Provider
@@ -18,57 +19,73 @@ type PayButtonProps = {
 
 function PayButton({ provider }: PayButtonProps) {
   const t = translations.family.providerList
-
   const { selectedChildInfo, canMakePayments } = useFamilyContext()
 
-  if (provider.status === 'pending' || provider.status === 'denied') {
-    return (
-      <Popover>
-        <PopoverTrigger asChild>
-          <Badge variant="destructive" className="cursor-help">
-            <Text text={provider.status === 'pending' ? t.pending : t.denied} />
-          </Badge>
-        </PopoverTrigger>
-        <PopoverContent className="max-w-xs w-auto p-3 text-sm text-center">
-          <Text text={t.disabledReasons.providerNotActive} />
-        </PopoverContent>
-      </Popover>
-    )
-  }
+  // Determine button state and disabled reason
+  let buttonContent: ReactNode
+  let disabledReason:
+    | (typeof t.disabledReasons)[keyof typeof t.disabledReasons]
+    | null = null
+  let isDisabled = false
 
-  if (!provider.isPaymentEnabled || !selectedChildInfo.isPaymentEnabled) {
-    const disabledReason = !selectedChildInfo.isPaymentEnabled
+  if (provider.status === 'pending' || provider.status === 'denied') {
+    // Provider not active - show badge
+    buttonContent = (
+      <Badge variant="destructive" className="cursor-help">
+        <Text text={provider.status === 'pending' ? t.pending : t.denied} />
+      </Badge>
+    )
+    disabledReason = t.disabledReasons.providerNotActive
+    isDisabled = true
+  } else if (
+    !provider.isPaymentEnabled ||
+    !selectedChildInfo.isPaymentEnabled
+  ) {
+    // Payments not enabled - show secondary badge
+    buttonContent = (
+      <Badge variant="secondary" className="cursor-help">
+        <Text text={t.paymentsDisabled} />
+      </Badge>
+    )
+    disabledReason = !selectedChildInfo.isPaymentEnabled
       ? t.disabledReasons.userPaymentDisabled
       : t.disabledReasons.providerPaymentDisabled
-
-    return (
-      <Popover>
-        <PopoverTrigger asChild>
-          <Badge variant="secondary" className="cursor-help">
-            <Text text={t.paymentsDisabled} />
-          </Badge>
-        </PopoverTrigger>
-        <PopoverContent className="max-w-xs w-auto p-3 text-sm text-center">
-          <Text text={disabledReason} />
-        </PopoverContent>
-      </Popover>
+    isDisabled = true
+  } else if (!provider.isPayable || !canMakePayments) {
+    // Cannot make payment - show disabled button
+    buttonContent = (
+      <div className="inline-block">
+        <Button disabled className="pointer-events-none">
+          <Text text={t.payProvider} />
+        </Button>
+      </div>
     )
-  }
-
-  if (!provider.isPayable || !canMakePayments) {
-    const disabledReason = !canMakePayments
+    disabledReason = !canMakePayments
       ? t.disabledReasons.accountIssue
       : t.disabledReasons.providerNotConfigured
+    isDisabled = true
+  } else {
+    // Can make payment - show active button
+    buttonContent = (
+      <Button asChild>
+        <Link
+          to="/family/$childId/payment/$providerId"
+          params={{
+            childId: selectedChildInfo.id,
+            providerId: provider.id,
+          }}
+        >
+          <Text text={t.payProvider} />
+        </Link>
+      </Button>
+    )
+  }
 
+  // Render with popover if disabled
+  if (isDisabled && disabledReason) {
     return (
       <Popover>
-        <PopoverTrigger asChild>
-          <div className="inline-block">
-            <Button disabled className="pointer-events-none">
-              <Text text={t.payProvider} />
-            </Button>
-          </div>
-        </PopoverTrigger>
+        <PopoverTrigger asChild>{buttonContent}</PopoverTrigger>
         <PopoverContent className="max-w-xs w-auto p-3 text-sm text-center">
           <Text text={disabledReason} />
         </PopoverContent>
@@ -76,19 +93,7 @@ function PayButton({ provider }: PayButtonProps) {
     )
   }
 
-  return (
-    <Button asChild>
-      <Link
-        to="/family/$childId/payment/$providerId"
-        params={{
-          childId: selectedChildInfo.id,
-          providerId: provider.id,
-        }}
-      >
-        <Text text={t.payProvider} />
-      </Link>
-    </Button>
-  )
+  return <>{buttonContent}</>
 }
 
 type ProviderListProps = {

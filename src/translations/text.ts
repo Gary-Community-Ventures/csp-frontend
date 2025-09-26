@@ -430,16 +430,16 @@ export const translations = {
       },
       disabledReasons: {
         accountIssue: {
-          en: `There is an issue with your account. Please contact ${SUPPORT_EMAIL}.`,
-          es: `Hay un problema con tu cuenta. Por favor contacta a ${SUPPORT_EMAIL}.`,
+          en: `There is an issue with your account making payments. Please contact ${SUPPORT_EMAIL}.`,
+          es: `Hay un problema con su cuenta para realizar pagos. Por favor contacte a ${SUPPORT_EMAIL}.`,
         },
         providerNotConfigured: {
-          en: 'This provider has not yet configured their payment settings.',
-          es: 'Este proveedor aún no ha configurado sus ajustes de pago.',
+          en: 'This provider has not yet configured their payment method.',
+          es: 'Este proveedor aún no ha configurado su método de pago.',
         },
         userPaymentDisabled: {
-          en: `Your account does not have the payment feature enabled currently. Please contact ${SUPPORT_EMAIL} if this seems like a mistake.`,
-          es: `Tu cuenta no tiene habilitada la función de pago actualmente. Por favor contacta a ${SUPPORT_EMAIL} si esto parece ser un error.`,
+          en: `Your account does not currently have the payment feature enabled. Please contact ${SUPPORT_EMAIL} if this is a mistake.`,
+          es: `Tu cuenta actualmente no tiene habilitada la función de pago. Por favor contacte a ${SUPPORT_EMAIL} si esto es un error.`,
         },
         providerPaymentDisabled: {
           en: `Payments have not yet been enabled for this provider. If this seems incorrect, please contact ${SUPPORT_EMAIL}.`,
