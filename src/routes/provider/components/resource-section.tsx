@@ -50,14 +50,14 @@ export function ResourceSection({
 
   // Checkbox classes
   const checkboxClassName = `
-    transition-all duration-200 w-5 h-5 sm:w-6 sm:h-6
-    ${isReadOnly ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:scale-110'}
+    opacity-100 disabled:!opacity-100 transition-all duration-200 w-5 h-5 sm:w-6 sm:h-6
+    ${isReadOnly ? 'cursor-not-allowed ' : 'cursor-pointer hover:scale-110'}
     ${isCompleted ? 'data-[state=checked]:bg-primary data-[state=checked]:border-primary' : ''}
   `.trim()
 
   const checkboxWrapperClassName = `
     p-2 rounded-lg transition-all duration-200
-    ${!isReadOnly && !isCompleted ? 'bg-tertiary-background/50 border-2 border-tertiary-background' : ''}
+    ${!isReadOnly && !isCompleted ? 'bg-tertiary-background border-2 border-tertiary-background' : ''}
     ${isReadOnly && !isCompleted ? 'hover:bg-gray-50' : ''}
   `.trim()
 
@@ -76,7 +76,7 @@ export function ResourceSection({
           <div className="flex flex-col items-center relative">
             {isReadOnly ? (
               // Read-only checkbox with tooltip
-              <Popover.Root open={showTooltip}>
+              <Popover.Root open={showTooltip && !isCompleted}>
                 <Popover.Trigger asChild>
                   <div
                     className={checkboxWrapperClassName}
@@ -131,7 +131,7 @@ export function ResourceSection({
             onClick={toggleCollapse}
           >
             <button
-              className="flex items-center justify-center p-1 hover:bg-gray-100 rounded transition-colors"
+              className="flex items-center justify-center p-1 hover:bg-gray-100 rounded transition-colors cursor-pointer"
               aria-label={isCollapsed ? 'Expand section' : 'Collapse section'}
             >
               {isCollapsed ? (
