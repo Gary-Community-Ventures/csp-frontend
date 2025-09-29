@@ -204,7 +204,8 @@ export function ResourcesPage() {
             isCompleted={completedSections.includes(
               'child_safety_module_training_completed_at'
             )}
-            onToggleCompletion={handleToggleCompletion}
+            onToggleCompletion={() => {}}
+            isReadOnly
           >
             <p>
               <strong>{text(t.section2.estimatedTime)}</strong>
@@ -251,7 +252,8 @@ export function ResourcesPage() {
             isCompleted={completedSections.includes(
               'safe_sleep_for_infants_training_completed_at'
             )}
-            onToggleCompletion={handleToggleCompletion}
+            onToggleCompletion={() => {}}
+            isReadOnly
           >
             <p>
               <strong>{text(t.section3.estimatedTime)}</strong>
@@ -298,7 +300,8 @@ export function ResourcesPage() {
             isCompleted={completedSections.includes(
               'home_safety_and_injury_prevention_training_completed_at'
             )}
-            onToggleCompletion={handleToggleCompletion}
+            onToggleCompletion={() => {}}
+            isReadOnly
           >
             <p>
               <strong>{text(t.section4.estimatedTime)}</strong>
