@@ -53,7 +53,7 @@ function PayButton({ provider }: PayButtonProps) {
     // Cannot make payment - show disabled button
     buttonContent = (
       <div className="inline-block">
-        <Button disabled className="pointer-events-none">
+        <Button disabled>
           <Text text={t.payProvider} />
         </Button>
       </div>
@@ -80,6 +80,13 @@ function PayButton({ provider }: PayButtonProps) {
 
   // Render with popover if disabled
   if (disabledReason) {
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        setIsOpen(!isOpen)
+      }
+    }
+
     return (
       <HoverCard
         open={isOpen}
@@ -88,7 +95,15 @@ function PayButton({ provider }: PayButtonProps) {
         closeDelay={100}
       >
         <HoverCardTrigger asChild>
-          <div onClick={() => setIsOpen(!isOpen)}>{buttonContent}</div>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => setIsOpen(!isOpen)}
+            onKeyDown={handleKeyDown}
+            className="inline-block"
+          >
+            {buttonContent}
+          </div>
         </HoverCardTrigger>
         <HoverCardContent className="max-w-xs w-auto p-3 text-sm text-center">
           <Text text={disabledReason} />
