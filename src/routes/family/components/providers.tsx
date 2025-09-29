@@ -40,11 +40,6 @@ function PayButton({ provider }: PayButtonProps) {
     !selectedChildInfo.isPaymentEnabled
   ) {
     // Payments not enabled - show secondary badge
-  } else if (
-    !provider.isPaymentEnabled ||
-    !selectedChildInfo.isPaymentEnabled
-  ) {
-    // Payments not enabled - show secondary badge
     buttonContent = (
       <Badge variant="secondary" className="cursor-help">
         <Text text={t.paymentsDisabled} />
