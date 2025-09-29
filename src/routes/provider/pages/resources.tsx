@@ -1,20 +1,11 @@
 import { Header } from '@/components/header'
-import {
-  getProviderTrainings,
-  updateProviderTrainings,
-} from '@/lib/api/providerTrainings'
-import { handleStatusCodes } from '@/lib/api/client'
-import {
-  ProviderTrainingResponseSchema,
-  ProviderTrainingUpdateRequestSchema,
-} from '@/lib/schemas'
+import { getProviderTrainings } from '@/lib/api/providerTrainings'
+import { ProviderTrainingResponseSchema } from '@/lib/schemas'
 import { translations } from '@/translations/text'
 import { useText, Text } from '@/translations/wrapper'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { useMemo } from 'react'
-import { toast } from 'sonner'
-import { z } from 'zod'
 import { ResourceSection } from '../components/resource-section'
 import { useProviderContext } from '../wrapper'
 import { ExternalLink } from '@/components/external-link'
@@ -34,7 +25,6 @@ export function ResourceLink({ href, children }: ResourceLinkProps) {
 
 export function ResourcesPage() {
   const context = useRouter().options.context
-  const queryClient = useQueryClient()
   const { providerInfo } = useProviderContext()
   const text = useText()
   const t = translations.provider.resources
@@ -49,22 +39,6 @@ export function ResourcesPage() {
     enabled: providerInfo.type !== 'center', // Only fetch if not a center
   })
 
-  // Update training mutation
-  const { mutate: updateTraining } = useMutation({
-    mutationFn: async (
-      variables: z.infer<typeof ProviderTrainingUpdateRequestSchema>
-    ) => {
-      const res = await updateProviderTrainings(context, variables)
-      handleStatusCodes(context, res)
-      const data = await res.json()
-      return ProviderTrainingResponseSchema.parse(data)
-    },
-    onSuccess: (data) => {
-      queryClient.setQueryData(['providerTrainings'], data)
-      toast.success(text(t.toastSuccess))
-    },
-  })
-
   // Calculate completed sections
   const completedSections = useMemo(() => {
     if (!trainingData) return []
@@ -72,16 +46,6 @@ export function ResourcesPage() {
       .filter(([, value]) => value !== null)
       .map(([key]) => key)
   }, [trainingData])
-
-  const handleToggleCompletion = (
-    sectionId: keyof z.infer<typeof ProviderTrainingResponseSchema>
-  ) => {
-    const isCompleted = completedSections.includes(sectionId)
-    // Only update if it's a valid update field (exclude cpr_online_training_completed_at)
-    if (sectionId !== 'cpr_online_training_completed_at') {
-      updateTraining({ [sectionId]: !isCompleted })
-    }
-  }
 
   // Only show resources page for FFN (Family, Friend, Neighbor) and LHB (Licensed Home-Based) providers
   if (providerInfo.type === 'center') {

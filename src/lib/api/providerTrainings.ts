@@ -2,7 +2,6 @@ import type { RouterContext } from '@/routes/router'
 import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 import type { z } from 'zod'
 import type {
-  ProviderTrainingUpdateRequestSchema,
   ProviderTrainingResponseSchema,
 } from '../schemas'
 
@@ -21,16 +20,4 @@ export async function getProviderTrainings(
   }
 
   return response.json()
-}
-
-export async function updateProviderTrainings(
-  context: RouterContext,
-  data: z.infer<typeof ProviderTrainingUpdateRequestSchema>
-) {
-  const res = await fetch(backendUrl('/provider/trainings'), {
-    method: 'PATCH',
-    headers: await headersWithAuth(context),
-    body: JSON.stringify(data),
-  })
-  return res
 }

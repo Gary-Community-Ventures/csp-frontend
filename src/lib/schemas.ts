@@ -161,11 +161,3 @@ export const ProviderTrainingResponseSchema = z.object({
     .datetime()
     .nullable(),
 })
-
-export const ProviderTrainingUpdateRequestSchema = z.object({
-  child_safety_module_training_completed_at: z.boolean().optional(),
-  safe_sleep_for_infants_training_completed_at: z.boolean().optional(),
-  home_safety_and_injury_prevention_training_completed_at: z
-    .boolean()
-    .optional(),
-})
