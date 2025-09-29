@@ -7,11 +7,11 @@ import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { WhiteCard } from '@/components/white-card'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import type { ReactNode } from 'react'
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card'
+import { useState, type ReactNode } from 'react'
 
 type PayButtonProps = {
   provider: Provider
@@ -20,6 +20,7 @@ type PayButtonProps = {
 function PayButton({ provider }: PayButtonProps) {
   const t = translations.family.providerList
   const { selectedChildInfo, canMakePayments } = useFamilyContext()
+  const [isOpen, setIsOpen] = useState(false)
 
   // Determine button state and disabled reason
   let buttonContent: ReactNode
@@ -80,12 +81,19 @@ function PayButton({ provider }: PayButtonProps) {
   // Render with popover if disabled
   if (disabledReason) {
     return (
-      <Popover>
-        <PopoverTrigger asChild>{buttonContent}</PopoverTrigger>
-        <PopoverContent className="max-w-xs w-auto p-3 text-sm text-center">
+      <HoverCard
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        openDelay={100}
+        closeDelay={100}
+      >
+        <HoverCardTrigger asChild>
+          <div onClick={() => setIsOpen(!isOpen)}>{buttonContent}</div>
+        </HoverCardTrigger>
+        <HoverCardContent className="max-w-xs w-auto p-3 text-sm text-center">
           <Text text={disabledReason} />
-        </PopoverContent>
-      </Popover>
+        </HoverCardContent>
+      </HoverCard>
     )
   }
 
