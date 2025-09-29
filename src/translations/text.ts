@@ -120,7 +120,7 @@ const notificationBanner = {
     es: 'Solicitud pendiente de aprobación',
   },
   attendance: {
-    en: 'Submit your care hours for last week',
+    en: 'Submit your care days for last week',
     es: 'Envía tus horas de cuidado para la última semana',
   },
 } as const
