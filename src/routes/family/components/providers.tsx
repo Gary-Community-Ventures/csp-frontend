@@ -26,7 +26,6 @@ function PayButton({ provider }: PayButtonProps) {
   let disabledReason:
     | (typeof t.disabledReasons)[keyof typeof t.disabledReasons]
     | null = null
-  let isDisabled = false
 
   if (provider.status === 'pending' || provider.status === 'denied') {
     // Provider not active - show badge
@@ -36,7 +35,11 @@ function PayButton({ provider }: PayButtonProps) {
       </Badge>
     )
     disabledReason = t.disabledReasons.providerNotActive
-    isDisabled = true
+  } else if (
+    !provider.isPaymentEnabled ||
+    !selectedChildInfo.isPaymentEnabled
+  ) {
+    // Payments not enabled - show secondary badge
   } else if (
     !provider.isPaymentEnabled ||
     !selectedChildInfo.isPaymentEnabled
@@ -48,9 +51,8 @@ function PayButton({ provider }: PayButtonProps) {
       </Badge>
     )
     disabledReason = !selectedChildInfo.isPaymentEnabled
-      ? t.disabledReasons.userPaymentDisabled
+      ? t.disabledReasons.childPaymentDisabled
       : t.disabledReasons.providerPaymentDisabled
-    isDisabled = true
   } else if (!provider.isPayable || !canMakePayments) {
     // Cannot make payment - show disabled button
     buttonContent = (
@@ -63,7 +65,6 @@ function PayButton({ provider }: PayButtonProps) {
     disabledReason = !canMakePayments
       ? t.disabledReasons.accountIssue
       : t.disabledReasons.providerNotConfigured
-    isDisabled = true
   } else {
     // Can make payment - show active button
     buttonContent = (
@@ -82,7 +83,7 @@ function PayButton({ provider }: PayButtonProps) {
   }
 
   // Render with popover if disabled
-  if (isDisabled && disabledReason) {
+  if (disabledReason) {
     return (
       <Popover>
         <PopoverTrigger asChild>{buttonContent}</PopoverTrigger>

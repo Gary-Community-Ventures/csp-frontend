@@ -437,9 +437,9 @@ export const translations = {
           en: 'This provider has not yet configured their payment method.',
           es: 'Este proveedor aún no ha configurado su método de pago.',
         },
-        userPaymentDisabled: {
-          en: `Your account does not currently have the payment feature enabled. Please contact ${SUPPORT_EMAIL} if this is a mistake.`,
-          es: `Tu cuenta actualmente no tiene habilitada la función de pago. Por favor contacte a ${SUPPORT_EMAIL} si esto es un error.`,
+        childPaymentDisabled: {
+          en: `This child on your account does not currently have the payment feature enabled. Please contact ${SUPPORT_EMAIL} if this is a mistake.`,
+          es: `Este niño en tu cuenta actualmente no tiene habilitada la función de pago. Por favor contacte a ${SUPPORT_EMAIL} si esto es un error.`,
         },
         providerPaymentDisabled: {
           en: `Payments have not yet been enabled for this provider. If this seems incorrect, please contact ${SUPPORT_EMAIL}.`,
