@@ -1,9 +1,7 @@
 import type { RouterContext } from '@/routes/router'
 import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 import type { z } from 'zod'
-import type {
-  ProviderTrainingResponseSchema,
-} from '../schemas'
+import type { ProviderTrainingResponseSchema } from '../schemas'
 
 export async function getProviderTrainings(
   context: RouterContext
