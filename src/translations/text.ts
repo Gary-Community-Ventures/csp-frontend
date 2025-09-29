@@ -1139,8 +1139,8 @@ export const translations = {
       },
       noProvidersAddProvider: {
         part1: {
-          en: 'To get started, add your childcare center or invite a new caregiver. You can search for providers at ',
-          es: 'Para comenzar, agrega tu centro de cuidado infantil o invita a un nuevo cuidador. Puedes buscar proveedores en ',
+          en: 'To get started, add your childcare center or invite a new caregiver. If you are looking for a new provider, you can find licensed childcare centers or homes on ',
+          es: 'Para comenzar, agrega tu centro de cuidado infantil o invita a un nuevo cuidador. Si estás buscando un nuevo proveedor, puedes encontrar centros de cuidado infantil autorizados u hogares en ',
         },
         coloradoShinesText: {
           en: 'Colorado Shines',
