@@ -1171,8 +1171,8 @@ export const translations = {
         es: 'Invitación Enviada',
       },
       successMessage: {
-        en: "An invitation has been sent to the following email and phone number. Your provider's next step is to complete a CAP application.",
-        es: 'Se ha enviado una invitación al siguiente correo electrónico y número de teléfono. El siguiente paso de su proveedor es completar una solicitud de CAP.',
+        en: 'An invitation has been sent to the following email and phone number.',
+        es: 'Se ha enviado una invitación al siguiente correo electrónico y número de teléfono.',
       },
       emailLabel: {
         en: 'Email:',
@@ -1185,6 +1185,10 @@ export const translations = {
       backButton: {
         en: 'Back to Providers',
         es: 'Volver a Proveedores',
+      },
+      inviteeNextStep: {
+        en: "Your invitee's next step is to complete a CAP application.",
+        es: 'El siguiente paso de su invitado es completar una solicitud de CAP.',
       },
     },
     paymentHistory: {

@@ -43,6 +43,9 @@ export function InviteConfirmation({
             {phone}
           </p>
         )}
+        <p className="mt-3">
+          <Text text={t.inviteeNextStep} />
+        </p>
       </WhiteCard>
       <Button className="w-full mt-10" asChild>
         <Link {...backLinkProps}>
