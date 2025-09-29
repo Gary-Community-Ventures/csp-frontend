@@ -43,7 +43,7 @@ export function InviteConfirmation({
             {phone}
           </p>
         )}
-        <p className="mt-3">
+        <p className="mt-10">
           <Text text={t.inviteeNextStep} />
         </p>
       </WhiteCard>
