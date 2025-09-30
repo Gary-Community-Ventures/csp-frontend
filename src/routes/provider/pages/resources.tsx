@@ -103,7 +103,7 @@ export function ResourcesPage() {
   return (
     <div className="mx-auto mb-5 max-w-4xl p-3 sm:p-5">
       {/* Page Header */}
-      <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-4xl">
+      <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-3xl">
         {text(t.pageTitle)}
       </Header>
 
@@ -120,14 +120,11 @@ export function ResourcesPage() {
         <div className="space-y-6">
           {/* CPR Section */}
           <div className="mt-6 sm:mt-8">
-            <Header className="mb-4 text-lg sm:text-3xl">
+            <Header className="mb-4 text-xl sm:text-2xl">
               {text(t.redCrossTitle)}
             </Header>
-            <p className="text-sm sm:text-base">
-              {text(t.redCrossDescription)}
-            </p>
           </div>
-          {/* Section 1: CPR Training */}
+          {/* CPR Training */}
           <ResourceSection
             title={text(t.section1.title)}
             sectionId="cpr_online_training_completed_at"
@@ -200,17 +197,17 @@ export function ResourcesPage() {
 
           {/* PDIS Section */}
           <div className="mt-6 sm:mt-8">
-            <Header className="mb-4 text-lg sm:text-3xl">
+            <Header className="mb-4 text-xl sm:text-2xl">
               {text(t.pdisTrainingTitle)}
             </Header>
             <p className="text-sm sm:text-base">
               {text(t.pdisTrainingDescription)}
             </p>
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 mt-2 sm:mt-4">
-              <p className="font-bold mb-3 text-blue-900">
+            <div className="bg-[#B8C9BE]/20 border border-primary/20 rounded-lg p-4 mb-6 mt-2 sm:mt-4">
+              <p className="font-bold mb-3 text-black">
                 {text(t.pdisSection.instructions.title)}
               </p>
-              <div className="whitespace-pre-line text-sm text-blue-800">
+              <div className="whitespace-pre-line text-sm text-black">
                 {text(t.pdisSection.instructions.steps)}
               </div>
             </div>

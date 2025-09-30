@@ -747,8 +747,8 @@ export const translations = {
         es: 'https://docs.google.com/document/d/1RVW3gSiCPRFQeekaKGGpEh1TXJzCvZi3R82Nu3y-bgk/edit?tab=t.0',
       },
       pageTitle: {
-        en: 'Childcare Affordability Pilot (CAP) Training Module',
-        es: 'Módulo de Capacitación del Programa Piloto de Asequibilidad de Cuidado Infantil (CAP)',
+        en: 'Provider Onboarding',
+        es: 'Incorporación de Proveedores',
       },
       welcome: {
         en: "Welcome to the Childcare Affordability Pilot (CAP)! We're thrilled to have you join us. This small invite-only test is all about supporting you as you provide vital care to children in Colorado.",
@@ -769,10 +769,6 @@ export const translations = {
       redCrossTitle: {
         en: 'American Red Cross Training',
         es: 'Capacitación de la Cruz Roja Americana',
-      },
-      redCrossDescription: {
-        en: 'The American Red Cross is a trusted leader in health and safety training. The courses below are designed to equip you with essential skills for responding to emergencies and ensuring child safety.',
-        es: 'La Cruz Roja Americana es un líder confiable en capacitación en salud y seguridad. Los cursos a continuación están diseñados para equiparlo con habilidades esenciales para responder a emergencias y garantizar la seguridad infantil.',
       },
       pdisTrainingTitle: {
         en: 'Colorado Professional Development Information System (PDIS) Training',
@@ -800,8 +796,8 @@ export const translations = {
       },
       section1: {
         title: {
-          en: 'Section 1: Adult, Child, and Baby First Aid/CPR/AED Online',
-          es: 'Sección 1: Primeros auxilios/RCP (reanimación cardiopulmonar) /DEA (Desfibrilador externo automático) en línea para adultos, niños y bebés',
+          en: 'Adult, Child, and Baby First Aid/CPR/AED Online',
+          es: 'Primeros auxilios/RCP (reanimación cardiopulmonar) /DEA (Desfibrilador externo automático) en línea para adultos, niños y bebés',
         },
         estimatedTime: {
           en: 'Estimated Time: Approximately 3 hours, 50 minutes',
