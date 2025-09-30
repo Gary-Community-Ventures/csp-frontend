@@ -140,7 +140,10 @@ export function ResourceSection({
                 <ChevronDown className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
               )}
             </button>
-            <Header Tag="h3" className="flex-1 my-0 text-base sm:text-2xl text-primary">
+            <Header
+              Tag="h3"
+              className="flex-1 my-0 text-base sm:text-2xl text-primary"
+            >
               {title}
             </Header>
             {isCompleted && (
