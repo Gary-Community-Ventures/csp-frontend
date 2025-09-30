@@ -224,14 +224,14 @@ export function ResourcesPage() {
               <ResourceSection
                 key={course.key}
                 title={`${text(t.pdisSection.course)} ${index + 1}: ${text(courseTranslations.title)}`}
-                sectionId={course.fieldName as any}
+                sectionId={course.fieldName}
                 isCompleted={completedSections.includes(course.fieldName)}
                 onToggleCompletion={() => {}}
                 isReadOnly
               >
                 <div className="space-y-4">
                   <p className="text-sm sm:text-base">
-                    {text(t.pdisSection.courseInstructions.clickHere)}
+                    {text(t.pdisSection.courseInstructions.clickHere)}<br />
                   </p>
 
                   <div className="pl-4">
