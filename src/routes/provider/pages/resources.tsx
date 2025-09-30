@@ -47,8 +47,8 @@ export function ResourcesPage() {
       .map(([key]) => key)
   }, [trainingData])
 
-  // Only show resources page for FFN (Family, Friend, Neighbor) and LHB (Licensed Home-Based) providers
-  if (providerInfo.type === 'center') {
+  // Only show resources page for FFN (Family, Friend, Neighbor)
+  if (providerInfo.type !== 'ffn') {
     return (
       <div className="mx-auto mb-5 max-w-4xl p-3 sm:p-5">
         <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-4xl">
