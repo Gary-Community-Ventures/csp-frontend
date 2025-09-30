@@ -1026,6 +1026,7 @@ export const translations = {
         en: 'Training resources are not required for licensed childcare centers.',
         es: 'Los recursos de capacitación no son requeridos para los centros de cuidado infantil con licencia.',
       },
+      supportEmail: 'support@capcolorado.org',
       pdisSection: {
         title: {
           en: 'Section 2: Colorado Professional Development Information System (PDIS) Training',
@@ -1033,37 +1034,48 @@ export const translations = {
         },
         instructions: {
           title: {
-            en: 'Create your PDIS Account',
-            es: 'Crear su cuenta PDIS',
+            en: 'Steps for Completing PDIS Training:',
+            es: 'Pasos para completar la capacitación PDIS:',
           },
-          steps: {
-            en: `Navigate to the Colorado Professional Development Information System (PDIS) at https://www.coloradoshinespdis.com/s/pdislogin
-
-Click "Create Account"
-
-Fill in personal information to create account
-
-Log into PDIS
-
-Under the "Learning" banner click "Learning Search"
-
-Search for the courses below, and complete each.
-
-After all of the courses are completed, email us a screenshot of the completion screen or the certificate of completion for each at support@capcolorado.org`,
-            es: `Navegue al Sistema de Información de Desarrollo Profesional de Colorado (PDIS) en https://www.coloradoshinespdis.com/s/pdislogin
-
-Haga clic en "Crear una cuenta"
-
-Complete la información personal para crear una cuenta
-
-Iniciar sesión en PDIS
-
-Debajo del banner "Aprendizaje", haga clic en "Búsqueda de aprendizaje".
-
-Busque los cursos a continuación y complete cada uno.
-
-Una vez completados todos los cursos, envíenos por correo electrónico una captura de pantalla de la pantalla de finalización o el certificado de finalización de cada uno a support@capcolorado.org`,
+          pdisLink: {
+            text: {
+              en: 'Colorado Professional Development Information System (PDIS)',
+              es: 'Sistema de Información de Desarrollo Profesional de Colorado (PDIS)',
+            },
+            url: 'https://www.coloradoshinespdis.com/s/pdislogin',
           },
+          steps: [
+            {
+              en: 'Navigate to the',
+              es: 'Navegue al',
+              hasLink: true,
+            },
+            {
+              en: 'Click "Create Account"',
+              es: 'Haga clic en "Crear una cuenta"',
+            },
+            {
+              en: 'Fill in personal information to create account',
+              es: 'Complete la información personal para crear una cuenta',
+            },
+            {
+              en: 'Log into PDIS',
+              es: 'Iniciar sesión en PDIS',
+            },
+            {
+              en: 'Under the "Learning" banner click "Learning Search"',
+              es: 'Debajo del banner "Aprendizaje", haga clic en "Búsqueda de aprendizaje"',
+            },
+            {
+              en: 'Search for the courses below, and complete each',
+              es: 'Busque los cursos a continuación y complete cada uno',
+            },
+            {
+              en: 'After all of the courses are completed, email us a screenshot of the completion screen or the certificate of completion for each at',
+              es: 'Una vez completados todos los cursos, envíenos por correo electrónico una captura de pantalla de la pantalla de finalización o el certificado de finalización de cada uno a',
+              hasEmail: true,
+            },
+          ],
         },
         course: {
           en: 'Course',

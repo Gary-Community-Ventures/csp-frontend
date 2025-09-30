@@ -166,8 +166,8 @@ export function ResourcesPage() {
                   ) : (
                     <>
                       {text(t.section1.noCprLink)}{' '}
-                      <ResourceLink href="mailto:support@capcolorado.org">
-                        support@capcolorado.org
+                      <ResourceLink href={`mailto:${t.supportEmail}`}>
+                        {t.supportEmail}
                       </ResourceLink>
                     </>
                   )}
@@ -188,7 +188,9 @@ export function ResourcesPage() {
                 <li>
                   <strong>{text(t.section1.important)}</strong>{' '}
                   {text(t.section1.emailCopy)}{' '}
-                  <strong>support@capcolorado.org</strong>{' '}
+                  <ResourceLink href={`mailto:${t.supportEmail}`}>
+                    {t.supportEmail}
+                  </ResourceLink>{' '}
                   {text(t.section1.emailCopyReason)}
                 </li>
               </ul>
@@ -204,12 +206,36 @@ export function ResourcesPage() {
               {text(t.pdisTrainingDescription)}
             </p>
             <div className="bg-[#B8C9BE]/20 border border-primary/20 rounded-lg p-4 mb-6 mt-2 sm:mt-4">
-              <p className="font-bold mb-3 text-black">
+              <h3 className="font-bold mb-4 text-black text-base">
                 {text(t.pdisSection.instructions.title)}
-              </p>
-              <div className="whitespace-pre-line text-sm text-black">
-                {text(t.pdisSection.instructions.steps)}
-              </div>
+              </h3>
+              <ol className="text-sm text-black space-y-2 list-decimal list-inside">
+                {t.pdisSection.instructions.steps.map((step, index) => (
+                  <li key={index} className="leading-relaxed">
+                    <span className="ml-1">
+                      {text(step)}
+                      {'hasLink' in step && step.hasLink && (
+                        <>
+                          {' '}
+                          <ResourceLink
+                            href={t.pdisSection.instructions.pdisLink.url}
+                          >
+                            {text(t.pdisSection.instructions.pdisLink.text)}
+                          </ResourceLink>
+                        </>
+                      )}
+                      {'hasEmail' in step && step.hasEmail && (
+                        <>
+                          {' '}
+                          <ResourceLink href={`mailto:${t.supportEmail}`}>
+                            {t.supportEmail}
+                          </ResourceLink>
+                        </>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
 
@@ -246,9 +272,9 @@ export function ResourcesPage() {
                       <strong>
                         {text(t.pdisSection.courseInstructions.afterCompletion)}
                       </strong>{' '}
-                      <span className="font-semibold">
-                        support@capcolorado.org
-                      </span>
+                      <ResourceLink href={`mailto:${t.supportEmail}`}>
+                        {t.supportEmail}
+                      </ResourceLink>
                     </p>
                     {index === pdisCourses.length - 1 && (
                       <p className="text-sm text-amber-800 mt-2 italic">
