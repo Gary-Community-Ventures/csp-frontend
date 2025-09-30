@@ -151,21 +151,19 @@ export const ProviderTrainingResponseSchema = z.object({
   cpr_certified: z.boolean().nullable(),
   cpr_training_link: z.string().nullable(),
   cpr_online_training_completed_at: z.string().datetime().nullable(),
-  child_safety_module_training_completed_at: z.string().datetime().nullable(),
-  safe_sleep_for_infants_training_completed_at: z
+  pdis_first_aid_cpr_completed_at: z.string().datetime().nullable(),
+  pdis_standard_precautions_completed_at: z.string().datetime().nullable(),
+  pdis_preventing_child_abuse_completed_at: z.string().datetime().nullable(),
+  pdis_infant_safe_sleep_completed_at: z.string().datetime().nullable(),
+  pdis_emergency_preparedness_completed_at: z.string().datetime().nullable(),
+  pdis_injury_prevention_completed_at: z.string().datetime().nullable(),
+  pdis_preventing_shaken_baby_completed_at: z.string().datetime().nullable(),
+  pdis_recognizing_impact_of_bias_completed_at: z
     .string()
     .datetime()
     .nullable(),
-  home_safety_and_injury_prevention_training_completed_at: z
+  pdis_medication_administration_part_one_completed_at: z
     .string()
     .datetime()
     .nullable(),
-})
-
-export const ProviderTrainingUpdateRequestSchema = z.object({
-  child_safety_module_training_completed_at: z.boolean().optional(),
-  safe_sleep_for_infants_training_completed_at: z.boolean().optional(),
-  home_safety_and_injury_prevention_training_completed_at: z
-    .boolean()
-    .optional(),
 })

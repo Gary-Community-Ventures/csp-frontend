@@ -1,20 +1,11 @@
 import { Header } from '@/components/header'
-import {
-  getProviderTrainings,
-  updateProviderTrainings,
-} from '@/lib/api/providerTrainings'
-import { handleStatusCodes } from '@/lib/api/client'
-import {
-  ProviderTrainingResponseSchema,
-  ProviderTrainingUpdateRequestSchema,
-} from '@/lib/schemas'
+import { getProviderTrainings } from '@/lib/api/providerTrainings'
+import { ProviderTrainingResponseSchema } from '@/lib/schemas'
 import { translations } from '@/translations/text'
 import { useText, Text } from '@/translations/wrapper'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { useMemo } from 'react'
-import { toast } from 'sonner'
-import { z } from 'zod'
 import { ResourceSection } from '../components/resource-section'
 import { useProviderContext } from '../wrapper'
 import { ExternalLink } from '@/components/external-link'
@@ -32,9 +23,45 @@ export function ResourceLink({ href, children }: ResourceLinkProps) {
   )
 }
 
+// Define the PDIS courses with their field names and translation keys
+const pdisCourses = [
+  { key: 'pdis_first_aid_cpr', fieldName: 'pdis_first_aid_cpr_completed_at' },
+  {
+    key: 'pdis_standard_precautions',
+    fieldName: 'pdis_standard_precautions_completed_at',
+  },
+  {
+    key: 'pdis_preventing_child_abuse',
+    fieldName: 'pdis_preventing_child_abuse_completed_at',
+  },
+  {
+    key: 'pdis_infant_safe_sleep',
+    fieldName: 'pdis_infant_safe_sleep_completed_at',
+  },
+  {
+    key: 'pdis_emergency_preparedness',
+    fieldName: 'pdis_emergency_preparedness_completed_at',
+  },
+  {
+    key: 'pdis_injury_prevention',
+    fieldName: 'pdis_injury_prevention_completed_at',
+  },
+  {
+    key: 'pdis_preventing_shaken_baby',
+    fieldName: 'pdis_preventing_shaken_baby_completed_at',
+  },
+  {
+    key: 'pdis_recognizing_impact_of_bias',
+    fieldName: 'pdis_recognizing_impact_of_bias_completed_at',
+  },
+  {
+    key: 'pdis_medication_administration_part_one',
+    fieldName: 'pdis_medication_administration_part_one_completed_at',
+  },
+] as const
+
 export function ResourcesPage() {
   const context = useRouter().options.context
-  const queryClient = useQueryClient()
   const { providerInfo } = useProviderContext()
   const text = useText()
   const t = translations.provider.resources
@@ -49,22 +76,6 @@ export function ResourcesPage() {
     enabled: providerInfo.type !== 'center', // Only fetch if not a center
   })
 
-  // Update training mutation
-  const { mutate: updateTraining } = useMutation({
-    mutationFn: async (
-      variables: z.infer<typeof ProviderTrainingUpdateRequestSchema>
-    ) => {
-      const res = await updateProviderTrainings(context, variables)
-      handleStatusCodes(context, res)
-      const data = await res.json()
-      return ProviderTrainingResponseSchema.parse(data)
-    },
-    onSuccess: (data) => {
-      queryClient.setQueryData(['providerTrainings'], data)
-      toast.success(text(t.toastSuccess))
-    },
-  })
-
   // Calculate completed sections
   const completedSections = useMemo(() => {
     if (!trainingData) return []
@@ -73,18 +84,8 @@ export function ResourcesPage() {
       .map(([key]) => key)
   }, [trainingData])
 
-  const handleToggleCompletion = (
-    sectionId: keyof z.infer<typeof ProviderTrainingResponseSchema>
-  ) => {
-    const isCompleted = completedSections.includes(sectionId)
-    // Only update if it's a valid update field (exclude cpr_online_training_completed_at)
-    if (sectionId !== 'cpr_online_training_completed_at') {
-      updateTraining({ [sectionId]: !isCompleted })
-    }
-  }
-
-  // Only show resources page for FFN (Family, Friend, Neighbor) and LHB (Licensed Home-Based) providers
-  if (providerInfo.type === 'center') {
+  // Only show resources page for FFN (Family, Friend, Neighbor)
+  if (providerInfo.type !== 'ffn') {
     return (
       <div className="mx-auto mb-5 max-w-4xl p-3 sm:p-5">
         <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-4xl">
@@ -102,7 +103,7 @@ export function ResourcesPage() {
   return (
     <div className="mx-auto mb-5 max-w-4xl p-3 sm:p-5">
       {/* Page Header */}
-      <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-4xl">
+      <Header Tag="h1" className="mb-6 text-center text-2xl sm:text-3xl">
         {text(t.pageTitle)}
       </Header>
 
@@ -115,18 +116,15 @@ export function ResourcesPage() {
           {text(t.readCarefully)}
         </p>
 
-        {/* Training Overview */}
-        <div className="mt-6 sm:mt-8">
-          <Header className="mb-4 text-xl sm:text-3xl">
-            {text(t.trainingOverviewTitle)}
-          </Header>
-          <p className="text-sm sm:text-base">
-            {text(t.trainingOverviewDescription)}
-          </p>
-        </div>
-
         {/* Training Sections */}
         <div className="space-y-6">
+          {/* CPR Section */}
+          <div className="mt-6 sm:mt-8">
+            <Header className="mb-4 text-xl sm:text-2xl">
+              {text(t.redCrossTitle)}
+            </Header>
+          </div>
+          {/* CPR Training */}
           <ResourceSection
             title={text(t.section1.title)}
             sectionId="cpr_online_training_completed_at"
@@ -168,8 +166,8 @@ export function ResourcesPage() {
                   ) : (
                     <>
                       {text(t.section1.noCprLink)}{' '}
-                      <ResourceLink href="mailto:support@capcolorado.org">
-                        support@capcolorado.org
+                      <ResourceLink href={`mailto:${t.supportEmail}`}>
+                        {t.supportEmail}
                       </ResourceLink>
                     </>
                   )}
@@ -190,150 +188,104 @@ export function ResourcesPage() {
                 <li>
                   <strong>{text(t.section1.important)}</strong>{' '}
                   {text(t.section1.emailCopy)}{' '}
-                  <strong>support@capcolorado.org</strong>{' '}
+                  <ResourceLink href={`mailto:${t.supportEmail}`}>
+                    {t.supportEmail}
+                  </ResourceLink>{' '}
                   {text(t.section1.emailCopyReason)}
                 </li>
               </ul>
             </div>
           </ResourceSection>
 
-          {/* Section 2: Child Safety Module */}
-          <ResourceSection
-            title={text(t.section2.title)}
-            sectionId="child_safety_module_training_completed_at"
-            isCompleted={completedSections.includes(
-              'child_safety_module_training_completed_at'
-            )}
-            onToggleCompletion={handleToggleCompletion}
-          >
-            <p>
-              <strong>{text(t.section2.estimatedTime)}</strong>
+          {/* PDIS Section */}
+          <div className="mt-6 sm:mt-8">
+            <Header className="mb-4 text-xl sm:text-2xl">
+              {text(t.pdisTrainingTitle)}
+            </Header>
+            <p className="text-sm sm:text-base">
+              {text(t.pdisTrainingDescription)}
             </p>
-            <p>{text(t.section2.description)}</p>
-            <ul className="list-disc space-y-2 pl-6">
-              <li>
-                <ResourceLink href={text(t.section2.overviewUrl)}>
-                  {text(t.section2.overviewLinkText)}
-                </ResourceLink>
-                <ul className="mt-2 list-none">
-                  <li className="italic">
-                    {text(t.section2.clickInstruction)}
+            <div className="bg-[#B8C9BE]/20 border border-primary/20 rounded-lg p-4 mb-6 mt-2 sm:mt-4">
+              <h3 className="font-bold mb-4 text-black text-base">
+                {text(t.pdisSection.instructions.title)}
+              </h3>
+              <ol className="text-sm text-black space-y-2 list-decimal list-inside">
+                {t.pdisSection.instructions.steps.map((step, index) => (
+                  <li key={index} className="leading-relaxed">
+                    <span className="ml-1">
+                      {text(step)}
+                      {'hasLink' in step && step.hasLink && (
+                        <>
+                          {' '}
+                          <ResourceLink
+                            href={t.pdisSection.instructions.pdisLink.url}
+                          >
+                            {text(t.pdisSection.instructions.pdisLink.text)}
+                          </ResourceLink>
+                        </>
+                      )}
+                      {'hasEmail' in step && step.hasEmail && (
+                        <>
+                          {' '}
+                          <ResourceLink href={`mailto:${t.supportEmail}`}>
+                            {t.supportEmail}
+                          </ResourceLink>
+                        </>
+                      )}
+                    </span>
                   </li>
-                </ul>
-              </li>
-            </ul>
-            <div className="ml-6">
-              <p className="font-bold mb-2">{text(t.section2.topicsTitle)}</p>
-              <ul className="list-disc space-y-1 pl-6">
-                <li>
-                  <strong>{text(t.section2.abusiveHeadTrauma)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section2.childAbuse)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section2.childDevelopment)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section2.medicationAdmin)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section2.foodAllergies)}</strong>
-                </li>
-              </ul>
+                ))}
+              </ol>
             </div>
-          </ResourceSection>
+          </div>
 
-          {/* Section 3: Safe Sleep for Infants */}
-          <ResourceSection
-            title={text(t.section3.title)}
-            sectionId="safe_sleep_for_infants_training_completed_at"
-            isCompleted={completedSections.includes(
-              'safe_sleep_for_infants_training_completed_at'
-            )}
-            onToggleCompletion={handleToggleCompletion}
-          >
-            <p>
-              <strong>{text(t.section3.estimatedTime)}</strong>
-            </p>
-            <p>{text(t.section3.description)}</p>
-            <ul className="list-disc space-y-2 pl-6">
-              <li>
-                <strong>{text(t.section3.nihResources)}</strong>
-                <ul className="mt-2 list-none space-y-1">
-                  <li>
-                    <ResourceLink href={text(t.section3.nihUrl)}>
-                      {text(t.section3.nihLinkText)}
+          {/* Individual PDIS Course Sections */}
+          {pdisCourses.map((course, index) => {
+            const courseTranslations =
+              t.pdisSection.courses[
+                course.key as keyof typeof t.pdisSection.courses
+              ]
+
+            return (
+              <ResourceSection
+                key={course.key}
+                title={`${text(t.pdisSection.course)} ${index + 1}: ${text(courseTranslations.title)}`}
+                sectionId={course.fieldName}
+                isCompleted={completedSections.includes(course.fieldName)}
+                onToggleCompletion={() => {}}
+                isReadOnly
+              >
+                <div className="space-y-4">
+                  <p className="text-sm sm:text-base">
+                    {text(t.pdisSection.courseInstructions.clickHere)}
+                    <br />
+                  </p>
+
+                  <div className="pl-4">
+                    <ResourceLink href={text(courseTranslations.url)}>
+                      {text(t.pdisSection.courseInstructions.openCourse)}
                     </ResourceLink>
-                  </li>
-                  <li>
-                    <strong>{text(t.section3.estimatedTimeReading)}</strong>
-                    <ul className="list-disc space-y-1 pl-6 mt-2">
-                      <li>
-                        <strong>{text(t.section3.reducingRisk)}</strong>
-                      </li>
-                      <li>
-                        <strong>{text(t.section3.backSleeping)}</strong>
-                      </li>
-                      <li>
-                        <strong>{text(t.section3.environment)}</strong>
-                      </li>
-                      <li>
-                        <strong>{text(t.section3.tummyTime)}</strong>
-                      </li>
-                      <li>
-                        <strong>{text(t.section3.faq)}</strong>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </ResourceSection>
+                  </div>
 
-          {/* Section 4: Home Safety & Injury Prevention */}
-          <ResourceSection
-            title={text(t.section4.title)}
-            sectionId="home_safety_and_injury_prevention_training_completed_at"
-            isCompleted={completedSections.includes(
-              'home_safety_and_injury_prevention_training_completed_at'
-            )}
-            onToggleCompletion={handleToggleCompletion}
-          >
-            <p>
-              <strong>{text(t.section4.estimatedTime)}</strong>
-            </p>
-            <p>{text(t.section4.description)}</p>
-            <div className="ml-6">
-              <p className="font-bold mb-2">{text(t.section4.topicsTitle)}</p>
-              <ul className="list-disc space-y-2 pl-6">
-                <li>
-                  <ResourceLink href={text(t.section4.injuryPreventionUrl)}>
-                    {text(t.section4.injuryPrevention)}
-                  </ResourceLink>
-                  <strong>{text(t.section4.timeEstimate)}</strong>
-                </li>
-                <li>
-                  <ResourceLink href={text(t.section4.poisoningPreventionUrl)}>
-                    {text(t.section4.poisoningPrevention)}
-                  </ResourceLink>
-                  <strong>{text(t.section4.timeEstimate)}</strong>
-                </li>
-                <li>
-                  <ResourceLink href={text(t.section4.homeSafetyUrl)}>
-                    {text(t.section4.homeSafety)}
-                  </ResourceLink>
-                  <strong>{text(t.section4.timeEstimate)}</strong>
-                </li>
-                <li>
-                  <ResourceLink href={text(t.section4.healthTipsUrl)}>
-                    {text(t.section4.healthTips)}
-                  </ResourceLink>
-                  <strong>{text(t.section4.timeEstimate)}</strong>
-                </li>
-              </ul>
-            </div>
-          </ResourceSection>
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                    <p className="text-sm text-amber-900">
+                      <strong>
+                        {text(t.pdisSection.courseInstructions.afterCompletion)}
+                      </strong>{' '}
+                      <ResourceLink href={`mailto:${t.supportEmail}`}>
+                        {t.supportEmail}
+                      </ResourceLink>
+                    </p>
+                    {index === pdisCourses.length - 1 && (
+                      <p className="text-sm text-amber-800 mt-2 italic">
+                        {text(t.pdisSection.courseInstructions.reminder)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </ResourceSection>
+            )
+          })}
         </div>
       </div>
     </div>
