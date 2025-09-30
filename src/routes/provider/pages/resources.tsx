@@ -231,7 +231,8 @@ export function ResourcesPage() {
               >
                 <div className="space-y-4">
                   <p className="text-sm sm:text-base">
-                    {text(t.pdisSection.courseInstructions.clickHere)}<br />
+                    {text(t.pdisSection.courseInstructions.clickHere)}
+                    <br />
                   </p>
 
                   <div className="pl-4">
