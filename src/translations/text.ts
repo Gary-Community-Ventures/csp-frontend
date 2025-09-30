@@ -766,13 +766,21 @@ export const translations = {
         en: 'Please read these instructions carefully, especially about the CPR training, as it has a unique process.',
         es: 'Lea atentamente estas instrucciones, especialmente sobre el entrenamiento en RCP (reanimación cardiopulmonar), ya que es un proceso único.',
       },
-      trainingOverviewTitle: {
-        en: 'Your Training Overview',
-        es: 'Descripción general de su entrenamiento',
+      redCrossTitle: {
+        en: 'American Red Cross Training',
+        es: 'Capacitación de la Cruz Roja Americana',
       },
-      trainingOverviewDescription: {
-        en: "We've organized your training into four main sections. Please complete these in the order they are presented, as they build upon important knowledge for providing the best care.",
-        es: 'Hemos organizado su capacitación en cuatro secciones principales. Por favor, complételas en el orden en que se presentan, ya que se basan en conocimientos importantes para brindar la mejor atención.',
+      redCrossDescription: {
+        en: 'The American Red Cross is a trusted leader in health and safety training. The courses below are designed to equip you with essential skills for responding to emergencies and ensuring child safety.',
+        es: 'La Cruz Roja Americana es un líder confiable en capacitación en salud y seguridad. Los cursos a continuación están diseñados para equiparlo con habilidades esenciales para responder a emergencias y garantizar la seguridad infantil.',
+      },
+      pdisTrainingTitle: {
+        en: 'Colorado Professional Development Information System (PDIS) Training',
+        es: 'Sistema de Información de Desarrollo Profesional de Colorado (PDIS) Capacitación',
+      },
+      pdisTrainingDescription: {
+        en: 'The PDIS training courses are designed to help you meet the specific needs of the children in your care. Please complete these courses as outlined below.',
+        es: 'Los cursos de capacitación PDIS están diseñados para ayudarlo a satisfacer las necesidades específicas de los niños a su cuidado. Por favor, complete estos cursos según lo indicado a continuación.',
       },
       markAsComplete: {
         en: 'Mark as Complete',
@@ -1021,6 +1029,160 @@ export const translations = {
       centerNotRequired: {
         en: 'Training resources are not required for licensed childcare centers.',
         es: 'Los recursos de capacitación no son requeridos para los centros de cuidado infantil con licencia.',
+      },
+      pdisSection: {
+        title: {
+          en: 'Section 2: Colorado Professional Development Information System (PDIS) Training',
+          es: 'Sección 2: Capacitación del Sistema de Información de Desarrollo Profesional de Colorado (PDIS)',
+        },
+        instructions: {
+          title: {
+            en: 'Create your PDIS Account',
+            es: 'Crear su cuenta PDIS',
+          },
+          steps: {
+            en: `Navigate to the Colorado Professional Development Information System (PDIS) at https://www.coloradoshinespdis.com/s/pdislogin
+
+Click "Create Account"
+
+Fill in personal information to create account
+
+Log into PDIS
+
+Under the "Learning" banner click "Learning Search"
+
+Search for the courses below, and complete each.
+
+After all of the courses are completed, email us a screenshot of the completion screen or the certificate of completion for each at support@capcolorado.org`,
+            es: `Navegue al Sistema de Información de Desarrollo Profesional de Colorado (PDIS) en https://www.coloradoshinespdis.com/s/pdislogin
+
+Haga clic en "Crear una cuenta"
+
+Complete la información personal para crear una cuenta
+
+Iniciar sesión en PDIS
+
+Debajo del banner "Aprendizaje", haga clic en "Búsqueda de aprendizaje".
+
+Busque los cursos a continuación y complete cada uno.
+
+Una vez completados todos los cursos, envíenos por correo electrónico una captura de pantalla de la pantalla de finalización o el certificado de finalización de cada uno a support@capcolorado.org`,
+          },
+        },
+        course: {
+          en: 'Course',
+          es: 'Curso',
+        },
+        courseInstructions: {
+          clickHere: {
+            en: 'Click the link below to access this training course:',
+            es: 'Haga clic en el enlace a continuación para acceder a este curso de capacitación:',
+          },
+          openCourse: {
+            en: '→ Open training course',
+            es: '→ Abrir curso de capacitación',
+          },
+          afterCompletion: {
+            en: 'After completing this course, include a screenshot of your completion certificate for this course in an email to',
+            es: 'Después de completar este curso, incluya una captura de pantalla de su certificado de finalización para este curso en un correo electrónico a',
+          },
+          reminder: {
+            en: 'Remember: You must complete all 9 PDIS courses and send certificates for each one.',
+            es: 'Recuerde: Debe completar los 9 cursos de PDIS y enviar certificados de cada uno.',
+          },
+        },
+        courses: {
+          pdis_first_aid_cpr: {
+            title: {
+              en: 'Introduction to First Aid and CPR',
+              es: 'Introduccion a primeros auxilios y RCP',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/ad32bab8-604a-406b-a28f-5b9edd7b5bd3?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/207ae41f-a67d-415d-a1b2-f29cd4e32533?isOnePlayer=true',
+            },
+          },
+          pdis_standard_precautions: {
+            title: {
+              en: 'Standard Precautions, including Prevention and Control of Infectious Diseases and Immunizations',
+              es: 'Precauciones estándar, incluida la prevención y el control de enfermedades infecciosas e inmunizaciones (Standard Precautions)',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/47125426-cccb-4678-80f6-1a7258582060?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/55bc99d3-3bb7-4104-a369-a6a136fd6b64?isOnePlayer=true',
+            },
+          },
+          pdis_preventing_child_abuse: {
+            title: {
+              en: 'Preventing and Responding to Child Abuse and Neglect',
+              es: 'Prevención y respuesta al abuso y negligencia infantil',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/c2b04f3e-75c7-4a1c-961b-c3c4d7fe69cb?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/d2345d45-6cda-4c32-81ba-d80198b90248?isOnePlayer=true',
+            },
+          },
+          pdis_infant_safe_sleep: {
+            title: {
+              en: 'Infant Safe Sleep Practices',
+              es: 'Prácticas para el sueño seguro infantil',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/03df97a9-81ab-4f39-bf82-102a570213d0?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/7dda97f0-f41e-488f-a79d-9e6fe3d4f005?isOnePlayer=true',
+            },
+          },
+          pdis_emergency_preparedness: {
+            title: {
+              en: 'Emergency and Disaster Preparedness for Child Care Providers',
+              es: 'Preparación ante emergencias y catástrofes para proveedores de servicios de cuidado infantil',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/7629dcc0-2ca2-4887-98b5-291cdcf1a319?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/fb6213cb-dbbd-4d0d-b8af-ce356c8a5b46?isOnePlayer=true',
+            },
+          },
+          pdis_injury_prevention: {
+            title: {
+              en: 'Injury Prevention for Homes',
+              es: 'Prevención de lesiones en hogares de cuidado infantil familiar',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/1da88130-4a79-4be9-8a90-c55456e746f1?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/e0a3055d-b33f-440f-9f0a-1950864b3b5d?isOnePlayer=true',
+            },
+          },
+          pdis_preventing_shaken_baby: {
+            title: {
+              en: 'Preventing Shaken Baby Syndrome and Abusive Head Trauma',
+              es: 'Prevención del traumatismo craneoencefálico por maltrato o síndrome del bebé/niño sacudido',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/e1306a6d-362f-4ecd-a267-b50724613cc9?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/bb67bccc-fb3d-43bb-9d4f-91b45c74131f?isOnePlayer=true',
+            },
+          },
+          pdis_recognizing_impact_of_bias: {
+            title: {
+              en: 'Recognizing the Impact of Bias on Early Childhood Professionals',
+              es: 'Reconocer el impacto de la parcialidad en profesionales de la primera infancia',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/ee4e09ad-90b2-4f9d-915a-34dd1fefe73e?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/b5b429ba-6579-470b-b5a4-cc16a7f3df76?isOnePlayer=true',
+            },
+          },
+          pdis_medication_administration_part_one: {
+            title: {
+              en: 'Medication Administration Training, Part 1',
+              es: 'Capacitación en administración de medicamentos Parte I',
+            },
+            url: {
+              en: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/6e94e24a-b5a1-4eb4-87c8-cf7ee0748f8b?isOnePlayer=true',
+              es: 'https://coshinespdis.csod.com/ui/lms-learning-details/app/curriculum/66f551f4-7017-4b98-87a2-07b936e4bcd5?isOnePlayer=true',
+            },
+          },
+        },
       },
     },
     inviteFamilyPage: {

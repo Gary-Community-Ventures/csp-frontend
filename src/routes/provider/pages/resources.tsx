@@ -23,6 +23,43 @@ export function ResourceLink({ href, children }: ResourceLinkProps) {
   )
 }
 
+// Define the PDIS courses with their field names and translation keys
+const pdisCourses = [
+  { key: 'pdis_first_aid_cpr', fieldName: 'pdis_first_aid_cpr_completed_at' },
+  {
+    key: 'pdis_standard_precautions',
+    fieldName: 'pdis_standard_precautions_completed_at',
+  },
+  {
+    key: 'pdis_preventing_child_abuse',
+    fieldName: 'pdis_preventing_child_abuse_completed_at',
+  },
+  {
+    key: 'pdis_infant_safe_sleep',
+    fieldName: 'pdis_infant_safe_sleep_completed_at',
+  },
+  {
+    key: 'pdis_emergency_preparedness',
+    fieldName: 'pdis_emergency_preparedness_completed_at',
+  },
+  {
+    key: 'pdis_injury_prevention',
+    fieldName: 'pdis_injury_prevention_completed_at',
+  },
+  {
+    key: 'pdis_preventing_shaken_baby',
+    fieldName: 'pdis_preventing_shaken_baby_completed_at',
+  },
+  {
+    key: 'pdis_recognizing_impact_of_bias',
+    fieldName: 'pdis_recognizing_impact_of_bias_completed_at',
+  },
+  {
+    key: 'pdis_medication_administration_part_one',
+    fieldName: 'pdis_medication_administration_part_one_completed_at',
+  },
+] as const
+
 export function ResourcesPage() {
   const context = useRouter().options.context
   const { providerInfo } = useProviderContext()
@@ -79,18 +116,18 @@ export function ResourcesPage() {
           {text(t.readCarefully)}
         </p>
 
-        {/* Training Overview */}
-        <div className="mt-6 sm:mt-8">
-          <Header className="mb-4 text-xl sm:text-3xl">
-            {text(t.trainingOverviewTitle)}
-          </Header>
-          <p className="text-sm sm:text-base">
-            {text(t.trainingOverviewDescription)}
-          </p>
-        </div>
-
         {/* Training Sections */}
         <div className="space-y-6">
+          {/* CPR Section */}
+          <div className="mt-6 sm:mt-8">
+            <Header className="mb-4 text-lg sm:text-3xl">
+              {text(t.redCrossTitle)}
+            </Header>
+            <p className="text-sm sm:text-base">
+              {text(t.redCrossDescription)}
+            </p>
+          </div>
+          {/* Section 1: CPR Training */}
           <ResourceSection
             title={text(t.section1.title)}
             sectionId="cpr_online_training_completed_at"
@@ -161,146 +198,70 @@ export function ResourcesPage() {
             </div>
           </ResourceSection>
 
-          {/* Section 2: Child Safety Module */}
-          <ResourceSection
-            title={text(t.section2.title)}
-            sectionId="child_safety_module_training_completed_at"
-            isCompleted={completedSections.includes(
-              'child_safety_module_training_completed_at'
-            )}
-            onToggleCompletion={() => {}}
-            isReadOnly
-          >
-            <p>
-              <strong>{text(t.section2.estimatedTime)}</strong>
+          {/* PDIS Section */}
+          <div className="mt-6 sm:mt-8">
+            <Header className="mb-4 text-lg sm:text-3xl">
+              {text(t.pdisTrainingTitle)}
+            </Header>
+            <p className="text-sm sm:text-base">
+              {text(t.pdisTrainingDescription)}
             </p>
-            <p>{text(t.section2.description)}</p>
-            <ul className="list-disc space-y-2 pl-6">
-              <li>
-                <ResourceLink href={text(t.section2.overviewUrl)}>
-                  {text(t.section2.overviewLinkText)}
-                </ResourceLink>
-                <ul className="mt-2 list-none">
-                  <li className="italic">
-                    {text(t.section2.clickInstruction)}
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <div className="ml-6">
-              <p className="font-bold mb-2">{text(t.section2.topicsTitle)}</p>
-              <ul className="list-disc space-y-1 pl-6">
-                <li>
-                  <strong>{text(t.section2.abusiveHeadTrauma)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section2.childAbuse)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section2.childDevelopment)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section2.medicationAdmin)}</strong>
-                </li>
-                <li>
-                  <strong>{text(t.section2.foodAllergies)}</strong>
-                </li>
-              </ul>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 mt-2 sm:mt-4">
+              <p className="font-bold mb-3 text-blue-900">
+                {text(t.pdisSection.instructions.title)}
+              </p>
+              <div className="whitespace-pre-line text-sm text-blue-800">
+                {text(t.pdisSection.instructions.steps)}
+              </div>
             </div>
-          </ResourceSection>
+          </div>
 
-          {/* Section 3: Safe Sleep for Infants */}
-          <ResourceSection
-            title={text(t.section3.title)}
-            sectionId="safe_sleep_for_infants_training_completed_at"
-            isCompleted={completedSections.includes(
-              'safe_sleep_for_infants_training_completed_at'
-            )}
-            onToggleCompletion={() => {}}
-            isReadOnly
-          >
-            <p>
-              <strong>{text(t.section3.estimatedTime)}</strong>
-            </p>
-            <p>{text(t.section3.description)}</p>
-            <ul className="list-disc space-y-2 pl-6">
-              <li>
-                <strong>{text(t.section3.nihResources)}</strong>
-                <ul className="mt-2 list-none space-y-1">
-                  <li>
-                    <ResourceLink href={text(t.section3.nihUrl)}>
-                      {text(t.section3.nihLinkText)}
+          {/* Individual PDIS Course Sections */}
+          {pdisCourses.map((course, index) => {
+            const courseTranslations =
+              t.pdisSection.courses[
+                course.key as keyof typeof t.pdisSection.courses
+              ]
+
+            return (
+              <ResourceSection
+                key={course.key}
+                title={`${text(t.pdisSection.course)} ${index + 1}: ${text(courseTranslations.title)}`}
+                sectionId={course.fieldName as any}
+                isCompleted={completedSections.includes(course.fieldName)}
+                onToggleCompletion={() => {}}
+                isReadOnly
+              >
+                <div className="space-y-4">
+                  <p className="text-sm sm:text-base">
+                    {text(t.pdisSection.courseInstructions.clickHere)}
+                  </p>
+
+                  <div className="pl-4">
+                    <ResourceLink href={text(courseTranslations.url)}>
+                      {text(t.pdisSection.courseInstructions.openCourse)}
                     </ResourceLink>
-                  </li>
-                  <li>
-                    <strong>{text(t.section3.estimatedTimeReading)}</strong>
-                    <ul className="list-disc space-y-1 pl-6 mt-2">
-                      <li>
-                        <strong>{text(t.section3.reducingRisk)}</strong>
-                      </li>
-                      <li>
-                        <strong>{text(t.section3.backSleeping)}</strong>
-                      </li>
-                      <li>
-                        <strong>{text(t.section3.environment)}</strong>
-                      </li>
-                      <li>
-                        <strong>{text(t.section3.tummyTime)}</strong>
-                      </li>
-                      <li>
-                        <strong>{text(t.section3.faq)}</strong>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </ResourceSection>
+                  </div>
 
-          {/* Section 4: Home Safety & Injury Prevention */}
-          <ResourceSection
-            title={text(t.section4.title)}
-            sectionId="home_safety_and_injury_prevention_training_completed_at"
-            isCompleted={completedSections.includes(
-              'home_safety_and_injury_prevention_training_completed_at'
-            )}
-            onToggleCompletion={() => {}}
-            isReadOnly
-          >
-            <p>
-              <strong>{text(t.section4.estimatedTime)}</strong>
-            </p>
-            <p>{text(t.section4.description)}</p>
-            <div className="ml-6">
-              <p className="font-bold mb-2">{text(t.section4.topicsTitle)}</p>
-              <ul className="list-disc space-y-2 pl-6">
-                <li>
-                  <ResourceLink href={text(t.section4.injuryPreventionUrl)}>
-                    {text(t.section4.injuryPrevention)}
-                  </ResourceLink>
-                  <strong>{text(t.section4.timeEstimate)}</strong>
-                </li>
-                <li>
-                  <ResourceLink href={text(t.section4.poisoningPreventionUrl)}>
-                    {text(t.section4.poisoningPrevention)}
-                  </ResourceLink>
-                  <strong>{text(t.section4.timeEstimate)}</strong>
-                </li>
-                <li>
-                  <ResourceLink href={text(t.section4.homeSafetyUrl)}>
-                    {text(t.section4.homeSafety)}
-                  </ResourceLink>
-                  <strong>{text(t.section4.timeEstimate)}</strong>
-                </li>
-                <li>
-                  <ResourceLink href={text(t.section4.healthTipsUrl)}>
-                    {text(t.section4.healthTips)}
-                  </ResourceLink>
-                  <strong>{text(t.section4.timeEstimate)}</strong>
-                </li>
-              </ul>
-            </div>
-          </ResourceSection>
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                    <p className="text-sm text-amber-900">
+                      <strong>
+                        {text(t.pdisSection.courseInstructions.afterCompletion)}
+                      </strong>{' '}
+                      <span className="font-semibold">
+                        support@capcolorado.org
+                      </span>
+                    </p>
+                    {index === pdisCourses.length - 1 && (
+                      <p className="text-sm text-amber-800 mt-2 italic">
+                        {text(t.pdisSection.courseInstructions.reminder)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </ResourceSection>
+            )
+          })}
         </div>
       </div>
     </div>
