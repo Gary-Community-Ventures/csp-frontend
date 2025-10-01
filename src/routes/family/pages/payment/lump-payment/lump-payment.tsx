@@ -41,29 +41,23 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
   const navigate = useNavigate()
   const context = paymentRoute.useRouteContext()
 
+  // Validation for integer day fields
+  const validateDays = (val: string) => {
+    const num = parseInt(val, 10)
+    return !isNaN(num) && num >= 0 && num <= 31
+  }
+
   const lumpSumSchema = useZodSchema(
     z.object({
       amount: z.string().refine((val) => parseFloat(val) > 0, {
         message: text(t.amountRequired),
       }),
-      days: z.string().refine(
-        (val) => {
-          const num = parseInt(val, 10)
-          return !isNaN(num) && num >= 0 && num <= 31
-        },
-        {
-          message: text(t.daysRequired),
-        }
-      ),
-      halfDays: z.string().refine(
-        (val) => {
-          const num = parseInt(val, 10)
-          return !isNaN(num) && num >= 0 && num <= 31
-        },
-        {
-          message: text(t.halfDaysRequired),
-        }
-      ),
+      days: z.string().refine(validateDays, {
+        message: text(t.daysRequired),
+      }),
+      halfDays: z.string().refine(validateDays, {
+        message: text(t.halfDaysRequired),
+      }),
     })
   )
   type LumpSumForm = z.infer<typeof lumpSumSchema>
@@ -113,27 +107,18 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
     }
   }
 
-  const handleDaysChange = (value: string) => {
+  const handleIntegerInputChange = (
+    field: 'days' | 'halfDays',
+    value: string
+  ) => {
     // Allow empty string or valid non-negative integers
     if (value === '') {
-      setFormData((prev) => ({ ...prev, days: '0' }))
+      setFormData((prev) => ({ ...prev, [field]: '0' }))
       return
     }
     const num = parseInt(value, 10)
-    if (!isNaN(num) && num >= 0) {
-      setFormData((prev) => ({ ...prev, days: num.toString() }))
-    }
-  }
-
-  const handleHalfDaysChange = (value: string) => {
-    // Allow empty string or valid non-negative integers
-    if (value === '') {
-      setFormData((prev) => ({ ...prev, halfDays: '0' }))
-      return
-    }
-    const num = parseInt(value, 10)
-    if (!isNaN(num) && num >= 0) {
-      setFormData((prev) => ({ ...prev, halfDays: num.toString() }))
+    if (!isNaN(num) && num >= 0 && num <= 31) {
+      setFormData((prev) => ({ ...prev, [field]: num.toString() }))
     }
   }
 
@@ -305,7 +290,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
             max="31"
             step="1"
             value={formData.days}
-            onChange={(e) => handleDaysChange(e.target.value)}
+            onChange={(e) => handleIntegerInputChange('days', e.target.value)}
             placeholder="0"
           />
           <FormErrorMessage error={getError('days')} />
@@ -321,7 +306,9 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
             max="31"
             step="1"
             value={formData.halfDays}
-            onChange={(e) => handleHalfDaysChange(e.target.value)}
+            onChange={(e) =>
+              handleIntegerInputChange('halfDays', e.target.value)
+            }
             placeholder="0"
           />
           <FormErrorMessage error={getError('halfDays')} />
