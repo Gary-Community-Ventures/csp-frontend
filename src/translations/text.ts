@@ -303,17 +303,29 @@ export const translations = {
         en: 'Hours must be a positive number',
         es: 'Las horas deben ser un número positivo',
       },
+      daysRequired: {
+        en: 'Days must be a non-negative integer less than or equal to 31',
+        es: 'Los días deben ser un número entero no negativo menor o igual a 31',
+      },
+      halfDaysRequired: {
+        en: 'Half days must be a non-negative integer less than or equal to 31',
+        es: 'Los medios días deben ser un número entero no negativo menor o igual a 31',
+      },
       paymentDescription: {
-        en: 'Submit the payment amount and hours to {providerName} for {childFirstName}.',
-        es: 'Enviar el monto del pago y las horas a {providerName} para {childFirstName}.',
+        en: 'Submit the payment amount and days to {providerName} for {childFirstName}.',
+        es: 'Enviar el monto del pago y los días a {providerName} para {childFirstName}.',
       },
       amountLabel: {
         en: 'Amount (USD)',
         es: 'Monto (USD)',
       },
-      hoursLabel: {
-        en: 'Hours',
-        es: 'Horas',
+      daysLabel: {
+        en: 'Days',
+        es: 'Días',
+      },
+      halfDaysLabel: {
+        en: 'Half Days',
+        es: 'Medios Días',
       },
       submitButton: submitButton,
       monthBalance: {
@@ -357,6 +369,14 @@ export const translations = {
       hoursLabel: {
         en: 'Hours',
         es: 'Horas',
+      },
+      daysLabel: {
+        en: 'Days',
+        es: 'Días',
+      },
+      halfDaysLabel: {
+        en: 'Half Days',
+        es: 'Medios Días',
       },
       amountLabel: {
         en: 'Amount',

@@ -137,14 +137,16 @@ export const allocatedLumpSumResponseSchema = z.object({
   care_month_allocation_id: z.number(),
   provider_supabase_id: z.string(),
   amount_cents: z.number(),
-  hours: z.number().nullable().default(null),
+  days: z.number(),
+  half_days: z.number(),
 })
 
 export const createLumpSumRequestSchema = z.object({
   allocation_id: z.number(),
   provider_id: z.string(),
   amount_cents: z.number(),
-  hours: z.number().min(0),
+  half_days: z.number(),
+  days: z.number(),
 })
 
 export const ProviderTrainingResponseSchema = z.object({
