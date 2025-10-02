@@ -6,6 +6,14 @@ import { CardList } from '@/components/card-list'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { WhiteCard } from '@/components/white-card'
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card'
+import { useState, type ReactNode } from 'react'
+import { ExternalLink } from '@/components/external-link'
+import { COLORADO_SHINES_URL } from '@/lib/constants'
 
 type PayButtonProps = {
   provider: Provider
@@ -13,52 +21,100 @@ type PayButtonProps = {
 
 function PayButton({ provider }: PayButtonProps) {
   const t = translations.family.providerList
-
   const { selectedChildInfo, canMakePayments } = useFamilyContext()
+  const [isOpen, setIsOpen] = useState(false)
 
-  if (provider.status === 'pending') {
-    return (
-      <Badge variant="destructive">
-        <Text text={t.pending} />
+  // Determine button state and disabled reason
+  let buttonContent: ReactNode
+  let disabledReason:
+    | (typeof t.disabledReasons)[keyof typeof t.disabledReasons]
+    | null = null
+
+  if (provider.status === 'pending' || provider.status === 'denied') {
+    // Provider not active - show badge
+    buttonContent = (
+      <Badge variant="destructive" className="cursor-help">
+        <Text text={provider.status === 'pending' ? t.pending : t.denied} />
       </Badge>
     )
-  } else if (provider.status === 'denied') {
-    return (
-      <Badge variant="destructive">
-        <Text text={t.denied} />
-      </Badge>
-    )
-  }
-
-  if (!provider.isPaymentEnabled || !selectedChildInfo.isPaymentEnabled) {
-    return (
-      <Badge variant="secondary">
+    disabledReason = t.disabledReasons.providerNotActive
+  } else if (
+    !provider.isPaymentEnabled ||
+    !selectedChildInfo.isPaymentEnabled
+  ) {
+    // Payments not enabled - show secondary badge
+    buttonContent = (
+      <Badge variant="secondary" className="cursor-help">
         <Text text={t.paymentsDisabled} />
       </Badge>
     )
-  }
-
-  if (!provider.isPayable || !canMakePayments) {
-    return (
-      <Button disabled>
-        <Text text={t.payProvider} />
+    disabledReason = !selectedChildInfo.isPaymentEnabled
+      ? t.disabledReasons.childPaymentDisabled
+      : t.disabledReasons.providerPaymentDisabled
+  } else if (!provider.isPayable || !canMakePayments) {
+    // Cannot make payment - show disabled button
+    buttonContent = (
+      <div className="inline-block">
+        <Button disabled>
+          <Text text={t.payProvider} />
+        </Button>
+      </div>
+    )
+    disabledReason = !canMakePayments
+      ? t.disabledReasons.accountIssue
+      : t.disabledReasons.providerNotConfigured
+  } else {
+    // Can make payment - show active button
+    buttonContent = (
+      <Button asChild>
+        <Link
+          to="/family/$childId/payment/$providerId"
+          params={{
+            childId: selectedChildInfo.id,
+            providerId: provider.id,
+          }}
+        >
+          <Text text={t.payProvider} />
+        </Link>
       </Button>
     )
   }
 
-  return (
-    <Button asChild>
-      <Link
-        to="/family/$childId/payment/$providerId"
-        params={{
-          childId: selectedChildInfo.id,
-          providerId: provider.id,
-        }}
+  // Render with popover if disabled
+  if (disabledReason) {
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        setIsOpen(!isOpen)
+      }
+    }
+
+    return (
+      <HoverCard
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        openDelay={100}
+        closeDelay={100}
       >
-        <Text text={t.payProvider} />
-      </Link>
-    </Button>
-  )
+        <HoverCardTrigger asChild>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => setIsOpen(!isOpen)}
+            onKeyDown={handleKeyDown}
+            className="inline-block"
+          >
+            {buttonContent}
+          </div>
+        </HoverCardTrigger>
+        <HoverCardContent className="max-w-xs w-auto p-3 text-sm text-center">
+          <Text text={disabledReason} />
+        </HoverCardContent>
+      </HoverCard>
+    )
+  }
+
+  return <>{buttonContent}</>
 }
 
 type ProviderListProps = {
@@ -72,7 +128,29 @@ export function ProviderList({ showAddProvider = false }: ProviderListProps) {
     return (
       <WhiteCard Tag="ul" className="py-8">
         <div className="flex flex-col items-center justify-center text-center">
-          <Text text={translations.general.emptyState.noProvidersAddProvider} />
+          <p>
+            <Text
+              text={
+                translations.general.emptyState.noProvidersAddProvider.part1
+              }
+            />
+            <ExternalLink
+              href={COLORADO_SHINES_URL}
+              className="text-primary hover:text-primary/80 underline"
+            >
+              <Text
+                text={
+                  translations.general.emptyState.noProvidersAddProvider
+                    .coloradoShinesText
+                }
+              />
+            </ExternalLink>
+            <Text
+              text={
+                translations.general.emptyState.noProvidersAddProvider.part2
+              }
+            />
+          </p>
           <Button asChild className="mt-4" size="lg">
             <Link to="/family/$childId/providers/invite">
               <Text text={translations.general.emptyState.addYourProvider} />

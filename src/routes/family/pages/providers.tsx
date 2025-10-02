@@ -6,6 +6,7 @@ import { Link } from '@tanstack/react-router'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { ExternalLink } from '@/components/external-link'
+import { COLORADO_SHINES_URL } from '@/lib/constants'
 
 export function FamilyProvidersPage() {
   const t = translations.family.providerPage
@@ -29,7 +30,7 @@ export function FamilyProvidersPage() {
           <p>
             <Text text={t.header.newProvider.part1} />
             <ExternalLink
-              href="https://www.coloradoshines.com/search"
+              href={COLORADO_SHINES_URL}
               className="text-primary hover:text-primary/80 underline"
             >
               <Text text={t.header.newProvider.coloradoShinesText} />
