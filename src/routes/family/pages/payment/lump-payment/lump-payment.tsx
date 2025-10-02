@@ -41,7 +41,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
   const navigate = useNavigate()
   const context = paymentRoute.useRouteContext()
 
-  // Validation for integer day fields
+  // Validation for integer day fields (0-31)
   const validateDays = (val: string) => {
     const num = parseInt(val, 10)
     return !isNaN(num) && num >= 0 && num <= 31
@@ -111,14 +111,15 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
     field: 'days' | 'halfDays',
     value: string
   ) => {
-    // Allow empty string or valid non-negative integers
+    // Allow empty string, default to '0'
     if (value === '') {
       setFormData((prev) => ({ ...prev, [field]: '0' }))
       return
     }
-    const num = parseInt(value, 10)
-    if (!isNaN(num) && num >= 0 && num <= 31) {
-      setFormData((prev) => ({ ...prev, [field]: num.toString() }))
+
+    // Only update if value passes validation
+    if (validateDays(value)) {
+      setFormData((prev) => ({ ...prev, [field]: value }))
     }
   }
 
