@@ -12,6 +12,8 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { useState, type ReactNode } from 'react'
+import { ExternalLink } from '@/components/external-link'
+import { COLORADO_SHINES_URL } from '@/lib/constants'
 
 type PayButtonProps = {
   provider: Provider
@@ -126,7 +128,29 @@ export function ProviderList({ showAddProvider = false }: ProviderListProps) {
     return (
       <WhiteCard Tag="ul" className="py-8">
         <div className="flex flex-col items-center justify-center text-center">
-          <Text text={translations.general.emptyState.noProvidersAddProvider} />
+          <p>
+            <Text
+              text={
+                translations.general.emptyState.noProvidersAddProvider.part1
+              }
+            />
+            <ExternalLink
+              href={COLORADO_SHINES_URL}
+              className="text-primary hover:text-primary/80 underline"
+            >
+              <Text
+                text={
+                  translations.general.emptyState.noProvidersAddProvider
+                    .coloradoShinesText
+                }
+              />
+            </ExternalLink>
+            <Text
+              text={
+                translations.general.emptyState.noProvidersAddProvider.part2
+              }
+            />
+          </p>
           <Button asChild className="mt-4" size="lg">
             <Link to="/family/$childId/providers/invite">
               <Text text={translations.general.emptyState.addYourProvider} />

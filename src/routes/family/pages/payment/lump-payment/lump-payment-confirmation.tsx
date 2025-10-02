@@ -9,7 +9,7 @@ import { formatMonthForDisplay } from '@/lib/date-utils'
 
 export function LumpSumConfirmationPage() {
   const t = translations.family.lumpSumConfirmationPage
-  const { providerName, childName, month, hours, amount } =
+  const { providerName, childName, month, days, halfDays, amount } =
     lumpPaymentConfirmationRoute.useSearch()
   const { childId } = lumpPaymentConfirmationRoute.useParams()
   const { lang } = useLanguageContext()
@@ -47,9 +47,15 @@ export function LumpSumConfirmationPage() {
         </div>
         <div className="flex justify-between py-2 border-b">
           <span className="font-semibold">
-            <Text text={t.hoursLabel} />
+            <Text text={t.daysLabel} />
           </span>
-          <span>{hours}</span>
+          <span>{days}</span>
+        </div>
+        <div className="flex justify-between py-2 border-b">
+          <span className="font-semibold">
+            <Text text={t.halfDaysLabel} />
+          </span>
+          <span>{halfDays}</span>
         </div>
         <div className="flex justify-between py-2">
           <span className="font-semibold">
