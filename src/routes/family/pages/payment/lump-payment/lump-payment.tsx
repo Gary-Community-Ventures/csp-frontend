@@ -41,13 +41,22 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
   const navigate = useNavigate()
   const context = paymentRoute.useRouteContext()
 
+  // Validation for integer day fields (0-31)
+  const validateDays = (val: string) => {
+    const num = parseInt(val, 10)
+    return !isNaN(num) && num >= 0 && num <= 31
+  }
+
   const lumpSumSchema = useZodSchema(
     z.object({
       amount: z.string().refine((val) => parseFloat(val) > 0, {
         message: text(t.amountRequired),
       }),
-      hours: z.string().refine((val) => parseFloat(val) > 0, {
-        message: text(t.hoursRequired),
+      days: z.string().refine((val) => val === '' || validateDays(val), {
+        message: text(t.daysRequired),
+      }),
+      halfDays: z.string().refine((val) => val === '' || validateDays(val), {
+        message: text(t.halfDaysRequired),
       }),
     })
   )
@@ -55,7 +64,8 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
 
   const [formData, setFormData] = useState<LumpSumForm>({
     amount: '',
-    hours: '',
+    halfDays: '0',
+    days: '0',
   })
 
   const { getError, submit } = useValidateForm(lumpSumSchema, formData)
@@ -97,9 +107,27 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
     }
   }
 
-  const handleHoursChange = (value: string) => {
-    const sanitizedValue = value.replace(/[^0-9.]/g, '')
-    setFormData((prev) => ({ ...prev, hours: sanitizedValue }))
+  const handleIntegerInputChange = (
+    field: 'days' | 'halfDays',
+    value: string
+  ) => {
+    // Allow empty string while typing
+    if (value === '') {
+      setFormData((prev) => ({ ...prev, [field]: '' }))
+      return
+    }
+
+    // Only update if value passes validation
+    if (validateDays(value)) {
+      setFormData((prev) => ({ ...prev, [field]: value }))
+    }
+  }
+
+  const handleIntegerInputBlur = (field: 'days' | 'halfDays') => {
+    // On blur, if empty, set to '0'
+    if (formData[field] === '') {
+      setFormData((prev) => ({ ...prev, [field]: '0' }))
+    }
   }
 
   const child = findChildById(children, selectedChildInfo.id)
@@ -109,7 +137,8 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
       allocation_id: number
       provider_id: string
       amount_cents: number
-      hours: number
+      days: number
+      half_days: number
     }) => createLumpSum(context, data),
     onSuccess: () => {
       toast.success(text(t.lumpPaymentSuccess))
@@ -119,7 +148,8 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
           providerName: provider?.name || '',
           childName: child?.firstName || '',
           month: selectedAllocation?.date || '',
-          hours: formData.hours,
+          days: formData.days,
+          halfDays: formData.halfDays,
           amount: formData.amount,
           providerId: provider.id,
         },
@@ -145,7 +175,8 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
           allocation_id: selectedAllocation.id,
           provider_id: provider.id,
           amount_cents: dollarToCents(formData.amount),
-          hours: parseFloat(formData.hours),
+          days: parseInt(formData.days || '0', 10),
+          half_days: parseInt(formData.halfDays || '0', 10),
         })
       } else {
         toast.error(text(t.lumpPaymentError))
@@ -257,18 +288,40 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
           <FormErrorMessage error={getError('amount')} />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="hours">
-            <Text text={t.hoursLabel} />
+          <Label htmlFor="days">
+            <Text text={t.daysLabel} />
           </Label>
           <Input
-            id="hours"
-            type="text"
-            inputMode="decimal"
-            value={formData.hours}
-            onChange={(e) => handleHoursChange(e.target.value)}
-            placeholder="0.0"
+            id="days"
+            type="number"
+            min="0"
+            max="31"
+            step="1"
+            value={formData.days}
+            onChange={(e) => handleIntegerInputChange('days', e.target.value)}
+            onBlur={() => handleIntegerInputBlur('days')}
+            placeholder="0"
           />
-          <FormErrorMessage error={getError('hours')} />
+          <FormErrorMessage error={getError('days')} />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="halfDays">
+            <Text text={t.halfDaysLabel} />
+          </Label>
+          <Input
+            id="halfDays"
+            type="number"
+            min="0"
+            max="31"
+            step="1"
+            value={formData.halfDays}
+            onChange={(e) =>
+              handleIntegerInputChange('halfDays', e.target.value)
+            }
+            onBlur={() => handleIntegerInputBlur('halfDays')}
+            placeholder="0"
+          />
+          <FormErrorMessage error={getError('halfDays')} />
         </div>
       </div>
 
