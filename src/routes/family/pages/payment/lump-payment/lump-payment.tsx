@@ -52,10 +52,10 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
       amount: z.string().refine((val) => parseFloat(val) > 0, {
         message: text(t.amountRequired),
       }),
-      days: z.string().refine(validateDays, {
+      days: z.string().refine((val) => val === '' || validateDays(val), {
         message: text(t.daysRequired),
       }),
-      halfDays: z.string().refine(validateDays, {
+      halfDays: z.string().refine((val) => val === '' || validateDays(val), {
         message: text(t.halfDaysRequired),
       }),
     })
@@ -111,15 +111,22 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
     field: 'days' | 'halfDays',
     value: string
   ) => {
-    // Allow empty string, default to '0'
+    // Allow empty string while typing
     if (value === '') {
-      setFormData((prev) => ({ ...prev, [field]: '0' }))
+      setFormData((prev) => ({ ...prev, [field]: '' }))
       return
     }
 
     // Only update if value passes validation
     if (validateDays(value)) {
       setFormData((prev) => ({ ...prev, [field]: value }))
+    }
+  }
+
+  const handleIntegerInputBlur = (field: 'days' | 'halfDays') => {
+    // On blur, if empty, set to '0'
+    if (formData[field] === '') {
+      setFormData((prev) => ({ ...prev, [field]: '0' }))
     }
   }
 
@@ -168,8 +175,8 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
           allocation_id: selectedAllocation.id,
           provider_id: provider.id,
           amount_cents: dollarToCents(formData.amount),
-          days: parseInt(formData.days, 10) || 0,
-          half_days: parseInt(formData.halfDays, 10) || 0,
+          days: parseInt(formData.days || '0', 10),
+          half_days: parseInt(formData.halfDays || '0', 10),
         })
       } else {
         toast.error(text(t.lumpPaymentError))
@@ -292,6 +299,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
             step="1"
             value={formData.days}
             onChange={(e) => handleIntegerInputChange('days', e.target.value)}
+            onBlur={() => handleIntegerInputBlur('days')}
             placeholder="0"
           />
           <FormErrorMessage error={getError('days')} />
@@ -310,6 +318,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
             onChange={(e) =>
               handleIntegerInputChange('halfDays', e.target.value)
             }
+            onBlur={() => handleIntegerInputBlur('halfDays')}
             placeholder="0"
           />
           <FormErrorMessage error={getError('halfDays')} />
