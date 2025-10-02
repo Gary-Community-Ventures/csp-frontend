@@ -1,3 +1,5 @@
+import { SUPPORT_EMAIL } from '@/lib/constants'
+
 const generalNavBar = {
   menu: {
     support: {
@@ -236,8 +238,8 @@ export const translations = {
         es: 'Asignación no encontrada',
       },
       allocationNotFoundDescription: {
-        en: 'The monthly allocation could not be loaded. Please try again or contact support if the problem persists.',
-        es: 'No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.',
+        en: `The monthly allocation could not be loaded. Please try again or contact ${SUPPORT_EMAIL} if the problem persists.`,
+        es: `No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte a ${SUPPORT_EMAIL} si el problema persiste.`,
       },
       noPaymentRate: {
         part1: {
@@ -292,8 +294,8 @@ export const translations = {
         es: 'Asignación no encontrada',
       },
       allocationNotFoundDescription: {
-        en: 'The monthly allocation could not be loaded. Please try again or contact support if the problem persists.',
-        es: 'No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.',
+        en: `The monthly allocation could not be loaded. Please try again or contact ${SUPPORT_EMAIL} if the problem persists.`,
+        es: `No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte a ${SUPPORT_EMAIL} si el problema persiste.`,
       },
       amountRequired: {
         en: 'Amount must be a positive number',
@@ -445,6 +447,28 @@ export const translations = {
       paymentsDisabled: {
         en: 'Payments Not Enabled',
         es: 'Pagos No Habilitados',
+      },
+      disabledReasons: {
+        accountIssue: {
+          en: `There is an issue with your account making payments. Please contact ${SUPPORT_EMAIL}.`,
+          es: `Hay un problema con su cuenta para realizar pagos. Por favor contacte a ${SUPPORT_EMAIL}.`,
+        },
+        providerNotConfigured: {
+          en: 'This provider has not yet configured their payment method.',
+          es: 'Este proveedor aún no ha configurado su método de pago.',
+        },
+        childPaymentDisabled: {
+          en: `This child on your account does not currently have the payment feature enabled. Please contact ${SUPPORT_EMAIL} if this is a mistake.`,
+          es: `Este niño en tu cuenta actualmente no tiene habilitada la función de pago. Por favor contacte a ${SUPPORT_EMAIL} si esto es un error.`,
+        },
+        providerPaymentDisabled: {
+          en: `Payments have not yet been enabled for this provider. If this seems incorrect, please contact ${SUPPORT_EMAIL}.`,
+          es: `Los pagos aún no han sido habilitados para este proveedor. Si esto parece incorrecto, por favor contacta a ${SUPPORT_EMAIL}.`,
+        },
+        providerNotActive: {
+          en: 'This provider is not yet fully part of the program.',
+          es: 'Este proveedor aún no es completamente parte del programa.',
+        },
       },
     },
     providerPage: {
@@ -688,8 +712,8 @@ export const translations = {
           es: 'Error al actualizar el método de pago',
         },
         setupRequired: {
-          en: 'Payment account setup is required before you can select a payment method. Please contact support.',
-          es: 'Se requiere configurar la cuenta de pago antes de poder seleccionar un método de pago. Por favor contacte a soporte.',
+          en: `Payment account setup is required before you can select a payment method. Please contact ${SUPPORT_EMAIL}.`,
+          es: `Se requiere configurar la cuenta de pago antes de poder seleccionar un método de pago. Por favor contacte a ${SUPPORT_EMAIL}.`,
         },
         chekSetupMessage: {
           en: 'After submitting, you will receive an email from our payment provider Chek to set up your account and configure your payment method.',
@@ -1046,7 +1070,6 @@ export const translations = {
         en: 'Training resources are not required for licensed childcare centers.',
         es: 'Los recursos de capacitación no son requeridos para los centros de cuidado infantil con licencia.',
       },
-      supportEmail: 'support@capcolorado.org',
       pdisSection: {
         title: {
           en: 'Section 2: Colorado Professional Development Information System (PDIS) Training',
