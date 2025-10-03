@@ -20,7 +20,7 @@ export const familyRoute = createRoute({
 export const familyWithoutIdRoute = createRoute({
   getParentRoute: () => familyRoute,
   path: '/',
-  beforeLoad: redirectToDefaultId,
+  loader: redirectToDefaultId(),
 })
 
 export const familyWithIdRoute = createRoute({
@@ -120,6 +120,12 @@ export const attendanceRoute = createRoute({
   loader: loadAttendance,
 })
 
+export const attendanceRedirectRoute = createRoute({
+  getParentRoute: () => familyRoute,
+  path: 'attendance',
+  beforeLoad: redirectToDefaultId('/family/$childId/attendance'),
+})
+
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   homeRoute,
   /* TODO renable when messages/activity are implemented
@@ -138,4 +144,5 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
 export const familyRouteTree = familyRoute.addChildren([
   familyWithIdRouteTree,
   familyWithoutIdRoute,
+  attendanceRedirectRoute,
 ])

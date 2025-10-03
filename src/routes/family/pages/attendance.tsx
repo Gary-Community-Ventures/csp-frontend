@@ -139,12 +139,22 @@ export async function loadAttendance({
   }
 }
 
-function attendanceIsValid(attendance: {
-  [key: string]: number | null
-}): attendance is {
-  [key: string]: number
+function attendanceIsValid(attendance: AttendanceValues): attendance is {
+  [key: string]: {
+    fullDays: number
+    halfDays: number
+  }
 } {
-  return !Object.values(attendance).some((value) => value === null)
+  return !Object.values(attendance).some(
+    (value) => value.fullDays === null || value.halfDays === null
+  )
+}
+
+type AttendanceValues = {
+  [key: string]: {
+    fullDays: number | null
+    halfDays: number | null
+  }
 }
 
 export function AttendancePage() {
@@ -157,7 +167,7 @@ export function AttendancePage() {
 
   useHideFamilyNavBar()
 
-  const [values, setValues] = useState<{ [key: string]: number | null }>({})
+  const [values, setValues] = useState<AttendanceValues>({})
   const [submitted, setSubmitted] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
 
@@ -247,7 +257,7 @@ export function AttendancePage() {
 type ChildAttendanceProps = {
   child: ChildrenWithAttendance
   submitted: boolean
-  setValues: Dispatch<SetStateAction<{ [key: string]: number | null }>>
+  setValues: Dispatch<SetStateAction<AttendanceValues>>
 }
 
 function ChildAttendance({
@@ -267,11 +277,11 @@ function ChildAttendance({
               label={row.provider.name}
               attendanceId={row.id}
               submitted={submitted}
-              onChange={(value) => {
+              onChange={(fullDays, halfDays) => {
                 setValues((prev) => {
                   return {
                     ...prev,
-                    [row.id]: value,
+                    [row.id]: { fullDays, halfDays },
                   }
                 })
               }}
@@ -285,13 +295,14 @@ function ChildAttendance({
 }
 
 async function submitAttendance(
-  attendance: { [key: string]: number },
+  attendance: { [key: string]: { fullDays: number; halfDays: number } },
   context: RouterContext
 ) {
   const formattedAttendance = Object.entries(attendance).map(
     ([key, value]) => ({
       id: key,
-      hours: value,
+      full_days: value.fullDays,
+      half_days: value.halfDays,
     })
   )
 
