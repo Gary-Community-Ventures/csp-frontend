@@ -9,6 +9,7 @@ import { useMemo } from 'react'
 import { ResourceSection } from '../components/resource-section'
 import { useProviderContext } from '../wrapper'
 import { ExternalLink } from '@/components/external-link'
+import { SUPPORT_EMAIL } from '@/lib/constants'
 import type { PropsWithChildren } from 'react'
 
 type ResourceLinkProps = PropsWithChildren<{
@@ -166,8 +167,8 @@ export function ResourcesPage() {
                   ) : (
                     <>
                       {text(t.section1.noCprLink)}{' '}
-                      <ResourceLink href={`mailto:${t.supportEmail}`}>
-                        {t.supportEmail}
+                      <ResourceLink href={`mailto:${SUPPORT_EMAIL}`}>
+                        {SUPPORT_EMAIL}
                       </ResourceLink>
                     </>
                   )}
@@ -188,8 +189,8 @@ export function ResourcesPage() {
                 <li>
                   <strong>{text(t.section1.important)}</strong>{' '}
                   {text(t.section1.emailCopy)}{' '}
-                  <ResourceLink href={`mailto:${t.supportEmail}`}>
-                    {t.supportEmail}
+                  <ResourceLink href={`mailto:${SUPPORT_EMAIL}`}>
+                    {SUPPORT_EMAIL}
                   </ResourceLink>{' '}
                   {text(t.section1.emailCopyReason)}
                 </li>
@@ -227,8 +228,8 @@ export function ResourcesPage() {
                       {'hasEmail' in step && step.hasEmail && (
                         <>
                           {' '}
-                          <ResourceLink href={`mailto:${t.supportEmail}`}>
-                            {t.supportEmail}
+                          <ResourceLink href={`mailto:${SUPPORT_EMAIL}`}>
+                            {SUPPORT_EMAIL}
                           </ResourceLink>
                         </>
                       )}
@@ -272,8 +273,8 @@ export function ResourcesPage() {
                       <strong>
                         {text(t.pdisSection.courseInstructions.afterCompletion)}
                       </strong>{' '}
-                      <ResourceLink href={`mailto:${t.supportEmail}`}>
-                        {t.supportEmail}
+                      <ResourceLink href={`mailto:${SUPPORT_EMAIL}`}>
+                        {SUPPORT_EMAIL}
                       </ResourceLink>
                     </p>
                     {index === pdisCourses.length - 1 && (

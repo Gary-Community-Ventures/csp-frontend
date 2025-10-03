@@ -10,7 +10,7 @@ type AttendanceInputProps = {
   label: string
   attendanceId: string
   submitted: boolean
-  onChange: (value: number | null) => void
+  onChange: (fullDays: number | null, halfDays: number | null) => void
 }
 
 export function AttendanceInput({
@@ -24,41 +24,72 @@ export function AttendanceInput({
 
   const schema = z.number().nonnegative().int()
 
-  const [value, setValue] = useState<number | null>(null)
+  const [fullDays, setFullDays] = useState<number | null>(null)
+  const [halfDays, setHalfDays] = useState<number | null>(null)
 
   const id = `attendance-${attendanceId}`
 
   useEffect(() => {
-    onChange(value)
-  }, [value]) // eslint-disable-line react-hooks/exhaustive-deps
+    onChange(fullDays, halfDays)
+  }, [fullDays, halfDays]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="py-2">
       <div className="flex justify-between">
         <Label htmlFor={id}>{label}</Label>
-        <div className="max-w-[15rem]">
-          <Input
-            id={id}
-            type="number"
-            placeholder={text(t.inputPlaceholder)}
-            value={value === null ? '' : String(value)}
-            onChange={(event) => {
-              const rawValue = event.target.value
-              if (rawValue === '') {
-                setValue(null)
-                return
-              }
+        <div className="flex gap-2">
+          <div className="max-w-[15rem]">
+            <Input
+              id={id}
+              type="number"
+              placeholder={text(t.fullDayInputPlaceholder)}
+              value={fullDays === null ? '' : String(fullDays)}
+              onChange={(event) => {
+                const rawValue = event.target.value
+                if (rawValue === '') {
+                  setFullDays(null)
+                  return
+                }
 
-              const value = Number(rawValue)
+                const value = Number(rawValue)
 
-              if (!Number.isNaN(value) && schema.safeParse(value).success) {
-                setValue(value)
+                if (!Number.isNaN(value) && schema.safeParse(value).success) {
+                  setFullDays(value)
+                }
+              }}
+            />
+            <FormErrorMessage
+              error={
+                fullDays === null && submitted ? text(t.required) : undefined
               }
-            }}
-          />
-          <FormErrorMessage
-            error={value === null && submitted ? text(t.required) : undefined}
-          />
+            />
+          </div>
+          <div className="max-w-[15rem]">
+            <Input
+              id={id}
+              type="number"
+              placeholder={text(t.halfDayInputPlaceholder)}
+              value={halfDays === null ? '' : String(halfDays)}
+              onChange={(event) => {
+                const rawValue = event.target.value
+                if (rawValue === '') {
+                  setHalfDays(null)
+                  return
+                }
+
+                const value = Number(rawValue)
+
+                if (!Number.isNaN(value) && schema.safeParse(value).success) {
+                  setHalfDays(value)
+                }
+              }}
+            />
+            <FormErrorMessage
+              error={
+                halfDays === null && submitted ? text(t.required) : undefined
+              }
+            />
+          </div>
         </div>
       </div>
     </div>

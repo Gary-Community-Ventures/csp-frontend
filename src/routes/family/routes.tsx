@@ -20,7 +20,7 @@ export const familyRoute = createRoute({
 export const familyWithoutIdRoute = createRoute({
   getParentRoute: () => familyRoute,
   path: '/',
-  beforeLoad: redirectToDefaultId,
+  loader: redirectToDefaultId(),
 })
 
 export const familyWithIdRoute = createRoute({
@@ -106,7 +106,8 @@ export const lumpPaymentConfirmationRoute = createRoute({
     providerName: z.string(),
     childName: z.string(),
     month: z.string(),
-    hours: z.string(),
+    days: z.string(),
+    halfDays: z.string(),
     amount: z.string(),
     providerId: z.string(),
   }),
@@ -117,6 +118,12 @@ export const attendanceRoute = createRoute({
   path: 'attendance',
   component: AttendancePage,
   loader: loadAttendance,
+})
+
+export const attendanceRedirectRoute = createRoute({
+  getParentRoute: () => familyRoute,
+  path: 'attendance',
+  beforeLoad: redirectToDefaultId('/family/$childId/attendance'),
 })
 
 export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
@@ -137,4 +144,5 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
 export const familyRouteTree = familyRoute.addChildren([
   familyWithIdRouteTree,
   familyWithoutIdRoute,
+  attendanceRedirectRoute,
 ])

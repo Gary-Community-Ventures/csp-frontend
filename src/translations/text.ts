@@ -1,3 +1,5 @@
+import { SUPPORT_EMAIL } from '@/lib/constants'
+
 const generalNavBar = {
   menu: {
     support: {
@@ -120,7 +122,7 @@ const notificationBanner = {
     es: 'Solicitud pendiente de aprobación',
   },
   attendance: {
-    en: 'Submit your care hours for last week',
+    en: 'Submit your care days for last week',
     es: 'Envía tus horas de cuidado para la última semana',
   },
 } as const
@@ -137,10 +139,6 @@ const attendance = {
   allSet: {
     en: 'All of your attendance has been submitted.',
     es: 'Toda tu asistencia ha sido enviada.',
-  },
-  allSetDescription: {
-    en: 'Come back next week to submit your attendance for this week.',
-    es: 'Vuelve la semana siguiente para enviar tu asistencia para esta semana.',
   },
   returnHome: returnHomeButton,
   submit: submitButton,
@@ -236,8 +234,8 @@ export const translations = {
         es: 'Asignación no encontrada',
       },
       allocationNotFoundDescription: {
-        en: 'The monthly allocation could not be loaded. Please try again or contact support if the problem persists.',
-        es: 'No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.',
+        en: `The monthly allocation could not be loaded. Please try again or contact ${SUPPORT_EMAIL} if the problem persists.`,
+        es: `No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte a ${SUPPORT_EMAIL} si el problema persiste.`,
       },
       noPaymentRate: {
         part1: {
@@ -292,8 +290,8 @@ export const translations = {
         es: 'Asignación no encontrada',
       },
       allocationNotFoundDescription: {
-        en: 'The monthly allocation could not be loaded. Please try again or contact support if the problem persists.',
-        es: 'No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte al soporte si el problema persiste.',
+        en: `The monthly allocation could not be loaded. Please try again or contact ${SUPPORT_EMAIL} if the problem persists.`,
+        es: `No se pudo cargar la asignación mensual. Por favor, inténtelo de nuevo o contacte a ${SUPPORT_EMAIL} si el problema persiste.`,
       },
       amountRequired: {
         en: 'Amount must be a positive number',
@@ -303,17 +301,29 @@ export const translations = {
         en: 'Hours must be a positive number',
         es: 'Las horas deben ser un número positivo',
       },
+      daysRequired: {
+        en: 'Days must be a non-negative integer less than or equal to 31',
+        es: 'Los días deben ser un número entero no negativo menor o igual a 31',
+      },
+      halfDaysRequired: {
+        en: 'Half days must be a non-negative integer less than or equal to 31',
+        es: 'Los medios días deben ser un número entero no negativo menor o igual a 31',
+      },
       paymentDescription: {
-        en: 'Submit the payment amount and hours to {providerName} for {childFirstName}.',
-        es: 'Enviar el monto del pago y las horas a {providerName} para {childFirstName}.',
+        en: 'Enter the payment amount you would like to submit and the number of full days and half days of care that this amount covers.',
+        es: 'Ingrese el monto del pago que desea enviar y la cantidad de días completos y medios días de cuidado que cubre este monto.',
       },
       amountLabel: {
         en: 'Amount (USD)',
         es: 'Monto (USD)',
       },
-      hoursLabel: {
-        en: 'Hours',
-        es: 'Horas',
+      daysLabel: {
+        en: 'Full Days',
+        es: 'Días Completos',
+      },
+      halfDaysLabel: {
+        en: 'Half Days',
+        es: 'Medios Días',
       },
       submitButton: submitButton,
       monthBalance: {
@@ -357,6 +367,14 @@ export const translations = {
       hoursLabel: {
         en: 'Hours',
         es: 'Horas',
+      },
+      daysLabel: {
+        en: 'Full Days',
+        es: 'Días Completos',
+      },
+      halfDaysLabel: {
+        en: 'Half Days',
+        es: 'Medios Días',
       },
       amountLabel: {
         en: 'Amount',
@@ -425,6 +443,28 @@ export const translations = {
       paymentsDisabled: {
         en: 'Payments Not Enabled',
         es: 'Pagos No Habilitados',
+      },
+      disabledReasons: {
+        accountIssue: {
+          en: `There is an issue with your account making payments. Please contact ${SUPPORT_EMAIL}.`,
+          es: `Hay un problema con su cuenta para realizar pagos. Por favor contacte a ${SUPPORT_EMAIL}.`,
+        },
+        providerNotConfigured: {
+          en: 'This provider has not yet configured their payment method.',
+          es: 'Este proveedor aún no ha configurado su método de pago.',
+        },
+        childPaymentDisabled: {
+          en: `This child on your account does not currently have the payment feature enabled. Please contact ${SUPPORT_EMAIL} if this is a mistake.`,
+          es: `Este niño en tu cuenta actualmente no tiene habilitada la función de pago. Por favor contacte a ${SUPPORT_EMAIL} si esto es un error.`,
+        },
+        providerPaymentDisabled: {
+          en: `Payments have not yet been enabled for this provider. If this seems incorrect, please contact ${SUPPORT_EMAIL}.`,
+          es: `Los pagos aún no han sido habilitados para este proveedor. Si esto parece incorrecto, por favor contacta a ${SUPPORT_EMAIL}.`,
+        },
+        providerNotActive: {
+          en: 'This provider is not yet fully part of the program.',
+          es: 'Este proveedor aún no es completamente parte del programa.',
+        },
       },
     },
     providerPage: {
@@ -503,9 +543,13 @@ export const translations = {
     },
     attendance: {
       ...attendance,
+      allSetDescription: {
+        en: 'Come back next week to verify your attendance for this week. Failure to continually verify childcare you received will result in the inability to make payments to your provider(s). If your provider is an FFN or Licensed Home-Based Center, make sure they also verify childcare weekly so they can continue to get paid on time.',
+        es: 'Vuelve la semana siguiente para verificar tu asistencia para esta semana. Si no verificas continuamente el cuidado que recibiste, no podrás hacer pagos a tu proveedor(es). Si tu proveedor es un centro de cuidado infantil o de hogar, asegúrate de que verifica el cuidado semanal para que puedan seguir recibiendo pagos en tiempo real.',
+      },
       description: {
-        en: 'Please confirm the hours of care you received for each child for the week. If you did not receive care, please enter 0.',
-        es: 'Confirme las horas de cuidado que recibió para cada niño para la semana. Si no recibió cuidado, ingrese 0.',
+        en: 'Please confirm the number of half days and full days of care you received for each child. If you did not receive care, please enter 0.',
+        es: 'Confirme el número de media horas y días completos de cuidado que recibió para cada niño. Si no recibió cuidado, ingrese 0.',
       },
     },
   },
@@ -668,8 +712,8 @@ export const translations = {
           es: 'Error al actualizar el método de pago',
         },
         setupRequired: {
-          en: 'Payment account setup is required before you can select a payment method. Please contact support.',
-          es: 'Se requiere configurar la cuenta de pago antes de poder seleccionar un método de pago. Por favor contacte a soporte.',
+          en: `Payment account setup is required before you can select a payment method. Please contact ${SUPPORT_EMAIL}.`,
+          es: `Se requiere configurar la cuenta de pago antes de poder seleccionar un método de pago. Por favor contacte a ${SUPPORT_EMAIL}.`,
         },
         chekSetupMessage: {
           en: 'After submitting, you will receive an email from our payment provider Chek to set up your account and configure your payment method.',
@@ -1026,7 +1070,6 @@ export const translations = {
         en: 'Training resources are not required for licensed childcare centers.',
         es: 'Los recursos de capacitación no son requeridos para los centros de cuidado infantil con licencia.',
       },
-      supportEmail: 'support@capcolorado.org',
       pdisSection: {
         title: {
           en: 'Section 2: Colorado Professional Development Information System (PDIS) Training',
@@ -1209,8 +1252,12 @@ export const translations = {
     },
     attendance: {
       ...attendance,
+      allSetDescription: {
+        en: 'Come back next week to verify your attendance for this week. Failure to continually verify childcare you provide will result in the inability for families to make payments to you.',
+        es: 'Vuelve la semana siguiente para verificar tu asistencia para esta semana. Si no verificas continuamente el cuidado que proporcionaste, no podrás hacer pagos a tu proveedor. Si tu proveedor es un centro de cuidado infantil o de hogar, asegúrate de que verifica el cuidado semanal para que puedan seguir recibiendo pagos en tiempo real.',
+      },
       description: {
-        en: 'Please confirm the hours of care you provided for each child for the week. If you did not provide care, please enter 0.',
+        en: 'Please confirm the number of half days and full days of care you provided for each child. If you did not provide care, please enter 0.',
         es: 'Confirme las horas de cuidado que proporcionó para cada niño para la semana. Si no proporcionó cuidado, ingrese 0.',
       },
     },
@@ -1401,9 +1448,13 @@ export const translations = {
       },
     },
     attendanceInput: {
-      inputPlaceholder: {
-        en: 'Total Hours of Care',
-        es: 'Horas de Cuidado Totales',
+      fullDayInputPlaceholder: {
+        en: 'Full Days',
+        es: 'Días Completos',
+      },
+      halfDayInputPlaceholder: {
+        en: 'Half Days',
+        es: 'Media Horas',
       },
       required: {
         en: 'This field is required',
