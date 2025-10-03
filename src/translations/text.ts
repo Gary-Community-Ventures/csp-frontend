@@ -140,10 +140,6 @@ const attendance = {
     en: 'All of your attendance has been submitted.',
     es: 'Toda tu asistencia ha sido enviada.',
   },
-  allSetDescription: {
-    en: 'Come back next week to submit your attendance for this week.',
-    es: 'Vuelve la semana siguiente para enviar tu asistencia para esta semana.',
-  },
   returnHome: returnHomeButton,
   submit: submitButton,
 } as const
@@ -314,16 +310,16 @@ export const translations = {
         es: 'Los medios días deben ser un número entero no negativo menor o igual a 31',
       },
       paymentDescription: {
-        en: 'Submit the payment amount and days to {providerName} for {childFirstName}.',
-        es: 'Enviar el monto del pago y los días a {providerName} para {childFirstName}.',
+        en: 'Enter the payment amount you would like to submit and the number of full days and half days of care that this amount covers.',
+        es: 'Ingrese el monto del pago que desea enviar y la cantidad de días completos y medios días de cuidado que cubre este monto.',
       },
       amountLabel: {
         en: 'Amount (USD)',
         es: 'Monto (USD)',
       },
       daysLabel: {
-        en: 'Days',
-        es: 'Días',
+        en: 'Full Days',
+        es: 'Días Completos',
       },
       halfDaysLabel: {
         en: 'Half Days',
@@ -373,8 +369,8 @@ export const translations = {
         es: 'Horas',
       },
       daysLabel: {
-        en: 'Days',
-        es: 'Días',
+        en: 'Full Days',
+        es: 'Días Completos',
       },
       halfDaysLabel: {
         en: 'Half Days',
@@ -547,6 +543,10 @@ export const translations = {
     },
     attendance: {
       ...attendance,
+      allSetDescription: {
+        en: 'Come back next week to verify your attendance for this week. Failure to continually verify childcare you received will result in the inability to make payments to your provider(s). If your provider is an FFN or Licensed Home-Based Center, make sure they also verify childcare weekly so they can continue to get paid on time.',
+        es: 'Vuelve la semana siguiente para verificar tu asistencia para esta semana. Si no verificas continuamente el cuidado que recibiste, no podrás hacer pagos a tu proveedor(es). Si tu proveedor es un centro de cuidado infantil o de hogar, asegúrate de que verifica el cuidado semanal para que puedan seguir recibiendo pagos en tiempo real.',
+      },
       description: {
         en: 'Please confirm the number of half days and full days of care you received for each child. If you did not receive care, please enter 0.',
         es: 'Confirme el número de media horas y días completos de cuidado que recibió para cada niño. Si no recibió cuidado, ingrese 0.',
@@ -1252,6 +1252,10 @@ export const translations = {
     },
     attendance: {
       ...attendance,
+      allSetDescription: {
+        en: 'Come back next week to verify your attendance for this week. Failure to continually verify childcare you provide will result in the inability for families to make payments to you.',
+        es: 'Vuelve la semana siguiente para verificar tu asistencia para esta semana. Si no verificas continuamente el cuidado que proporcionaste, no podrás hacer pagos a tu proveedor. Si tu proveedor es un centro de cuidado infantil o de hogar, asegúrate de que verifica el cuidado semanal para que puedan seguir recibiendo pagos en tiempo real.',
+      },
       description: {
         en: 'Please confirm the number of half days and full days of care you provided for each child. If you did not provide care, please enter 0.',
         es: 'Confirme las horas de cuidado que proporcionó para cada niño para la semana. Si no proporcionó cuidado, ingrese 0.',
