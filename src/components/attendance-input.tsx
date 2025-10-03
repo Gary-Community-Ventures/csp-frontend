@@ -69,7 +69,7 @@ export function AttendanceInput({
               id={id}
               type="number"
               placeholder={text(t.halfDayInputPlaceholder)}
-              value={fullDays === null ? '' : String(halfDays)}
+              value={halfDays === null ? '' : String(halfDays)}
               onChange={(event) => {
                 const rawValue = event.target.value
                 if (rawValue === '') {
