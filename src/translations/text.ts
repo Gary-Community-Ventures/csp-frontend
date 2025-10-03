@@ -373,8 +373,8 @@ export const translations = {
         es: 'Horas',
       },
       daysLabel: {
-        en: 'Days',
-        es: 'Días',
+        en: 'Full Days',
+        es: 'Días Completos',
       },
       halfDaysLabel: {
         en: 'Half Days',
