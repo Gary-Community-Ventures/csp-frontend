@@ -39,7 +39,7 @@ export async function loadFamilyData({
       }),
     ])
 
-    // If the family request 404ed and a child ID is present, try redirecting to the default child ID
+    // If the family request returned a 404 status code and a child ID is present, try redirecting to the default child ID
     if (familyRes.status === 404 && params.childId !== undefined) {
       await redirectToDefaultId({ context, abortController })
     }
