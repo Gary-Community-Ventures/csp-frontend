@@ -1253,7 +1253,7 @@ export const translations = {
     attendance: {
       ...attendance,
       allSetDescription: {
-        en: 'Come back next week to verify your attendance for this week. Failure to continually verify childcare you provider will result in the inability for families to make payments to you.',
+        en: 'Come back next week to verify your attendance for this week. Failure to continually verify childcare you provide will result in the inability for families to make payments to you.',
         es: 'Vuelve la semana siguiente para verificar tu asistencia para esta semana. Si no verificas continuamente el cuidado que proporcionaste, no podrás hacer pagos a tu proveedor. Si tu proveedor es un centro de cuidado infantil o de hogar, asegúrate de que verifica el cuidado semanal para que puedan seguir recibiendo pagos en tiempo real.',
       },
       description: {
