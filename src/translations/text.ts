@@ -314,8 +314,8 @@ export const translations = {
         es: 'Los medios días deben ser un número entero no negativo menor o igual a 31',
       },
       paymentDescription: {
-        en: 'Submit the payment amount and days to {providerName} for {childFirstName}.',
-        es: 'Enviar el monto del pago y los días a {providerName} para {childFirstName}.',
+        en: 'Enter the payment amount you would like to submit and the number of full days and half days of care that this amount covers.',
+        es: 'Ingrese el monto del pago que desea enviar y la cantidad de días completos y medios días de cuidado que cubre este monto.',
       },
       amountLabel: {
         en: 'Amount (USD)',

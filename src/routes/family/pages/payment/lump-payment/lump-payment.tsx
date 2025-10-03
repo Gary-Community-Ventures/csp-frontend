@@ -222,13 +222,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
   return (
     <div className="flex flex-col items-center gap-8 p-4 min-w-[320px] pb-8">
       <div className="text-center w-full max-w-md md:max-w-2xl">
-        <Text
-          text={t.paymentDescription}
-          data={{
-            providerName: provider?.name,
-            childFirstName: child?.firstName,
-          }}
-        />
+        <Text text={t.paymentDescription} />
       </div>
 
       <div className="w-full max-w-md md:max-w-2xl">
