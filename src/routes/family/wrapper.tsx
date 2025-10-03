@@ -24,6 +24,7 @@ export type Provider = {
   type: 'ffn' | 'lhb' | 'center'
   isPayable: boolean
   isPaymentEnabled: boolean
+  attendanceIsOverdue: boolean
 }
 
 export type Child = {
@@ -50,6 +51,7 @@ export type FamilyContext = {
   isAlsoProvider: boolean
   canMakePayments: boolean
   paymentHistory: FamilyPaymentHistoryResponse
+  attendanceDue: boolean
 }
 
 const FamilyContext = createContext<FamilyContext | undefined>(undefined)
@@ -74,6 +76,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
         type: provider.type,
         isPaymentEnabled: provider.is_payment_enabled,
         isPayable: provider.is_payable,
+        attendanceIsOverdue: provider.attendance_is_overdue,
       }
     }),
     children: familyData.children.map((child) => {
@@ -86,6 +89,7 @@ export function FamilyWrapper({ children }: PropsWithChildren) {
     isAlsoProvider: familyData.is_also_provider,
     canMakePayments: familyData.can_make_payments,
     paymentHistory,
+    attendanceDue: familyData.attendance_due,
     navBar: {
       notifications: familyData.notifications,
       setHidden,

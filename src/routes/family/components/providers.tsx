@@ -21,7 +21,8 @@ type PayButtonProps = {
 
 function PayButton({ provider }: PayButtonProps) {
   const t = translations.family.providerList
-  const { selectedChildInfo, canMakePayments } = useFamilyContext()
+  const { selectedChildInfo, attendanceDue, canMakePayments } =
+    useFamilyContext()
   const [isOpen, setIsOpen] = useState(false)
 
   // Determine button state and disabled reason
@@ -63,6 +64,20 @@ function PayButton({ provider }: PayButtonProps) {
     disabledReason = !canMakePayments
       ? t.disabledReasons.accountIssue
       : t.disabledReasons.providerNotConfigured
+  } else if (provider.attendanceIsOverdue) {
+    buttonContent = (
+      <div className="inline-block">
+        <Button disabled>
+          <Text text={t.payProvider} />
+        </Button>
+      </div>
+    )
+
+    if (attendanceDue) {
+      disabledReason = t.disabledReasons.familyAttendanceOverdue
+    } else {
+      disabledReason = t.disabledReasons.providerAttendanceOverdue
+    }
   } else {
     // Can make payment - show active button
     buttonContent = (

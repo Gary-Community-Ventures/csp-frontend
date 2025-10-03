@@ -465,6 +465,14 @@ export const translations = {
           en: 'This provider is not yet fully part of the program.',
           es: 'Este proveedor aún no es completamente parte del programa.',
         },
+        providerAttendanceOverdue: {
+          en: 'This provider has not yet submitted their attendance.',
+          es: 'Este proveedor aún no ha enviado su asistencia.',
+        },
+        familyAttendanceOverdue: {
+          en: 'You need to submit your attendance for last week to submit your payment.',
+          es: 'Debes enviar tu asistencia para la última semana para enviar tu pago.',
+        },
       },
     },
     providerPage: {
