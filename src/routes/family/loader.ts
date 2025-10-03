@@ -39,6 +39,12 @@ export async function loadFamilyData({
       }),
     ])
 
+    if (familyRes.status === 404 && params.childId !== undefined) {
+      // If the family request failed and a child ID is present, try redirecting to the default child ID
+      console.log('Family request failed, redirecting to default child ID')
+      await redirectToDefaultId({ context, abortController })
+    }
+
     handleStatusCodes(context, familyRes)
 
     const rawJson = (await familyRes.json()) as Family
