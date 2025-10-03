@@ -322,8 +322,8 @@ export const translations = {
         es: 'Monto (USD)',
       },
       daysLabel: {
-        en: 'Days',
-        es: 'Días',
+        en: 'Full Days',
+        es: 'Días Completos',
       },
       halfDaysLabel: {
         en: 'Half Days',
