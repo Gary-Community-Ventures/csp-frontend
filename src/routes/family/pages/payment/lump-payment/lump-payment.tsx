@@ -68,7 +68,7 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
         },
         {
           message: text(t.daysOrHalfDaysRequired),
-          path: ['days', 'halfDays'],
+          path: ['days'],
         }
       )
   )
