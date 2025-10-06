@@ -310,8 +310,8 @@ export const translations = {
         es: 'Los medios días deben ser un número entero no negativo menor o igual a 31',
       },
       daysOrHalfDaysRequired: {
-        en: 'At least one full day or half day must be greater than 0',
-        es: 'Al menos un día completo o medio día debe ser mayor que 0',
+        en: 'You must enter at least one full day or one half day',
+        es: 'Debe ingresar al menos un día completo o un medio día',
       },
       paymentDescription: {
         en: 'Enter the payment amount you would like to submit and the number of full days and half days of care that this amount covers.',
