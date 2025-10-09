@@ -314,7 +314,7 @@ async function submitAttendance(
 
   handleStatusCodes(context, res)
   if (!res.ok) {
-    throw new Error(`Failed to invite provider: ${res.statusText}`)
+    throw new Error(`Failed to submit attendance: ${res.statusText}`)
   }
 
   return res.json()

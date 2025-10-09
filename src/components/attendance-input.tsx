@@ -40,9 +40,9 @@ export function AttendanceInput({
         <div className="flex gap-2">
           <div className="max-w-[15rem]">
             <Input
-              id={id}
               type="number"
               placeholder={text(t.fullDayInputPlaceholder)}
+              floatingLabel
               value={fullDays === null ? '' : String(fullDays)}
               onChange={(event) => {
                 const rawValue = event.target.value
@@ -66,9 +66,9 @@ export function AttendanceInput({
           </div>
           <div className="max-w-[15rem]">
             <Input
-              id={id}
               type="number"
               placeholder={text(t.halfDayInputPlaceholder)}
+              floatingLabel
               value={halfDays === null ? '' : String(halfDays)}
               onChange={(event) => {
                 const rawValue = event.target.value
