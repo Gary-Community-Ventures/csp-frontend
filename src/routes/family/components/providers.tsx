@@ -64,6 +64,15 @@ function PayButton({ provider }: PayButtonProps) {
     disabledReason = !canMakePayments
       ? t.disabledReasons.accountIssue
       : t.disabledReasons.providerNotConfigured
+  } else if (attendanceDue) {
+    buttonContent = (
+      <div className="inline-block">
+        <Button disabled>
+          <Text text={t.payProvider} />
+        </Button>
+      </div>
+    )
+    disabledReason = t.disabledReasons.familyAttendanceOverdue
   } else if (provider.attendanceIsOverdue) {
     buttonContent = (
       <div className="inline-block">
@@ -72,12 +81,7 @@ function PayButton({ provider }: PayButtonProps) {
         </Button>
       </div>
     )
-
-    if (attendanceDue) {
-      disabledReason = t.disabledReasons.familyAttendanceOverdue
-    } else {
-      disabledReason = t.disabledReasons.providerAttendanceOverdue
-    }
+    disabledReason = t.disabledReasons.providerAttendanceOverdue
   } else {
     // Can make payment - show active button
     buttonContent = (

@@ -8,7 +8,6 @@ import {
   createRoute,
   redirect,
 } from '@tanstack/react-router'
-import { Wrapper } from '@/context'
 import { adminRouteTree } from './admin/routes'
 import { providerRouteTree } from './provider/routes'
 import { familyRouteTree } from './family/routes'
@@ -26,10 +25,10 @@ export type RouterContext = {
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: () => {
     return (
-      <Wrapper>
+      <>
         <EnvironmentBanner />
         <Outlet />
-      </Wrapper>
+      </>
     )
   },
   errorComponent: ErrorFallback,
