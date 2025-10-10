@@ -48,17 +48,29 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
   }
 
   const lumpSumSchema = useZodSchema(
-    z.object({
-      amount: z.string().refine((val) => parseFloat(val) > 0, {
-        message: text(t.amountRequired),
-      }),
-      days: z.string().refine((val) => val === '' || validateDays(val), {
-        message: text(t.daysRequired),
-      }),
-      halfDays: z.string().refine((val) => val === '' || validateDays(val), {
-        message: text(t.halfDaysRequired),
-      }),
-    })
+    z
+      .object({
+        amount: z.string().refine((val) => parseFloat(val) > 0, {
+          message: text(t.amountRequired),
+        }),
+        days: z.string().refine((val) => val === '' || validateDays(val), {
+          message: text(t.daysRequired),
+        }),
+        halfDays: z.string().refine((val) => val === '' || validateDays(val), {
+          message: text(t.halfDaysRequired),
+        }),
+      })
+      .refine(
+        (data) => {
+          const days = parseInt(data.days || '0', 10)
+          const halfDays = parseInt(data.halfDays || '0', 10)
+          return days > 0 || halfDays > 0
+        },
+        {
+          message: text(t.daysOrHalfDaysRequired),
+          path: ['days'],
+        }
+      )
   )
   type LumpSumForm = z.infer<typeof lumpSumSchema>
 
