@@ -95,6 +95,7 @@ export default defineConfig({
         'favicon.png',
         'cap_circle_logo_white.png',
         'cap_full_logo_white.png',
+        'bimi.svg',
       ],
       manifest: {
         name: 'Cap',
