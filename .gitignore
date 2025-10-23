@@ -41,17 +41,5 @@ dist/
 # macOS
 .DS_Store
 
-# editorconfig
-.editorconfig
-
-# Prettier
-.prettierignore
-
-# ESLint
-.eslintcache
-
 # TypeScript
 *.tsbuildinfo
-
-# Shadcn UI
-components.json
