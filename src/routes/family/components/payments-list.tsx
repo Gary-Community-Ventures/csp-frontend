@@ -64,6 +64,7 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
                 {new Date(payment.month).toLocaleDateString(lang, {
                   year: 'numeric',
                   month: 'short',
+                  timeZone: 'UTC',
                 })}
               </div>
             </div>
