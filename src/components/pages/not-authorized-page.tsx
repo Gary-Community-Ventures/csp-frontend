@@ -10,7 +10,7 @@ export const NotAuthorizedPage = () => {
       <Header Tag="h1">
         <Text text={t.title} />
       </Header>
-      <p className="text-lg text-muted-foreground mb-8">
+      <p className="mb-8 text-lg text-muted-foreground">
         <Text text={t.message} />
       </p>
       <a
