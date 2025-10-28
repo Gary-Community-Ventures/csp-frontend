@@ -1459,6 +1459,20 @@ export const translations = {
         es: 'Parece que estás desconectado. Por favor, revisa tu conexión a Internet.',
       },
     },
+    notAuthorizedPage: {
+      title: {
+        en: 'You are not authorized to access this resource',
+        es: 'No estás autorizado para acceder a este recurso',
+      },
+      message: {
+        en: 'It looks like you do not have access to the CAP Colorado Portal. To gain access you must complete the CAP Colorado application process.',
+        es: 'Parece que no tienes acceso al Portal de CAP Colorado. Para obtener acceso, debes completar el proceso de solicitud de CAP Colorado.',
+      },
+      link: {
+        en: 'Visit the CAP Colorado website for more information',
+        es: 'Visite el sitio web de CAP Colorado para más información',
+      },
+    },
     attendanceInput: {
       fullDayInputPlaceholder: {
         en: 'Full Days',
