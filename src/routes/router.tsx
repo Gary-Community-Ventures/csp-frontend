@@ -59,6 +59,7 @@ export const redirectToProviderOrFamily = createRoute({
       (context.user.publicMetadata.family_id === undefined &&
         context.user.publicMetadata.provider_id === undefined)
     ) {
+      // Eventually we will redirect to application once the application is complete
       throw redirect({
         to: '/not-authorized',
       })
