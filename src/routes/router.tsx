@@ -69,10 +69,10 @@ export const redirectToProviderOrFamily = createRoute({
 
     const types = context.user.publicMetadata.types
 
-    if (Array.isArray(types) && types.includes('family')) {
+    if (types.includes('family')) {
       throw redirect({ to: '/family' })
     }
-    if (Array.isArray(types) && types.includes('provider')) {
+    if (types.includes('provider')) {
       throw redirect({ to: '/provider' })
     }
   },
