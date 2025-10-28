@@ -1468,6 +1468,10 @@ export const translations = {
         en: 'It looks like you do not have access to the CAP Colorado Portal. To gain access you must complete the CAP Colorado application process.',
         es: 'Parece que no tienes acceso al Portal de CAP Colorado. Para obtener acceso, debes completar el proceso de solicitud de CAP Colorado.',
       },
+      link: {
+        en: 'Visit the CAP Colorado website for more information',
+        es: 'Visite el sitio web de CAP Colorado para más información',
+      },
     },
     attendanceInput: {
       fullDayInputPlaceholder: {

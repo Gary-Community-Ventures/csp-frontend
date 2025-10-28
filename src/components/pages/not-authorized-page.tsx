@@ -13,6 +13,14 @@ export const NotAuthorizedPage = () => {
       <p className="text-lg text-muted-foreground mb-8">
         <Text text={t.message} />
       </p>
+      <a
+        href="https://www.capcolorado.org"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary underline hover:text-primary/80"
+      >
+        <Text text={t.link} />
+      </a>
     </div>
   )
 }
