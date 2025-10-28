@@ -23,6 +23,14 @@ export type RouterContext = {
   clerk: LoadedClerk | null
 }
 
+const isUserAuthorized = (user: UserResource): boolean => {
+  const types = user.publicMetadata.types
+  const hasFamilyId = user.publicMetadata.family_id !== undefined
+  const hasProviderId = user.publicMetadata.provider_id !== undefined
+
+  return Array.isArray(types) && (hasFamilyId || hasProviderId)
+}
+
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: () => {
     return (
@@ -52,23 +60,19 @@ export const redirectToProviderOrFamily = createRoute({
       })
     }
 
-    const types = context.user.publicMetadata.types
-
-    if (
-      !Array.isArray(types) ||
-      (context.user.publicMetadata.family_id === undefined &&
-        context.user.publicMetadata.provider_id === undefined)
-    ) {
+    if (!isUserAuthorized(context.user)) {
       // Eventually we will redirect to application once the application is complete
       throw redirect({
         to: '/not-authorized',
       })
     }
 
-    if (types.includes('family')) {
+    const types = context.user.publicMetadata.types
+
+    if (Array.isArray(types) && types.includes('family')) {
       throw redirect({ to: '/family' })
     }
-    if (types.includes('provider')) {
+    if (Array.isArray(types) && types.includes('provider')) {
       throw redirect({ to: '/provider' })
     }
   },
