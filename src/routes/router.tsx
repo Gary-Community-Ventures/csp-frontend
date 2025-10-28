@@ -14,6 +14,7 @@ import { familyRouteTree } from './family/routes'
 import { authRouteTree } from './auth/routes'
 import type { UserResource, GetToken, LoadedClerk } from '@clerk/types'
 import { inviteRouteTree } from './invite/routes'
+import { NotAuthorizedPage } from '@/components/pages/not-authorized-page'
 
 export type RouterContext = {
   user: UserResource | null
@@ -34,6 +35,12 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
   errorComponent: ErrorFallback,
 })
 
+export const notAuthorizedRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/not-authorized',
+  component: NotAuthorizedPage,
+})
+
 export const redirectToProviderOrFamily = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
@@ -47,8 +54,14 @@ export const redirectToProviderOrFamily = createRoute({
 
     const types = context.user.publicMetadata.types
 
-    if (!Array.isArray(types)) {
-      throw new Error('User has no types')
+    if (
+      !Array.isArray(types) ||
+      (context.user.publicMetadata.family_id === undefined &&
+        context.user.publicMetadata.provider_id === undefined)
+    ) {
+      throw redirect({
+        to: '/not-authorized',
+      })
     }
 
     if (types.includes('family')) {
@@ -67,6 +80,7 @@ export const routeTree = rootRoute.addChildren([
   familyRouteTree,
   authRouteTree,
   inviteRouteTree,
+  notAuthorizedRoute,
 ])
 
 export const router = new Router({
