@@ -1,6 +1,7 @@
 import { Header } from '../header'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { ExternalLink } from '../external-link'
 
 export const NotAuthorizedPage = () => {
   const t = translations.general.notAuthorizedPage
@@ -13,14 +14,12 @@ export const NotAuthorizedPage = () => {
       <p className="mb-8 text-lg text-muted-foreground">
         <Text text={t.message} />
       </p>
-      <a
+      <ExternalLink
         href="https://www.capcolorado.org"
-        target="_blank"
-        rel="noopener noreferrer"
         className="text-primary underline hover:text-primary/80"
       >
         <Text text={t.link} />
-      </a>
+      </ExternalLink>
     </div>
   )
 }

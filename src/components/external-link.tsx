@@ -13,7 +13,7 @@ export function ExternalLink({
     <a
       href={href}
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       {...restOfProps}
       onClick={(e) => {
         if (href !== undefined) {
