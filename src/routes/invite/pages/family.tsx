@@ -22,6 +22,7 @@ import { useState } from 'react'
 import { useValidateForm, useZodSchema } from '@/lib/schemas'
 import { Label } from '@/components/ui/label'
 import { FormErrorMessage } from '@/components/form-error'
+import { APPLICATION_FAMILY_URL } from '@/lib/constants'
 
 type ApiResponse = {
   provider: {
@@ -104,15 +105,13 @@ export async function loadFamilyInvite({
   }
 }
 
-const BASE_APPLY_FORM_URL = 'https://form.jotform.com/252036367719058'
-
 export function FamilyInvitePage() {
   const t = translations.invite.family
   const clerk = useClerk()
   const { invite } = familyRoute.useLoaderData()
   const { inviteId } = familyRoute.useParams()
 
-  const formUrl = new URL(BASE_APPLY_FORM_URL)
+  const formUrl = new URL(APPLICATION_FAMILY_URL)
   formUrl.searchParams.append('link_id', inviteId)
 
   const providerName =
