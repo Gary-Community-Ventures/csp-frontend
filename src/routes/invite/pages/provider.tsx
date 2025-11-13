@@ -175,7 +175,7 @@ function SignedInOptions() {
 
     const types = user.publicMetadata.types as string[]
 
-    return types.includes(CLERK_PROVIDER_TYPE)
+    return types?.includes(CLERK_PROVIDER_TYPE)
   }, [user, isLoaded, isSignedIn])
 
   const { alreadyCaringFor, atMaxChildCount } = invite
