@@ -5,13 +5,10 @@ import { useProviderContext } from '../wrapper'
 import { ProviderPaymentsList } from '@/routes/provider/components/payments-list'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { Button } from '@/components/ui/button'
-import { Link } from '@tanstack/react-router'
-import { Plus } from 'lucide-react'
 
 export function ProviderHomePage() {
   const t = translations.provider.home
-  const { children, curriculum, maxChildCount, paymentHistory, providerInfo } =
+  const { children, curriculum, paymentHistory, providerInfo } =
     useProviderContext()
 
   return (
@@ -29,14 +26,6 @@ export function ProviderHomePage() {
           <Header>
             <Text text={t.children} />
           </Header>
-          {maxChildCount - children.length > 0 && (
-            <Button variant="linkButton" size="textLarge" asChild>
-              <Link to="/provider/families/invite">
-                <Plus className="size-6" />
-                <Text text={t.inviteFamily} />
-              </Link>
-            </Button>
-          )}
         </div>
         <ChildrenList children={children} />
       </section>
