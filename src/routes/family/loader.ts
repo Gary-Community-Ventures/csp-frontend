@@ -101,6 +101,7 @@ export type Provider = {
   type: 'ffn' | 'lhb' | 'center'
   is_payable: boolean
   is_payment_enabled: boolean
+  attendance_is_overdue: boolean
 }
 
 export type Child = {
@@ -120,4 +121,5 @@ export type Family = {
   notifications: Notification[]
   is_also_provider: boolean
   can_make_payments: boolean
+  attendance_due: boolean
 }

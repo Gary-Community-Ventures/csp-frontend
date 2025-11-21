@@ -17,7 +17,7 @@ import { Link, useMatch, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { ExternalLink } from '@/components/external-link'
 import { useMemo, useState } from 'react'
-import { CLERK_PROVIDER_TYPE } from '@/lib/constants'
+import { CLERK_PROVIDER_TYPE, APPLICATION_PROVIDER_URL } from '@/lib/constants'
 
 type ApiResponse = {
   child: {
@@ -91,12 +91,10 @@ export async function loadProviderInvite({
   }
 }
 
-const BASE_APPLY_FORM_URL = 'https://form.jotform.com/252056647581159'
-
 function useFormUrl() {
   const { inviteId } = providerRoute.useParams()
 
-  const formUrl = new URL(BASE_APPLY_FORM_URL)
+  const formUrl = new URL(APPLICATION_PROVIDER_URL)
   formUrl.searchParams.append('link_id', inviteId)
 
   return formUrl.href
@@ -177,7 +175,7 @@ function SignedInOptions() {
 
     const types = user.publicMetadata.types as string[]
 
-    return types.includes(CLERK_PROVIDER_TYPE)
+    return types?.includes(CLERK_PROVIDER_TYPE)
   }, [user, isLoaded, isSignedIn])
 
   const { alreadyCaringFor, atMaxChildCount } = invite

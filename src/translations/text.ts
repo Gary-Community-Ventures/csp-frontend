@@ -309,6 +309,10 @@ export const translations = {
         en: 'Half days must be a non-negative integer less than or equal to 31',
         es: 'Los medios días deben ser un número entero no negativo menor o igual a 31',
       },
+      daysOrHalfDaysRequired: {
+        en: 'You must enter at least one full day or one half day',
+        es: 'Debe ingresar al menos un día completo o un medio día',
+      },
       paymentDescription: {
         en: 'Enter the payment amount you would like to submit and the number of full days and half days of care that this amount covers.',
         es: 'Ingrese el monto del pago que desea enviar y la cantidad de días completos y medios días de cuidado que cubre este monto.',
@@ -464,6 +468,14 @@ export const translations = {
         providerNotActive: {
           en: 'This provider is not yet fully part of the program.',
           es: 'Este proveedor aún no es completamente parte del programa.',
+        },
+        providerAttendanceOverdue: {
+          en: 'This provider has not yet submitted their attendance.',
+          es: 'Este proveedor aún no ha enviado su asistencia.',
+        },
+        familyAttendanceOverdue: {
+          en: 'You need to submit your attendance for last week to submit your payment.',
+          es: 'Debes enviar tu asistencia para la última semana para enviar tu pago.',
         },
       },
     },
@@ -1445,6 +1457,20 @@ export const translations = {
       message: {
         en: 'It looks like you are offline. Please check your internet connection.',
         es: 'Parece que estás desconectado. Por favor, revisa tu conexión a Internet.',
+      },
+    },
+    notAuthorizedPage: {
+      title: {
+        en: 'You are not authorized to access this resource',
+        es: 'No estás autorizado para acceder a este recurso',
+      },
+      message: {
+        en: 'It looks like you do not have access to the CAP Colorado Portal. To gain access you must complete the CAP Colorado application process.',
+        es: 'Parece que no tienes acceso al Portal de CAP Colorado. Para obtener acceso, debes completar el proceso de solicitud de CAP Colorado.',
+      },
+      link: {
+        en: 'Visit the CAP Colorado website for more information',
+        es: 'Visite el sitio web de CAP Colorado para más información',
       },
     },
     attendanceInput: {

@@ -55,12 +55,19 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectManifest: {
+        buildId: new Date().getTime().toString(), // Force new service worker on each build
+      },
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
         // Use StaleWhileRevalidate for most resources - always serve from cache but update in background
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        navigateFallbackDenylist: [
+          /^https:\/\/csp-backend-staging-9941beb4ce92\.herokuapp\.com\//,
+          /^https:\/\/api\.capcolorado\.org\//,
+        ],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -88,6 +95,7 @@ export default defineConfig({
         'favicon.png',
         'cap_circle_logo_white.png',
         'cap_full_logo_white.png',
+        'bimi.svg',
       ],
       manifest: {
         name: 'Cap',
