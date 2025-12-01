@@ -205,5 +205,13 @@ function FamilyNotificationBanner({
     )
   }
 
+  if (notification.type === 'no_provider_invited') {
+    return (
+      <NotificationBanner link={{ to: '/family/$childId/providers/invite' }}>
+        <Text text={t.noProviderInvited} />
+      </NotificationBanner>
+    )
+  }
+
   return null
 }

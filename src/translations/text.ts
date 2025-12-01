@@ -414,6 +414,10 @@ export const translations = {
           en: 'Unfortunately, your application was denied for this child',
           es: 'Lamentablemente, tu solicitud fue rechazada para este niño',
         },
+        noProviderInvited: {
+          en: 'The next step in the application process is to invite your provider to join CAP.',
+          es: 'El siguiente paso en el proceso de solicitud es invitar a tu proveedor a unirse a CAP.',
+        },
       },
     },
     home: {
