@@ -90,9 +90,10 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
           date: selectedDate.toISOString().split('T')[0],
         })
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Error message is already parsed in the API function
-      const errorMessage = error?.message || text(t.careDayError)
+      const errorMessage =
+        error instanceof Error ? error.message : text(t.careDayError)
       toast.error(errorMessage)
     }
   }
