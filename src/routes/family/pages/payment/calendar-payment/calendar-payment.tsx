@@ -26,7 +26,6 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
   const navigate = useNavigate()
   const text = useText()
   const {
-    date,
     setDate,
     allocationQuery,
     paymentRateQuery,
