@@ -49,8 +49,21 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
 
   const hasPendingPartialPayments = allocationQuery.data?.care_days.some(
     (careDay) =>
-      careDay.status === 'needs_submission' && careDay.is_partial_payment
+      careDay.status === 'needs_submission' &&
+      careDay.is_partial_payment &&
+      !careDay.is_deleted
   )
+
+  const totalMissingAmountCents =
+    allocationQuery.data?.care_days
+      .filter(
+        (careDay) =>
+          careDay.status === 'needs_submission' &&
+          careDay.is_partial_payment &&
+          !careDay.is_deleted
+      )
+      .reduce((sum, careDay) => sum + (careDay.amount_missing_cents || 0), 0) ||
+    0
 
   // Reset checkbox when partial payments change or disappear
   React.useEffect(() => {
@@ -158,27 +171,25 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
       />
       {hasPendingPartialPayments && (
         <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl p-6">
-          <label className="flex items-start gap-3 cursor-pointer group">
+          <div className="text-sm text-gray-700 leading-relaxed mb-4">
+            <Text text={t.partialPaymentWarning} />
+          </div>
+          <label className="flex items-center gap-3 cursor-pointer group">
             <Checkbox
               checked={partialPaymentAcknowledged}
               onCheckedChange={(checked) =>
                 setPartialPaymentAcknowledged(checked === true)
               }
-              className="mt-0.5"
               aria-invalid={showPartialPaymentError}
             />
-            <span className="text-sm text-gray-700 leading-relaxed select-none">
-              <Text
-                text={t.partialPaymentWarning}
-                data={{
-                  halfDayRate: formatAmount(
-                    paymentRateQuery.data?.half_day_rate_cents || 0
-                  ),
-                  fullDayRate: formatAmount(
-                    paymentRateQuery.data?.full_day_rate_cents || 0
-                  ),
-                }}
-              />
+            <span className="select-none">
+              <div className="font-semibold text-base">
+                <Text text={t.partialPaymentAmount} />{' '}
+                <span className="text-xl font-bold text-red-600">
+                  {formatAmount(totalMissingAmountCents)}
+                </span>{' '}
+                <Text text={t.partialPaymentAmountSuffix} />
+              </div>
             </span>
           </label>
           {showPartialPaymentError && (
