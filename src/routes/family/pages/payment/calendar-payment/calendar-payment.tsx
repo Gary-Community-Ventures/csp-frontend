@@ -1,5 +1,5 @@
 import React from 'react'
-import { useBlocker } from '@tanstack/react-router'
+import { useBlocker, useNavigate } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { useFamilyContext } from '@/routes/family/wrapper'
@@ -16,11 +16,17 @@ import { allocatedCareDaySchema } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
 import { LoadingPage } from '@/components/pages/loading-page'
 import { findChildById } from '@/lib/children'
+import { calendarPaymentConfirmationRoute } from '@/routes/family/routes'
+import { toast } from 'sonner'
+import { useText } from '@/translations/wrapper'
 
 export function CalendarPaymentPage({ provider }: { provider: Provider }) {
   const t = translations.family.calendarPaymentPage
   const { children, selectedChildInfo } = useFamilyContext()
+  const navigate = useNavigate()
+  const text = useText()
   const {
+    date,
     setDate,
     allocationQuery,
     paymentRateQuery,
@@ -36,6 +42,7 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
     React.useState(false)
   const [showPartialPaymentError, setShowPartialPaymentError] =
     React.useState(false)
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
 
   const hasPendingChanges = allocationQuery.data?.care_days.some(
     (careDay) => careDay.status === 'needs_submission'
@@ -62,7 +69,7 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
   }, [partialPaymentAcknowledged])
 
   const blocker = useBlocker({
-    shouldBlockFn: () => !!hasPendingChanges,
+    shouldBlockFn: () => !!hasPendingChanges && !isSubmitting,
     withResolver: true,
   })
 
@@ -184,7 +191,38 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
               setShowPartialPaymentError(true)
               return
             }
-            submitCareDaysMutation.mutate()
+            setIsSubmitting(true)
+            submitCareDaysMutation.mutate(undefined, {
+              onSuccess: () => {
+                const submittedCareDays =
+                  allocationQuery.data?.care_days.filter(
+                    (day) => day.status === 'needs_submission'
+                  )
+                const careDaysCount = submittedCareDays?.length || 0
+                const totalAmount = submittedCareDays?.reduce(
+                  (sum, day) => sum + day.amount_cents,
+                  0
+                )
+
+                toast.success(text(t.calendarPaymentSuccess))
+                navigate({
+                  to: calendarPaymentConfirmationRoute.to,
+                  search: {
+                    providerName: provider?.name || '',
+                    childName: child?.firstName || '',
+                    month: allocationQuery.data?.date || '',
+                    careDaysCount: careDaysCount.toString(),
+                    amount: ((totalAmount || 0) / 100).toFixed(2),
+                    providerId: provider.id,
+                  },
+                })
+              },
+              onError: (error) => {
+                console.error('Calendar payment submission error:', error)
+                toast.error(text(t.calendarPaymentError))
+                setIsSubmitting(false)
+              },
+            })
           }}
           disabled={!hasPendingChanges || submitCareDaysMutation.isPending}
           className="w-full max-w-md md:max-w-2xl py-3 text-lg"

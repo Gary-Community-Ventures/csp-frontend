@@ -10,6 +10,7 @@ import { PaymentPage } from './pages/payment/payment'
 import { InviteProviderPage } from './pages/invite-provider'
 import { InviteProviderConfirmationPage } from './pages/invite-provider-confirmation'
 import { LumpSumConfirmationPage } from './pages/payment/lump-payment/lump-payment-confirmation'
+import { CalendarPaymentConfirmationPage } from './pages/payment/calendar-payment/calendar-payment-confirmation'
 import { AttendancePage, loadAttendance } from './pages/attendance'
 
 export const familyRoute = createRoute({
@@ -113,6 +114,20 @@ export const lumpPaymentConfirmationRoute = createRoute({
   }),
 })
 
+export const calendarPaymentConfirmationRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: 'payment/calendar-payment/confirmation',
+  component: CalendarPaymentConfirmationPage,
+  validateSearch: z.object({
+    providerName: z.string().optional(),
+    childName: z.string().optional(),
+    month: z.string().optional(),
+    careDaysCount: z.string().optional(),
+    amount: z.string().optional(),
+    providerId: z.string().optional(),
+  }),
+})
+
 export const attendanceRoute = createRoute({
   getParentRoute: () => familyWithIdRoute,
   path: 'attendance',
@@ -138,6 +153,7 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   inviteProviderRoute,
   inviteProviderConfirmationRoute,
   lumpPaymentConfirmationRoute,
+  calendarPaymentConfirmationRoute,
   attendanceRoute,
 ])
 

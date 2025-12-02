@@ -283,8 +283,58 @@ export const translations = {
         en: 'You must confirm you understand you need to cover the remaining payment.',
         es: 'Debe confirmar que comprende que debe cubrir el pago restante.',
       },
+      calendarPaymentSuccess: {
+        en: 'Payment successful!',
+        es: '¡Pago exitoso!',
+      },
+      calendarPaymentError: {
+        en: 'Failed to submit payment',
+        es: 'Error al enviar el pago',
+      },
       submitButton: submitButton,
       submittingButton: submittingButton,
+    },
+    calendarPaymentConfirmationPage: {
+      header: {
+        en: 'Payment Submitted',
+        es: 'Pago Enviado',
+      },
+      successMessage: {
+        en: 'Your payment has been successfully submitted.',
+        es: 'Su pago ha sido enviado exitosamente.',
+      },
+      errorHeader: {
+        en: 'Oops! Something went wrong',
+        es: 'Ups! Algo salió mal',
+      },
+      errorMessage: {
+        en: "We couldn't load the payment confirmation details. Please return home.",
+        es: 'No pudimos cargar los detalles de confirmación del pago. Por favor, regrese al inicio.',
+      },
+      providerLabel: {
+        en: 'Provider',
+        es: 'Proveedor',
+      },
+      childLabel: {
+        en: 'Child',
+        es: 'Niño',
+      },
+      monthLabel: {
+        en: 'Month',
+        es: 'Mes',
+      },
+      careDaysLabel: {
+        en: 'Care Days',
+        es: 'Días de Cuidado',
+      },
+      amountLabel: {
+        en: 'Amount',
+        es: 'Monto',
+      },
+      backButton: {
+        en: 'Back to Home',
+        es: 'Volver al Inicio',
+      },
     },
     paymentPage: {
       providerNotFound: {
