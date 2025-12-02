@@ -43,7 +43,7 @@ export function CalendarPaymentConfirmationPage() {
   }
 
   const { providerName, childName, month, careDaysCount, amount } = search
-  const formattedAmount = formatAmount(parseFloat(amount) * 100)
+  const formattedAmount = formatAmount(parseFloat(amount!) * 100)
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
@@ -72,7 +72,7 @@ export function CalendarPaymentConfirmationPage() {
           <span className="font-semibold">
             <Text text={t.monthLabel} />
           </span>
-          <span>{formatMonthForDisplay(month, lang)}</span>
+          <span>{formatMonthForDisplay(month!, lang)}</span>
         </div>
         <div className="flex justify-between py-2 border-b">
           <span className="font-semibold">
