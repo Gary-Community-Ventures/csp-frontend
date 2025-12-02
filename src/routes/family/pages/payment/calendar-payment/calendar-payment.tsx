@@ -72,22 +72,28 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
     withResolver: true,
   })
 
-  const handleDayTypeChange = (
+  const handleDayTypeChange = async (
     day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
     type: 'Full Day' | 'Half Day' | 'none',
     selectedDate: Date
   ) => {
-    if (type === 'none') {
-      if (day) {
-        deleteCareDayMutation.mutate(day.id)
+    try {
+      if (type === 'none') {
+        if (day) {
+          await deleteCareDayMutation.mutateAsync(day.id)
+        }
+      } else if (day) {
+        await updateCareDayMutation.mutateAsync({ careDayId: day.id, type })
+      } else {
+        await createCareDayMutation.mutateAsync({
+          type,
+          date: selectedDate.toISOString().split('T')[0],
+        })
       }
-    } else if (day) {
-      updateCareDayMutation.mutate({ careDayId: day.id, type })
-    } else {
-      createCareDayMutation.mutate({
-        type,
-        date: selectedDate.toISOString().split('T')[0],
-      })
+    } catch (error: any) {
+      // Error message is already parsed in the API function
+      const errorMessage = error?.message || text(t.careDayError)
+      toast.error(errorMessage)
     }
   }
 

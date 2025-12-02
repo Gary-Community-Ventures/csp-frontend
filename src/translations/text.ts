@@ -291,6 +291,10 @@ export const translations = {
         en: 'Failed to submit payment',
         es: 'Error al enviar el pago',
       },
+      careDayError: {
+        en: 'Failed to update care day',
+        es: 'Error al actualizar el día de cuidado',
+      },
       submitButton: submitButton,
       submittingButton: submittingButton,
     },
