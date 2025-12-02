@@ -159,6 +159,10 @@ export const translations = {
         en: 'Tap once for half day, twice for full day, three times to remove.',
         es: 'Toque una vez para medio día, toque dos veces para día completo y toque tres veces para eliminar.',
       },
+      partialPaymentExplanation: {
+        en: 'Yellow amounts indicate partial payments due to insufficient balance.',
+        es: 'Los montos amarillos indican pagos parciales debido a saldo insuficiente.',
+      },
       daysOfWeek: {
         mon: {
           en: 'Mon',
@@ -270,6 +274,14 @@ export const translations = {
       monthBalance: {
         en: 'Month Balance',
         es: 'Balance del Mes',
+      },
+      partialPaymentWarning: {
+        en: 'Your submission contains a partial payment for one or more days. Please ensure you cover the remaining value as your provider\'s rates are {halfDayRate} for a half day and {fullDayRate} for a full day.',
+        es: 'Su envío contiene un pago parcial para uno o más días. Por favor, asegúrese de cubrir el valor restante ya que las tarifas de su proveedor son {halfDayRate} para medio día y {fullDayRate} para un día completo.',
+      },
+      partialPaymentError: {
+        en: 'You must confirm you understand you need to cover the remaining payment.',
+        es: 'Debe confirmar que comprende que debe cubrir el pago restante.',
       },
       submitButton: submitButton,
       submittingButton: submittingButton,

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useBlocker } from '@tanstack/react-router'
 import { z } from 'zod'
 
@@ -5,6 +6,7 @@ import { useFamilyContext } from '@/routes/family/wrapper'
 import type { Provider } from '@/routes/family/wrapper'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
+import { Checkbox } from '@/components/ui/checkbox'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
 import { usePaymentData } from '../use-payment-data'
@@ -30,12 +32,35 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
     nextMonthAllocationFailed,
   } = usePaymentData()
 
+  const [partialPaymentAcknowledged, setPartialPaymentAcknowledged] =
+    React.useState(false)
+  const [showPartialPaymentError, setShowPartialPaymentError] =
+    React.useState(false)
+
   const hasPendingChanges = allocationQuery.data?.care_days.some(
     (careDay) =>
-      careDay.status === 'new' ||
-      careDay.status === 'needs_resubmission' ||
-      careDay.status === 'delete_not_submitted'
+      careDay.status === 'needs_submission'
   )
+
+  const hasPendingPartialPayments = allocationQuery.data?.care_days.some(
+    (careDay) =>
+      careDay.status === 'needs_submission' && careDay.is_partial_payment
+  )
+
+  // Reset checkbox when partial payments change or disappear
+  React.useEffect(() => {
+    if (!hasPendingPartialPayments) {
+      setPartialPaymentAcknowledged(false)
+      setShowPartialPaymentError(false)
+    }
+  }, [hasPendingPartialPayments])
+
+  // Clear error when checkbox is checked
+  React.useEffect(() => {
+    if (partialPaymentAcknowledged) {
+      setShowPartialPaymentError(false)
+    }
+  }, [partialPaymentAcknowledged])
 
   const blocker = useBlocker({
     shouldBlockFn: () => !!hasPendingChanges,
@@ -119,10 +144,49 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
         nextMonthAllocationFailed={nextMonthAllocationFailed}
         paymentRate={paymentRateQuery.data}
       />
+      {hasPendingPartialPayments && (
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl p-6">
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <Checkbox
+              checked={partialPaymentAcknowledged}
+              onCheckedChange={(checked) =>
+                setPartialPaymentAcknowledged(checked === true)
+              }
+              className="mt-0.5"
+              aria-invalid={showPartialPaymentError}
+            />
+            <span className="text-sm text-gray-700 leading-relaxed select-none">
+              <Text
+                text={t.partialPaymentWarning}
+                data={{
+                  halfDayRate: formatAmount(
+                    paymentRateQuery.data?.half_day_rate_cents || 0
+                  ),
+                  fullDayRate: formatAmount(
+                    paymentRateQuery.data?.full_day_rate_cents || 0
+                  ),
+                }}
+              />
+            </span>
+          </label>
+          {showPartialPaymentError && (
+            <div className="mt-3 text-sm text-red-600 flex items-start gap-2">
+              <span className="text-red-600">⚠</span>
+              <Text text={t.partialPaymentError} />
+            </div>
+          )}
+        </div>
+      )}
       <div className="w-full flex justify-center">
         <Button
           type="button"
-          onClick={() => submitCareDaysMutation.mutate()}
+          onClick={() => {
+            if (hasPendingPartialPayments && !partialPaymentAcknowledged) {
+              setShowPartialPaymentError(true)
+              return
+            }
+            submitCareDaysMutation.mutate()
+          }}
           disabled={!hasPendingChanges || submitCareDaysMutation.isPending}
           className="w-full max-w-md md:max-w-2xl py-3 text-lg"
         >
