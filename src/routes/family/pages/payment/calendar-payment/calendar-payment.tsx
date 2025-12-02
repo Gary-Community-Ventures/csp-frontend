@@ -38,8 +38,7 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
     React.useState(false)
 
   const hasPendingChanges = allocationQuery.data?.care_days.some(
-    (careDay) =>
-      careDay.status === 'needs_submission'
+    (careDay) => careDay.status === 'needs_submission'
   )
 
   const hasPendingPartialPayments = allocationQuery.data?.care_days.some(

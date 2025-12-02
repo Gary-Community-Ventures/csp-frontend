@@ -276,7 +276,7 @@ export const translations = {
         es: 'Balance del Mes',
       },
       partialPaymentWarning: {
-        en: 'Your submission contains a partial payment for one or more days. Please ensure you cover the remaining value as your provider\'s rates are {halfDayRate} for a half day and {fullDayRate} for a full day.',
+        en: "Your submission contains a partial payment for one or more days. Please ensure you cover the remaining value as your provider's rates are {halfDayRate} for a half day and {fullDayRate} for a full day.",
         es: 'Su envío contiene un pago parcial para uno o más días. Por favor, asegúrese de cubrir el valor restante ya que las tarifas de su proveedor son {halfDayRate} para medio día y {fullDayRate} para un día completo.',
       },
       partialPaymentError: {
