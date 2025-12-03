@@ -208,19 +208,19 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
               setShowPartialPaymentError(true)
               return
             }
+
+            const submittedCareDays = allocationQuery.data?.care_days.filter(
+              (day) => day.status === 'needs_submission'
+            )
+            const careDaysCount = submittedCareDays?.length || 0
+            const totalAmount = submittedCareDays?.reduce(
+              (sum, day) => sum + day.amount_cents,
+              0
+            )
+
             setIsSubmitting(true)
             submitCareDaysMutation.mutate(undefined, {
               onSuccess: () => {
-                const submittedCareDays =
-                  allocationQuery.data?.care_days.filter(
-                    (day) => day.status === 'needs_submission'
-                  )
-                const careDaysCount = submittedCareDays?.length || 0
-                const totalAmount = submittedCareDays?.reduce(
-                  (sum, day) => sum + day.amount_cents,
-                  0
-                )
-
                 toast.success(text(t.calendarPaymentSuccess))
                 navigate({
                   to: calendarPaymentConfirmationRoute.to,
@@ -233,10 +233,15 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
                     providerId: provider.id,
                   },
                 })
+                // Navigation happens, so no need to reset isSubmitting
               },
-              onError: (error) => {
+              onError: (error: unknown) => {
                 console.error('Calendar payment submission error:', error)
-                toast.error(text(t.calendarPaymentError))
+                const errorMessage =
+                  error instanceof Error
+                    ? error.message
+                    : text(t.calendarPaymentError)
+                toast.error(errorMessage)
                 setIsSubmitting(false)
               },
             })
