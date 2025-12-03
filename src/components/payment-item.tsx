@@ -18,6 +18,7 @@ interface PaymentItemProps {
   allocationMonth?: string
   renderAmount: (amountCents: number) => React.ReactNode
   amountClassName?: string
+  defaultExpanded?: boolean
 }
 
 export function PaymentItem({
@@ -29,8 +30,9 @@ export function PaymentItem({
   allocationMonth,
   renderAmount,
   amountClassName = 'text-gray-700',
+  defaultExpanded = false,
 }: PaymentItemProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded)
   const { lang } = useLanguageContext()
   const formatDate = useFormatDate()
 

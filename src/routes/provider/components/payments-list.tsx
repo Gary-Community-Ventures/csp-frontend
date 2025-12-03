@@ -67,8 +67,12 @@ export function ProviderPaymentsList({
 
   return (
     <CardList
-      items={payments.map((payment) => (
-        <ProviderPaymentItem key={payment.payment_id} payment={payment} />
+      items={payments.map((payment, index) => (
+        <ProviderPaymentItem
+          key={payment.payment_id}
+          payment={payment}
+          defaultExpanded={index === 0}
+        />
       ))}
     />
   )
@@ -76,8 +80,10 @@ export function ProviderPaymentsList({
 
 function ProviderPaymentItem({
   payment,
+  defaultExpanded,
 }: {
   payment: ProviderPaymentHistoryItem
+  defaultExpanded: boolean
 }) {
   return (
     <PaymentItem
@@ -91,6 +97,7 @@ function ProviderPaymentItem({
         <ProviderPaymentAmount amountCents={amountCents} />
       )}
       amountClassName="text-green-600 font-medium"
+      defaultExpanded={defaultExpanded}
     />
   )
 }

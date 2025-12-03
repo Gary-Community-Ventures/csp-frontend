@@ -38,14 +38,24 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
 
   return (
     <CardList
-      items={payments.map((payment) => (
-        <FamilyPaymentItem key={payment.payment_id} payment={payment} />
+      items={payments.map((payment, index) => (
+        <FamilyPaymentItem
+          key={payment.payment_id}
+          payment={payment}
+          defaultExpanded={index === 0}
+        />
       ))}
     />
   )
 }
 
-function FamilyPaymentItem({ payment }: { payment: FamilyPaymentHistoryItem }) {
+function FamilyPaymentItem({
+  payment,
+  defaultExpanded,
+}: {
+  payment: FamilyPaymentHistoryItem
+  defaultExpanded: boolean
+}) {
   return (
     <PaymentItem
       title={payment.provider_name}
@@ -58,6 +68,7 @@ function FamilyPaymentItem({ payment }: { payment: FamilyPaymentHistoryItem }) {
         <FamilyPaymentAmount amountCents={amountCents} />
       )}
       amountClassName="text-gray-700"
+      defaultExpanded={defaultExpanded}
     />
   )
 }
