@@ -119,12 +119,12 @@ export const calendarPaymentConfirmationRoute = createRoute({
   path: 'payment/calendar-payment/confirmation',
   component: CalendarPaymentConfirmationPage,
   validateSearch: z.object({
-    providerName: z.string().optional(),
-    childName: z.string().optional(),
-    month: z.string().optional(),
-    careDaysCount: z.string().optional(),
-    amount: z.string().optional(),
-    providerId: z.string().optional(),
+    providerName: z.string(),
+    childName: z.string(),
+    month: z.string(),
+    careDaysCount: z.string(),
+    amount: z.string(),
+    providerId: z.string(),
   }),
 })
 
