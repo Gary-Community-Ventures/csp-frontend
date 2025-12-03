@@ -1,65 +1,31 @@
-import { useEffect } from 'react'
-import { toast } from 'sonner'
+import { useEffect, useRef } from 'react'
 
-/*
-
-  Hook to manage service worker updates and notify users
-  
-  Listens for service worker update events and prompts the user to refresh the page
-  when a new version is available. Automatically reloads the page after the user
-  confirms the update.
-
-  We do not currently use this but leaving it around in case we ever do.
-
-*/
-
+/**
+ * Hook to auto-reload the page when a new service worker takes control.
+ * This ensures users always get the latest version after a SW update.
+ */
 export function useServiceWorkerUpdate() {
+  const refreshingRef = useRef(false)
+
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      const handleControllerChange = () => {
-        // Service worker was updated and is now controlling the page
-        toast.success('App updated! Refreshing...', {
-          duration: 2000,
-        })
+    if (!('serviceWorker' in navigator)) return
 
-        // Give user time to see the message, then reload
-        setTimeout(() => {
-          window.location.reload()
-        }, 2000)
-      }
+    const handleControllerChange = () => {
+      if (refreshingRef.current) return
+      refreshingRef.current = true
+      window.location.reload()
+    }
 
-      const handleMessage = (event: MessageEvent) => {
-        if (event.data?.type === 'SW_UPDATE_AVAILABLE') {
-          toast.info('App update available! Click to refresh.', {
-            duration: 10000,
-            action: {
-              label: 'Refresh',
-              onClick: () => {
-                // Tell the service worker to skip waiting and take control
-                navigator.serviceWorker.controller?.postMessage({
-                  type: 'SKIP_WAITING',
-                })
-              },
-            },
-          })
-        }
-      }
+    navigator.serviceWorker.addEventListener(
+      'controllerchange',
+      handleControllerChange
+    )
 
-      // Add event listeners
-      navigator.serviceWorker.addEventListener(
+    return () => {
+      navigator.serviceWorker.removeEventListener(
         'controllerchange',
         handleControllerChange
       )
-      navigator.serviceWorker.addEventListener('message', handleMessage)
-
-      // Cleanup function to remove event listeners
-      return () => {
-        navigator.serviceWorker.removeEventListener(
-          'controllerchange',
-          handleControllerChange
-        )
-        navigator.serviceWorker.removeEventListener('message', handleMessage)
-      }
     }
   }, [])
 }

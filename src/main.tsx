@@ -13,6 +13,7 @@ import { enUS, esES } from '@clerk/localizations'
 import ErrorFallback from '@/components/error-fallback'
 import { initializeSentry } from '@/lib/sentry'
 import { useSentryUserContext } from '@/lib/hooks'
+import { useServiceWorkerUpdate } from '@/lib/hooks/use-service-worker-update'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { recordPageView, useRecordUserSession } from '@/lib/analytics'
 import { OfflinePage } from './components/pages/offline-page'
@@ -30,7 +31,7 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <div>testing 4</div>
+    <div>testing 5</div>
     <QueryClientProvider client={queryClient}>
       <LanguageWrapper>
         <OfflineWrapper>
@@ -99,6 +100,7 @@ function App() {
   const clerk = useClerk()
 
   useSentryUserContext()
+  useServiceWorkerUpdate()
 
   useRecordUserSession()
 
