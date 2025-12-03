@@ -1522,6 +1522,30 @@ export const translations = {
         es: 'Método de Pago',
       },
       status: paymentStatuses,
+      day: {
+        en: 'day',
+        es: 'día',
+      },
+      days: {
+        en: 'days',
+        es: 'días',
+      },
+      lumpSum: {
+        en: 'Lump sum',
+        es: 'Suma global',
+      },
+      fullDays: {
+        en: 'Full Days',
+        es: 'Días completos',
+      },
+      halfDays: {
+        en: 'Half Days',
+        es: 'Medios días',
+      },
+      partial: {
+        en: 'Partial',
+        es: 'Parcial',
+      },
     },
     offlinePage: {
       title: {

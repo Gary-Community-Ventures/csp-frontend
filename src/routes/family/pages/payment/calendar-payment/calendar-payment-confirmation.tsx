@@ -44,7 +44,9 @@ export function CalendarPaymentConfirmationPage() {
 
   const { providerName, childName, month, careDaysCount, amount } = search
   const parsedAmount = parseFloat(amount!)
-  const formattedAmount = isNaN(parsedAmount) ? formatAmount(0) : formatAmount(parsedAmount * 100)
+  const formattedAmount = isNaN(parsedAmount)
+    ? formatAmount(0)
+    : formatAmount(parsedAmount * 100)
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
