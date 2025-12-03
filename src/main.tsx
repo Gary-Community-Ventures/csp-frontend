@@ -31,7 +31,7 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <div>testing 6</div>
+    <div>testing 7</div>
     <QueryClientProvider client={queryClient}>
       <LanguageWrapper>
         <OfflineWrapper>
@@ -100,7 +100,7 @@ function App() {
   const clerk = useClerk()
 
   useSentryUserContext()
-  useServiceWorkerUpdate()
+  // useServiceWorkerUpdate()
 
   useRecordUserSession()
 
