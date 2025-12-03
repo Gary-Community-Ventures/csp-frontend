@@ -210,12 +210,22 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   }, [isPopoverOpen, disabledReason])
 
   const dayElement = (
-    <div
-      key={d.toString()}
-      className={dayClasses}
-      onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
-    >
-      {dayContent}
+    <div className="relative flex items-center justify-center">
+      {careDay && !careDay.is_deleted && careDay.is_partial_payment && (
+        <div
+          className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[10px] font-medium leading-none whitespace-nowrap text-yellow-600"
+          aria-label={`Partial payment: ${formatAmount(careDay.amount_cents)}`}
+        >
+          {formatAmount(careDay.amount_cents)}
+        </div>
+      )}
+      <div
+        key={d.toString()}
+        className={dayClasses}
+        onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
+      >
+        {dayContent}
+      </div>
     </div>
   )
 
@@ -223,16 +233,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
     <div className={cellClasses}>
       {isDisabled && disabledReason ? (
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-          <PopoverTrigger asChild>
-            <div className="relative flex items-center justify-center">
-              {careDay && !careDay.is_deleted && careDay.is_partial_payment && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[10px] font-medium leading-none whitespace-nowrap text-yellow-600">
-                  {formatAmount(careDay.amount_cents)}
-                </div>
-              )}
-              {dayElement}
-            </div>
-          </PopoverTrigger>
+          <PopoverTrigger asChild>{dayElement}</PopoverTrigger>
           <PopoverContent
             className="max-w-xs w-auto p-3 text-sm text-center break-words whitespace-normal shadow-lg border border-gray-200"
             sideOffset={8}
@@ -242,14 +243,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
           </PopoverContent>
         </Popover>
       ) : (
-        <div className="relative flex items-center justify-center">
-          {careDay && !careDay.is_deleted && careDay.is_partial_payment && (
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[10px] font-medium leading-none whitespace-nowrap text-yellow-600">
-              {formatAmount(careDay.amount_cents)}
-            </div>
-          )}
-          {dayElement}
-        </div>
+        <>{dayElement}</>
       )}
     </div>
   )

@@ -197,11 +197,14 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
               id="partial-payment-error"
               className="mt-3 text-sm text-red-600 flex items-start gap-2"
               role="alert"
+              aria-label="Error"
             >
               <span className="text-red-600" aria-hidden="true">
                 ⚠
               </span>
-              <Text text={t.partialPaymentError} />
+              <span>
+                <Text text={t.partialPaymentError} />
+              </span>
             </div>
           )}
         </div>

@@ -50,6 +50,15 @@ export function PaymentItem({
           isExpandable ? 'cursor-pointer' : ''
         }`}
         onClick={() => isExpandable && setIsExpanded(!isExpanded)}
+        onKeyDown={(e) => {
+          if (isExpandable && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault()
+            setIsExpanded(!isExpanded)
+          }
+        }}
+        tabIndex={isExpandable ? 0 : undefined}
+        role={isExpandable ? 'button' : undefined}
+        aria-expanded={isExpandable ? isExpanded : undefined}
       >
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
