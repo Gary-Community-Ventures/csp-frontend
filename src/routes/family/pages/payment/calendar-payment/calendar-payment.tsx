@@ -171,23 +171,36 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
       />
       {hasPendingPartialPayments && (
         <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl p-6">
-          <label className="flex items-center gap-3 cursor-pointer group">
+          <div className="flex items-center gap-3">
             <Checkbox
+              id="partial-payment-acknowledgement"
               checked={partialPaymentAcknowledged}
               onCheckedChange={(checked) =>
                 setPartialPaymentAcknowledged(checked === true)
               }
               aria-invalid={showPartialPaymentError}
+              aria-describedby={
+                showPartialPaymentError ? 'partial-payment-error' : undefined
+              }
             />
-            <span className="select-none text-sm text-gray-700 leading-relaxed">
+            <label
+              htmlFor="partial-payment-acknowledgement"
+              className="cursor-pointer select-none text-sm text-gray-700 leading-relaxed"
+            >
               <Text text={t.partialPaymentAcknowledgementPart1} />{' '}
               <strong>{formatAmount(totalMissingAmountCents)}</strong>{' '}
               <Text text={t.partialPaymentAcknowledgementPart2} />
-            </span>
-          </label>
+            </label>
+          </div>
           {showPartialPaymentError && (
-            <div className="mt-3 text-sm text-red-600 flex items-start gap-2">
-              <span className="text-red-600">⚠</span>
+            <div
+              id="partial-payment-error"
+              className="mt-3 text-sm text-red-600 flex items-start gap-2"
+              role="alert"
+            >
+              <span className="text-red-600" aria-hidden="true">
+                ⚠
+              </span>
               <Text text={t.partialPaymentError} />
             </div>
           )}
@@ -229,7 +242,6 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
                 // Navigation happens, so no need to reset isSubmitting
               },
               onError: (error: unknown) => {
-                console.error('Calendar payment submission error:', error)
                 const errorMessage =
                   error instanceof Error
                     ? error.message

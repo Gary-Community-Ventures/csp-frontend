@@ -57,13 +57,7 @@ export async function submitCareDays(
   // Handle 400 errors specially to preserve error message and throw
   if (res.status === 400) {
     const errorData = await res.json()
-    const error = new Error(errorData.error || 'Bad Request') as Error & {
-      response: Response
-      errorData: { error?: string }
-    }
-    error.response = res
-    error.errorData = errorData
-    throw error
+    throw new Error(errorData.error || 'Bad Request')
   }
 
   handleStatusCodes(context, res)

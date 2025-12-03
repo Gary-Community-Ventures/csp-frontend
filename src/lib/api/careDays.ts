@@ -1,22 +1,6 @@
 import type { RouterContext } from '@/routes/router'
 import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 
-class CareDayError extends Error {
-  response: Response
-  errorData: { error?: string }
-
-  constructor(
-    message: string,
-    response: Response,
-    errorData: { error?: string }
-  ) {
-    super(message)
-    this.name = 'CareDayError'
-    this.response = response
-    this.errorData = errorData
-  }
-}
-
 export async function createCareDay(
   context: RouterContext,
   allocationId: number,
@@ -39,7 +23,7 @@ export async function createCareDay(
   // Handle 400 errors specially to preserve error message
   if (res.status === 400) {
     const errorData = await res.json()
-    throw new CareDayError(errorData.error || 'Bad Request', res, errorData)
+    throw new Error(errorData.error || 'Bad Request')
   }
 
   handleStatusCodes(context, res)
@@ -61,7 +45,7 @@ export async function updateCareDay(
   // Handle 400 errors specially to preserve error message
   if (res.status === 400) {
     const errorData = await res.json()
-    throw new CareDayError(errorData.error || 'Bad Request', res, errorData)
+    throw new Error(errorData.error || 'Bad Request')
   }
 
   handleStatusCodes(context, res)
@@ -78,7 +62,7 @@ export async function deleteCareDay(context: RouterContext, careDayId: number) {
   // Handle 400 errors specially to preserve error message
   if (res.status === 400) {
     const errorData = await res.json()
-    throw new CareDayError(errorData.error || 'Bad Request', res, errorData)
+    throw new Error(errorData.error || 'Bad Request')
   }
 
   handleStatusCodes(context, res)
