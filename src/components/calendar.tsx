@@ -369,7 +369,7 @@ export const Calendar: React.FC<CalendarProps> = ({
             onClick={prevMonth}
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-5 h-5 rtl:rotate-180" />
           </button>
         ) : (
           <div className="w-9 h-9" />
@@ -386,7 +386,7 @@ export const Calendar: React.FC<CalendarProps> = ({
             onClick={nextMonth}
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-5 h-5 rtl:rotate-180" />
           </button>
         ) : (
           <div className="w-9 h-9" />
