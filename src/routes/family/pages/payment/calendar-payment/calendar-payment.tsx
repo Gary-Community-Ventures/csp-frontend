@@ -171,9 +171,6 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
       />
       {hasPendingPartialPayments && (
         <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl p-6">
-          <div className="text-sm text-gray-700 leading-relaxed mb-4">
-            <Text text={t.partialPaymentWarning} />
-          </div>
           <label className="flex items-center gap-3 cursor-pointer group">
             <Checkbox
               checked={partialPaymentAcknowledged}
@@ -182,14 +179,10 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
               }
               aria-invalid={showPartialPaymentError}
             />
-            <span className="select-none">
-              <div className="font-semibold text-base">
-                <Text text={t.partialPaymentAmount} />{' '}
-                <span className="text-xl font-bold text-red-600">
-                  {formatAmount(totalMissingAmountCents)}
-                </span>{' '}
-                <Text text={t.partialPaymentAmountSuffix} />
-              </div>
+            <span className="select-none text-sm text-gray-700 leading-relaxed">
+              <Text text={t.partialPaymentAcknowledgementPart1} />{' '}
+              <strong>{formatAmount(totalMissingAmountCents)}</strong>{' '}
+              <Text text={t.partialPaymentAcknowledgementPart2} />
             </span>
           </label>
           {showPartialPaymentError && (

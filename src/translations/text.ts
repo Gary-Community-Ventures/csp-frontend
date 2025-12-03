@@ -102,7 +102,7 @@ const signInButton = {
 
 const returnHomeButton = {
   en: 'Return home',
-  es: 'Volver a inicio',
+  es: 'Volver al Inicio',
 } as const
 
 const translatedLanguages = {
@@ -275,17 +275,13 @@ export const translations = {
         en: 'Month Balance',
         es: 'Balance del Mes',
       },
-      partialPaymentWarning: {
-        en: 'Your submission contains a partial payment for one or more days.',
-        es: 'Su envío contiene un pago parcial para uno o más días.',
+      partialPaymentAcknowledgementPart1: {
+        en: 'I understand that my submission contains a partial payment for one or more days, and that I will need to pay my provider an additional',
+        es: 'Entiendo que mi envío contiene un pago parcial para uno o más días, y que necesitaré pagar a mi proveedor',
       },
-      partialPaymentAmount: {
-        en: 'I understand I will need to pay an additional',
-        es: 'Entiendo que necesitaré pagar un adicional',
-      },
-      partialPaymentAmountSuffix: {
-        en: 'outside of this program to cover the remaining value to match my providers rate.',
-        es: 'fuera de este programa para cubrir el valor restante y así igualar la tarifa de mi proveedor.',
+      partialPaymentAcknowledgementPart2: {
+        en: 'to cover the balance for childcare.',
+        es: 'adicional para cubrir el saldo del cuidado infantil.',
       },
       partialPaymentError: {
         en: 'You must confirm you understand you need to cover the remaining payment.',
@@ -460,7 +456,7 @@ export const translations = {
       },
       backButton: {
         en: 'Back to Home',
-        es: 'Volver a Inicio',
+        es: 'Volver al Inicio',
       },
     },
     navBar: {
