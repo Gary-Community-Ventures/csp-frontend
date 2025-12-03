@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { formatAmount } from '@/lib/currency'
-import { Text } from '@/translations/wrapper'
+import { Text, useLanguageContext } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { useFormatDate } from '@/lib/dates'
 import type {
   PaymentCareDayDetail,
   PaymentLumpSumDetail,
@@ -15,12 +16,6 @@ interface PaymentItemProps {
   careDays: PaymentCareDayDetail[]
   lumpSum?: PaymentLumpSumDetail | null
   allocationMonth?: string
-  hasCaredays: boolean
-  hasPartialPayments: boolean
-  isLumpSum: boolean
-  isExpandable: boolean
-  formatDate: (date: Date) => string
-  lang: string
   renderAmount: (amountCents: number) => React.ReactNode
   amountClassName?: string
 }
@@ -32,16 +27,20 @@ export function PaymentItem({
   careDays,
   lumpSum,
   allocationMonth,
-  hasCaredays,
-  hasPartialPayments,
-  isLumpSum,
-  isExpandable,
-  formatDate,
-  lang,
   renderAmount,
   amountClassName = 'text-gray-700',
 }: PaymentItemProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const { lang } = useLanguageContext()
+  const formatDate = useFormatDate()
+
+  // Derive values from props
+  const hasCaredays = careDays.length > 0
+  const hasPartialPayments = careDays.some(
+    (day) => day.amount_missing_cents && day.amount_missing_cents > 0
+  )
+  const isLumpSum = lumpSum !== null && lumpSum !== undefined
+  const isExpandable = hasCaredays || isLumpSum
 
   return (
     <div className="space-y-2">
