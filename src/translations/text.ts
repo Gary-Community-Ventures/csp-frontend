@@ -281,7 +281,7 @@ export const translations = {
       },
       partialPaymentAmount: {
         en: 'I understand I will need to pay an additional',
-        es: 'Entiendo que necesitaré pagar',
+        es: 'Entiendo que necesitaré pagar un adicional',
       },
       partialPaymentAmountSuffix: {
         en: 'outside of this program to cover the remaining value to match my providers rate.',
