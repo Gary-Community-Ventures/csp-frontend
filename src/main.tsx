@@ -30,7 +30,7 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <div>testing 3</div>
+    <div>testing 4</div>
     <QueryClientProvider client={queryClient}>
       <LanguageWrapper>
         <OfflineWrapper>
