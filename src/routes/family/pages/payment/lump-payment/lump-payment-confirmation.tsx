@@ -9,12 +9,50 @@ import { formatMonthForDisplay } from '@/lib/date-utils'
 
 export function LumpSumConfirmationPage() {
   const t = translations.family.lumpSumConfirmationPage
-  const { providerName, childName, month, days, halfDays, amount } =
-    lumpPaymentConfirmationRoute.useSearch()
+  const search = lumpPaymentConfirmationRoute.useSearch()
   const { childId } = lumpPaymentConfirmationRoute.useParams()
   const { lang } = useLanguageContext()
 
-  const formattedAmount = formatAmount(parseFloat(amount) * 100)
+  // Check if parameters are missing
+  const isMissingParams =
+    !search.providerName ||
+    !search.childName ||
+    !search.month ||
+    !search.days ||
+    !search.halfDays ||
+    !search.amount
+
+  // Show error state if parameters are missing
+  if (isMissingParams) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
+        <div className="text-center">
+          <Header Tag="h1" className="text-2xl font-bold mb-4">
+            <Text
+              text={
+                translations.family.calendarPaymentConfirmationPage.errorHeader
+              }
+            />
+          </Header>
+          <p className="text-lg text-gray-600 mb-2">
+            <Text
+              text={
+                translations.family.calendarPaymentConfirmationPage.errorMessage
+              }
+            />
+          </p>
+        </div>
+        <Link to="/family/$childId/home" params={{ childId }}>
+          <Button>
+            <Text text={t.backButton} />
+          </Button>
+        </Link>
+      </div>
+    )
+  }
+
+  const { providerName, childName, month, days, halfDays, amount } = search
+  const formattedAmount = formatAmount(parseFloat(amount!) * 100)
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
@@ -43,7 +81,7 @@ export function LumpSumConfirmationPage() {
           <span className="font-semibold">
             <Text text={t.monthLabel} />
           </span>
-          <span>{formatMonthForDisplay(month, lang)}</span>
+          <span>{formatMonthForDisplay(month!, lang)}</span>
         </div>
         <div className="flex justify-between py-2 border-b">
           <span className="font-semibold">

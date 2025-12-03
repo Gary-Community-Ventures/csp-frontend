@@ -104,13 +104,13 @@ export const lumpPaymentConfirmationRoute = createRoute({
   path: 'payment/lump-payment/confirmation',
   component: LumpSumConfirmationPage,
   validateSearch: z.object({
-    providerName: z.string(),
-    childName: z.string(),
-    month: z.string(),
-    days: z.string(),
-    halfDays: z.string(),
-    amount: z.string(),
-    providerId: z.string(),
+    providerName: z.string().optional(),
+    childName: z.string().optional(),
+    month: z.string().optional(),
+    days: z.string().optional(),
+    halfDays: z.string().optional(),
+    amount: z.string().optional(),
+    providerId: z.string().optional(),
   }),
 })
 
