@@ -200,7 +200,7 @@ function PaymentItem({
           <div className="pl-4 border-l-2 border-gray-200 space-y-2 pt-2">
             {payment.care_days.map((day, index) => (
               <div
-                key={index}
+                key={day.date + '-' + day.type}
                 className="flex justify-between items-center text-sm"
               >
                 <div className="flex items-center gap-2">
