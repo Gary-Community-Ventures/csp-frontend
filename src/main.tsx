@@ -8,8 +8,12 @@ import { ClerkProvider, useAuth, useClerk, useUser } from '@clerk/clerk-react'
 import * as Sentry from '@sentry/react'
 import './index.css'
 import { Toaster } from 'sonner'
-import { LanguageWrapper, useLanguageContext } from './translations/wrapper'
-import { enUS, esES } from '@clerk/localizations'
+import {
+  LanguageWrapper,
+  useLanguageContext,
+  type Language,
+} from './translations/wrapper'
+import { enUS, esES, arSA, ruRU } from '@clerk/localizations'
 import ErrorFallback from '@/components/error-fallback'
 import { initializeSentry } from '@/lib/sentry'
 import { useSentryUserContext } from '@/lib/hooks'
@@ -67,12 +71,19 @@ function OfflineWrapper({ children }: PropsWithChildren) {
   return <>{children}</>
 }
 
+const CLERK_TRANSLATIONS: Record<Language, typeof enUS> = {
+  en: enUS,
+  es: esES,
+  ar: arSA,
+  ru: ruRU,
+}
+
 function ClerkWrapper({ children }: PropsWithChildren) {
   const { lang } = useLanguageContext()
 
-  let locale = enUS
-  if (lang === 'es') {
-    locale = esES
+  let locale = CLERK_TRANSLATIONS.en
+  if (lang !== 'en') {
+    locale = CLERK_TRANSLATIONS[lang]
   }
 
   return (

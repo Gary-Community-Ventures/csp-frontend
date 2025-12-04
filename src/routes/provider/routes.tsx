@@ -7,7 +7,6 @@ import { ProviderWrapper } from './wrapper'
 import { InviteFamilyPage } from './pages/invite-family'
 import { InviteFamilyConfirmationPage } from './pages/invite-family-confirmation'
 import { AttendancePage, loadAttendance } from './pages/attendance'
-import { ResourcesPage } from './pages/resources'
 import { PaymentSettingsPage } from './pages/payment-settings'
 import { SetRatePage } from './pages/set-rate'
 
@@ -63,12 +62,6 @@ export const attendanceRoute = createRoute({
   loader: loadAttendance,
 })
 
-const resourcesRoute = createRoute({
-  getParentRoute: () => providerRoute,
-  path: '/resources',
-  component: ResourcesPage,
-})
-
 export const paymentSettingsRoute = createRoute({
   getParentRoute: () => providerRoute,
   path: '/payment-settings',
@@ -112,7 +105,6 @@ export const providerRouteTree = providerRoute.addChildren([
   inviteFamilyRoute,
   inviteFamilyConfirmationRoute,
   attendanceRoute,
-  resourcesRoute,
   paymentSettingsRoute,
   setRateRoute,
   // childrenRoute,
