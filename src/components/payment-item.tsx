@@ -4,6 +4,7 @@ import { formatAmount } from '@/lib/currency'
 import { Text, useLanguageContext } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { useFormatDate } from '@/lib/dates'
+import { formatMonthForDisplay } from '@/lib/date-utils'
 import type {
   PaymentCareDayDetail,
   PaymentLumpSumDetail,
@@ -121,12 +122,7 @@ export function PaymentItem({
                 <Text
                   text={translations.general.paymentHistory.fromAllocationMonth}
                 />
-                :{' '}
-                {new Date(allocationMonth).toLocaleDateString(lang, {
-                  year: 'numeric',
-                  month: 'long',
-                  timeZone: 'UTC',
-                })}
+                : {formatMonthForDisplay(allocationMonth, lang)}
               </div>
             )}
             {lumpSum.days > 0 && (
