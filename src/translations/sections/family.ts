@@ -242,6 +242,68 @@ export const familyTranslations = {
     submitButton: submitButton,
     submittingButton: submittingButton,
   },
+  calendarPaymentConfirmationPage: {
+    header: {
+      en: 'Payment Submitted',
+      es: 'Pago Enviado',
+      ru: 'Платёж отправлен',
+      ar: 'تم إرسال الدفع',
+    },
+    successMessage: {
+      en: 'Your payment has been successfully submitted.',
+      es: 'Su pago ha sido enviado exitosamente.',
+      ru: 'Ваш платёж успешно отправлен.',
+      ar: 'تم إرسال دفعتك بنجاح.',
+    },
+    errorHeader: {
+      en: 'Oops! Something went wrong',
+      es: 'Ups! Algo salió mal',
+      ru: 'Упс! Что-то пошло не так',
+      ar: 'عذرًا! حدث خطأ ما',
+    },
+    errorMessage: {
+      en: "We couldn't load the payment confirmation details. Please return home.",
+      es: 'No pudimos cargar los detalles de confirmación del pago. Por favor, regrese al inicio.',
+      ru: 'Не удалось загрузить данные подтверждения платежа. Пожалуйста, вернитесь на главную.',
+      ar: 'تعذر تحميل تفاصيل تأكيد الدفع. يرجى العودة إلى الصفحة الرئيسية.',
+    },
+    providerLabel: {
+      en: 'Provider',
+      es: 'Proveedor',
+      ru: 'Поставщик',
+      ar: 'المزود',
+    },
+    childLabel: {
+      en: 'Child',
+      es: 'Niño',
+      ru: 'Ребёнок',
+      ar: 'الطفل',
+    },
+    monthLabel: {
+      en: 'Month',
+      es: 'Mes',
+      ru: 'Месяц',
+      ar: 'الشهر',
+    },
+    careDaysLabel: {
+      en: 'Care Days',
+      es: 'Días de Cuidado',
+      ru: 'Дни ухода',
+      ar: 'أيام الرعاية',
+    },
+    amountLabel: {
+      en: 'Amount',
+      es: 'Monto',
+      ru: 'Сумма',
+      ar: 'المبلغ',
+    },
+    backButton: {
+      en: 'Back to Home',
+      es: 'Volver al Inicio',
+      ru: 'Вернуться на главную',
+      ar: 'العودة إلى الصفحة الرئيسية',
+    },
+  },
   paymentPage: {
     providerNotFound: {
       en: 'Provider not found',
@@ -406,7 +468,7 @@ export const familyTranslations = {
     },
     backButton: {
       en: 'Back to Home',
-      es: 'Volver a Inicio',
+      es: 'Volver al Inicio',
       ru: 'Вернуться на главную',
       ar: 'العودة للرئيسية',
     },
