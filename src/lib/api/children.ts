@@ -53,6 +53,14 @@ export async function submitCareDays(
     method: 'POST',
     headers: await headersWithAuth(context),
   })
+
+  // Handle 400 errors - log backend message for Sentry, throw generic error for UI
+  if (res.status === 400) {
+    const errorData = await res.json()
+    console.error('Care days submission failed:', errorData.error)
+    throw new Error('PAYMENT_SUBMISSION_ERROR')
+  }
+
   handleStatusCodes(context, res)
   return res.json()
 }

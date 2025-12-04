@@ -250,6 +250,42 @@ export const generalTranslations = {
       ar: 'طريقة الدفع',
     },
     status: paymentStatuses,
+    day: {
+      en: 'day',
+      es: 'día',
+      ru: 'день',
+      ar: 'يوم',
+    },
+    days: {
+      en: 'days',
+      es: 'días',
+      ru: 'дней',
+      ar: 'أيام',
+    },
+    lumpSum: {
+      en: 'Lump sum',
+      es: 'Suma global',
+      ru: 'Единовременная сумма',
+      ar: 'مبلغ مقطوع',
+    },
+    fullDays: {
+      en: 'Full Days',
+      es: 'Días completos',
+      ru: 'Полные дни',
+      ar: 'أيام كاملة',
+    },
+    halfDays: {
+      en: 'Half Days',
+      es: 'Medios días',
+      ru: 'Полудни',
+      ar: 'أنصاف أيام',
+    },
+    partial: {
+      en: 'Partial',
+      es: 'Parcial',
+      ru: 'Частичный',
+      ar: 'جزئي',
+    },
   },
   offlinePage: {
     title: {

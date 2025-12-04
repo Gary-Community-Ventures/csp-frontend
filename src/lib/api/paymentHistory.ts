@@ -1,6 +1,19 @@
 import type { RouterContext } from '@/routes/router'
 import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 
+export interface PaymentCareDayDetail {
+  date: string // ISO date string (YYYY-MM-DD)
+  type: 'Full Day' | 'Half Day'
+  amount_cents: number
+  amount_missing_cents: number | null
+}
+
+export interface PaymentLumpSumDetail {
+  days: number
+  half_days: number
+  amount_cents: number
+}
+
 export interface FamilyPaymentHistoryItem {
   payment_id: string
   created_at: string
@@ -12,6 +25,8 @@ export interface FamilyPaymentHistoryItem {
   child_supabase_id: string
   month: string
   payment_type: 'care_days' | 'lump_sum' | 'other'
+  care_days: PaymentCareDayDetail[]
+  lump_sum: PaymentLumpSumDetail | null
 }
 
 export interface FamilyPaymentHistoryResponse {
@@ -26,10 +41,11 @@ export interface ProviderPaymentHistoryItem {
   amount_cents: number
   status: 'success' | 'failed' | 'pending'
   child_name: string
-  child_supabase_id: string
-  month: string
+  child_id: string
   payment_method: string
   payment_type: 'care_days' | 'lump_sum' | 'other'
+  care_days: PaymentCareDayDetail[]
+  lump_sum: PaymentLumpSumDetail | null
 }
 
 export interface ProviderPaymentHistoryResponse {

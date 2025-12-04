@@ -3,12 +3,11 @@ import { WhiteCard } from '@/components/white-card'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { useFormatDate } from '@/lib/dates'
 import { Link } from '@tanstack/react-router'
 import { Settings } from 'lucide-react'
 import type { ProviderPaymentHistoryItem } from '@/lib/api/paymentHistory'
-
 import { formatAmount } from '@/lib/currency'
+import { PaymentItem } from '@/components/payment-item'
 
 type PaymentAmountProps = {
   amountCents: number
@@ -33,8 +32,6 @@ export function ProviderPaymentsList({
   isPayable,
   isPaymentEnabled,
 }: ProviderPaymentsListProps) {
-  const formatDate = useFormatDate()
-
   if (payments.length < 1) {
     return (
       <WhiteCard Tag="ul" className="py-8">
@@ -70,30 +67,37 @@ export function ProviderPaymentsList({
 
   return (
     <CardList
-      items={payments.map((payment) => (
-        <div
-          className="flex justify-between items-start gap-4"
+      items={payments.map((payment, index) => (
+        <ProviderPaymentItem
           key={payment.payment_id}
-        >
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <strong className="text-lg truncate">{payment.child_name}</strong>
-            </div>
-            <div className="text-muted-foreground text-sm space-y-1">
-              <div>{formatDate(new Date(payment.created_at))}</div>
-              <div>
-                <Text
-                  text={translations.general.paymentHistory.paymentMethod}
-                />
-                : {payment.payment_method.toUpperCase()}
-              </div>
-            </div>
-          </div>
-          <div className="text-right">
-            <ProviderPaymentAmount amountCents={payment.amount_cents} />
-          </div>
-        </div>
+          payment={payment}
+          defaultExpanded={index === 0}
+        />
       ))}
+    />
+  )
+}
+
+function ProviderPaymentItem({
+  payment,
+  defaultExpanded,
+}: {
+  payment: ProviderPaymentHistoryItem
+  defaultExpanded: boolean
+}) {
+  return (
+    <PaymentItem
+      title={payment.child_name}
+      amountCents={payment.amount_cents}
+      createdAt={payment.created_at}
+      careDays={payment.care_days}
+      lumpSum={payment.lump_sum}
+      allocationMonth={undefined} // Providers don't see allocation month
+      renderAmount={(amountCents) => (
+        <ProviderPaymentAmount amountCents={amountCents} />
+      )}
+      amountClassName="text-green-600 font-medium"
+      defaultExpanded={defaultExpanded}
     />
   )
 }

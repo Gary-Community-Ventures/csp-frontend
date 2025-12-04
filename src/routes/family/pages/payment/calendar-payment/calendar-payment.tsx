@@ -1,10 +1,12 @@
-import { useBlocker } from '@tanstack/react-router'
+import React from 'react'
+import { useBlocker, useNavigate } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { useFamilyContext } from '@/routes/family/wrapper'
 import type { Provider } from '@/routes/family/wrapper'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
+import { Checkbox } from '@/components/ui/checkbox'
 import { translations } from '@/translations/text'
 import { Text } from '@/translations/wrapper'
 import { usePaymentData } from '../use-payment-data'
@@ -14,10 +16,15 @@ import { allocatedCareDaySchema } from '@/lib/schemas'
 import { formatAmount } from '@/lib/currency'
 import { LoadingPage } from '@/components/pages/loading-page'
 import { findChildById } from '@/lib/children'
+import { calendarPaymentConfirmationRoute } from '@/routes/family/routes'
+import { toast } from 'sonner'
+import { useText } from '@/translations/wrapper'
 
 export function CalendarPaymentPage({ provider }: { provider: Provider }) {
   const t = translations.family.calendarPaymentPage
   const { children, selectedChildInfo } = useFamilyContext()
+  const navigate = useNavigate()
+  const text = useText()
   const {
     setDate,
     allocationQuery,
@@ -30,34 +37,76 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
     nextMonthAllocationFailed,
   } = usePaymentData()
 
+  const [partialPaymentAcknowledged, setPartialPaymentAcknowledged] =
+    React.useState(false)
+  const [showPartialPaymentError, setShowPartialPaymentError] =
+    React.useState(false)
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+
   const hasPendingChanges = allocationQuery.data?.care_days.some(
-    (careDay) =>
-      careDay.status === 'new' ||
-      careDay.status === 'needs_resubmission' ||
-      careDay.status === 'delete_not_submitted'
+    (careDay) => careDay.status === 'needs_submission'
   )
 
+  const hasPendingPartialPayments = allocationQuery.data?.care_days.some(
+    (careDay) =>
+      careDay.status === 'needs_submission' &&
+      careDay.is_partial_payment &&
+      !careDay.is_deleted
+  )
+
+  const totalMissingAmountCents =
+    allocationQuery.data?.care_days
+      .filter(
+        (careDay) =>
+          careDay.status === 'needs_submission' &&
+          careDay.is_partial_payment &&
+          !careDay.is_deleted
+      )
+      .reduce((sum, careDay) => sum + (careDay.amount_missing_cents || 0), 0) ||
+    0
+
+  // Reset checkbox when partial payments change or disappear
+  React.useEffect(() => {
+    if (!hasPendingPartialPayments) {
+      setPartialPaymentAcknowledged(false)
+      setShowPartialPaymentError(false)
+    }
+  }, [hasPendingPartialPayments])
+
+  // Clear error when checkbox is checked
+  React.useEffect(() => {
+    if (partialPaymentAcknowledged) {
+      setShowPartialPaymentError(false)
+    }
+  }, [partialPaymentAcknowledged])
+
   const blocker = useBlocker({
-    shouldBlockFn: () => !!hasPendingChanges,
+    shouldBlockFn: () => !!hasPendingChanges && !isSubmitting,
     withResolver: true,
   })
 
-  const handleDayTypeChange = (
+  const handleDayTypeChange = async (
     day: z.infer<typeof allocatedCareDaySchema> | null | undefined,
     type: 'Full Day' | 'Half Day' | 'none',
     selectedDate: Date
   ) => {
-    if (type === 'none') {
-      if (day) {
-        deleteCareDayMutation.mutate(day.id)
+    try {
+      if (type === 'none') {
+        if (day) {
+          await deleteCareDayMutation.mutateAsync(day.id)
+        }
+      } else if (day) {
+        await updateCareDayMutation.mutateAsync({ careDayId: day.id, type })
+      } else {
+        await createCareDayMutation.mutateAsync({
+          type,
+          date: selectedDate.toISOString().split('T')[0],
+        })
       }
-    } else if (day) {
-      updateCareDayMutation.mutate({ careDayId: day.id, type })
-    } else {
-      createCareDayMutation.mutate({
-        type,
-        date: selectedDate.toISOString().split('T')[0],
-      })
+    } catch {
+      // Show translated generic error message to user
+      // Specific backend error is logged to console for Sentry
+      toast.error(text(t.careDayError))
     }
   }
 
@@ -119,10 +168,89 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
         nextMonthAllocationFailed={nextMonthAllocationFailed}
         paymentRate={paymentRateQuery.data}
       />
+      {hasPendingPartialPayments && (
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl p-6">
+          <div className="flex items-center gap-3">
+            <Checkbox
+              id="partial-payment-acknowledgement"
+              checked={partialPaymentAcknowledged}
+              onCheckedChange={(checked) =>
+                setPartialPaymentAcknowledged(checked === true)
+              }
+              aria-invalid={showPartialPaymentError}
+              aria-describedby={
+                showPartialPaymentError ? 'partial-payment-error' : undefined
+              }
+            />
+            <label
+              htmlFor="partial-payment-acknowledgement"
+              className="cursor-pointer select-none text-sm text-gray-700 leading-relaxed"
+            >
+              <Text text={t.partialPaymentAcknowledgementPart1} />{' '}
+              <strong>{formatAmount(totalMissingAmountCents)}</strong>{' '}
+              <Text text={t.partialPaymentAcknowledgementPart2} />
+            </label>
+          </div>
+          {showPartialPaymentError && (
+            <div
+              id="partial-payment-error"
+              className="mt-3 text-sm text-red-600 flex items-start gap-2"
+              role="alert"
+              aria-label="Error"
+            >
+              <span className="text-red-600" aria-hidden="true">
+                ⚠
+              </span>
+              <span>
+                <Text text={t.partialPaymentError} />
+              </span>
+            </div>
+          )}
+        </div>
+      )}
       <div className="w-full flex justify-center">
         <Button
           type="button"
-          onClick={() => submitCareDaysMutation.mutate()}
+          onClick={() => {
+            if (hasPendingPartialPayments && !partialPaymentAcknowledged) {
+              setShowPartialPaymentError(true)
+              return
+            }
+
+            const submittedCareDays = allocationQuery.data?.care_days.filter(
+              (day) => day.status === 'needs_submission'
+            )
+            const careDaysCount = submittedCareDays?.length || 0
+            const totalAmount = submittedCareDays?.reduce(
+              (sum, day) => sum + day.amount_cents,
+              0
+            )
+
+            setIsSubmitting(true)
+            submitCareDaysMutation.mutate(undefined, {
+              onSuccess: () => {
+                toast.success(text(t.calendarPaymentSuccess))
+                navigate({
+                  to: calendarPaymentConfirmationRoute.to,
+                  search: {
+                    providerName: provider?.name || '',
+                    childName: child?.firstName || '',
+                    month: allocationQuery.data?.date || '',
+                    careDaysCount: careDaysCount.toString(),
+                    amount: ((totalAmount || 0) / 100).toFixed(2),
+                    providerId: provider.id,
+                  },
+                })
+                // Navigation happens, so no need to reset isSubmitting
+              },
+              onError: () => {
+                // Show translated generic error message to user
+                // Specific backend error is logged to console for Sentry
+                toast.error(text(t.calendarPaymentError))
+                setIsSubmitting(false)
+              },
+            })
+          }}
           disabled={!hasPendingChanges || submitCareDaysMutation.isPending}
           className="w-full max-w-md md:max-w-2xl py-3 text-lg"
         >

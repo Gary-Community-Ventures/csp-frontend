@@ -2,11 +2,9 @@ import { CardList } from '@/components/card-list'
 import { WhiteCard } from '@/components/white-card'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { useFormatDate } from '@/lib/dates'
 import type { FamilyPaymentHistoryItem } from '@/lib/api/paymentHistory'
-import { useLanguageContext } from '@/translations/wrapper'
-
 import { formatAmount } from '@/lib/currency'
+import { PaymentItem } from '@/components/payment-item'
 
 type PaymentAmountProps = {
   amountCents: number
@@ -21,9 +19,6 @@ export type FamilyPaymentsListProps = {
 }
 
 export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
-  const formatDate = useFormatDate()
-  const { lang } = useLanguageContext()
-
   if (payments.length < 1) {
     return (
       <WhiteCard Tag="ul" className="py-8">
@@ -43,37 +38,37 @@ export function FamilyPaymentsList({ payments }: FamilyPaymentsListProps) {
 
   return (
     <CardList
-      items={payments.map((payment) => (
-        <div
-          className="flex justify-between items-start gap-4"
+      items={payments.map((payment, index) => (
+        <FamilyPaymentItem
           key={payment.payment_id}
-        >
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <strong className="text-lg truncate">
-                {payment.provider_name}
-              </strong>
-            </div>
-            <div className="text-muted-foreground text-sm space-y-1">
-              <div>{formatDate(new Date(payment.created_at))}</div>
-              <div>
-                <Text
-                  text={translations.general.paymentHistory.fromAllocationMonth}
-                />
-                :{' '}
-                {new Date(payment.month).toLocaleDateString(lang, {
-                  year: 'numeric',
-                  month: 'short',
-                  timeZone: 'UTC',
-                })}
-              </div>
-            </div>
-          </div>
-          <div className="text-right">
-            <FamilyPaymentAmount amountCents={payment.amount_cents} />
-          </div>
-        </div>
+          payment={payment}
+          defaultExpanded={index === 0}
+        />
       ))}
+    />
+  )
+}
+
+function FamilyPaymentItem({
+  payment,
+  defaultExpanded,
+}: {
+  payment: FamilyPaymentHistoryItem
+  defaultExpanded: boolean
+}) {
+  return (
+    <PaymentItem
+      title={payment.provider_name}
+      amountCents={payment.amount_cents}
+      createdAt={payment.created_at}
+      careDays={payment.care_days}
+      lumpSum={payment.lump_sum}
+      allocationMonth={payment.month}
+      renderAmount={(amountCents) => (
+        <FamilyPaymentAmount amountCents={amountCents} />
+      )}
+      amountClassName="text-gray-700"
+      defaultExpanded={defaultExpanded}
     />
   )
 }

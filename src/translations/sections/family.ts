@@ -127,6 +127,12 @@ export const familyTranslations = {
       ru: 'Отмена',
       ar: 'إلغاء',
     },
+    partialPaymentExplanation: {
+      en: 'Yellow amounts indicate partial payments due to insufficient balance.',
+      es: 'Los montos amarillos indican pagos parciales debido a saldo insuficiente.',
+      ru: 'Жёлтые суммы указывают на частичные платежи из-за недостаточного баланса.',
+      ar: 'تشير المبالغ الصفراء إلى مدفوعات جزئية بسبب رصيد غير كافٍ.',
+    },
   },
   calendarPaymentPage: {
     loading: {
@@ -197,8 +203,106 @@ export const familyTranslations = {
       ru: 'Баланс за месяц',
       ar: 'رصيد الشهر',
     },
+    partialPaymentAcknowledgementPart1: {
+      en: 'I understand that my submission contains a partial payment for one or more days, and that I will need to pay my provider an additional',
+      es: 'Entiendo que mi envío contiene un pago parcial para uno o más días, y que necesitaré pagar a mi proveedor',
+      ru: 'Я понимаю, что моя заявка содержит частичную оплату за один или несколько дней, и мне нужно будет заплатить поставщику дополнительно',
+      ar: 'أفهم أن طلبي يحتوي على دفعة جزئية ليوم واحد أو أكثر، وأنني سأحتاج إلى دفع مبلغ إضافي لمزودي',
+    },
+    partialPaymentAcknowledgementPart2: {
+      en: 'to cover the balance for childcare.',
+      es: 'adicional para cubrir el saldo del cuidado infantil.',
+      ru: 'для покрытия остатка за уход за детьми.',
+      ar: 'لتغطية الرصيد المتبقي لرعاية الأطفال.',
+    },
+    partialPaymentError: {
+      en: 'You must confirm you understand you need to cover the remaining payment.',
+      es: 'Debe confirmar que comprende que debe cubrir el pago restante.',
+      ru: 'Вы должны подтвердить, что понимаете необходимость покрыть оставшийся платёж.',
+      ar: 'يجب عليك تأكيد فهمك بأنك بحاجة إلى تغطية الدفعة المتبقية.',
+    },
+    calendarPaymentSuccess: {
+      en: 'Payment successful!',
+      es: '¡Pago exitoso!',
+      ru: 'Платёж успешен!',
+      ar: 'تم الدفع بنجاح!',
+    },
+    calendarPaymentError: {
+      en: 'Failed to submit payment',
+      es: 'Error al enviar el pago',
+      ru: 'Не удалось отправить платёж',
+      ar: 'فشل إرسال الدفع',
+    },
+    careDayError: {
+      en: 'Failed to update care day',
+      es: 'Error al actualizar el día de cuidado',
+      ru: 'Не удалось обновить день ухода',
+      ar: 'فشل تحديث يوم الرعاية',
+    },
     submitButton: submitButton,
     submittingButton: submittingButton,
+  },
+  calendarPaymentConfirmationPage: {
+    header: {
+      en: 'Payment Submitted',
+      es: 'Pago Enviado',
+      ru: 'Платёж отправлен',
+      ar: 'تم إرسال الدفع',
+    },
+    successMessage: {
+      en: 'Your payment has been successfully submitted.',
+      es: 'Su pago ha sido enviado exitosamente.',
+      ru: 'Ваш платёж успешно отправлен.',
+      ar: 'تم إرسال دفعتك بنجاح.',
+    },
+    errorHeader: {
+      en: 'Oops! Something went wrong',
+      es: 'Ups! Algo salió mal',
+      ru: 'Упс! Что-то пошло не так',
+      ar: 'عذرًا! حدث خطأ ما',
+    },
+    errorMessage: {
+      en: "We couldn't load the payment confirmation details. Please return home.",
+      es: 'No pudimos cargar los detalles de confirmación del pago. Por favor, regrese al inicio.',
+      ru: 'Не удалось загрузить данные подтверждения платежа. Пожалуйста, вернитесь на главную.',
+      ar: 'تعذر تحميل تفاصيل تأكيد الدفع. يرجى العودة إلى الصفحة الرئيسية.',
+    },
+    providerLabel: {
+      en: 'Provider',
+      es: 'Proveedor',
+      ru: 'Поставщик',
+      ar: 'المزود',
+    },
+    childLabel: {
+      en: 'Child',
+      es: 'Niño',
+      ru: 'Ребёнок',
+      ar: 'الطفل',
+    },
+    monthLabel: {
+      en: 'Month',
+      es: 'Mes',
+      ru: 'Месяц',
+      ar: 'الشهر',
+    },
+    careDaysLabel: {
+      en: 'Care Days',
+      es: 'Días de Cuidado',
+      ru: 'Дни ухода',
+      ar: 'أيام الرعاية',
+    },
+    amountLabel: {
+      en: 'Amount',
+      es: 'Monto',
+      ru: 'Сумма',
+      ar: 'المبلغ',
+    },
+    backButton: {
+      en: 'Back to Home',
+      es: 'Volver al Inicio',
+      ru: 'Вернуться на главную',
+      ar: 'العودة إلى الصفحة الرئيسية',
+    },
   },
   paymentPage: {
     providerNotFound: {
@@ -364,7 +468,7 @@ export const familyTranslations = {
     },
     backButton: {
       en: 'Back to Home',
-      es: 'Volver a Inicio',
+      es: 'Volver al Inicio',
       ru: 'Вернуться на главную',
       ar: 'العودة للرئيسية',
     },
