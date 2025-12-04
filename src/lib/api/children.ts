@@ -54,10 +54,11 @@ export async function submitCareDays(
     headers: await headersWithAuth(context),
   })
 
-  // Handle 400 errors specially to preserve error message and throw
+  // Handle 400 errors - log backend message for Sentry, throw generic error for UI
   if (res.status === 400) {
     const errorData = await res.json()
-    throw new Error(errorData.error || 'Bad Request')
+    console.error('Care days submission failed:', errorData.error)
+    throw new Error('PAYMENT_SUBMISSION_ERROR')
   }
 
   handleStatusCodes(context, res)

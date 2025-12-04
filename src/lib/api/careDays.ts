@@ -20,10 +20,11 @@ export async function createCareDay(
     }),
   })
 
-  // Handle 400 errors specially to preserve error message
+  // Handle 400 errors - log backend message for Sentry, throw generic error for UI
   if (res.status === 400) {
     const errorData = await res.json()
-    throw new Error(errorData.error || 'Bad Request')
+    console.error('Care day creation failed:', errorData.error)
+    throw new Error('CARE_DAY_ERROR')
   }
 
   handleStatusCodes(context, res)
@@ -42,10 +43,11 @@ export async function updateCareDay(
     body: JSON.stringify({ type }),
   })
 
-  // Handle 400 errors specially to preserve error message
+  // Handle 400 errors - log backend message for Sentry, throw generic error for UI
   if (res.status === 400) {
     const errorData = await res.json()
-    throw new Error(errorData.error || 'Bad Request')
+    console.error('Care day update failed:', errorData.error)
+    throw new Error('CARE_DAY_ERROR')
   }
 
   handleStatusCodes(context, res)
@@ -59,10 +61,11 @@ export async function deleteCareDay(context: RouterContext, careDayId: number) {
     headers: await headersWithAuth(context),
   })
 
-  // Handle 400 errors specially to preserve error message
+  // Handle 400 errors - log backend message for Sentry, throw generic error for UI
   if (res.status === 400) {
     const errorData = await res.json()
-    throw new Error(errorData.error || 'Bad Request')
+    console.error('Care day deletion failed:', errorData.error)
+    throw new Error('CARE_DAY_ERROR')
   }
 
   handleStatusCodes(context, res)

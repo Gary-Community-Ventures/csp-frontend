@@ -103,11 +103,10 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
           date: selectedDate.toISOString().split('T')[0],
         })
       }
-    } catch (error: unknown) {
-      // Error message is already parsed in the API function
-      const errorMessage =
-        error instanceof Error ? error.message : text(t.careDayError)
-      toast.error(errorMessage)
+    } catch {
+      // Show translated generic error message to user
+      // Specific backend error is logged to console for Sentry
+      toast.error(text(t.careDayError))
     }
   }
 
@@ -244,12 +243,10 @@ export function CalendarPaymentPage({ provider }: { provider: Provider }) {
                 })
                 // Navigation happens, so no need to reset isSubmitting
               },
-              onError: (error: unknown) => {
-                const errorMessage =
-                  error instanceof Error
-                    ? error.message
-                    : text(t.calendarPaymentError)
-                toast.error(errorMessage)
+              onError: () => {
+                // Show translated generic error message to user
+                // Specific backend error is logged to console for Sentry
+                toast.error(text(t.calendarPaymentError))
                 setIsSubmitting(false)
               },
             })
