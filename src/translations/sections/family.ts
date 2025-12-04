@@ -402,6 +402,12 @@ export const familyTranslations = {
         ru: 'К сожалению, ваша заявка на этого ребёнка была отклонена',
         ar: 'للأسف، تم رفض طلبك لهذا الطفل',
       },
+      noProviderInvited: {
+        en: 'You have not invited a provider yet. Add a provider to start making payments.',
+        es: 'Aún no has invitado a un proveedor. Agrega un proveedor para comenzar a realizar pagos.',
+        ru: 'Вы ещё не пригласили поставщика. Добавьте поставщика, чтобы начать совершать платежи.',
+        ar: 'لم تقم بدعوة مزود بعد. أضف مزودًا لبدء إجراء المدفوعات.',
+      },
     },
   },
   home: {
