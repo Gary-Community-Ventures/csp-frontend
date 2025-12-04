@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npx tsc -b && vite build",
+    "heroku-postbuild": "npm run build",
     "format": "prettier --write .",
     "lint": "eslint . && npx tsc --noEmit",
     "preview": "vite preview",

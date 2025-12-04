@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label'
 import { useValidateForm, useZodSchema } from '@/lib/schemas'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Link, useMatch, useNavigate } from '@tanstack/react-router'
+import { Link, useMatch, useNavigate, useRouter } from '@tanstack/react-router'
 import {
   backendUrl,
   handleStatusCodes,
@@ -31,6 +31,7 @@ export function InviteProviderPage() {
   const navigate = useNavigate()
   const { children, selectedChildInfo } = useFamilyContext()
   const [submitting, setSubmitting] = useState(false)
+  const router = useRouter()
 
   const schema = useZodSchema(
     z.object({
@@ -69,6 +70,9 @@ export function InviteProviderPage() {
           data.lang,
           context
         )
+          .then(() => {
+            return router.invalidate()
+          })
           .then(() => {
             navigate({
               to: '/family/$childId/providers/invite/confirmation',
