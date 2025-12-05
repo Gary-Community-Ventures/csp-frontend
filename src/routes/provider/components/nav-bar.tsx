@@ -1,7 +1,6 @@
 import {
   // Mail,
   Home,
-  BookOpen,
   // ListChecks,
   // ListTodo,
   MessageCircleQuestionMark,
@@ -105,11 +104,6 @@ export function ProviderNavBar() {
         sticky={true}
         links={[
           { to: '/provider/home', text: text(t.links.home), Icon: Home },
-          {
-            to: '/provider/resources',
-            text: text(t.links.resources),
-            Icon: BookOpen,
-          },
           {
             to: '/provider/payment-settings',
             text: text(t.links.paymentSettings),

@@ -55,15 +55,14 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      injectManifest: {
-        buildId: new Date().getTime().toString(), // Force new service worker on each build
-      },
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
-        // Use StaleWhileRevalidate for most resources - always serve from cache but update in background
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Only precache JS and CSS (hashed assets) - not HTML
+        globPatterns: ['**/*.{js,css,ico,png,svg,woff2}'],
+        // Serve index.html for all navigation requests (SPA)
+        navigateFallback: 'index.html',
         navigateFallbackDenylist: [
           /^https:\/\/csp-backend-staging-9941beb4ce92\.herokuapp\.com\//,
           /^https:\/\/api\.capcolorado\.org\//,
@@ -80,17 +79,10 @@ export default defineConfig({
               },
             },
           },
-          {
-            // For navigation requests (page loads), always try network first
-            urlPattern: ({ request }) => request.mode === 'navigate',
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'pages-cache',
-              networkTimeoutSeconds: 2, // Fast timeout
-            },
-          },
         ],
       },
+      // Force reload when new SW takes control
+      selfDestroying: false,
       includeAssets: [
         'favicon.png',
         'cap_circle_logo_white.png',

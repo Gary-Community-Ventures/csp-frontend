@@ -38,19 +38,11 @@ const getDayStyles = (status: string) => {
   }
 
   const statusStyles: { [key: string]: Partial<typeof baseStyles> } = {
-    new: {
+    needs_submission: {
       colorClasses: 'bg-tertiary-background',
     },
     submitted: {
       colorClasses: 'bg-[#778C7F]',
-    },
-    needs_resubmission: {
-      colorClasses: 'bg-tertiary-background',
-    },
-    delete_not_submitted: {
-      colorClasses: 'bg-transparent',
-      xColorClass: 'text-[#b33363]',
-      showX: true,
     },
     default: { colorClasses: 'bg-gray-100' },
   }
@@ -138,7 +130,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   const isAlreadySubmitted = !!careDay?.last_submitted_at
   const isDisabled = !isCurrentMonth || isDayLocked || isAlreadySubmitted
 
-  let dayClasses = `w-10 h-10 rounded-full flex items-center justify-center relative text-sm ${
+  let dayClasses = `w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center relative text-sm md:text-base ${
     !isDisabled ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'
   }`
   let colorClass = ''
@@ -218,12 +210,22 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   }, [isPopoverOpen, disabledReason])
 
   const dayElement = (
-    <div
-      key={d.toString()}
-      className={dayClasses}
-      onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
-    >
-      {dayContent}
+    <div className="relative flex items-center justify-center">
+      {careDay && !careDay.is_deleted && careDay.is_partial_payment && (
+        <div
+          className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[10px] font-medium leading-none whitespace-nowrap text-yellow-600"
+          aria-label={`Partial payment: ${formatAmount(careDay.amount_cents)}`}
+        >
+          {formatAmount(careDay.amount_cents)}
+        </div>
+      )}
+      <div
+        key={d.toString()}
+        className={dayClasses}
+        onClick={!isDisabled ? () => handleDayClick(careDay, d) : undefined}
+      >
+        {dayContent}
+      </div>
     </div>
   )
 
@@ -241,7 +243,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
           </PopoverContent>
         </Popover>
       ) : (
-        dayElement
+        <>{dayElement}</>
       )}
     </div>
   )
@@ -361,6 +363,13 @@ export const Calendar: React.FC<CalendarProps> = ({
       </div>
       <div className="text-center text-sm text-gray-500 mb-4">
         <Text text={t.tapInstructions} />
+        {allocation.care_days.some(
+          (day) => day.is_partial_payment && !day.is_deleted
+        ) && (
+          <div className="mt-2 text-xs text-yellow-600 font-medium">
+            <Text text={t.partialPaymentExplanation} />
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-between mb-6">
         {canGoPrev ? (
@@ -369,7 +378,7 @@ export const Calendar: React.FC<CalendarProps> = ({
             onClick={prevMonth}
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-5 h-5 rtl:rotate-180" />
           </button>
         ) : (
           <div className="w-9 h-9" />
@@ -386,7 +395,7 @@ export const Calendar: React.FC<CalendarProps> = ({
             onClick={nextMonth}
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-5 h-5 rtl:rotate-180" />
           </button>
         ) : (
           <div className="w-9 h-9" />
@@ -394,7 +403,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       </div>
 
       <div className="space-y-4">
-        <div className="grid grid-cols-7 gap-2">
+        <div className="grid grid-cols-7 gap-1 md:gap-2 pb-3 border-b border-gray-200">
           {[
             t.daysOfWeek.sun,
             t.daysOfWeek.mon,
@@ -406,7 +415,7 @@ export const Calendar: React.FC<CalendarProps> = ({
           ].map((day) => (
             <div
               key={day.en}
-              className="text-xs font-medium text-gray-500 text-center py-2"
+              className="text-xs font-semibold text-gray-600 text-center py-2"
             >
               <Text text={day} />
             </div>

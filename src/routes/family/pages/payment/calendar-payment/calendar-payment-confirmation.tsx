@@ -2,15 +2,15 @@ import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { Text, useLanguageContext } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { lumpPaymentConfirmationRoute } from '@/routes/family/routes'
+import { calendarPaymentConfirmationRoute } from '@/routes/family/routes'
 import { formatAmount } from '@/lib/currency'
 import { Header } from '@/components/header'
 import { formatMonthForDisplay } from '@/lib/date-utils'
 
-export function LumpSumConfirmationPage() {
-  const t = translations.family.lumpSumConfirmationPage
-  const search = lumpPaymentConfirmationRoute.useSearch()
-  const { childId } = lumpPaymentConfirmationRoute.useParams()
+export function CalendarPaymentConfirmationPage() {
+  const t = translations.family.calendarPaymentConfirmationPage
+  const search = calendarPaymentConfirmationRoute.useSearch()
+  const { childId } = calendarPaymentConfirmationRoute.useParams()
   const { lang } = useLanguageContext()
 
   // Check if parameters are missing
@@ -18,8 +18,7 @@ export function LumpSumConfirmationPage() {
     !search.providerName ||
     !search.childName ||
     !search.month ||
-    !search.days ||
-    !search.halfDays ||
+    !search.careDaysCount ||
     !search.amount
 
   // Show error state if parameters are missing
@@ -28,18 +27,10 @@ export function LumpSumConfirmationPage() {
       <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
         <div className="text-center">
           <Header Tag="h1" className="text-2xl font-bold mb-4">
-            <Text
-              text={
-                translations.family.calendarPaymentConfirmationPage.errorHeader
-              }
-            />
+            <Text text={t.errorHeader} />
           </Header>
           <p className="text-lg text-gray-600 mb-2">
-            <Text
-              text={
-                translations.family.calendarPaymentConfirmationPage.errorMessage
-              }
-            />
+            <Text text={t.errorMessage} />
           </p>
         </div>
         <Link to="/family/$childId/home" params={{ childId }}>
@@ -51,8 +42,11 @@ export function LumpSumConfirmationPage() {
     )
   }
 
-  const { providerName, childName, month, days, halfDays, amount } = search
-  const formattedAmount = formatAmount(parseFloat(amount!) * 100)
+  const { providerName, childName, month, careDaysCount, amount } = search
+  const parsedAmount = parseFloat(amount!)
+  const formattedAmount = isNaN(parsedAmount)
+    ? formatAmount(0)
+    : formatAmount(parsedAmount * 100)
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
@@ -85,15 +79,9 @@ export function LumpSumConfirmationPage() {
         </div>
         <div className="flex justify-between py-2 border-b">
           <span className="font-semibold">
-            <Text text={t.daysLabel} />
+            <Text text={t.careDaysLabel} />
           </span>
-          <span>{days}</span>
-        </div>
-        <div className="flex justify-between py-2 border-b">
-          <span className="font-semibold">
-            <Text text={t.halfDaysLabel} />
-          </span>
-          <span>{halfDays}</span>
+          <span>{careDaysCount}</span>
         </div>
         <div className="flex justify-between py-2">
           <span className="font-semibold">

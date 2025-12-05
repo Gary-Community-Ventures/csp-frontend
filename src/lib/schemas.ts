@@ -79,6 +79,7 @@ export const allocatedCareDaySchema = z.object({
   id: z.number(),
   care_month_allocation_id: z.number(),
   amount_cents: z.number(),
+  amount_missing_cents: z.number().nullable().default(null),
   day_count: z.number(),
   payment_distribution_requested: z.boolean(),
   last_submitted_at: z.string().datetime().nullable().default(null),
@@ -88,9 +89,8 @@ export const allocatedCareDaySchema = z.object({
   locked_date: z.string().datetime(),
   is_locked: z.boolean(),
   is_deleted: z.boolean(),
-  needs_resubmission: z.boolean(),
-  delete_not_submitted: z.boolean(),
-  is_new: z.boolean(),
+  is_partial_payment: z.boolean(),
+  needs_submission: z.boolean(),
   status: z.string(),
 })
 

@@ -168,7 +168,6 @@ export function LumpPaymentPage({ provider }: { provider: Provider }) {
       })
     },
     onError: (error) => {
-      console.error('Lump sum payment error:', error)
       if (
         error instanceof Error &&
         error.message === 'MONTHLY_ALLOCATION_EXCEEDED'

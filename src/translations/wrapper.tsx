@@ -9,12 +9,15 @@ import {
 } from 'react'
 
 // NOTE: don't forget to update the Clerk localizations
-export const LANGUAGES = ['en', 'es'] as const
+export const LANGUAGES = ['en', 'es', 'ru', 'ar'] as const
 export const LANGUAGE_NAMES: Record<Language, string> = {
   en: 'English',
   es: 'Español',
+  ru: 'Русский',
+  ar: 'العربية',
 }
 export const DEFAULT_LANGUAGE = 'en' as const
+export const RTL_LANGUAGES = ['ar'] as const
 
 export type DefaultLanguage = typeof DEFAULT_LANGUAGE
 export type Language = (typeof LANGUAGES)[number]
@@ -40,6 +43,11 @@ export function LanguageWrapper({ children }: PropsWithChildren) {
 
   useEffect(() => {
     localStorage.setItem('lang', lang)
+    if ((RTL_LANGUAGES as readonly string[]).includes(lang)) {
+      document.documentElement.dir = 'rtl'
+    } else {
+      document.documentElement.dir = 'ltr'
+    }
   }, [lang])
 
   return (
