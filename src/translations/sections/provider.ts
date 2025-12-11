@@ -444,7 +444,7 @@ export const providerTranslations = {
       },
       officialInfo: {
         en: 'Colorado Department of Early Childhood - Care Worker Tax Credit',
-        es: 'Departamento de Educación Temprana de Colorado - Crédito fiscal para trabajadores de cuidado infantil',
+        es: 'Departamento de la Primera Infancia de Colorado - Crédito fiscal para trabajadores de cuidado infantil',
         ru: 'Департамент раннего детства Колорадо - Налоговый кредит для работников по уходу',
         ar: 'دائرة الطفولة المبكرة في كولورادو - ائتمان ضريبي لعمال الرعاية',
       },
