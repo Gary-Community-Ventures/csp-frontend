@@ -11,7 +11,27 @@ export function ResourcesPage() {
 
   // Only show for FFN providers
   if (providerInfo.type !== 'ffn') {
-    return null
+    return (
+      <div className="p-5">
+        <section>
+          <Header>
+            <span className="flex items-center gap-2">
+              <span role="img" aria-label="info">
+                ℹ️
+              </span>
+              <Text text="Resource Unavailable" />
+            </span>
+          </Header>
+          <WhiteCard>
+            <div className="space-y-4">
+              <p>
+                <Text text="This resource is only available for FFN providers." />
+              </p>
+            </div>
+          </WhiteCard>
+        </section>
+      </div>
+    )
   }
 
   return (
