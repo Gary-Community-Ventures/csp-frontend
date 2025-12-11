@@ -478,7 +478,7 @@ export const providerTranslations = {
       },
       cdecLink: {
         en: 'Colorado Department of Early Childhood',
-        es: 'Departamento de Educación Temprana de Colorado',
+        es: 'Departamento de la Primera Infancia de Colorado',
         ru: 'Департаментом раннего детства Колорадо',
         ar: 'دائرة الطفولة المبكرة في كولورادو',
       },
