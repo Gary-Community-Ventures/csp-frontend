@@ -1,15 +1,11 @@
 import {
-  // Mail,
   Home,
-  // ListChecks,
-  // ListTodo,
   MessageCircleQuestionMark,
   LogOut,
   UserRound,
   ArrowRightLeft,
   CreditCard,
   BookOpen,
-  type LucideProps,
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
@@ -29,7 +25,6 @@ import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Logo } from '@/components/logo'
 import { NotificationBanner } from '@/components/notification-banner'
-import type { ForwardRefExoticComponent } from 'react'
 
 export function ProviderNavBar() {
   const t = translations.provider.navBar
@@ -44,31 +39,6 @@ export function ProviderNavBar() {
 
   if (navBar.hidden) {
     return null
-  }
-
-  // Build navigation links array conditionally
-  const navLinks: Array<{
-    to: string
-    text: string
-    Icon: ForwardRefExoticComponent<
-      Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
-    >
-  }> = [
-    { to: '/provider/home', text: text(t.links.home), Icon: Home },
-    {
-      to: '/provider/payment-settings',
-      text: text(t.links.paymentSettings),
-      Icon: CreditCard,
-    },
-  ]
-
-  // Only add resources link for FFN providers
-  if (providerInfo.type === 'ffn') {
-    navLinks.push({
-      to: '/provider/resources',
-      text: text(t.links.resources),
-      Icon: BookOpen,
-    })
   }
 
   return (
@@ -130,8 +100,40 @@ export function ProviderNavBar() {
       </div>
       <NavBar
         sticky={true}
-        // @ts-expect-error - Router types will be regenerated after build
-        links={navLinks}
+        links={[
+          { to: '/provider/home', text: text(t.links.home), Icon: Home },
+          {
+            to: '/provider/payment-settings',
+            text: text(t.links.paymentSettings),
+            Icon: CreditCard,
+          },
+
+          ...(providerInfo.type === 'ffn'
+            ? [
+                {
+                  to: '/provider/resources' as const,
+                  text: text(t.links.resources),
+                  Icon: BookOpen,
+                },
+              ]
+            : []),
+
+          // {
+          //   to: '/provider/messages',
+          //   text: text(t.links.messages),
+          //   Icon: Mail,
+          // },
+          // {
+          //   to: '/provider/activity',
+          //   text: text(t.links.activity),
+          //   Icon: ListChecks,
+          // },
+          // {
+          //   to: '/provider/attendance',
+          //   text: text(t.links.attendance),
+          //   Icon: ListTodo,
+          // },
+        ]}
       />
     </>
   )
