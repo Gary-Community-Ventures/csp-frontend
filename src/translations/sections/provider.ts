@@ -497,10 +497,10 @@ export const providerTranslations = {
         ar: 'المورد غير متاح',
       },
       message: {
-        en: 'This resource is only available for Family, Friends, and Neighbors (FFN) providers.',
-        es: 'Este recurso solo está disponible para proveedores de Familia, Amigos y Vecinos (FFN).',
-        ru: 'Этот ресурс доступен только для поставщиков «Семья, друзья и соседи» (FFN).',
-        ar: 'هذا المورد متاح فقط لمقدمي العائلة والأصدقاء والجيران (FFN).',
+        en: 'This resource is only available for Licensed Home Based (LHB) and Family, Friends, and Neighbors (FFN) providers.',
+        es: 'Este recurso está disponible solo para proveedores de Familia, Amigos y Vecinos (FFN) y con Licencia Basada en el Hogar (LHB).',
+        ru: 'Этот ресурс доступен только для поставщиков «Семья, друзья и соседи» (FFN) и «Лицензированного домашнего ухода» (LHB).',
+        ar: 'هذا المورد متاح فقط لمقدمي العائلة والأصدقاء والجيران (FFN) ومرخصي الرعاية المنزلية (LHB).',
       },
     },
     readCarefully: {

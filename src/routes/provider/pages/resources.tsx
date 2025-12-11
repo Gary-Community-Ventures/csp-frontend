@@ -10,7 +10,7 @@ export function ResourcesPage() {
   const t = translations.provider.resources
 
   // Only show for FFN providers
-  if (providerInfo.type !== 'ffn') {
+  if (providerInfo.type !== 'ffn' && providerInfo.type !== 'lhb') {
     return (
       <div className="p-5">
         <section>

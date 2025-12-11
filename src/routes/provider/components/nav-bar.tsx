@@ -108,7 +108,7 @@ export function ProviderNavBar() {
             Icon: CreditCard,
           },
 
-          ...(providerInfo.type === 'ffn'
+          ...(providerInfo.type === 'ffn' || providerInfo.type === 'lhb'
             ? [
                 {
                   to: '/provider/resources' as const,
