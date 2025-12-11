@@ -326,53 +326,154 @@ export const providerTranslations = {
     },
   },
   resources: {
-    title: {
-      en: 'Resources',
-      es: 'Recursos',
-      ru: 'Ресурсы',
-      ar: 'الموارد',
+    header: {
+      emoji: '💰',
+      title: {
+        en: 'Get Up to $1,200 Back: Care Worker Tax Credit',
+        es: 'Obtenga hasta $1,200 de reembolso: Crédito fiscal para trabajadores de cuidado infantil',
+        ru: 'Получите до $1,200 обратно: Налоговый кредит для работников по уходу',
+        ar: 'احصل على ما يصل إلى 1,200 دولار: ائتمان ضريبي لعمال الرعاية',
+      },
     },
-    description: {
-      en: "A key step to fully participate in the CAP program and receive payments from families is to complete mandatory health and safety training. We've put together a series of online videos and readings that you can access from home.",
-      es: 'Un paso clave para participar completamente en el programa CAP y recibir pagos de familias es completar el entrenamiento obligatorio de salud y seguridad. Hemos creado una serie de videos y lecturas en línea que puedes acceder desde casa.',
-      ru: 'Ключевой шаг для полноценного участия в программе CAP и получения платежей от семей — это прохождение обязательного обучения по охране здоровья и безопасности. Мы подготовили серию онлайн-видео и материалов для чтения, доступных из дома.',
-      ar: 'خطوة رئيسية للمشاركة الكاملة في برنامج CAP وتلقي المدفوعات من العائلات هي إكمال التدريب الإلزامي على الصحة والسلامة. قمنا بإعداد سلسلة من مقاطع الفيديو والقراءات عبر الإنترنت التي يمكنك الوصول إليها من المنزل.',
+    intro: {
+      paragraph1: {
+        en: "If you care for children who aren't your own, you could get $1,200 when you file your 2025 taxes.",
+        es: 'Si cuida a niños que no son suyos, podría recibir $1,200 cuando presente sus impuestos de 2025.',
+        ru: 'Если вы ухаживаете за чужими детьми, вы можете получить $1,200 при подаче налоговой декларации за 2025 год.',
+        ar: 'إذا كنت تعتني بأطفال ليسوا أطفالك، يمكنك الحصول على 1,200 دولار عند تقديم ضرائب 2025.',
+      },
+      paragraph2: {
+        en: 'This is a refundable tax credit — that means you get money back even if you don't owe any taxes. The full $1,200 will come to you as a tax refund in spring 2026.',
+        es: 'Este es un crédito fiscal reembolsable, lo que significa que recibirá dinero incluso si no debe impuestos. Los $1,200 completos le llegarán como reembolso de impuestos en la primavera de 2026.',
+        ru: 'Это возвратный налоговый кредит — это означает, что вы получите деньги обратно, даже если не должны налогов. Полная сумма в $1,200 придет к вам в виде налогового возврата весной 2026 года.',
+        ar: 'هذا ائتمان ضريبي قابل للاسترداد - مما يعني أنك تحصل على المال حتى لو لم تكن مدينًا بأي ضرائب. سيأتي إليك المبلغ الكامل البالغ 1,200 دولار كاسترداد ضريبي في ربيع 2026.',
+      },
     },
-    getStarted: {
-      en: 'Get Started',
-      es: 'Empezar',
-      ru: 'Начать',
-      ar: 'ابدأ',
+    qualify: {
+      title: {
+        en: 'How do you qualify?',
+        es: '¿Cómo califica?',
+        ru: 'Как вы можете соответствовать требованиям?',
+        ar: 'كيف تستطيع التأهل؟',
+      },
+      requirement1: {
+        en: "Provide childcare for children age 5 and under who aren't your own children",
+        es: 'Proporcionar cuidado infantil para niños de 5 años o menos que no sean sus propios hijos',
+        ru: 'Предоставлять уход за детьми в возрасте 5 лет и младше, которые не являются вашими собственными детьми',
+        ar: 'توفير رعاية الأطفال للأطفال الذين تبلغ أعمارهم 5 سنوات وأقل والذين ليسوا أطفالك',
+      },
+      requirement2: {
+        en: 'Work at least 720 hours in 2025 (about 14 hours/week for a year)',
+        es: 'Trabajar al menos 720 horas en 2025 (aproximadamente 14 horas/semana durante un año)',
+        ru: 'Работать не менее 720 часов в 2025 году (примерно 14 часов в неделю в течение года)',
+        ar: 'العمل لمدة 720 ساعة على الأقل في عام 2025 (حوالي 14 ساعة/أسبوع لمدة عام)',
+      },
+      requirement3: {
+        en: 'Make less than $75,000/year (or $100,000 if filing jointly)',
+        es: 'Ganar menos de $75,000/año (o $100,000 si presenta declaración conjunta)',
+        ru: 'Зарабатывать менее $75,000 в год (или $100,000 при подаче совместной декларации)',
+        ar: 'كسب أقل من 75,000 دولار/سنة (أو 100,000 دولار إذا كنت تقدم بشكل مشترك)',
+      },
+      requirement4: {
+        en: 'Live in Colorado',
+        es: 'Vivir en Colorado',
+        ru: 'Жить в Колорадо',
+        ar: 'العيش في كولورادو',
+      },
     },
-    getStartedLink: {
-      en: 'https://docs.google.com/document/d/1SBK4GkX5kzHG5JByqhRKw_w2I0d1t4eCEcPMrp-KpgU/edit?tab=t.0',
-      es: 'https://docs.google.com/document/d/1RVW3gSiCPRFQeekaKGGpEh1TXJzCvZi3R82Nu3y-bgk/edit?tab=t.0',
-      ru: 'https://docs.google.com/document/d/1SBK4GkX5kzHG5JByqhRKw_w2I0d1t4eCEcPMrp-KpgU/edit?tab=t.0',
-      ar: 'https://docs.google.com/document/d/1SBK4GkX5kzHG5JByqhRKw_w2I0d1t4eCEcPMrp-KpgU/edit?tab=t.0',
+    steps: {
+      title: {
+        en: 'What You Need to Do:',
+        es: 'Lo que necesita hacer:',
+        ru: 'Что вам нужно сделать:',
+        ar: 'ما تحتاج إلى فعله:',
+      },
+      step1: {
+        part1: {
+          en: 'Login to',
+          es: 'Inicie sesión en',
+          ru: 'Войдите в',
+          ar: 'تسجيل الدخول إلى',
+        },
+        pdisLink: {
+          en: 'PDIS',
+          es: 'PDIS',
+          ru: 'PDIS',
+          ar: 'PDIS',
+        },
+        part2: {
+          en: "or create a free account if you don't have one. PDIS is Colorado's system for childcare professionals (Available in English, Spanish, and Arabic)",
+          es: 'o cree una cuenta gratuita si no tiene una. PDIS es el sistema de Colorado para profesionales del cuidado infantil (Disponible en inglés, español y árabe)',
+          ru: 'или создайте бесплатную учетную запись, если у вас её нет. PDIS - это система Колорадо для специалистов по уходу за детьми (доступна на английском, испанском и арабском языках)',
+          ar: 'أو أنشئ حسابًا مجانيًا إذا لم يكن لديك حساب. PDIS هو نظام كولورادو لمحترفي رعاية الأطفال (متاح باللغات الإنجليزية والإسبانية والعربية)',
+        },
+      },
+      step2: {
+        en: 'Log into PDIS and confirm you provided at least 720 hours of childcare in 2025. This form must be completed by December 31, 2025. (My Account > Profile Settings)',
+        es: 'Inicie sesión en PDIS y confirme que proporcionó al menos 720 horas de cuidado infantil en 2025. Este formulario debe completarse antes del 31 de diciembre de 2025. (Mi cuenta > Configuración del perfil)',
+        ru: 'Войдите в PDIS и подтвердите, что вы предоставили не менее 720 часов ухода за детьми в 2025 году. Эта форма должна быть заполнена до 31 декабря 2025 года. (Моя учетная запись > Настройки профиля)',
+        ar: 'سجل الدخول إلى PDIS وأكد أنك قدمت ما لا يقل عن 720 ساعة من رعاية الأطفال في عام 2025. يجب إكمال هذا النموذج بحلول 31 ديسمبر 2025. (حسابي > إعدادات الملف الشخصي)',
+      },
+      step3: {
+        en: 'File your 2025 Colorado taxes in spring 2026. Free tax help is available if you need it!',
+        es: 'Presente sus impuestos de Colorado de 2025 en la primavera de 2026. ¡Hay ayuda gratuita con los impuestos disponible si la necesita!',
+        ru: 'Подайте налоговую декларацию Колорадо за 2025 год весной 2026 года. Бесплатная помощь с налогами доступна, если вам нужна!',
+        ar: 'قدم ضرائب كولورادو لعام 2025 في ربيع 2026. المساعدة الضريبية المجانية متاحة إذا كنت بحاجة إليها!',
+      },
     },
-    pageTitle: {
-      en: 'Provider Onboarding',
-      es: 'Incorporación de Proveedores',
-      ru: 'Адаптация поставщика',
-      ar: 'تأهيل المزود',
+    learnMore: {
+      title: {
+        en: 'Learn More & Get Started:',
+        es: 'Aprenda más y comience:',
+        ru: 'Узнайте больше и начните:',
+        ar: 'تعرف على المزيد وابدأ:',
+      },
+      officialInfo: {
+        en: 'Colorado Department of Early Childhood - Care Worker Tax Credit',
+        es: 'Departamento de Educación Temprana de Colorado - Crédito fiscal para trabajadores de cuidado infantil',
+        ru: 'Департамент раннего детства Колорадо - Налоговый кредит для работников по уходу',
+        ar: 'دائرة الطفولة المبكرة في كولورادو - ائتمان ضريبي لعمال الرعاية',
+      },
     },
-    welcome: {
-      en: "Welcome to the Childcare Affordability Pilot (CAP)! We're thrilled to have you join us. This small invite-only test is all about supporting you as you provide vital care to children in Colorado.",
-      es: '¡Bienvenido al Programa Piloto Childcare Affordability Pilot (CAP)! Nos complace contar con su participación. Esta pequeña prueba solo por invitación se centra en ayudarle mientras brinda atención vital a los niños de Colorado.',
-      ru: 'Добро пожаловать в пилотный проект по доступности ухода за детьми (CAP)! Мы рады, что вы присоединились к нам. Этот небольшой тест по приглашениям направлен на поддержку вас в предоставлении жизненно важного ухода детям в Колорадо.',
-      ar: 'مرحبًا بك في البرنامج التجريبي لإمكانية الوصول إلى رعاية الأطفال (CAP)! يسعدنا انضمامك إلينا. هذا الاختبار الصغير بالدعوة فقط يهدف إلى دعمك أثناء تقديم الرعاية الحيوية للأطفال في كولورادو.',
+    freeTaxHelp: {
+      title: {
+        en: 'Free Tax Help:',
+        es: 'Ayuda gratuita con los impuestos:',
+        ru: 'Бесплатная помощь с налогами:',
+        ar: 'المساعدة الضريبية المجانية:',
+      },
+      getAheadColorado: {
+        en: 'Get Ahead Colorado',
+        es: 'Get Ahead Colorado',
+        ru: 'Get Ahead Colorado',
+        ar: 'Get Ahead Colorado',
+      },
+      taxHelpColorado: {
+        en: 'Tax Help Colorado',
+        es: 'Tax Help Colorado',
+        ru: 'Tax Help Colorado',
+        ar: 'Tax Help Colorado',
+      },
     },
-    keyStep: {
-      en: "A key step to fully participate in the CAP program and receive payments from families is to complete mandatory health and safety training. We've put together a series of online videos and readings that you can access from home.",
-      es: 'Un paso clave para participar en el programa CAP y recibir pagos de las familias es completar la capacitación esencial sobre salud y seguridad. Hemos creado una serie de videos y lecturas en línea a los que puede acceder desde casa.',
-      ru: 'Ключевой шаг для полноценного участия в программе CAP и получения платежей от семей — это прохождение обязательного обучения по охране здоровья и безопасности. Мы подготовили серию онлайн-видео и материалов для чтения, доступных из дома.',
-      ar: 'خطوة رئيسية للمشاركة الكاملة في برنامج CAP وتلقي المدفوعات من العائلات هي إكمال التدريب الإلزامي على الصحة والسلامة. قمنا بإعداد سلسلة من مقاطع الفيديو والقراءات عبر الإنترنت التي يمكنك الوصول إليها من المنزل.',
-    },
-    pleaseNote: {
-      en: 'Please note: All training outlined below must be completed PRIOR TO FORMAL APPROVAL into the Childcare Affordability Pilot (CAP).',
-      es: 'Tenga en cuenta: toda la capacitación descrita a continuación debe completarse ANTES DE LA APROBACIÓN FORMAL en el Programa Piloto Childcare Affordability Pilot (CAP).',
-      ru: 'Обратите внимание: все указанные ниже тренинги должны быть завершены ДО ОФИЦИАЛЬНОГО ОДОБРЕНИЯ в пилотном проекте по доступности ухода за детьми (CAP).',
-      ar: 'يرجى ملاحظة: يجب إكمال جميع التدريبات الموضحة أدناه قبل الموافقة الرسمية على البرنامج التجريبي لإمكانية الوصول إلى رعاية الأطفال (CAP).',
+    questions: {
+      part1: {
+        en: 'Questions? Contact the',
+        es: '¿Preguntas? Contacte al',
+        ru: 'Вопросы? Свяжитесь с',
+        ar: 'أسئلة؟ اتصل بـ',
+      },
+      cdecLink: {
+        en: 'Colorado Department of Early Childhood',
+        es: 'Departamento de Educación Temprana de Colorado',
+        ru: 'Департаментом раннего детства Колорадо',
+        ar: 'دائرة الطفولة المبكرة في كولورادو',
+      },
+      part2: {
+        en: 'or reach out to our CAP team.',
+        es: 'o comuníquese con nuestro equipo de CAP.',
+        ru: 'или обратитесь к нашей команде CAP.',
+        ar: 'أو تواصل مع فريق CAP الخاص بنا.',
+      },
     },
     readCarefully: {
       en: 'Please read these instructions carefully, especially about the CPR training, as it has a unique process.',
