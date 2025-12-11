@@ -489,6 +489,20 @@ export const providerTranslations = {
         ar: 'أو تواصل مع فريق CAP الخاص بنا.',
       },
     },
+    notAvailable: {
+      title: {
+        en: 'Resource Not Available',
+        es: 'Recurso no disponible',
+        ru: 'Ресурс недоступен',
+        ar: 'المورد غير متاح',
+      },
+      message: {
+        en: 'This resource is only available for Family, Friends, and Neighbors (FFN) providers.',
+        es: 'Este recurso solo está disponible para proveedores de Familia, Amigos y Vecinos (FFN).',
+        ru: 'Этот ресурс доступен только для поставщиков «Семья, друзья и соседи» (FFN).',
+        ar: 'هذا المورد متاح فقط لمقدمي العائلة والأصدقاء والجيران (FFN).',
+      },
+    },
     readCarefully: {
       en: 'Please read these instructions carefully, especially about the CPR training, as it has a unique process.',
       es: 'Lea atentamente estas instrucciones, especialmente sobre el entrenamiento en RCP (reanimación cardiopulmonar), ya que es un proceso único.',

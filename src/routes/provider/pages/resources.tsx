@@ -15,19 +15,12 @@ export function ResourcesPage() {
       <div className="p-5">
         <section>
           <Header>
-            <span className="flex items-center gap-2">
-              <span role="img" aria-label="info">
-                ℹ️
-              </span>
-              <Text text="Resource Unavailable" />
-            </span>
+            <Text text={t.notAvailable.title} />
           </Header>
           <WhiteCard>
-            <div className="space-y-4">
-              <p>
-                <Text text="This resource is only available for FFN providers." />
-              </p>
-            </div>
+            <p>
+              <Text text={t.notAvailable.message} />
+            </p>
           </WhiteCard>
         </section>
       </div>
