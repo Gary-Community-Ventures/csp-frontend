@@ -19,7 +19,9 @@ export function ResourcesPage() {
       <section>
         <Header>
           <span className="flex items-center gap-2">
-            <span role="img" aria-label="money">{t.header.emoji}</span>
+            <span role="img" aria-label="money">
+              {t.header.emoji}
+            </span>
             <Text text={t.header.title} />
           </span>
         </Header>
@@ -38,10 +40,18 @@ export function ResourcesPage() {
                 <Text text={t.qualify.title} />
               </h3>
               <ul className="list-disc pl-5 space-y-1">
-                <li><Text text={t.qualify.requirement1} /></li>
-                <li><Text text={t.qualify.requirement2} /></li>
-                <li><Text text={t.qualify.requirement3} /></li>
-                <li><Text text={t.qualify.requirement4} /></li>
+                <li>
+                  <Text text={t.qualify.requirement1} />
+                </li>
+                <li>
+                  <Text text={t.qualify.requirement2} />
+                </li>
+                <li>
+                  <Text text={t.qualify.requirement3} />
+                </li>
+                <li>
+                  <Text text={t.qualify.requirement4} />
+                </li>
               </ul>
             </div>
 
@@ -52,7 +62,10 @@ export function ResourcesPage() {
               <ol className="list-decimal pl-5 space-y-2">
                 <li>
                   <Text text={t.steps.step1.part1} />{' '}
-                  <ExternalLink href="https://www.coloradoshinespdis.com/s/pdislogin" className="text-primary underline">
+                  <ExternalLink
+                    href="https://www.coloradoshinespdis.com/s/pdislogin"
+                    className="text-primary underline"
+                  >
                     <Text text={t.steps.step1.pdisLink} />
                   </ExternalLink>{' '}
                   <Text text={t.steps.step1.part2} />
@@ -61,14 +74,23 @@ export function ResourcesPage() {
                   <Text text={t.steps.step2} />
                 </li>
                 <li>
-                  <Text text={t.steps.step3} />
+                  <Text text={t.steps.step3.part1} />{' '}
+                  <ExternalLink
+                    href="https://tax.colorado.gov/sites/tax/files/documents/DR1217_2025.pdf"
+                    className="text-primary underline"
+                  >
+                    <Text text={t.steps.step3.formLink} />
+                  </ExternalLink>
+                  <Text text={t.steps.step3.part2} />
                 </li>
               </ol>
             </div>
 
             <div>
               <p>
-                <span className="font-semibold"><Text text={t.learnMore.title} /></span>
+                <span className="font-semibold">
+                  <Text text={t.learnMore.title} />
+                </span>{' '}
                 <ExternalLink
                   href="https://cdec.colorado.gov/care-worker-tax-credit"
                   className="text-primary underline"

@@ -343,9 +343,9 @@ export const providerTranslations = {
         ar: 'إذا كنت تعتني بأطفال ليسوا أطفالك، يمكنك الحصول على 1,200 دولار عند تقديم ضرائب 2025.',
       },
       paragraph2: {
-        en: 'This is a refundable tax credit — that means you get money back even if you don't owe any taxes. The full $1,200 will come to you as a tax refund in spring 2026.',
+        en: "This is a refundable tax credit - that means you get money back even if you don't owe any taxes. The full $1,200 will come to you as a tax refund in spring 2026.",
         es: 'Este es un crédito fiscal reembolsable, lo que significa que recibirá dinero incluso si no debe impuestos. Los $1,200 completos le llegarán como reembolso de impuestos en la primavera de 2026.',
-        ru: 'Это возвратный налоговый кредит — это означает, что вы получите деньги обратно, даже если не должны налогов. Полная сумма в $1,200 придет к вам в виде налогового возврата весной 2026 года.',
+        ru: 'Это возвратный налоговый кредит - это означает, что вы получите деньги обратно, даже если не должны налогов. Полная сумма в $1,200 придет к вам в виде налогового возврата весной 2026 года.',
         ar: 'هذا ائتمان ضريبي قابل للاسترداد - مما يعني أنك تحصل على المال حتى لو لم تكن مدينًا بأي ضرائب. سيأتي إليك المبلغ الكامل البالغ 1,200 دولار كاسترداد ضريبي في ربيع 2026.',
       },
     },
@@ -415,10 +415,24 @@ export const providerTranslations = {
         ar: 'سجل الدخول إلى PDIS وأكد أنك قدمت ما لا يقل عن 720 ساعة من رعاية الأطفال في عام 2025. يجب إكمال هذا النموذج بحلول 31 ديسمبر 2025. (حسابي > إعدادات الملف الشخصي)',
       },
       step3: {
-        en: 'File your 2025 Colorado taxes in spring 2026. Free tax help is available if you need it!',
-        es: 'Presente sus impuestos de Colorado de 2025 en la primavera de 2026. ¡Hay ayuda gratuita con los impuestos disponible si la necesita!',
-        ru: 'Подайте налоговую декларацию Колорадо за 2025 год весной 2026 года. Бесплатная помощь с налогами доступна, если вам нужна!',
-        ar: 'قدم ضرائب كولورادو لعام 2025 في ربيع 2026. المساعدة الضريبية المجانية متاحة إذا كنت بحاجة إليها!',
+        part1: {
+          en: 'File your 2025 Colorado taxes in the spring of 2026, and include',
+          es: 'Presente sus impuestos de Colorado de 2025 en la primavera de 2026 e incluya',
+          ru: 'Подайте налоговую декларацию Колорадо за 2025 год весной 2026 года и включите',
+          ar: 'قدم ضرائب كولورادو لعام 2025 في ربيع 2026، وقم بتضمين',
+        },
+        formLink: {
+          en: 'this form',
+          es: 'este formulario',
+          ru: 'эту форму',
+          ar: 'هذا النموذج',
+        },
+        part2: {
+          en: '. Free tax help is available if you need it!',
+          es: '. ¡Hay ayuda gratuita con los impuestos disponible si la necesita!',
+          ru: '. Бесплатная помощь с налогами доступна, если вам нужна!',
+          ar: '. المساعدة الضريبية المجانية متاحة إذا كنت بحاجة إليها!',
+        },
       },
     },
     learnMore: {
