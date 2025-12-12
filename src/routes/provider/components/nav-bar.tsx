@@ -1,13 +1,11 @@
 import {
-  // Mail,
   Home,
-  // ListChecks,
-  // ListTodo,
   MessageCircleQuestionMark,
   LogOut,
   UserRound,
   ArrowRightLeft,
   CreditCard,
+  BookOpen,
 } from 'lucide-react'
 import { NavBar } from '@/components/nav-bar'
 import { SignOutButton, useClerk, useUser } from '@clerk/clerk-react'
@@ -109,6 +107,17 @@ export function ProviderNavBar() {
             text: text(t.links.paymentSettings),
             Icon: CreditCard,
           },
+
+          ...(providerInfo.type === 'ffn' || providerInfo.type === 'lhb'
+            ? [
+                {
+                  to: '/provider/resources' as const,
+                  text: text(t.links.resources),
+                  Icon: BookOpen,
+                },
+              ]
+            : []),
+
           // {
           //   to: '/provider/messages',
           //   text: text(t.links.messages),
