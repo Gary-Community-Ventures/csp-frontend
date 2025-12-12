@@ -100,24 +100,10 @@ export function ResourcesPage() {
             </div>
 
             <div>
-              <p>
-                <span className="font-semibold">
-                  <Text text={t.learnMore.title} />
-                </span>{' '}
-                <ExternalLink
-                  href="https://cdec.colorado.gov/care-worker-tax-credit"
-                  className="text-primary underline"
-                >
-                  <Text text={t.learnMore.officialInfo} />
-                </ExternalLink>
-              </p>
-            </div>
-
-            <div>
               <h3 className="font-semibold text-lg mb-2">
                 <Text text={t.freeTaxHelp.title} />
               </h3>
-              <ul className="space-y-1">
+              <ul className="list-disc pl-5 space-y-1">
                 <li>
                   <ExternalLink
                     href="https://www.getaheadcolorado.org/"
@@ -135,6 +121,20 @@ export function ResourcesPage() {
                   </ExternalLink>
                 </li>
               </ul>
+            </div>
+
+            <div className="pt-4 border-t">
+              <p>
+                <span className="font-semibold">
+                  <Text text={t.learnMore.title} />
+                </span>{' '}
+                <ExternalLink
+                  href="https://cdec.colorado.gov/care-worker-tax-credit"
+                  className="text-primary underline"
+                >
+                  <Text text={t.learnMore.officialInfo} />
+                </ExternalLink>
+              </p>
             </div>
 
             <p className="text-sm text-gray-600">
