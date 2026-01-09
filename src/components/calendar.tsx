@@ -258,7 +258,10 @@ export const Calendar: React.FC<CalendarProps> = ({
   paymentRate,
 }) => {
   const t = translations.family.calendar
-  const [currentDate, setCurrentDate] = useState(new Date())
+  const allocationDate = new Date(allocation.date)
+  const [currentDate, setCurrentDate] = useState(
+    new Date(allocationDate.getFullYear(), allocationDate.getMonth() + 1, 1)
+  )
   const MIN_DATE = new Date(2025, 6, 1) // July 1, 2025 (Month is 0-indexed)xw
 
   const handleDayClick = (

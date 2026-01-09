@@ -133,27 +133,32 @@ export function FamilyNavBar() {
       )}
       {navBar.hidden ? null : (
         <NavBar
+          key={selectedChildInfo.id}
           sticky={true}
           links={[
             {
               to: '/family/$childId/home',
+              params: { childId: selectedChildInfo.id },
               text: text(t.links.home),
               Icon: House,
             },
             /* TODO renable when messages/activity are implemented
             {
               to: '/family/$childId/messages',
+              params: { childId: selectedChildInfo.id },
               text: text(t.links.messages),
               Icon: Mail,
             },
             {
               to: '/family/$childId/activity',
+              params: { childId: selectedChildInfo.id },
               text: text(t.links.activity),
               Icon: ListChecks,
             },
             */
             {
               to: '/family/$childId/providers',
+              params: { childId: selectedChildInfo.id },
               text: text(t.links.providers),
               Icon: HeartHandshake,
             },
