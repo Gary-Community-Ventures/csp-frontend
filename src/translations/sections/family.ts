@@ -722,4 +722,90 @@ export const familyTranslations = {
       ar: 'يرجى تأكيد عدد أنصاف الأيام والأيام الكاملة من الرعاية التي تلقيتها لكل طفل. إذا لم تتلق رعاية، يرجى إدخال 0.',
     },
   },
+  pathwaysBanner: {
+    message: {
+      en: 'Track your child\'s development with a free app!',
+      es: '¡Sigue el desarrollo de tu hijo con una aplicación gratuita!',
+      ru: 'Track your child\'s development with a free app!',
+      ar: 'Track your child\'s development with a free app!',
+    },
+  },
+  resources: {
+    header: {
+      title: {
+        en: 'Family Resources',
+        es: 'Recursos Familiares',
+        ru: 'Family Resources',
+        ar: 'Family Resources',
+      },
+    },
+    intro: {
+      title: {
+        en: 'Pathways.org: Track Your Child\'s Development',
+        es: 'Pathways.org: Sigue el Desarrollo de Tu Hijo',
+        ru: 'Pathways.org: Track Your Child\'s Development',
+        ar: 'Pathways.org: Track Your Child\'s Development',
+      },
+      description: {
+        en: 'Pathways.org provides free resources to help you track your child\'s developmental milestones. Their mobile app makes it easy to monitor your child\'s growth and development.',
+        es: 'Pathways.org ofrece recursos gratuitos para ayudarte a seguir los hitos del desarrollo de tu hijo. Su aplicación móvil facilita el monitoreo del crecimiento y desarrollo de tu hijo.',
+        ru: 'Pathways.org provides free resources to help you track your child\'s developmental milestones. Their mobile app makes it easy to monitor your child\'s growth and development.',
+        ar: 'Pathways.org provides free resources to help you track your child\'s developmental milestones. Their mobile app makes it easy to monitor your child\'s growth and development.',
+      },
+    },
+    downloadApp: {
+      title: {
+        en: 'Download the Free App',
+        es: 'Descarga la Aplicación Gratuita',
+        ru: 'Download the Free App',
+        ar: 'Download the Free App',
+      },
+      appStore: {
+        en: 'Download on the App Store',
+        es: 'Descargar en App Store',
+        ru: 'Download on the App Store',
+        ar: 'Download on the App Store',
+      },
+      googlePlay: {
+        en: 'Get it on Google Play',
+        es: 'Disponible en Google Play',
+        ru: 'Get it on Google Play',
+        ar: 'Get it on Google Play',
+      },
+    },
+    learnMore: {
+      title: {
+        en: 'Learn More',
+        es: 'Más Información',
+        ru: 'Learn More',
+        ar: 'Learn More',
+      },
+      websiteLink: {
+        en: 'Visit Pathways.org',
+        es: 'Visita Pathways.org',
+        ru: 'Visit Pathways.org',
+        ar: 'Visit Pathways.org',
+      },
+    },
+    support: {
+      title: {
+        en: 'Need Help?',
+        es: '¿Necesitas Ayuda?',
+        ru: 'Need Help?',
+        ar: 'Need Help?',
+      },
+      description: {
+        en: 'Schedule a free support call to learn more about tracking your child\'s development.',
+        es: 'Programa una llamada de apoyo gratuita para aprender más sobre cómo seguir el desarrollo de tu hijo.',
+        ru: 'Schedule a free support call to learn more about tracking your child\'s development.',
+        ar: 'Schedule a free support call to learn more about tracking your child\'s development.',
+      },
+      scheduleCall: {
+        en: 'Schedule a Support Call',
+        es: 'Programar una Llamada de Apoyo',
+        ru: 'Schedule a Support Call',
+        ar: 'Schedule a Support Call',
+      },
+    },
+  },
 } as const

@@ -30,6 +30,7 @@ import { translations } from '@/translations/text'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
 import { ExternalLink } from '@/components/external-link'
 import { NotificationBanner } from '@/components/notification-banner'
+import { PathwaysBanner } from './pathways-banner'
 
 export function FamilyNavBar() {
   const t = translations.family.navBar
@@ -119,6 +120,7 @@ export function FamilyNavBar() {
       {!navBar.hidden && (
         <FamilyNotificationBanner notification={navBar.notifications[0]} />
       )}
+      {!navBar.hidden && <PathwaysBanner />}
       {!navBar.hidden && (
         <div className="flex justify-center items-center p-5 bg-white">
           <Link to="/family/$childId/home">
@@ -131,6 +133,7 @@ export function FamilyNavBar() {
       {navBar.hidden && (
         <FamilyNotificationBanner notification={navBar.notifications[0]} />
       )}
+      {navBar.hidden && <PathwaysBanner />}
       {navBar.hidden ? null : (
         <NavBar
           key={selectedChildInfo.id}
