@@ -1,5 +1,5 @@
 import type { RouterContext } from '@/routes/router'
-import { backendUrl, headersWithAuth } from './client'
+import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
 
 type TrackClickParams = {
   trackingId: string
@@ -19,10 +19,12 @@ export async function checkClicked(
     headers: await headersWithAuth(context),
   })
 
+  // 404 means the user hasn't clicked yet - this is expected
   if (res.status === 404) {
     return false
   }
 
+  handleStatusCodes(context, res)
   return res.ok
 }
 
@@ -38,9 +40,11 @@ export async function trackClick(
     body.url = params.url
   }
 
-  await fetch(backendUrl('/clicks'), {
+  const res = await fetch(backendUrl('/clicks'), {
     method: 'POST',
     headers: await headersWithAuth(context),
     body: JSON.stringify(body),
   })
+
+  handleStatusCodes(context, res)
 }

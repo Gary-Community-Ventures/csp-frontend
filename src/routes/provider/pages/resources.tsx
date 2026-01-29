@@ -5,8 +5,6 @@ import { ExternalLink } from '@/components/external-link'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Button } from '@/components/ui/button'
-import { resourcesRoute } from '../routes'
-import type { RouterContext } from '@/routes/router'
 
 const BRIGHTWHEEL_FORM_URL =
   'https://c151s.share-na2.hsforms.com/2AftzYUlgRf6DTgcR4qa5sw'
@@ -14,7 +12,6 @@ const BRIGHTWHEEL_TRACKING_ID = 'brightwheel_signup_form'
 
 export function ResourcesPage() {
   const { providerInfo } = useProviderContext()
-  const context = resourcesRoute.useRouteContext()
   const t = translations.provider.resources
 
   // Only show for FFN providers
@@ -37,7 +34,7 @@ export function ResourcesPage() {
 
   return (
     <div className="p-5 space-y-6">
-      <BrightwheelSection context={context} />
+      <BrightwheelSection />
 
       <section>
         <Header>
@@ -164,7 +161,7 @@ export function ResourcesPage() {
   )
 }
 
-function BrightwheelSection({ context }: { context: RouterContext }) {
+function BrightwheelSection() {
   const t = translations.provider.brightwheelSection
 
   return (
@@ -206,7 +203,6 @@ function BrightwheelSection({ context }: { context: RouterContext }) {
               <ExternalLink
                 href={BRIGHTWHEEL_FORM_URL}
                 trackingId={BRIGHTWHEEL_TRACKING_ID}
-                context={context}
               >
                 <Text text={t.signUpButton} />
               </ExternalLink>

@@ -3,7 +3,6 @@ import { WhiteCard } from '@/components/white-card'
 import { ExternalLink } from '@/components/external-link'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { resourcesRoute } from '../routes'
 
 const EXTERNAL_URLS = {
   appStore:
@@ -23,7 +22,6 @@ const TRACKING_IDS = {
 
 export function FamilyResourcesPage() {
   const t = translations.family.resources
-  const context = resourcesRoute.useRouteContext()
 
   return (
     <div className="p-5">
@@ -45,7 +43,6 @@ export function FamilyResourcesPage() {
                 <ExternalLink
                   href={EXTERNAL_URLS.website}
                   trackingId={TRACKING_IDS.website}
-                  context={context}
                   className="text-primary underline"
                 >
                   <Text text={t.whatIsIt.pathwaysLink} />
@@ -91,7 +88,6 @@ export function FamilyResourcesPage() {
                       <ExternalLink
                         href={EXTERNAL_URLS.appStore}
                         trackingId={TRACKING_IDS.appStore}
-                        context={context}
                         className="text-primary underline"
                       >
                         <Text text={t.tryPathways.appStore} />
@@ -101,7 +97,6 @@ export function FamilyResourcesPage() {
                       <ExternalLink
                         href={EXTERNAL_URLS.googlePlay}
                         trackingId={TRACKING_IDS.googlePlay}
-                        context={context}
                         className="text-primary underline"
                       >
                         <Text text={t.tryPathways.googlePlay} />
@@ -111,7 +106,6 @@ export function FamilyResourcesPage() {
                       <ExternalLink
                         href={EXTERNAL_URLS.website}
                         trackingId={TRACKING_IDS.website}
-                        context={context}
                         className="text-primary underline"
                       >
                         <Text text={t.tryPathways.websiteLink} />
@@ -142,7 +136,6 @@ export function FamilyResourcesPage() {
               <ExternalLink
                 href={EXTERNAL_URLS.scheduling}
                 trackingId={TRACKING_IDS.scheduling}
-                context={context}
                 className="text-primary underline"
               >
                 <Text text={t.support.scheduleCall} />

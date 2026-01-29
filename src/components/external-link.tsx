@@ -1,12 +1,11 @@
 import { recordExternalLinkClick } from '@/lib/analytics'
 import { trackClick } from '@/lib/api/clicks'
-import type { RouterContext } from '@/routes/router'
+import { rootRoute } from '@/routes/router'
 import type { ComponentProps, PropsWithChildren } from 'react'
 
 type ExternalLinkProps = PropsWithChildren<
   ComponentProps<'a'> & {
     trackingId?: string
-    context?: RouterContext
   }
 >
 
@@ -15,9 +14,10 @@ export function ExternalLink({
   children,
   onClick,
   trackingId,
-  context,
   ...restOfProps
 }: ExternalLinkProps) {
+  const context = rootRoute.useRouteContext()
+
   return (
     <a
       href={href}
@@ -29,7 +29,7 @@ export function ExternalLink({
           recordExternalLinkClick(href)
         }
 
-        if (trackingId && context) {
+        if (trackingId) {
           trackClick(context, { trackingId, url: href }).catch(() => {
             // Intentionally ignore tracking errors to avoid impacting user experience
           })
