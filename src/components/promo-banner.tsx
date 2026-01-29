@@ -3,7 +3,7 @@ import { Button } from './ui/button'
 import { MoveRight } from 'lucide-react'
 import { Link, type LinkProps } from '@tanstack/react-router'
 
-export type PromoBannerVariant = 'pathways'
+export type PromoBannerVariant = 'pathways' | 'brightwheel'
 
 type PromoBannerProps = PropsWithChildren<{
   variant: PromoBannerVariant

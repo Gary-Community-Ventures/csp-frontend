@@ -4,9 +4,17 @@ import { WhiteCard } from '@/components/white-card'
 import { ExternalLink } from '@/components/external-link'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { Button } from '@/components/ui/button'
+import { resourcesRoute } from '../routes'
+import type { RouterContext } from '@/routes/router'
+
+const BRIGHTWHEEL_FORM_URL =
+  'https://c151s.share-na2.hsforms.com/2AftzYUlgRf6DTgcR4qa5sw'
+const BRIGHTWHEEL_TRACKING_ID = 'brightwheel_signup_form'
 
 export function ResourcesPage() {
   const { providerInfo } = useProviderContext()
+  const context = resourcesRoute.useRouteContext()
   const t = translations.provider.resources
 
   // Only show for FFN providers
@@ -28,7 +36,9 @@ export function ResourcesPage() {
   }
 
   return (
-    <div className="p-5">
+    <div className="p-5 space-y-6">
+      <BrightwheelSection context={context} />
+
       <section>
         <Header>
           <span className="flex items-center gap-2">
@@ -151,5 +161,59 @@ export function ResourcesPage() {
         </WhiteCard>
       </section>
     </div>
+  )
+}
+
+function BrightwheelSection({ context }: { context: RouterContext }) {
+  const t = translations.provider.brightwheelSection
+
+  return (
+    <section>
+      <Header>
+        <Text text={t.title} />
+      </Header>
+      <WhiteCard>
+        <div className="space-y-4">
+          <p>
+            <Text text={t.intro} />
+          </p>
+
+          <ul className="list-disc pl-5 space-y-2">
+            <li>
+              <Text text={t.benefit1} />
+            </li>
+            <li>
+              <Text text={t.benefit2} />
+            </li>
+            <li>
+              <Text text={t.benefit3} />
+            </li>
+            <li>
+              <Text text={t.benefit4} />
+            </li>
+          </ul>
+
+          <p>
+            <Text text={t.costInfo} />
+          </p>
+
+          <p>
+            <Text text={t.cta} />
+          </p>
+
+          <div className="pt-2">
+            <Button asChild>
+              <ExternalLink
+                href={BRIGHTWHEEL_FORM_URL}
+                trackingId={BRIGHTWHEEL_TRACKING_ID}
+                context={context}
+              >
+                <Text text={t.signUpButton} />
+              </ExternalLink>
+            </Button>
+          </div>
+        </div>
+      </WhiteCard>
+    </section>
   )
 }

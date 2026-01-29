@@ -25,6 +25,7 @@ import { Text, useText } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Logo } from '@/components/logo'
 import { NotificationBanner } from '@/components/notification-banner'
+import { BrightwheelBanner } from './brightwheel-banner'
 
 export function ProviderNavBar() {
   const t = translations.provider.navBar
@@ -93,6 +94,7 @@ export function ProviderNavBar() {
         </div>
       </div>
       <ProviderNotificationBanner notification={navBar.notifications[0]} />
+      <BrightwheelBanner />
       <div className="flex justify-center items-center p-5 bg-white">
         <strong className="text-3xl text-primary">
           {providerInfo.firstName} {providerInfo.lastName}
