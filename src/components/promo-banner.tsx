@@ -12,7 +12,7 @@ type PromoBannerProps = PropsWithChildren<{
 }>
 
 const WRAPPER_CLASSES =
-  'flex justify-between items-center gap-2 bg-primary text-primary-foreground p-2 w-full'
+  'flex justify-between items-center gap-2 bg-secondary text-secondary-foreground p-2 w-full'
 
 function Wrapper({
   children,
@@ -38,7 +38,7 @@ export function PromoBanner({ link, children, onClick }: PromoBannerProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="translate-y-[2px] text-primary-foreground hover:bg-primary-foreground/10"
+            className="translate-y-[2px]"
             asChild
           >
             <span>

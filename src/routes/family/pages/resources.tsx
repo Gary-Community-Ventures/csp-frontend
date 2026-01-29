@@ -3,6 +3,7 @@ import { WhiteCard } from '@/components/white-card'
 import { ExternalLink } from '@/components/external-link'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
+import { resourcesRoute } from '../routes'
 
 const EXTERNAL_URLS = {
   appStore:
@@ -13,8 +14,16 @@ const EXTERNAL_URLS = {
     'https://meetings-na2.hubspot.com/james-lukens/cap-pathways-support-call',
 }
 
+const TRACKING_IDS = {
+  appStore: 'pathways_app_store',
+  googlePlay: 'pathways_google_play',
+  website: 'pathways_website',
+  scheduling: 'pathways_scheduling',
+}
+
 export function FamilyResourcesPage() {
   const t = translations.family.resources
+  const context = resourcesRoute.useRouteContext()
 
   return (
     <div className="p-5">
@@ -24,62 +33,116 @@ export function FamilyResourcesPage() {
         </Header>
         <WhiteCard>
           <div className="space-y-6">
-            <div>
-              <h3 className="font-semibold text-lg mb-2">
-                <Text text={t.intro.title} />
-              </h3>
-              <p>
-                <Text text={t.intro.description} />
-              </p>
-            </div>
+            <p className="font-semibold">
+              <Text text={t.intro.headline} />
+            </p>
 
             <div>
               <h3 className="font-semibold text-lg mb-2">
-                <Text text={t.downloadApp.title} />
+                <Text text={t.whatIsIt.title} />
               </h3>
+              <p className="mb-3">
+                <ExternalLink
+                  href={EXTERNAL_URLS.website}
+                  trackingId={TRACKING_IDS.website}
+                  context={context}
+                  className="text-primary underline"
+                >
+                  <Text text={t.whatIsIt.pathwaysLink} />
+                </ExternalLink>{' '}
+                <Text text={t.whatIsIt.descriptionAfterLink} />
+              </p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <ExternalLink
-                    href={EXTERNAL_URLS.appStore}
-                    className="text-primary underline"
-                  >
-                    <Text text={t.downloadApp.appStore} />
-                  </ExternalLink>
+                  <Text text={t.whatIsIt.benefit1} />
                 </li>
                 <li>
-                  <ExternalLink
-                    href={EXTERNAL_URLS.googlePlay}
-                    className="text-primary underline"
-                  >
-                    <Text text={t.downloadApp.googlePlay} />
-                  </ExternalLink>
+                  <Text text={t.whatIsIt.benefit2} />
+                </li>
+                <li>
+                  <Text text={t.whatIsIt.benefit3} />
+                </li>
+                <li>
+                  <Text text={t.whatIsIt.benefit4} />
                 </li>
               </ul>
             </div>
 
             <div>
               <h3 className="font-semibold text-lg mb-2">
-                <Text text={t.learnMore.title} />
+                <Text text={t.whyTry.title} />
               </h3>
               <p>
-                <ExternalLink
-                  href={EXTERNAL_URLS.website}
-                  className="text-primary underline"
-                >
-                  <Text text={t.learnMore.websiteLink} />
-                </ExternalLink>
+                <Text text={t.whyTry.description} />
               </p>
             </div>
+
+            <div>
+              <h3 className="font-semibold text-lg mb-2">
+                <Text text={t.tryPathways.title} />
+              </h3>
+              <ol className="list-decimal pl-5 space-y-3">
+                <li>
+                  <p className="mb-2">
+                    <Text text={t.tryPathways.downloadTitle} />
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>
+                      <ExternalLink
+                        href={EXTERNAL_URLS.appStore}
+                        trackingId={TRACKING_IDS.appStore}
+                        context={context}
+                        className="text-primary underline"
+                      >
+                        <Text text={t.tryPathways.appStore} />
+                      </ExternalLink>
+                    </li>
+                    <li>
+                      <ExternalLink
+                        href={EXTERNAL_URLS.googlePlay}
+                        trackingId={TRACKING_IDS.googlePlay}
+                        context={context}
+                        className="text-primary underline"
+                      >
+                        <Text text={t.tryPathways.googlePlay} />
+                      </ExternalLink>
+                    </li>
+                    <li>
+                      <ExternalLink
+                        href={EXTERNAL_URLS.website}
+                        trackingId={TRACKING_IDS.website}
+                        context={context}
+                        className="text-primary underline"
+                      >
+                        <Text text={t.tryPathways.websiteLink} />
+                      </ExternalLink>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <Text text={t.tryPathways.step1} />
+                </li>
+                <li>
+                  <Text text={t.tryPathways.step2} />
+                </li>
+                <li>
+                  <Text text={t.tryPathways.step3} />
+                </li>
+              </ol>
+            </div>
+
+            <p className="text-sm text-gray-600">
+              <Text text={t.followUp} />
+            </p>
 
             <div className="pt-4 border-t">
               <h3 className="font-semibold text-lg mb-2">
                 <Text text={t.support.title} />
               </h3>
-              <p className="mb-3">
-                <Text text={t.support.description} />
-              </p>
               <ExternalLink
                 href={EXTERNAL_URLS.scheduling}
+                trackingId={TRACKING_IDS.scheduling}
+                context={context}
                 className="text-primary underline"
               >
                 <Text text={t.support.scheduleCall} />

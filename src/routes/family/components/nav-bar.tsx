@@ -7,6 +7,7 @@ import {
   LogOut,
   UserRound,
   ArrowRightLeft,
+  BookOpen,
 } from 'lucide-react'
 import { Logo } from '@/components/logo'
 import { NavBar } from '@/components/nav-bar'
@@ -164,6 +165,12 @@ export function FamilyNavBar() {
               params: { childId: selectedChildInfo.id },
               text: text(t.links.providers),
               Icon: HeartHandshake,
+            },
+            {
+              to: '/family/$childId/resources',
+              params: { childId: selectedChildInfo.id },
+              text: text(t.links.resources),
+              Icon: BookOpen,
             },
           ]}
         />

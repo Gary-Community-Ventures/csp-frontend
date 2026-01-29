@@ -2,10 +2,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { PromoBanner } from '@/components/promo-banner'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
-import { checkLinkClicked, trackLinkClick } from '@/lib/api/clickLink'
+import { checkClicked, trackClick } from '@/lib/api/clicks'
 import { familyRoute } from '../routes'
 
-const PATHWAYS_LINK_ID = 'pathways_resources'
+const PATHWAYS_BANNER_TRACKING_ID = 'pathways_banner'
 
 export function PathwaysBanner() {
   const t = translations.family.pathwaysBanner
@@ -13,15 +13,16 @@ export function PathwaysBanner() {
   const queryClient = useQueryClient()
 
   const { data: hasClicked, isLoading } = useQuery({
-    queryKey: ['clickLink', PATHWAYS_LINK_ID],
-    queryFn: () => checkLinkClicked(context, PATHWAYS_LINK_ID),
+    queryKey: ['clicks', PATHWAYS_BANNER_TRACKING_ID],
+    queryFn: () => checkClicked(context, PATHWAYS_BANNER_TRACKING_ID),
     staleTime: Infinity,
   })
 
   const trackClickMutation = useMutation({
-    mutationFn: () => trackLinkClick(context, PATHWAYS_LINK_ID),
+    mutationFn: () =>
+      trackClick(context, { trackingId: PATHWAYS_BANNER_TRACKING_ID }),
     onSuccess: () => {
-      queryClient.setQueryData(['clickLink', PATHWAYS_LINK_ID], true)
+      queryClient.setQueryData(['clicks', PATHWAYS_BANNER_TRACKING_ID], true)
     },
   })
 
