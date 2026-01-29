@@ -1,21 +1,19 @@
 import type { PropsWithChildren } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import type { LinkProps } from '@tanstack/react-router'
-import { PromoBanner, type PromoBannerVariant } from './promo-banner'
+import { NotificationBanner } from './notification-banner'
 import { checkClicked, trackClick } from '@/lib/api/clicks'
 import type { RouterContext } from '@/routes/router'
 
 type TrackableBannerProps = PropsWithChildren<{
   trackingId: string
   link: LinkProps
-  variant: PromoBannerVariant
   context: RouterContext
 }>
 
 export function TrackableBanner({
   trackingId,
   link,
-  variant,
   context,
   children,
 }: TrackableBannerProps) {
@@ -39,12 +37,12 @@ export function TrackableBanner({
   }
 
   return (
-    <PromoBanner
-      variant={variant}
+    <NotificationBanner
       link={link}
       onClick={() => trackClickMutation.mutate()}
+      showActionRequired={false}
     >
       {children}
-    </PromoBanner>
+    </NotificationBanner>
   )
 }

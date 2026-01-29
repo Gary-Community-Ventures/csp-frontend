@@ -12,7 +12,6 @@ export function BrightwheelBanner() {
   return (
     <TrackableBanner
       trackingId={BRIGHTWHEEL_BANNER_TRACKING_ID}
-      variant="brightwheel"
       link={{ to: '/provider/resources' }}
       context={context}
     >

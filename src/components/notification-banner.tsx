@@ -7,14 +7,21 @@ import { Link, type LinkProps } from '@tanstack/react-router'
 
 type NotificationBannerProps = PropsWithChildren<{
   link?: LinkProps
+  onClick?: () => void
+  showActionRequired?: boolean
 }>
 
 const WRAPPER_CLASSES =
   'flex justify-between items-center gap-2 bg-secondary text-secondary-foreground p-2 w-full'
-export function Wrapper({ children, link }: NotificationBannerProps) {
+
+function Wrapper({
+  children,
+  link,
+  onClick,
+}: PropsWithChildren<{ link?: LinkProps; onClick?: () => void }>) {
   if (link !== undefined) {
     return (
-      <Link {...link} className={WRAPPER_CLASSES}>
+      <Link {...link} className={WRAPPER_CLASSES} onClick={onClick}>
         {children}
       </Link>
     )
@@ -25,13 +32,15 @@ export function Wrapper({ children, link }: NotificationBannerProps) {
 export function NotificationBanner({
   link,
   children,
+  onClick,
+  showActionRequired = true,
 }: NotificationBannerProps) {
   const t = translations.general.banner
 
   return (
-    <Wrapper link={link}>
+    <Wrapper link={link} onClick={onClick}>
       <div>
-        {link !== undefined ? (
+        {link !== undefined && showActionRequired ? (
           <span className="font-bold">
             <Text text={t.actionRequired} />
           </span>

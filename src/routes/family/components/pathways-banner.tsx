@@ -12,7 +12,6 @@ export function PathwaysBanner() {
   return (
     <TrackableBanner
       trackingId={PATHWAYS_BANNER_TRACKING_ID}
-      variant="pathways"
       link={{ to: '/family/$childId/resources' }}
       context={context}
     >
