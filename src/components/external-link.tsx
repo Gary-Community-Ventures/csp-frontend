@@ -30,7 +30,9 @@ export function ExternalLink({
         }
 
         if (trackingId && context) {
-          trackClick(context, { trackingId, url: href })
+          trackClick(context, { trackingId, url: href }).catch(() => {
+            // Intentionally ignore tracking errors to avoid impacting user experience
+          })
         }
 
         onClick?.(e)
