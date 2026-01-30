@@ -12,9 +12,9 @@ export async function getMonthAllocation(
   year: number,
   providerId?: string | undefined
 ): Promise<z.infer<typeof monthAllocationSchema>> {
-  let url = backendUrl(`/child/${childId}/allocation/${month}/${year}`)
+  const url = backendUrl(`/child/${childId}/allocation/${month}/${year}`)
   if (providerId !== undefined) {
-    url += `?provider_id=${providerId}`
+    url.searchParams.append('provider_id', providerId)
   }
   const res = await fetch(url, {
     headers: await headersWithAuth(context),

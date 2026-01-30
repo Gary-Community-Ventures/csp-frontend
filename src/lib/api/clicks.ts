@@ -15,10 +15,8 @@ export async function checkClicked(
   context: RouterContext,
   trackingId: string
 ): Promise<boolean> {
-  const url =
-    backendUrl('/clicks') +
-    '?' +
-    new URLSearchParams({ tracking_id: trackingId })
+  const url = backendUrl('/clicks')
+  url.searchParams.append('tracking_id', trackingId)
 
   try {
     const res = await fetch(url, {
