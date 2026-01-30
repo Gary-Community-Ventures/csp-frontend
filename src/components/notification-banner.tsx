@@ -40,7 +40,7 @@ export function NotificationBanner({
   return (
     <Wrapper link={link} onClick={onClick}>
       <div>
-        {link !== undefined && showActionRequired ? (
+        {showActionRequired ? (
           <span className="font-bold">
             <Text text={t.actionRequired} />
           </span>
