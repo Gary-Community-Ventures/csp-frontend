@@ -1,11 +1,16 @@
 import type { RouterContext } from '@/routes/router'
-import { backendUrl, handleStatusCodes, headersWithAuth } from './client'
+import { backendUrl, headersWithAuth } from './client'
 
 type TrackClickParams = {
   trackingId: string
   url?: string
 }
 
+/**
+ * Check if a user has clicked a tracked element.
+ * Returns false if not clicked OR if there's an error (fails open - shows banner).
+ * Errors are silent since tracking shouldn't impact user experience.
+ */
 export async function checkClicked(
   context: RouterContext,
   trackingId: string
@@ -14,20 +19,29 @@ export async function checkClicked(
     backendUrl('/clicks') +
     '?' +
     new URLSearchParams({ tracking_id: trackingId })
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: await headersWithAuth(context),
-  })
 
-  // 404 means the user hasn't clicked yet - this is expected
-  if (res.status === 404) {
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: await headersWithAuth(context),
+    })
+
+    // 404 means the user hasn't clicked yet
+    if (res.status === 404) {
+      return false
+    }
+
+    return res.ok
+  } catch {
+    // Network errors - fail silently, show banner
     return false
   }
-
-  handleStatusCodes(context, res)
-  return res.ok
 }
 
+/**
+ * Track a click event. Fails silently since tracking
+ * shouldn't impact user experience.
+ */
 export async function trackClick(
   context: RouterContext,
   params: TrackClickParams
@@ -40,11 +54,13 @@ export async function trackClick(
     body.url = params.url
   }
 
-  const res = await fetch(backendUrl('/clicks'), {
-    method: 'POST',
-    headers: await headersWithAuth(context),
-    body: JSON.stringify(body),
-  })
-
-  handleStatusCodes(context, res)
+  try {
+    await fetch(backendUrl('/clicks'), {
+      method: 'POST',
+      headers: await headersWithAuth(context),
+      body: JSON.stringify(body),
+    })
+  } catch {
+    // Silently ignore tracking errors
+  }
 }
