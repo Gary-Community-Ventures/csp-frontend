@@ -1143,6 +1143,70 @@ export const providerTranslations = {
       backButton: returnHomeButton,
     },
   },
+  brightwheelBanner: {
+    message: {
+      en: 'Are you interested in using Brightwheel? Click Here',
+      es: '¿Está interesado en usar Brightwheel? Haga clic aquí',
+      ru: 'Вас интересует использование Brightwheel? Нажмите здесь',
+      ar: 'هل أنت مهتم باستخدام Brightwheel؟ انقر هنا',
+    },
+  },
+  brightwheelSection: {
+    title: {
+      en: 'Are you interested in using Brightwheel?',
+      es: '¿Está interesado en usar Brightwheel?',
+      ru: 'Вас интересует использование Brightwheel?',
+      ar: 'هل أنت مهتم باستخدام Brightwheel؟',
+    },
+    intro: {
+      en: "We're exploring whether tools like Brightwheel might make your life easier as a CAP provider. Brightwheel is an app that many licensed childcare centers use to:",
+      es: 'Estamos explorando si herramientas como Brightwheel podrían facilitarle la vida como proveedor de CAP. Brightwheel es una aplicación que muchos centros de cuidado infantil con licencia usan para:',
+      ru: 'Мы изучаем, могут ли такие инструменты, как Brightwheel, облегчить вашу жизнь в качестве поставщика CAP. Brightwheel — это приложение, которое используют многие лицензированные детские центры для:',
+      ar: 'نحن نستكشف ما إذا كانت أدوات مثل Brightwheel قد تسهل حياتك كمزود CAP. Brightwheel هو تطبيق تستخدمه العديد من مراكز رعاية الأطفال المرخصة من أجل:',
+    },
+    benefit1: {
+      en: 'Send quick updates to families (photos, daily notes)',
+      es: 'Enviar actualizaciones rápidas a las familias (fotos, notas diarias)',
+      ru: 'Быстро отправлять обновления семьям (фотографии, ежедневные заметки)',
+      ar: 'إرسال تحديثات سريعة للعائلات (صور، ملاحظات يومية)',
+    },
+    benefit2: {
+      en: 'Track important information about each child',
+      es: 'Rastrear información importante sobre cada niño',
+      ru: 'Отслеживать важную информацию о каждом ребёнке',
+      ar: 'تتبع المعلومات المهمة عن كل طفل',
+    },
+    benefit3: {
+      en: "Track a child's activities throughout the day so that both you and the parent can stay up to date on things like: when the last diaper change happened, how long the child's last nap was, or what the child last ate",
+      es: 'Rastrear las actividades de un niño a lo largo del día para que tanto usted como el padre puedan mantenerse al día sobre cosas como: cuándo fue el último cambio de pañal, cuánto duró la última siesta del niño, o qué comió el niño por última vez',
+      ru: 'Отслеживать активность ребёнка в течение дня, чтобы и вы, и родитель были в курсе таких вещей, как: когда была последняя смена подгузника, как долго длился последний сон ребёнка или что ребёнок ел в последний раз',
+      ar: 'تتبع أنشطة الطفل طوال اليوم حتى يتمكن كل من أنت والوالد من البقاء على اطلاع على أشياء مثل: متى حدث آخر تغيير للحفاض، ومدة آخر قيلولة للطفل، أو ما أكله الطفل آخر مرة',
+    },
+    benefit4: {
+      en: 'Keep records all in one place',
+      es: 'Mantener todos los registros en un solo lugar',
+      ru: 'Хранить все записи в одном месте',
+      ar: 'الاحتفاظ بجميع السجلات في مكان واحد',
+    },
+    costInfo: {
+      en: "Brightwheel normally costs $50/month, but CAP will cover the full cost if you are interested in using it. This is completely optional—we just want to know if technology like this would actually be useful for the way you provide care, or if it's not a good fit.",
+      es: 'Brightwheel normalmente cuesta $50/mes, pero CAP cubrirá el costo completo si está interesado en usarlo. Esto es completamente opcional—solo queremos saber si una tecnología como esta sería realmente útil para la forma en que usted brinda cuidado, o si no es una buena opción.',
+      ru: 'Brightwheel обычно стоит $50/месяц, но CAP покроет полную стоимость, если вы заинтересованы в его использовании. Это полностью добровольно — мы просто хотим узнать, будет ли такая технология действительно полезна для того, как вы предоставляете уход, или она вам не подходит.',
+      ar: 'يكلف Brightwheel عادةً 50 دولارًا شهريًا، لكن CAP ستغطي التكلفة الكاملة إذا كنت مهتمًا باستخدامه. هذا اختياري تمامًا - نريد فقط معرفة ما إذا كانت تقنية مثل هذه ستكون مفيدة فعلاً للطريقة التي تقدم بها الرعاية، أم أنها غير مناسبة.',
+    },
+    cta: {
+      en: "If you're interested in using Brightwheel, please fill out the form below:",
+      es: 'Si está interesado en usar Brightwheel, complete el siguiente formulario:',
+      ru: 'Если вы заинтересованы в использовании Brightwheel, пожалуйста, заполните форму ниже:',
+      ar: 'إذا كنت مهتمًا باستخدام Brightwheel، يرجى ملء النموذج أدناه:',
+    },
+    signUpButton: {
+      en: 'Sign Me Up!',
+      es: '¡Inscríbame!',
+      ru: 'Зарегистрируйте меня!',
+      ar: 'سجلني!',
+    },
+  },
   attendance: {
     ...attendance,
     allSetDescription: {

@@ -7,6 +7,7 @@ import {
   LogOut,
   UserRound,
   ArrowRightLeft,
+  BookOpen,
 } from 'lucide-react'
 import { Logo } from '@/components/logo'
 import { NavBar } from '@/components/nav-bar'
@@ -30,6 +31,7 @@ import { translations } from '@/translations/text'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
 import { ExternalLink } from '@/components/external-link'
 import { NotificationBanner } from '@/components/notification-banner'
+import { PathwaysBanner } from './pathways-banner'
 
 export function FamilyNavBar() {
   const t = translations.family.navBar
@@ -119,6 +121,7 @@ export function FamilyNavBar() {
       {!navBar.hidden && (
         <FamilyNotificationBanner notification={navBar.notifications[0]} />
       )}
+      {!navBar.hidden && <PathwaysBanner />}
       {!navBar.hidden && (
         <div className="flex justify-center items-center p-5 bg-white">
           <Link to="/family/$childId/home">
@@ -131,6 +134,8 @@ export function FamilyNavBar() {
       {navBar.hidden && (
         <FamilyNotificationBanner notification={navBar.notifications[0]} />
       )}
+      {/* TODO Consider refactoring to make a part of the FamilyNotificationBanner */}
+      {navBar.hidden && <PathwaysBanner />}
       {navBar.hidden ? null : (
         <NavBar
           key={selectedChildInfo.id}
@@ -161,6 +166,12 @@ export function FamilyNavBar() {
               params: { childId: selectedChildInfo.id },
               text: text(t.links.providers),
               Icon: HeartHandshake,
+            },
+            {
+              to: '/family/$childId/resources',
+              params: { childId: selectedChildInfo.id },
+              text: text(t.links.resources),
+              Icon: BookOpen,
             },
           ]}
         />
