@@ -18,7 +18,7 @@ function Wrapper({
   children,
   link,
   onClick,
-}: PropsWithChildren<{ link?: LinkProps; onClick?: () => void }>) {
+}: NotificationBannerProps) {
   if (link !== undefined) {
     return (
       <Link {...link} className={WRAPPER_CLASSES} onClick={onClick}>
