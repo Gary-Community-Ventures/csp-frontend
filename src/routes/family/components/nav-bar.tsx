@@ -134,6 +134,7 @@ export function FamilyNavBar() {
       {navBar.hidden && (
         <FamilyNotificationBanner notification={navBar.notifications[0]} />
       )}
+      {/* TODO Consider refactoring to make a part of the FamilyNotificationBanner */}
       {navBar.hidden && <PathwaysBanner />}
       {navBar.hidden ? null : (
         <NavBar
