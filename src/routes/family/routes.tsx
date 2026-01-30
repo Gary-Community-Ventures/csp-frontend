@@ -12,6 +12,7 @@ import { InviteProviderConfirmationPage } from './pages/invite-provider-confirma
 import { LumpSumConfirmationPage } from './pages/payment/lump-payment/lump-payment-confirmation'
 import { CalendarPaymentConfirmationPage } from './pages/payment/calendar-payment/calendar-payment-confirmation'
 import { AttendancePage, loadAttendance } from './pages/attendance'
+import { FamilyResourcesPage } from './pages/resources'
 
 export const familyRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -135,6 +136,12 @@ export const attendanceRoute = createRoute({
   loader: loadAttendance,
 })
 
+export const resourcesRoute = createRoute({
+  getParentRoute: () => familyWithIdRoute,
+  path: '/resources',
+  component: FamilyResourcesPage,
+})
+
 export const attendanceRedirectRoute = createRoute({
   getParentRoute: () => familyRoute,
   path: 'attendance',
@@ -155,6 +162,7 @@ export const familyWithIdRouteTree = familyWithIdRoute.addChildren([
   lumpPaymentConfirmationRoute,
   calendarPaymentConfirmationRoute,
   attendanceRoute,
+  resourcesRoute,
 ])
 
 export const familyRouteTree = familyRoute.addChildren([
