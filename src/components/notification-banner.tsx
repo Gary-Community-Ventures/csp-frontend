@@ -12,7 +12,7 @@ type NotificationBannerProps = PropsWithChildren<{
 }>
 
 const WRAPPER_CLASSES =
-  'flex justify-between items-center gap-2 bg-secondary text-secondary-foreground p-2 w-full'
+  'flex justify-between items-center gap-2 bg-secondary text-secondary-foreground p-2 w-full border-b border-secondary-foreground/20'
 
 function Wrapper({ children, link, onClick }: NotificationBannerProps) {
   if (link !== undefined) {
