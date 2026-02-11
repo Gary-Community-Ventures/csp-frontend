@@ -95,8 +95,8 @@ export function ProviderNavBar() {
         </div>
       </div>
       <ProviderNotificationBanner notification={navBar.notifications[0]} />
-      <BrightwheelBanner />
-      <PathwaysBanner />
+      {providerInfo.type === 'ffn' && <BrightwheelBanner />}
+      {providerInfo.type === 'ffn' && <PathwaysBanner />}
       <div className="flex justify-center items-center p-5 bg-white">
         <strong className="text-3xl text-primary">
           {providerInfo.firstName} {providerInfo.lastName}
