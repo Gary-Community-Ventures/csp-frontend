@@ -5,6 +5,7 @@ import { ExternalLink } from '@/components/external-link'
 import { Text } from '@/translations/wrapper'
 import { translations } from '@/translations/text'
 import { Button } from '@/components/ui/button'
+import { MyFriendBenSection } from '@/components/myfriendben-section'
 import { PathwaysSection } from '@/components/pathways-section'
 
 const BRIGHTWHEEL_FORM_URL =
@@ -35,6 +36,8 @@ export function ResourcesPage() {
 
   return (
     <div className="p-5 space-y-6">
+      {providerInfo.type === 'ffn' && <MyFriendBenSection />}
+
       <section>
         <PathwaysSection
           translations={translations.pathways.providerResources}
@@ -173,7 +176,7 @@ function BrightwheelSection() {
 
   return (
     <section>
-      <Header>
+      <Header id="brightwheel" className="scroll-mt-24">
         <Text text={t.title} />
       </Header>
       <WhiteCard>

@@ -29,7 +29,7 @@ type PathwaysSectionProps = {
 export function PathwaysSection({ translations: t }: PathwaysSectionProps) {
   return (
     <>
-      <Header>
+      <Header id="pathways" className="scroll-mt-24">
         <Text text={t.title} />
       </Header>
       <WhiteCard>
