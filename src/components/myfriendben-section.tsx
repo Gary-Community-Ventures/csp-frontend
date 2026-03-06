@@ -30,7 +30,7 @@ export function MyFriendBenSection() {
             <Text text={t.description} />
           </p>
 
-          <div className="pt-2">
+          <div className="pt-2 flex justify-center">
             <Button asChild>
               <ExternalLink
                 href={MYFRIENDBEN_URL}
