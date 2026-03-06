@@ -26,7 +26,7 @@ export function MyFriendBenSection() {
             />
           </div>
 
-          <p>
+          <p className="text-center">
             <Text text={t.description} />
           </p>
 
