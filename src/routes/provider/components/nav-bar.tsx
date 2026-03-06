@@ -26,6 +26,7 @@ import { translations } from '@/translations/text'
 import { Logo } from '@/components/logo'
 import { NotificationBanner } from '@/components/notification-banner'
 import { BrightwheelBanner } from './brightwheel-banner'
+import { MyFriendBenBanner } from './myfriendben-banner'
 import { PathwaysBanner } from './pathways-banner'
 
 export function ProviderNavBar() {
@@ -95,6 +96,7 @@ export function ProviderNavBar() {
         </div>
       </div>
       <ProviderNotificationBanner notification={navBar.notifications[0]} />
+      {providerInfo.type === 'ffn' && <MyFriendBenBanner />}
       {providerInfo.type === 'ffn' && <BrightwheelBanner />}
       {providerInfo.type === 'ffn' && <PathwaysBanner />}
       <div className="flex justify-center items-center p-5 bg-white">

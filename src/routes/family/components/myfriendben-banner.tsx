@@ -4,20 +4,20 @@ import { translations } from '@/translations/text'
 import { familyRoute } from '../routes'
 import { useFamilyContext } from '../wrapper'
 
-const PATHWAYS_BANNER_TRACKING_ID = 'pathways_banner'
+const MYFRIENDBEN_BANNER_TRACKING_ID = 'myfriendben_banner'
 
-export function PathwaysBanner() {
-  const t = translations.pathways.familyBanner
+export function MyFriendBenBanner() {
+  const t = translations.myFriendBen.familyBanner
   const context = familyRoute.useRouteContext()
   const { selectedChildInfo } = useFamilyContext()
 
   return (
     <TrackableBanner
-      trackingId={PATHWAYS_BANNER_TRACKING_ID}
+      trackingId={MYFRIENDBEN_BANNER_TRACKING_ID}
       link={{
         to: '/family/$childId/resources',
         params: { childId: selectedChildInfo.id },
-        hash: 'pathways',
+        hash: 'myfriendben',
       }}
       context={context}
     >
