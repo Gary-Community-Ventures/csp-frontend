@@ -124,7 +124,7 @@ export function FamilyNavBar() {
       )}
       <NotificationBanner
         showActionRequired={false}
-        className="bg-amber-200 text-amber-950 border-amber-500"
+        className="bg-amber-200 text-amber-950 border-b-0"
       >
         <span className="font-bold">
           <Text text={t.notificationBanner.programEndingPrefix} />
