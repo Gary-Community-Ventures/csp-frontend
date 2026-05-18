@@ -12,7 +12,7 @@ export function PathwaysBanner() {
   return (
     <TrackableBanner
       trackingId={PATHWAYS_BANNER_TRACKING_ID}
-      link={{ to: '/provider/resources' }}
+      link={{ to: '/provider/resources', hash: 'pathways' }}
       context={context}
     >
       <Text text={t.message} />

@@ -31,6 +31,7 @@ import { translations } from '@/translations/text'
 import { DropdownMenuLanguageSwitcher } from '@/components/dropdown-menu-language-switcher'
 import { ExternalLink } from '@/components/external-link'
 import { NotificationBanner } from '@/components/notification-banner'
+import { MyFriendBenBanner } from './myfriendben-banner'
 import { PathwaysBanner } from './pathways-banner'
 
 export function FamilyNavBar() {
@@ -130,6 +131,7 @@ export function FamilyNavBar() {
         </span>
         <Text text={t.notificationBanner.programEnding} />
       </NotificationBanner>
+      {!navBar.hidden && <MyFriendBenBanner />}
       {!navBar.hidden && <PathwaysBanner />}
       {!navBar.hidden && (
         <div className="flex justify-center items-center p-5 bg-white">
@@ -144,6 +146,7 @@ export function FamilyNavBar() {
         <FamilyNotificationBanner notification={navBar.notifications[0]} />
       )}
       {/* TODO Consider refactoring to make a part of the FamilyNotificationBanner */}
+      {navBar.hidden && <MyFriendBenBanner />}
       {navBar.hidden && <PathwaysBanner />}
       {navBar.hidden ? null : (
         <NavBar

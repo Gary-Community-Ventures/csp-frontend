@@ -3,6 +3,7 @@ import { providerTranslations } from './sections/provider'
 import { generalTranslations } from './sections/general'
 import { inviteTranslations } from './sections/invite'
 import { pathwaysTranslations } from './sections/pathways'
+import { myFriendBenTranslations } from './sections/myfriendben'
 
 export const translations = {
   family: familyTranslations,
@@ -10,4 +11,5 @@ export const translations = {
   general: generalTranslations,
   invite: inviteTranslations,
   pathways: pathwaysTranslations,
+  myFriendBen: myFriendBenTranslations,
 } as const
