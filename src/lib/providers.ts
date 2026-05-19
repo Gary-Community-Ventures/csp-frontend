@@ -1,4 +1,4 @@
-import type { Provider } from 'src/routes/family/wrapper'
+import type { Provider } from '@/routes/family/wrapper'
 
 export const findProviderById = (
   providers: Provider[],

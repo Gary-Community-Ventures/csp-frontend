@@ -96,6 +96,15 @@ export function ProviderNavBar() {
         </div>
       </div>
       <ProviderNotificationBanner notification={navBar.notifications[0]} />
+      <NotificationBanner
+        showActionRequired={false}
+        className="bg-amber-200 text-amber-950 border-b-0"
+      >
+        <span className="font-bold">
+          <Text text={t.notificationBanner.programEndingPrefix} />
+        </span>
+        <Text text={t.notificationBanner.programEnding} />
+      </NotificationBanner>
       {providerInfo.type === 'ffn' && <MyFriendBenBanner />}
       {providerInfo.type === 'ffn' && <BrightwheelBanner />}
       {providerInfo.type === 'ffn' && <PathwaysBanner />}
