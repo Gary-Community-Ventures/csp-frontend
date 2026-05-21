@@ -19,33 +19,14 @@ export default defineConfig({
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
         assetFileNames: 'assets/[name].[hash].[ext]',
-        manualChunks: {
-          // Split large vendor chunks
-          'react-vendor': ['react', 'react-dom'],
-          'clerk-vendor': [
-            '@clerk/clerk-react',
-            '@clerk/localizations',
-            '@clerk/types',
-          ],
-          'radix-vendor': [
-            '@radix-ui/react-avatar',
-            '@radix-ui/react-checkbox',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-label',
-            '@radix-ui/react-navigation-menu',
-            '@radix-ui/react-popover',
-            '@radix-ui/react-radio-group',
-            '@radix-ui/react-select',
-            '@radix-ui/react-separator',
-            '@radix-ui/react-slot',
-          ],
-          'tanstack-vendor': [
-            '@tanstack/react-query',
-            '@tanstack/react-router',
-            '@tanstack/router-devtools',
-          ],
-          'sentry-vendor': ['@sentry/react', '@sentry/tracing'],
+        manualChunks: (id) => {
+          if (!id.includes('node_modules')) return
+          if (/node_modules\/(react|react-dom|scheduler)\//.test(id))
+            return 'react-vendor'
+          if (id.includes('@clerk/')) return 'clerk-vendor'
+          if (id.includes('@radix-ui/')) return 'radix-vendor'
+          if (id.includes('@tanstack/')) return 'tanstack-vendor'
+          if (id.includes('@sentry/')) return 'sentry-vendor'
         },
       },
     },
