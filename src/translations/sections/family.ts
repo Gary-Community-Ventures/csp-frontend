@@ -512,6 +512,18 @@ export const familyTranslations = {
         ru: 'К сожалению, ваша заявка на этого ребёнка была отклонена',
         ar: 'للأسف، تم رفض طلبك لهذا الطفل',
       },
+      programEndingPrefix: {
+        en: 'Reminder:',
+        es: 'Recordatorio:',
+        ru: 'Напоминание:',
+        ar: 'تذكير:',
+      },
+      programEnding: {
+        en: ' As planned, the Childcare Affordability Pilot will end on June 30, 2026. Thank you for your participation.',
+        es: ' Como estaba previsto, el Piloto de Asequibilidad del Cuidado Infantil finalizará el 30 de junio de 2026. Gracias por su participación.',
+        ru: ' как и планировалось, Пилотный проект по доступности детского ухода завершится 30 июня 2026 года. Спасибо за ваше участие.',
+        ar: ' كما هو مخطط، سينتهي برنامج دعم تكاليف رعاية الأطفال في 30 يونيو 2026. شكرًا لمشاركتك.',
+      },
       noProviderInvited: {
         en: 'You have not invited a provider yet. Add a provider to start making payments.',
         es: 'Aún no has invitado a un proveedor. Agrega un proveedor para comenzar a realizar pagos.',

@@ -1,4 +1,4 @@
-import type { Child } from 'src/routes/family/wrapper'
+import type { Child } from '@/routes/family/wrapper'
 
 export const findChildById = (children: Child[], childId: string | null) => {
   if (childId === null) {
